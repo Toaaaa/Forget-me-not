@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    public Player Player;
+    
+    
     void Update()
     {
         
