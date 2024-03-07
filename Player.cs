@@ -7,11 +7,12 @@ public class Player : MovingObject
 {
     [SerializeField]
     float Speed = 5f;
-
+    RandomEncounter randomEncounter;//랜덤 인카운터// 할당해줘야 하나?
 
     float h;
     float v;
     bool isHorizonMove;
+    public bool isMoving;
     Vector2 dirVec;//direction of where player is looking at
 
     Rigidbody2D rigid;
@@ -30,6 +31,8 @@ public class Player : MovingObject
 
     void Update()
     {
+        isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
+        
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
 
