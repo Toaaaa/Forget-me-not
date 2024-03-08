@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MovingObject
+public class Player : MovingObject //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
     [SerializeField]
     float Speed = 5f;
-    RandomEncounter randomEncounter;//랜덤 인카운터// 할당해줘야 하나?
+    RandomEncounter randomEncounter;
 
     float h;
     float v;
@@ -27,19 +27,21 @@ public class Player : MovingObject
     private void Awake()
     {
        rigid = GetComponent<Rigidbody2D>();
+
+       DontDestroyOnLoad(this.gameObject); //이거 문제 없겟지..? 추후 플레이어가 중복 생성 되지 않는지 확인@@@@@
     }
 
     void Update()
     {
         isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
         
-        h = Input.GetAxisRaw("Horizontal");
-        v = Input.GetAxisRaw("Vertical");
+        h = GameManager.Instance.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
+        v = GameManager.Instance.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
 
-        bool hDown = Input.GetButtonDown("Horizontal");
-        bool vDown = Input.GetButtonDown("Vertical");
-        bool hUp = Input.GetButtonUp("Horizontal");
-        bool vUp = Input.GetButtonUp("Vertical");
+        bool hDown = GameManager.Instance.cantAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = GameManager.Instance.cantAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = GameManager.Instance.cantAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = GameManager.Instance.cantAction ? false : Input.GetButtonUp("Vertical");
 
         if(hDown)
             isHorizonMove = true;

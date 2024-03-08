@@ -33,7 +33,7 @@ public class RandomEncounter : MonoBehaviour
         if(timeMoved >= encounterTime)
         {
             timeMoved = 0;
-            encounterCount++; //every 1.2 seconds, it counts as 1 step.
+            encounterCount++; //every "encounterTime" seconds, it counts as 1 step.
 
             if (encounterCount >= encounterStep) //it starts to check encounterrate.
             {
