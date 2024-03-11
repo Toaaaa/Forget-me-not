@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public class ForCanvas : MonoBehaviour
 {
-    private static T instance;
+    private static ForCanvas instance;
 
-    public static T Instance
+    public static ForCanvas Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = (T)FindObjectOfType(typeof(T));
+                instance = (ForCanvas)FindObjectOfType(typeof(ForCanvas));
 
                 if (instance == null)
                 {
-                    GameObject obj = new GameObject(typeof(T).Name, typeof(T));
-                    instance = obj.GetComponent<T>();
+                    GameObject obj = new GameObject(typeof(ForCanvas).Name, typeof(ForCanvas));
+                    instance = obj.GetComponent<ForCanvas>();
                 }
             }
             return instance;
@@ -29,7 +29,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         if (instance == null)
         {
-            instance = this as T;
+            instance = this as ForCanvas;
         }
         else
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
+public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
     [SerializeField]
     float Speed = 5f;
@@ -22,13 +22,15 @@ public class Player : Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobje
      void Start()
     {
         GameManager.Instance.Player = this;
+        if (FindObjectsOfType(GetType()).Length > 1)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Awake()
     {
        rigid = GetComponent<Rigidbody2D>();
-
-       DontDestroyOnLoad(this.gameObject); //이거 문제 없겟지..? 추후 플레이어가 중복 생성 되지 않는지 확인@@@@@
     }
 
     void Update()

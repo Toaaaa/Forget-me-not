@@ -10,8 +10,17 @@ public class GameManager : Singleton<GameManager>
 
     public EventManager eventManager;
     public GameObject MenuUI;
-    
-    
+    public CameraManager Camera;
+
+    private void Awake()
+    {
+        Camera = GetComponent<CameraManager>();
+        eventManager = GetComponent<EventManager>();
+        DontDestroyOnLoad(Player.gameObject); //플레이어 오브젝트는 씬이 바뀌어도 파괴되지 않게 함.
+        //플레이어가 복수 존재한때 하나만 남기기
+        
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 

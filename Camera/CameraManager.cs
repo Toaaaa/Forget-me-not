@@ -2,26 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
     public GameObject target;
     public float moveSpeed;
+    [SerializeField]
     private Vector3 targetPosition;
-    
-    // Start is called before the first frame update
+
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject); 
+        if(target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
-        if(target.gameObject != null)
+       if(target.gameObject != null)
         {
             targetPosition.Set(target.transform.position.x, target.transform.position.y, this.transform.position.z);
             this.transform.position = Vector3.Lerp(this.transform.position, targetPosition, moveSpeed * Time.deltaTime);
         }
+       //해당 오브젝트 x,y회전을 0으로 고정
+       this.transform.rotation = Quaternion.Euler(0, 0, 0);
+
     }
+
+    
 
 }
