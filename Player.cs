@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MovingObject //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
+public class Player : Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
     [SerializeField]
     float Speed = 5f;
@@ -13,15 +13,15 @@ public class Player : MovingObject //추후 다른거 상속받게 바꾸자 movingobject는 
     float v;
     bool isHorizonMove;
     public bool isMoving;
+    public string currentMapName;//이동전 맵이름을 받아주기
     Vector2 dirVec;//direction of where player is looking at
 
     Rigidbody2D rigid;
     GameObject scanedObject;
 
-    protected override void Start()
+     void Start()
     {
         GameManager.Instance.Player = this;
-        base.Start();
     }
 
     private void Awake()
