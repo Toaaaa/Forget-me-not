@@ -69,7 +69,11 @@ public class RandomEncounter : MonoBehaviour
         {
             isMonsterZone = tilemanager.IsMonsterZone(player.transform.position); //플레이어가 있는 타일이 몬스터 타일인지 체크.
         }
-         else { Debug.Log("TileManager is null");}
+         else 
+        { 
+            isMonsterZone = false;
+            Debug.Log("TileManager is null");
+        }
 
         if (player.isMoving && isMonsterZone)
         {
