@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 public class VirtualCamera :MonoBehaviour
 {
     private static VirtualCamera instance;
+    CinemachineVirtualCamera cinevircamera;
+    CinemachineConfiner2D cineconf;
 
     public static VirtualCamera Instance
     {
@@ -27,7 +29,6 @@ public class VirtualCamera :MonoBehaviour
     }
 
 
-
     private void Awake()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -40,11 +41,15 @@ public class VirtualCamera :MonoBehaviour
             Destroy(gameObject);
         }
 
-        CinemachineVirtualCamera cinevircamera = GetComponent<CinemachineVirtualCamera>();
-        CinemachineConfiner2D cineconf = GetComponent<CinemachineConfiner2D>();
+        cinevircamera = GetComponent<CinemachineVirtualCamera>();
+        cineconf = GetComponent<CinemachineConfiner2D>();
         cinevircamera.Follow = GameManager.Instance.Player.transform;
         cinevircamera.LookAt = GameManager.Instance.Player.transform;
-        if(cineconf.m_BoundingShape2D == null)
+    }
+
+    private void Update()
+    {
+        if (cineconf.m_BoundingShape2D == null)
         {
             cineconf.m_BoundingShape2D = FindObjectOfType<PolygonCollider2D>();
         }
