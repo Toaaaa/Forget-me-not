@@ -13,6 +13,7 @@ public class GameManager : Singleton<GameManager>
     public CameraManager Camera;
     public Inventory inventory;
 
+
     private void Awake()
     {
         Camera = GetComponent<CameraManager>();

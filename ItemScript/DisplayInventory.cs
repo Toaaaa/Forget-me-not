@@ -21,7 +21,25 @@ public class DisplayInventory : MonoBehaviour
     }
     private void Update()
     {
-        //UpdateDisplay();
+        UpdateDisplay();
+    }
+
+    public void UpdateDisplay()
+    {
+        for (int i =0; i< inventory.Container.Count; i++)
+        {
+            if (itemDisplayed.ContainsKey(inventory.Container[i]))
+            {
+                itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+            }
+            else
+            {
+                var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                itemDisplayed.Add(inventory.Container[i], obj);
+            }
+        }
     }
 
     public void CreateDisplay()
