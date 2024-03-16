@@ -11,7 +11,7 @@ public class GameManager : Singleton<GameManager>
     public EventManager eventManager;
     public GameObject MenuUI;
     public CameraManager Camera;
-    public Inventory inventory;
+    public Inventory inventory; //inventory.save // inventory.load 메서드 사용가능.
 
 
     private void Awake()
