@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.UI;
+using Unity.VisualScripting;
 
 public enum ItemType
 {
     Consumable, //소비    
     Equipment, //장비
-    Quest, //퀘스트
     Default //기타
 }
 
@@ -14,26 +15,31 @@ public enum ItemType
 public abstract class Item : ScriptableObject
 {
     public GameObject prefab;
+    public Sprite sprite;
 
     public int itemID;
-    public string itemName;
     [TextArea(5, 15)]
     public string itemDescription;
-    public int itemCount;
-    public Sprite itemIcon;
     public ItemType itemType;
 
-    
 
-    /*public Item(int _itemID, string _itemName, string _itemDescription, ItemType _itemType, int _itemCount = 1)
+
+
+}
+
+[System.Serializable]
+public class ItemInfo
+{
+    public string Name;
+    public int Id;
+    public ItemType Itemtype;
+
+    public ItemInfo(Item item)
     {
-        itemID = _itemID;
-        itemName = _itemName;
-        itemDescription = _itemDescription;
-        itemCount = _itemCount;
-        itemType = _itemType;
-        itemIcon = Resources.Load<Sprite>("ItemIcons/" + _itemName);
-    }*/
-
-
+        Name = item.name;
+        Id = item.itemID;
+        Itemtype = item.itemType;
+        Debug.Log("ItemInfo 생성자 호출");
+    }
+    
 }
