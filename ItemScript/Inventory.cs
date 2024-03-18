@@ -5,6 +5,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Text;
 using UnityEditor;
+using Unity.VisualScripting;
+using static EquipItem;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/Inventory")]
 public class Inventory : ScriptableObject, ISerializationCallbackReceiver
@@ -21,7 +23,7 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
 #endif
     }
     
-    public void AddItem(Item _item, int _amount)
+    public void AddItem(Item _item, int _amount, int itemtype) 
     {
         for(int i=0; i<Container.Count; i++)
         {
@@ -31,8 +33,8 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
                 return;
             }
         }
-        Container.Add(new InvenSlot(database.GetId[_item],_item, _amount));
-
+        Container.Add(new InvenSlot(database.GetId[_item],_item, _amount, itemtype));
+        
     }
 
     public void Save()
@@ -63,19 +65,43 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
     public void OnBeforeSerialize()
     {
     }
+
+    /*
+     * if (Input.GetKeyDown(??)) 이와 같은 방식으로 아이템 추가 가능.
+        {
+            inventory.AddItem(database.GetItem[0], 1, 1);
+        }
+    */
+
 }
 
 [System.Serializable]
-public class InvenSlot
+public class InvenSlot //컨테이너에 저장될 정보
 {
     public int ID;
     public Item item;
     public int amount;
-    public InvenSlot(int _id, Item _item, int _amount)
+    public int itemType; // 0: weapon+acc  1:consumable 2:other
+    public bool isAcc;
+
+    public InvenSlot(int _id, Item _item, int _amount, int itemtype)
     {
         ID = _id;
         item = _item;
         amount = _amount;
+        itemType = itemtype;
+        if(itemType == 0) //인벤에 들어갈때 itemtype이 equip 일때 해당 아이템의 악세서리 유무를 확인, isAcc값에 변수 등록.
+        {
+            EquipType equipType = (EquipType)item.itemType;
+            if(equipType == EquipType.Accessory)
+            {
+                isAcc = true;
+            }
+            else
+            {
+                isAcc = false;
+            }
+        }
     }
     
     public void AddAmount(int value)

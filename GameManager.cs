@@ -11,6 +11,7 @@ public class GameManager : Singleton<GameManager>
     public EventManager eventManager;
     public GameObject MenuUI;
     public CameraManager Camera;
+    public DBManager database;
     public Inventory inventory; //inventory.save // inventory.load 메서드 사용가능.
 
 
@@ -27,6 +28,11 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
             MenuUI.SetActive(!MenuUI.activeSelf); //활성화 되어있으면 비활성화, 비활성화 되어있으면 활성화.
+
+        /*if (Input.GetKeyDown(KeyCode.S)) //아이템 추가 테스트용.
+        {
+            inventory.AddItem(database.GetItem[2], 1, 0);
+        }*/
 
         cantAction = MenuUI.activeSelf ? true : false; //메뉴가 활성화 되어있으면 cantAction은 true.
     }
