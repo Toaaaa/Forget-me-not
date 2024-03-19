@@ -7,6 +7,10 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject[] menu;
 
+    public void onClickExit()
+    {
+        //모바일환경의 경우 해당 버튼을 눌러서 메뉴닫기 기능구현.
+    }
     public void onClickStatMenu()
     {
 
@@ -14,13 +18,27 @@ public class MenuManager : MonoBehaviour
 
     public void onClickSkillMenu()
     {
-        menu[2].SetActive(true);
+        menu[3].SetActive(true);
     }
-
+    #region 
     public void onClickItemMenu()
     {
-
+        menu[2].SetActive(true);
     }
+    public void clickItemEquip()
+    {
+        menu[6].SetActive(true);
+    }
+    public void clickItemConsumable()
+    {
+        menu[7].SetActive(true);
+    }
+    public void clickItemOther()
+    {
+        menu[8].SetActive(true);
+    }
+    #endregion 
+    //아이템 메뉴 관련 메서드들
 
     public void onClickSettingMenu()
     {

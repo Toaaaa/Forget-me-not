@@ -13,6 +13,7 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
 {
     public string savePath; ///Inventory.Save °¡ savePath 
     private DBManager database;
+    public int goldHave;
     public List<InvenSlot> Container = new List<InvenSlot>();
 
     private void OnEnable()
