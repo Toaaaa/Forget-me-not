@@ -74,6 +74,16 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
         }
     */
 
+    void Update()
+    {
+        for (int i = 0; i < Container.Count; i++)
+        {
+            if (Container[i].amount == 0)
+            {
+                Container.Remove(Container[i]);
+            }
+        }
+    }
 }
 
 [System.Serializable]
@@ -82,7 +92,7 @@ public class InvenSlot //컨테이너에 저장될 정보
     public int ID;
     public Item item;
     public int amount;
-    public int itemType; // 0: weapon+acc  1:consumable 2:other
+    public int _itemType; // 0: weapon+acc  1:consumable 2:other
     public bool isAcc;
 
     public InvenSlot(int _id, Item _item, int _amount, int itemtype)
@@ -90,8 +100,8 @@ public class InvenSlot //컨테이너에 저장될 정보
         ID = _id;
         item = _item;
         amount = _amount;
-        itemType = itemtype;
-        if(itemType == 0) //인벤에 들어갈때 itemtype이 equip 일때 해당 아이템의 악세서리 유무를 확인, isAcc값에 변수 등록.
+        _itemType = itemtype;
+        if(_itemType == 0) //인벤에 들어갈때 itemtype이 equip 일때 해당 아이템의 악세서리 유무를 확인, isAcc값에 변수 등록.
         {
             EquipType equipType = (EquipType)item.itemType;
             if(equipType == EquipType.Accessory)
