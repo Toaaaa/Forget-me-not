@@ -27,7 +27,8 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) 
-            MenuUI.SetActive(!MenuUI.activeSelf); //활성화 되어있으면 비활성화, 비활성화 되어있으면 활성화.
+            MenuUI.SetActive(true); //ui가 전부 담긴 메뉴 활성화.
+        
 
         /*if (Input.GetKeyDown(KeyCode.S)) //아이템 추가 테스트용.
         {

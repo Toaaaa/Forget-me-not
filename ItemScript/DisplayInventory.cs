@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DisplayInventory : MonoBehaviour
@@ -13,7 +14,11 @@ public class DisplayInventory : MonoBehaviour
     public int X_SpaceBetweenItems;
     public int Y_SpaceBetweenItems;
     public int NumberOfColumns;
-    Dictionary<InvenSlot, GameObject> itemDisplayed = new Dictionary<InvenSlot, GameObject>();
+    public Dictionary<InvenSlot, GameObject> itemDisplayed = new Dictionary<InvenSlot, GameObject>();
+    [SerializeField]
+    List<GameObject> itemInInven;//현재 display되고있는 아이템들을 저장할 배열.
+    int invenNumber; // itemInInven의 [i] 번째를 저장하는 변수.
+    int invenTotal; // itemInInven의 총 개수를 저장하는 변수.
 
     private void Start()
     {
@@ -24,8 +29,10 @@ public class DisplayInventory : MonoBehaviour
     {
 
         UpdateDisplay(inventype);
-    }
+        SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
 
+    }
+    /*
     public void UpdateDisplay(int inventype)
     {
         
@@ -36,12 +43,10 @@ public class DisplayInventory : MonoBehaviour
             {
                 if (itemDisplayed.ContainsKey(inventory.Container[i])) //이미 들어가있는 경우.
                 {
-                    Debug.Log("아이템 갯수 업데이트");
                     itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                 }
                 else //inventory에 새로 아이템이 추가됬을 경우.
                 {
-                    Debug.Log("test");
                     var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform); //inventory.Container[i].item.<<의 경우 본체의item 정보가 저장되어있음.
                     //여기있는 prefab으로 된 방식말고, item 정보의 sprite + text 정보를 가져와서 생성하는 방식으로 바꿀것.
                     obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
@@ -52,22 +57,57 @@ public class DisplayInventory : MonoBehaviour
             }
             else
             {
-                Debug.Log(inventory.Container[i]._itemType); //얘가 계속 출력 + 1의 값만 나옴. >> 처음 start() 에서는 0의 값을 가졌는데 update() 가 되면서 계속 1의 값만 나온다.               
+                Debug.Log(inventory.Container[i]._itemType);               
             }
 
             if (inventory.Container[i].amount == 0) //아이템이 0개가 되면 인벤에서 삭제.
             {
                 Destroy(itemDisplayed[inventory.Container[i]]);
-                Debug.Log("아이템 삭제");
                 itemDisplayed.Remove(inventory.Container[i]);
             }
         }
-    }
-    public void invenDisplay()
+    }*/
+    public void SelectingItem()
     {
 
     }
-    //지금 문제가 inventory.Container[i].itemType의 값이 제대로 적용되지 않고 1로만 적용되고 있다.
+    public void UpdateDisplay(int inventype)
+    {
+
+        for (int i = 0; i < inventory.Container.Count; i++)
+        {
+            // if(inventory.Container[].itemtype ==1) , if(inventory.Container[].itemtype ==1), if(inventory.Container[].itemtype ==2) 으로 나눠서 각각의 종류의 아이템 인벤 구분.
+            if (inventory.Container[i]._itemType == inventype)
+            {
+                if (itemDisplayed.ContainsKey(inventory.Container[i])) //이미 들어가있는 경우.
+                {
+                    itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                }
+                else //inventory에 새로 아이템이 추가됬을 경우.
+                {
+                    var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform); //inventory.Container[i].item.<<의 경우 본체의item 정보가 저장되어있음.
+                    //여기있는 prefab으로 된 방식말고, item 정보의 sprite + text 정보를 가져와서 생성하는 방식으로 바꿀것.
+                    obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+                    obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                    itemDisplayed.Add(inventory.Container[i], obj);
+                    itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
+                }
+
+            }
+            else
+            {
+                Debug.Log(inventory.Container[i]._itemType);
+            }
+
+            if (inventory.Container[i].amount == 0) //아이템이 0개가 되면 인벤에서 삭제.
+            {
+                Destroy(itemDisplayed[inventory.Container[i]]); //destroy가 필요한가? //필요한듯.. 게임 오브젝트 자체를 없애줘야 하니깐. dictionary 와 list에 저장된건 정보일뿐 오브젝트 자체가 아니니깐.
+                itemDisplayed.Remove(inventory.Container[i]);
+                itemInInven.Remove(itemInInven[i]);
+            }
+        }
+    }
+
     public void CreateDisplay(int inventype)
     {
         for(int i =0; i< inventory.Container.Count; i++)
@@ -78,14 +118,13 @@ public class DisplayInventory : MonoBehaviour
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                 itemDisplayed.Add(inventory.Container[i], obj);
-                Debug.Log("아이템 생성" + inventory.Container[i]._itemType);
+                itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
             }
             else
             {
                 Debug.Log(inventory.Container[i]._itemType);
             }
 
-            if (inventory.Container[i]._itemType == 0) { Debug.Log("123123"); }
             
         }
     }
