@@ -74,16 +74,7 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
         }
     */
 
-    void Update()
-    {
-        for (int i = 0; i < Container.Count; i++)
-        {
-            if (Container[i].amount == 0)
-            {
-                Container.Remove(Container[i]);
-            }
-        }
-    }
+   
 }
 
 [System.Serializable]

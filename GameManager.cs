@@ -29,10 +29,10 @@ public class GameManager : Singleton<GameManager>
         if (Input.GetKeyDown(KeyCode.Escape)) 
             MenuUI.SetActive(true); //ui가 전부 담긴 메뉴 활성화.
         
-
-        /*if (Input.GetKeyDown(KeyCode.S)) //아이템 추가 테스트용.
+        /*
+        if (Input.GetKeyDown(KeyCode.S)) //아이템 추가 테스트용.
         {
-            inventory.AddItem(database.GetItem[2], 1, 0);
+            inventory.AddItem(database.GetItem[1], 1, 0);
         }*/
 
         cantAction = MenuUI.activeSelf ? true : false; //메뉴가 활성화 되어있으면 cantAction은 true.

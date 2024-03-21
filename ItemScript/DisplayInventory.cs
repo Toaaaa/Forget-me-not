@@ -9,16 +9,14 @@ public class DisplayInventory : MonoBehaviour
     public Inventory inventory;
     public int inventype; // 0:weapon+acc, 1:consumable, 2:other
 
-    public int X_Start;
     public int Y_Start;
-    public int X_SpaceBetweenItems;
     public int Y_SpaceBetweenItems;
-    public int NumberOfColumns;
     public Dictionary<InvenSlot, GameObject> itemDisplayed = new Dictionary<InvenSlot, GameObject>();
     [SerializeField]
     List<GameObject> itemInInven;//현재 display되고있는 아이템들을 저장할 배열.
     int invenNumber; // itemInInven의 [i] 번째를 저장하는 변수.
     int invenTotal; // itemInInven의 총 개수를 저장하는 변수.
+    int invenPage; // 현재 인벤의 페이지를 저장하는 변수, 한번의 창에 표시되는 아이템의 갯수에 제한이 있음.
 
     private void Start()
     {
@@ -27,7 +25,7 @@ public class DisplayInventory : MonoBehaviour
     }
     private void Update()
     {
-
+        itemReplace();
         UpdateDisplay(inventype);
         SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
 
@@ -77,11 +75,11 @@ public class DisplayInventory : MonoBehaviour
         for (int i = 0; i < inventory.Container.Count; i++)
         {
             // if(inventory.Container[].itemtype ==1) , if(inventory.Container[].itemtype ==1), if(inventory.Container[].itemtype ==2) 으로 나눠서 각각의 종류의 아이템 인벤 구분.
-            if (inventory.Container[i]._itemType == inventype)
+            if (inventory.Container[i].amount !=0 &&inventory.Container[i]._itemType == inventype)
             {
                 if (itemDisplayed.ContainsKey(inventory.Container[i])) //이미 들어가있는 경우.
                 {
-                    itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                    itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0"); //inventoy.container 키를 gameobject를 가져왓음.
                 }
                 else //inventory에 새로 아이템이 추가됬을 경우.
                 {
@@ -89,23 +87,53 @@ public class DisplayInventory : MonoBehaviour
                     //여기있는 prefab으로 된 방식말고, item 정보의 sprite + text 정보를 가져와서 생성하는 방식으로 바꿀것.
                     obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                     obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                    obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID; //처음 만들때 itemID를 저장. 해서 자체적으로 아이템이 0개가 되면 삭제되게 유도.
                     itemDisplayed.Add(inventory.Container[i], obj);
                     itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
                 }
 
             }
-            else
+        }
+    }
+    void itemReplace() //어떤 아이템이0개가 되면 가방에서 삭제된것을 display에 업데이트 해주는 함수.
+    {
+
+        //0개가 되면 remove와destroy ,리스트 순서 앞으로 당겨주고, 마지막 순번 지워주는 함수 + itemdisplayed에서도 삭제해주는 함수.
+        /*for(int i =0; i< itemInInven.Count; i++)
+        {
+            if (itemInInven[i] != null && itemInInven[i].GetComponent<IsGone>().isGone)
             {
-                Debug.Log(inventory.Container[i]._itemType);
+                itemDisplayed.Remove(inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID]);
+                itemInInven.Remove(itemInInven[i]);
+                Destroy(itemInInven[i]);
+                Debug.Log("destroy");
             }
 
-            if (inventory.Container[i].amount == 0) //아이템이 0개가 되면 인벤에서 삭제.
+            if (itemInInven[i] == null && itemInInven.Count != i+1)
             {
-                Destroy(itemDisplayed[inventory.Container[i]]); //destroy가 필요한가? //필요한듯.. 게임 오브젝트 자체를 없애줘야 하니깐. dictionary 와 list에 저장된건 정보일뿐 오브젝트 자체가 아니니깐.
-                itemDisplayed.Remove(inventory.Container[i]);
-                itemInInven.Remove(itemInInven[i]);
+                itemInInven[i] = itemInInven[i + 1];
+            }
+            else if (itemInInven[i] == null && itemInInven.Count == i+1)
+            {
+                itemInInven[i] = itemInInven[i + 1];
+                itemInInven.RemoveAt(i + 1);
+                Debug.Log("removeAT");
+            }
+        }*/
+        
+        for (int i = 0; i < itemInInven.Count; i++)
+        {
+            if (itemInInven[i] != null && itemInInven[i].GetComponent<IsGone>().isGone)
+            {
+                itemDisplayed.Remove(inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID]);
+                Destroy(itemInInven[i].gameObject);
+                //itemInInven.Remove(itemInInven[i]);
+                itemInInven.RemoveAt(i);
+                Debug.Log("destroy");//
             }
         }
+
+        //itemininven의 리스트 순서대로 아이템의 위치를 세팅 해주는 함수
     }
 
     public void CreateDisplay(int inventype)
@@ -117,12 +145,9 @@ public class DisplayInventory : MonoBehaviour
                 var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
                 obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
+                obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID;
                 itemDisplayed.Add(inventory.Container[i], obj);
                 itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
-            }
-            else
-            {
-                Debug.Log(inventory.Container[i]._itemType);
             }
 
             
@@ -131,7 +156,8 @@ public class DisplayInventory : MonoBehaviour
 
     public Vector3 GetPosition(int i)
     {
-        return new Vector3(X_Start + (X_SpaceBetweenItems*(i%NumberOfColumns)), Y_Start+(-Y_SpaceBetweenItems*(i/NumberOfColumns)), 0f);
+        return new Vector3(0, Y_Start+(-Y_SpaceBetweenItems*i), 0f);
+        //위의 방식이 아닌 새로운 방식으로. 세로 방향으로만 나열되는 방식으로 바꿀것.
     }
 
    
