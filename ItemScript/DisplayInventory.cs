@@ -13,8 +13,7 @@ public class DisplayInventory : MonoBehaviour
     public int Y_Start;
     public int Y_SpaceBetweenItems;
     public Dictionary<InvenSlot, GameObject> itemDisplayed = new Dictionary<InvenSlot, GameObject>();
-    [SerializeField]
-    List<GameObject> itemInInven;//현재 인벤토리에 있는 (같은 inventype의)모든 아이템   
+    public List<GameObject> itemInInven;//현재 인벤토리에 있는 (같은 inventype의)모든 아이템   
     int invenNumber; // itemInInven의 [i] 번째를 저장하는 변수. //현재 선택된 아이템의 번호. >>0부터 시작
     int invenTotal; // itemInInven의 총 개수를 저장하는 변수. //1부터 시작 주의
 
@@ -71,8 +70,9 @@ public class DisplayInventory : MonoBehaviour
             if (i == invenNumber)
             {
                 itemInInven[i].GetComponent<Image>().color = new Color(0f, 66f, 0f);
+                //InfoText.Instance.itemInfos[0].GetComponent<Image>().sprite = inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID].item.sprite;
             }
-            else
+            else//선택되지 않은 아이템들
             {
                 itemInInven[i].GetComponent<Image>().color = new Color(0f, 66f, 255f);
             }
@@ -123,19 +123,29 @@ public class DisplayInventory : MonoBehaviour
                 itemDisplayed.Remove(inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID]);
                 Destroy(itemInInven[i].gameObject);
                 itemInInven.RemoveAt(i);
-                Debug.Log("destroy");//
+                invenTotal = itemInInven.Count;
+                invenNumber = 0;
             }
         }
         //이전에 같은 위치에 getposition 해준 아이템이 있을경우 겹쳐서 표시되는 문제가 발생하지 않도록 아래의 코드를 추가.
         for (int i = 0; i < invenTotal; i++)
         {
-            if (i < itemPerPage * invenPage || i >= itemPerPage * (invenPage + 1))
+            /*if (i < itemPerPage * invenPage || i >= itemPerPage * (invenPage + 1))
             {
                 itemInInven[i].gameObject.SetActive(false);
             }
             else
             {
                 itemInInven[i].gameObject.SetActive(true);
+            }*/
+
+            if(i>= itemPerPage*invenPage && i < itemPerPage*(invenPage+1))
+            {
+                itemInInven[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                itemInInven[i].gameObject.SetActive(false);
             }
         }
 
