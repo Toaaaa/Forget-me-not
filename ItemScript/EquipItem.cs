@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,23 @@ public class EquipItem : Item
 {
     //장비는 장착시 드래그 형식, 소비는 클릭(아이템 선택) + 클릭(캐릭터 선택) 형식
 
-    public GameObject OnThisCharacter;//장비를 장착할 캐릭터
+    public GameObject OnThisCharacter;//장비를 장착할 캐릭터 
+    public OptionType[] options;
     public EquipType equipType;
+    public bool isAcc;
+
     public enum EquipType
     {
         Weapon,
         Accessory
+    }
+    public enum OptionType
+    {
+        Atk,
+        Def,
+        Hp,
+        Mp,
+        Spd
     }
 
     public float atk;

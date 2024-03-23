@@ -7,6 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Consume Item", menuName = "Inventory/Items/Consume")]
 public class ConsumeItem : Item
 {
+    //소모품 아이템의 경우 각각의 소모품 효과가 들어있는 데이터 클래스를 만들어서 potionNum2(int i, intj) 같이만들어 접근, 사용할수 있게 할것.
     public int restoreAmount;
     public ConsumeType consumeType;
     public BuffType buffType;

@@ -9,6 +9,7 @@ public class DisplayInventory : MonoBehaviour
 {
     public Inventory inventory;
     public int inventype; // 0:weapon+acc, 1:consumable, 2:other
+    public InfoText infoText;
 
     public int Y_Start;
     public int Y_SpaceBetweenItems;
@@ -67,10 +68,10 @@ public class DisplayInventory : MonoBehaviour
         }
         for(int i = 0; i < invenTotal; i++)
         {
-            if (i == invenNumber)
+            if (i == invenNumber) //선택된 아이템의 정보 출력
             {
                 itemInInven[i].GetComponent<Image>().color = new Color(0f, 66f, 0f);
-                //InfoText.Instance.itemInfos[0].GetComponent<Image>().sprite = inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID].item.sprite;
+                infoText.selectedItem = inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID].item; //현재 선택된 아이템의 정보를 infoText에 전달.
             }
             else//선택되지 않은 아이템들
             {
@@ -130,14 +131,6 @@ public class DisplayInventory : MonoBehaviour
         //이전에 같은 위치에 getposition 해준 아이템이 있을경우 겹쳐서 표시되는 문제가 발생하지 않도록 아래의 코드를 추가.
         for (int i = 0; i < invenTotal; i++)
         {
-            /*if (i < itemPerPage * invenPage || i >= itemPerPage * (invenPage + 1))
-            {
-                itemInInven[i].gameObject.SetActive(false);
-            }
-            else
-            {
-                itemInInven[i].gameObject.SetActive(true);
-            }*/
 
             if(i>= itemPerPage*invenPage && i < itemPerPage*(invenPage+1))
             {

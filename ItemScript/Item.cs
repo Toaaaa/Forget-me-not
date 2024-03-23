@@ -6,8 +6,8 @@ using Unity.VisualScripting;
 
 public enum ItemType
 {
-    Consumable, //소비    
     Equipment, //장비
+    Consumable, //소비    
     Default //기타
 }
 
@@ -21,6 +21,9 @@ public abstract class Item : ScriptableObject
     [TextArea(5, 15)]
     public string itemDescription;
     public ItemType itemType;
+    //public EquipItem.EquipType equipType;
+    //public EquipItem.OptionType optionType;
+    //public ConsumeItem.ConsumeType consumeType;
 
 
 
