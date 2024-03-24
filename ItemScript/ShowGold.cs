@@ -14,7 +14,7 @@ public class ShowGold : MonoBehaviour
     private void Start()
     {
         goldText = GetComponent<TextMeshProUGUI>();
-        goldText.text = inventory.goldHave.ToString();
+        goldText.text = inventory.goldHave.ToString(); //추후 골드쪽도 아이콘 추가.
     }
     private void Update()
     {

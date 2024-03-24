@@ -109,7 +109,7 @@ public class DisplayInventory : MonoBehaviour
                     itemDisplayed.Add(inventory.Container[i], obj);
                     itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.                   
                 }
-
+                //추후 위에 obj.박스위 에 아이템 이름//능력//갯수 로 표시하기.
             }
         }
     }
