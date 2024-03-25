@@ -42,11 +42,19 @@ public class InfoText : MonoBehaviour
                     break;
             }
 
-            itemInfos[0].GetComponent<Image>().sprite = selectedItem.sprite;
-            itemInfos[1].GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.name;
-            //option은 itemtype에 따라 다르게 표시할것. 장비 아이템의 경우. 증가하는 주요 스탯을, 소비아이템의 경우 hp,mp,버프등의 스탯종류를. 기타아이템의 경우 설명x.
-            itemInfos[2].GetComponentInChildren<TextMeshProUGUI>().text = optionText;
-            itemInfos[3].GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.itemDescription;
+                itemInfos[0].GetComponent<Image>().sprite = selectedItem.sprite;
+                itemInfos[1].GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.name;
+                //option은 itemtype에 따라 다르게 표시할것. 장비 아이템의 경우. 증가하는 주요 스탯을, 소비아이템의 경우 hp,mp,버프등의 스탯종류를. 기타아이템의 경우 설명x.
+                itemInfos[2].GetComponentInChildren<TextMeshProUGUI>().text = optionText;
+                itemInfos[3].GetComponentInChildren<TextMeshProUGUI>().text = selectedItem.itemDescription;
+       
+        }
+        else //해당 인벤에 아이템이 없을때.
+        {
+            itemInfos[0].GetComponent<Image>().sprite = null; /////////////추후 null이 아닌 아이템이 없는것을 보여주는 이미지로 변경할것.
+            itemInfos[1].GetComponentInChildren<TextMeshProUGUI>().text = "";
+            itemInfos[2].GetComponentInChildren<TextMeshProUGUI>().text = "";
+            itemInfos[3].GetComponentInChildren<TextMeshProUGUI>().text = "";
         }
 
         //selectedItem.itemType

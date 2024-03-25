@@ -78,10 +78,13 @@ public class DisplayInventory : MonoBehaviour
                 itemInInven[i].GetComponent<Image>().color = new Color(0f, 66f, 255f);
             }
         }
+        if(invenTotal == 0) //인벤토리에 아이템이 없을경우
+        {
+            infoText.selectedItem = null;
+        }
 
         //선택된 아이템은 하이라이트 + iteminfo에 자동으로 정보가 표시
-        //선택한 아이템을 사용하는 함수 추가. useSelectedItem();
-        
+        //선택한 아이템을 사용하는 함수 추가. useSelectedItem();        
     }
     public void useSelectedItem()
     {

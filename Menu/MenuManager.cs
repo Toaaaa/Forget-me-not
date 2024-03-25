@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -133,7 +134,53 @@ public class MenuManager : MonoBehaviour
                 }
             }
         }//1차 메뉴 선택시 좌우 키보드선택. ++ 1차 메뉴를 엔터로 선택시 2차메뉴 활성화.
-
+        else 
+        {
+            switch (menuselectionNum)
+            {
+                case 0://stat
+                    break;
+                case 1://item
+                    if(Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        if (menu[1].activeSelf == true)
+                        {
+                            clickItemOther();
+                        }
+                        else if (menu[2].activeSelf == true)
+                        {
+                            clickItemEquip();
+                        }
+                        else if (menu[3].activeSelf == true)
+                        {
+                            clickItemConsumable();
+                        }
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        if (menu[1].activeSelf == true)
+                        {
+                            clickItemConsumable();
+                        }
+                        else if (menu[2].activeSelf == true)
+                        {
+                            clickItemOther();
+                        }
+                        else if (menu[3].activeSelf == true)
+                        {
+                            clickItemEquip();
+                        }
+                    }
+                    break;
+                case 2://skill
+                    break;
+                case 3://setting
+                    break;
+                default:
+                    Debug.Log("Menuselect Number Out of range");
+                    break;
+            }
+        }//2차 메뉴가 켜져있을때의 동작들.
 
         if (Input.GetKeyDown(KeyCode.Escape) && canCloseMenu)//menuselection만 활성화되어있는 경우해당.
         {
