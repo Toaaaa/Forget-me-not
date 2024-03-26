@@ -33,6 +33,7 @@ public class DisplayInventory : MonoBehaviour
         invenTotal = itemInInven.Count;
         invenPage = invenNumber/(itemPerPage);
         SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
+        useSelectedItem(invenNumber);
 
     }
     private void OnEnable()
@@ -83,12 +84,14 @@ public class DisplayInventory : MonoBehaviour
             infoText.selectedItem = null;
         }
 
-        //선택된 아이템은 하이라이트 + iteminfo에 자동으로 정보가 표시
         //선택한 아이템을 사용하는 함수 추가. useSelectedItem();        
     }
-    public void useSelectedItem()
+    public void useSelectedItem(int invennum)
     {
-
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            //invennum에 해당하는 아이템 사용.
+        }
     }
 
     public void UpdateDisplay(int inventype)
@@ -101,7 +104,23 @@ public class DisplayInventory : MonoBehaviour
             {
                 if (itemDisplayed.ContainsKey(inventory.Container[i])) //이미 들어가있는 경우.
                 {
-                    itemDisplayed[inventory.Container[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0"); //inventoy.container 키를 gameobject를 가져왓음.
+                    itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[0].text = inventory.Container[i].item.name;
+                    switch(inventory.Container[i]._itemType) // 해당 아이템의 타입의 텍스트를 출력해줌<<<<<<<<<<<<<<<<<<<<<<<<< 추후 조금더 세련되게 수정할것.
+                    {
+                        case 0: //장비 아이템의 경우
+                            EquipItem equipItem = (EquipItem)inventory.Container[i].item;
+                            itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = equipItem.equipType.ToString();
+                            break;
+                        case 1:
+                            ConsumeItem consumeItem = (ConsumeItem)inventory.Container[i].item;
+                            itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = consumeItem.consumeType.ToString();
+                            break;
+                        case 2:
+                            itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = "";
+                            break;
+                    }
+                    itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[2].text = inventory.Container[i].amount.ToString("n0"); //inventoy.container 키를 gameobject를 가져왓음.
+                    //이미 들어가있는 경우 해당아이템의 인벤토리 정보만 업데이트 해주는 작업.
                 }
                 else //inventory에 새로 아이템이 추가됬을 경우.
                 {
@@ -112,7 +131,6 @@ public class DisplayInventory : MonoBehaviour
                     itemDisplayed.Add(inventory.Container[i], obj);
                     itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.                   
                 }
-                //추후 위에 obj.박스위 에 아이템 이름//능력//갯수 로 표시하기.
             }
         }
     }
