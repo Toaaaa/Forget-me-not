@@ -18,6 +18,15 @@ public class SlotManager : MonoBehaviour
     {
         if(currentCharacter != null)
         {
+            if (currentCharacter.equipedWeapon != null)
+                w_slot = currentCharacter.equipedWeapon;
+            if (currentCharacter.equipedAcc != null)
+                a_slot = currentCharacter.equipedAcc;
+        }
+
+
+        if(currentCharacter != null)
+        {
             this.GetComponentInChildren<TextMeshProUGUI>().text = currentCharacter.name;
         }
         else

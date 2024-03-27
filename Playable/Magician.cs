@@ -7,6 +7,7 @@ public class Magician : PlayableC
 {
    public skillMagician skillMagician;
 
+
     private void Awake()
     {
         skillMagician = new skillMagician();

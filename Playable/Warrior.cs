@@ -10,6 +10,7 @@ public class Warrior : PlayableC
 {
     public skillWarrior skillWarrior;
 
+
     private void Awake()
     {
         skillWarrior = new skillWarrior();

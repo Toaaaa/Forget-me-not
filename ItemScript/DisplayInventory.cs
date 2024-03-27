@@ -15,6 +15,8 @@ public class DisplayInventory : MonoBehaviour
     public InfoText infoText;
     public Item selectedItem;//인벤에서부터 엔터키를 통해 선택이된 아이템.
 
+    public GameObject itemUseUI; //아이템 사용시 나타나는 ui
+
     public int Y_Start;
     public int Y_SpaceBetweenItems;
     public Dictionary<InvenSlot, GameObject> itemDisplayed = new Dictionary<InvenSlot, GameObject>();
@@ -38,13 +40,13 @@ public class DisplayInventory : MonoBehaviour
 
     private void Update()
     {
-
+        selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item ?? null;
         p_slotTotal = playableManager.joinedPlayer.Count;
         itemReplace();
         UpdateDisplay(inventype);
         invenTotal = itemInInven.Count;
         invenPage = invenNumber/(itemPerPage);
-        useSelectedItem(invenNumber);
+        useSelectedItem();
 
         if (!isp_SlotOn)
             SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
@@ -60,6 +62,8 @@ public class DisplayInventory : MonoBehaviour
     {
         invenNumber = 0; 
         invenPage = 0;
+        //itemuseui 의 displayinventory에 this를 넣어줌.
+        itemUseUI.GetComponent<ItemUseUI>().displayInventory = this;
     }
 
 
@@ -145,27 +149,43 @@ public class DisplayInventory : MonoBehaviour
             }
         }
     }
-    public void useSelectedItem(int invennum)
+    public void useSelectedItem() //해당 아이템을 사용하는 함수를, 관리에 용이하도록,  추후 장비/소비 에 따라 각각의 개별 메서드를 이용해 사용할것.
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)&& selectedItem != null)
         {
-            selectedItem = inventory.Container[itemInInven[invennum].GetComponent<IsGone>().itemID].item;
-            switch (inventype)
-            {
-                case 0:
-                    isp_SlotOn = true;//여기서 코루틴을..쓰나./.??
-                    menuManager.isItemUsing = true;
-                    Debug.Log("장비 아이템 사용");
-                    break;
-                case 1:
-                    isp_SlotOn = true;//여기서 코루틴을..쓰나./.??
-                    menuManager.isItemUsing = true;
-                    Debug.Log("소비 아이템 사용");
-                    break;
-                case 2:
-                    Debug.Log("기타 아이템은 사용을 하지 못해요");
-                    break;
-            }
+            isp_SlotOn = true;
+            menuManager.isItemUsing = true;
+            itemUseUI.SetActive(true);
+
+        }
+    }
+
+    public void useItem() //itemuseUI에서 사용버튼을 누를경우 실행되는 함수.
+    {
+        switch (inventype)
+        {
+            case 0:
+                EquipItem equipItem = (EquipItem)selectedItem;
+                if (equipItem.isAcc)
+                {
+                    playerslot[p_slotNumber].currentCharacter.equipedAcc = selectedItem;
+                }
+                else
+                {
+                    playerslot[p_slotNumber].currentCharacter.equipedWeapon = selectedItem;
+                }
+                Debug.Log("장비 아이템 사용");
+                inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
+                menuManager.isItemUsing = false;
+                break;
+            case 1://아직 소모아이템 코드 작성 안됨
+                Debug.Log("소비 아이템 사용");
+                inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
+                menuManager.isItemUsing = false;
+                break;
+            case 2:
+                Debug.Log("기타 아이템은 사용을 하지 못해요");
+                break;
         }
     }
 
@@ -283,4 +303,5 @@ public class DisplayInventory : MonoBehaviour
     }
 
   
+
 }
