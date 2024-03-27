@@ -12,9 +12,7 @@ public class PlayableC : ScriptableObject
     public int spd;
     public int exp;
     public int maxExp;
-    public bool isDead;
-
-    public bool isJoin; //현재 파티에 참가중인지 확인.
+    public int priority;
 
     public Item equipedWeapon;
     public Item equipedAcc;
