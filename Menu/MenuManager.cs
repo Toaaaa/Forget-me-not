@@ -13,7 +13,8 @@ public class MenuManager : MonoBehaviour
     int menuselectionNum; //0:stat,1:item, 2:skill, 3:setting.
     bool canCloseMenu;
     bool IsSecondMenuOn; // 이게 true 로 되어있으면 1차메뉴의 종류선택이 불가능하게 할것.
-    bool IsAction; 
+    bool IsAction;
+    public bool isItemUsing;//아이템을 사용하려고 하는 도중일때
     //스텟창에서의 추가정보 or 아이템의 장착/ 사용 ui가 활성화 되어있거나 등의 상황에서 esc를 눌렀을때 메뉴창이 닫히지 않도록 하기위한 bool값. 각각의 ui에서 menuManager의 객체를 참조하여 해당 bool값을 변경시킬것.
 
     public void onClickExit()
@@ -141,7 +142,7 @@ public class MenuManager : MonoBehaviour
                 case 0://stat
                     break;
                 case 1://item
-                    if(Input.GetKeyDown(KeyCode.LeftArrow))
+                    if(Input.GetKeyDown(KeyCode.LeftArrow)&& !isItemUsing) //아이템 사용하려고 하는 중이 아닐때 좌우키를 누르면 아이템메뉴의 2차메뉴가 변경됨.
                     {
                         if (menu[1].activeSelf == true)
                         {
@@ -156,7 +157,7 @@ public class MenuManager : MonoBehaviour
                             clickItemConsumable();
                         }
                     }
-                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    else if (Input.GetKeyDown(KeyCode.RightArrow)&& !isItemUsing)
                     {
                         if (menu[1].activeSelf == true)
                         {

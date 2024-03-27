@@ -7,9 +7,13 @@ using UnityEngine.UI;
 
 public class DisplayInventory : MonoBehaviour 
 {
+    public MenuManager menuManager;
+    public PlayableManager playableManager; //inventype이 0일때만 접근하여 사용하도록 할것.
+    public List<SlotManager> playerslot;
     public Inventory inventory;
     public int inventype; // 0:weapon+acc, 1:consumable, 2:other
     public InfoText infoText;
+    public Item selectedItem;//인벤에서부터 엔터키를 통해 선택이된 아이템.
 
     public int Y_Start;
     public int Y_SpaceBetweenItems;
@@ -18,22 +22,38 @@ public class DisplayInventory : MonoBehaviour
     int invenNumber; // itemInInven의 [i] 번째를 저장하는 변수. //현재 선택된 아이템의 번호. >>0부터 시작
     int invenTotal; // itemInInven의 총 개수를 저장하는 변수. //1부터 시작 주의
 
-    public int itemPerPage = 9; //한페이지에 표시되는 아이템의 갯수를 저장하는 변수. 
+    int itemPerPage = 9; //한페이지에 표시되는 아이템의 갯수를 저장하는 변수. 
     int invenPage; // 현재 인벤의 페이지를 저장하는 변수, 한번의 창에 표시되는 아이템의 갯수에 제한이 있음. >> 일단은 한페이지에 9개의 아이템으로.
+    int p_slotNumber; //player슬롯
+    int p_slotTotal; 
+
+    bool isp_SlotOn;
+
 
     private void Start()
     {
         CreateDisplay(inventype);
 
     }
+
     private void Update()
     {
+
+        p_slotTotal = playableManager.joinedPlayer.Count;
         itemReplace();
         UpdateDisplay(inventype);
         invenTotal = itemInInven.Count;
         invenPage = invenNumber/(itemPerPage);
-        SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
         useSelectedItem(invenNumber);
+
+        if (!isp_SlotOn)
+            SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
+        else
+        {
+            slotSelection();
+            showSelectedSlot();
+        }
+        
 
     }
     private void OnEnable()
@@ -86,13 +106,69 @@ public class DisplayInventory : MonoBehaviour
 
         //선택한 아이템을 사용하는 함수 추가. useSelectedItem();        
     }
+    void slotSelection()
+    {
+        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if(p_slotNumber > 0)
+            {
+                p_slotNumber--;
+            }
+            else
+            {
+                p_slotNumber = p_slotTotal - 1;
+            }
+        }
+        else if(Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if(p_slotNumber < p_slotTotal - 1)
+            {
+                p_slotNumber++;
+            }
+            else
+            {
+                p_slotNumber = 0;
+            }
+        }
+    }
+    void showSelectedSlot()
+    {
+        for(int i = 0; i < p_slotTotal; i++)
+        {
+            if(i != p_slotNumber)
+            {
+                playerslot[i].isSelected = false;
+            }
+            else
+            {
+                playerslot[i].isSelected = true;
+            }
+        }
+    }
     public void useSelectedItem(int invennum)
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            //invennum에 해당하는 아이템 사용.
+            selectedItem = inventory.Container[itemInInven[invennum].GetComponent<IsGone>().itemID].item;
+            switch (inventype)
+            {
+                case 0:
+                    isp_SlotOn = true;//여기서 코루틴을..쓰나./.??
+                    menuManager.isItemUsing = true;
+                    Debug.Log("장비 아이템 사용");
+                    break;
+                case 1:
+                    isp_SlotOn = true;//여기서 코루틴을..쓰나./.??
+                    menuManager.isItemUsing = true;
+                    Debug.Log("소비 아이템 사용");
+                    break;
+                case 2:
+                    Debug.Log("기타 아이템은 사용을 하지 못해요");
+                    break;
+            }
         }
     }
+
 
     public void UpdateDisplay(int inventype)
     {
@@ -206,5 +282,5 @@ public class DisplayInventory : MonoBehaviour
         //위의 방식이 아닌 새로운 방식으로. 세로 방향으로만 나열되는 방식으로 바꿀것.
     }
 
-   
+  
 }
