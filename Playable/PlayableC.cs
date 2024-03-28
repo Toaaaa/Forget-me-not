@@ -14,8 +14,11 @@ public class PlayableC : ScriptableObject
     public int maxExp;
     public int priority;
 
+    public int jobNum; // 0:전사 1:마법사 2:탱커 3:힐러
     public Item equipedWeapon;
     public Item equipedAcc;
+
+
 
     //일단은 여기까지만
 

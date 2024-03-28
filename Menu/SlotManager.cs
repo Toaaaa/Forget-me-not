@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SlotManager : MonoBehaviour
 {
@@ -19,9 +20,34 @@ public class SlotManager : MonoBehaviour
         if(currentCharacter != null)
         {
             if (currentCharacter.equipedWeapon != null)
+            {
                 w_slot = currentCharacter.equipedWeapon;
+                weaponSlot.GetComponent<Image>().sprite = currentCharacter.equipedWeapon.sprite;
+            }
+            else
+            {
+                w_slot = null;
+                weaponSlot.GetComponent<Image>().sprite = null;
+            }
+                
             if (currentCharacter.equipedAcc != null)
+            {
                 a_slot = currentCharacter.equipedAcc;
+                accSlot.GetComponent<Image>().sprite = currentCharacter.equipedAcc.sprite;
+            }
+            else
+            {
+                a_slot = null;
+                accSlot.GetComponent<Image>().sprite = null;
+            }
+                
+        }
+        else
+        {
+            w_slot = null;
+            a_slot = null;
+            weaponSlot.GetComponent<Image>().sprite = null;
+            accSlot.GetComponent<Image>().sprite = null;
         }
 
 

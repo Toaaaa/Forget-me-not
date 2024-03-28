@@ -16,6 +16,7 @@ public class DisplayInventory : MonoBehaviour
     public Item selectedItem;//인벤에서부터 엔터키를 통해 선택이된 아이템.
 
     public GameObject itemUseUI; //아이템 사용시 나타나는 ui
+    public UISelectingSystem uISelectingSystem;
 
     public int Y_Start;
     public int Y_SpaceBetweenItems;
@@ -29,7 +30,7 @@ public class DisplayInventory : MonoBehaviour
     int p_slotNumber; //player슬롯
     int p_slotTotal; 
 
-    bool isp_SlotOn;
+    public bool isp_SlotOn;
 
 
     private void Start()
@@ -40,7 +41,7 @@ public class DisplayInventory : MonoBehaviour
 
     private void Update()
     {
-        selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item ?? null;
+        selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item;
         p_slotTotal = playableManager.joinedPlayer.Count;
         itemReplace();
         UpdateDisplay(inventype);
@@ -173,13 +174,14 @@ public class DisplayInventory : MonoBehaviour
                 else
                 {
                     playerslot[p_slotNumber].currentCharacter.equipedWeapon = selectedItem;
+                    equipItem.itemOption(playerslot[p_slotNumber].currentCharacter);/////////////////이거 아이템 사용시 직업 확인 코드
                 }
-                Debug.Log("장비 아이템 사용");
                 inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
                 menuManager.isItemUsing = false;
                 break;
-            case 1://아직 소모아이템 코드 작성 안됨
-                Debug.Log("소비 아이템 사용");
+            case 1:
+                Debug.Log("소비 아이템 사용"); 
+                UseConsume(itemInInven[invenNumber].GetComponent<IsGone>().itemID);//추후 소모아이템을 사용시 각각의 아이템에 따라 회복<< 스크립트와, 버프<< 스크립트등의 효과 적용.
                 inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
                 menuManager.isItemUsing = false;
                 break;
@@ -188,7 +190,31 @@ public class DisplayInventory : MonoBehaviour
                 break;
         }
     }
+    public void returnItem()
+    {
+        EquipItem equipItem = (EquipItem)selectedItem;
+        if(equipItem.isAcc) //선택된 아이템이 악세사리일 경우.
+        {
+            if (playerslot[p_slotNumber].currentCharacter.equipedAcc != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+            {
+                inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedAcc.itemID].amount++;
+                playerslot[p_slotNumber].currentCharacter.equipedAcc = null;
+            }
+        }
+        else //선택된 아이템이 장비인 경우
+        {
+            if (playerslot[p_slotNumber].currentCharacter.equipedWeapon != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+            {
+                inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedWeapon.itemID].amount++;
+                playerslot[p_slotNumber].currentCharacter.equipedWeapon = null;
+            }
+        }
+    }
 
+    void UseConsume(int itemid)
+    {
+
+    }
 
     public void UpdateDisplay(int inventype)
     {
