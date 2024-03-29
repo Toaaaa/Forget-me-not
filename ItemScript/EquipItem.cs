@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static PlayableC;
 
 [CreateAssetMenu(fileName = "New Equip Item", menuName = "Inventory/Items/Equipment")]
@@ -41,11 +43,11 @@ public class EquipItem : Item
         Healer
     }
 
-    public float atk;
-    public float def;
-    public float hp;
-    public float mp;
-    public float spd;
+    public int atk;
+    public int def;
+    public int hp;
+    public int mp;
+    public int spd;
 
     private void Awake()
     {
@@ -54,15 +56,54 @@ public class EquipItem : Item
 
     public void itemOption(PlayableC character) //처음 장착 될때 아이템의 옵션을 캐릭터에게 적용시키는 함수.
     {
-        //characterType 리스트에 포함되어 있는 character 캐릭터만 옵션을 적용하는 if문
-        if (characterType.ToString().Contains(character.name))
+        //characterType 리스트에 포함되어 있는 character 캐릭터만 옵션을 적용하는 if문.
+        CharacterType charatype = (CharacterType)Enum.Parse(typeof(CharacterType), character.name);
+        if (characterType.Contains(charatype))
         {
-            Debug.Log("옵션 적용 가능");
+            character.hp += hp;
+            character.mp += mp;
+            character.atk += atk;
+            character.def += def;
+            character.spd += spd;
         }
         else
         {
             Debug.Log("옵션 적용 불가능");
         }
         
+    }
+    public void itemOptionAcc(PlayableC character)
+    {
+        character.hp += hp;
+        character.mp += mp;
+        character.atk += atk;
+        character.def += def;
+        character.spd += spd;
+    }
+
+
+    public void itemOptionOff(PlayableC character) //아이템을 해제할때 캐릭터에게 적용된 옵션을 해제하는 함수.
+    {
+        CharacterType charatype = (CharacterType)Enum.Parse(typeof(CharacterType), character.name);
+        if (characterType.Contains(charatype))
+        {
+            character.hp -= hp;
+            character.mp -= mp;
+            character.atk -= atk;
+            character.def -= def;
+            character.spd -= spd;
+        }
+        else
+        {
+            Debug.Log("옵션 적용 불가능");
+        }
+    }
+    public void itemOptionOffAcc(PlayableC character)
+    {
+        character.hp -= hp;
+        character.mp -= mp;
+        character.atk -= atk;
+        character.def -= def;
+        character.spd -= spd;
     }
 }

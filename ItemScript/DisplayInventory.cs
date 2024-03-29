@@ -170,11 +170,12 @@ public class DisplayInventory : MonoBehaviour
                 if (equipItem.isAcc)
                 {
                     playerslot[p_slotNumber].currentCharacter.equipedAcc = selectedItem;
+                    equipItem.itemOptionAcc(playerslot[p_slotNumber].currentCharacter);
                 }
                 else
                 {
                     playerslot[p_slotNumber].currentCharacter.equipedWeapon = selectedItem;
-                    equipItem.itemOption(playerslot[p_slotNumber].currentCharacter);/////////////////이거 아이템 사용시 직업 확인 코드
+                    equipItem.itemOption(playerslot[p_slotNumber].currentCharacter);
                 }
                 inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
                 menuManager.isItemUsing = false;
@@ -193,11 +194,13 @@ public class DisplayInventory : MonoBehaviour
     public void returnItem()
     {
         EquipItem equipItem = (EquipItem)selectedItem;
-        if(equipItem.isAcc) //선택된 아이템이 악세사리일 경우.
+        EquipItem equiped = (EquipItem)playerslot[p_slotNumber].currentCharacter.equipedWeapon;
+        if (equipItem.isAcc) //선택된 아이템이 악세사리일 경우.
         {
             if (playerslot[p_slotNumber].currentCharacter.equipedAcc != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
             {
                 inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedAcc.itemID].amount++;
+                equiped.itemOptionOffAcc(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
                 playerslot[p_slotNumber].currentCharacter.equipedAcc = null;
             }
         }
@@ -206,6 +209,7 @@ public class DisplayInventory : MonoBehaviour
             if (playerslot[p_slotNumber].currentCharacter.equipedWeapon != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
             {
                 inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedWeapon.itemID].amount++;
+                equiped.itemOptionOff(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
                 playerslot[p_slotNumber].currentCharacter.equipedWeapon = null;
             }
         }
