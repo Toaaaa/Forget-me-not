@@ -43,8 +43,11 @@ public class VirtualCamera :MonoBehaviour
 
         cinevircamera = GetComponent<CinemachineVirtualCamera>();
         cineconf = GetComponent<CinemachineConfiner2D>();
-        cinevircamera.Follow = GameManager.Instance.Player.transform;
-        cinevircamera.LookAt = GameManager.Instance.Player.transform;
+        if (GameManager.Instance.Player != null)
+        {
+            cinevircamera.Follow = GameManager.Instance.Player.transform;
+            cinevircamera.LookAt = GameManager.Instance.Player.transform;
+        }
     }
 
     private void Update()
