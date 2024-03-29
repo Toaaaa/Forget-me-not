@@ -14,6 +14,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     bool isHorizonMove;
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
+    public 
     Vector2 dirVec;//direction of where player is looking at
 
     Rigidbody2D rigid;
@@ -66,7 +67,23 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         //scan object
         if(Input.GetButtonDown("Jump") && scanedObject != null)
         {
-            Debug.Log("스캔한 오브젝트: " + scanedObject.name);
+            switch(scanedObject.tag)
+            {
+                case "NPC":
+                    //talk
+                    break;
+                case "Shop":
+                    GameManager.Instance.shopUI.SetActive(true);
+                    //여기를 통해서 추가로 shopUI에 대한 정보에 접근 가능.
+                    break;
+                case "Portal":
+                    scanedObject.GetComponent<Portal>().portalOn();
+                    //추후 portalOn에서 ui를 띠워서 이동할지 물어보는 기능 추가.
+                    break;
+
+                    default:
+                        break;
+            }
         }
     }
 
@@ -80,7 +97,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         //Debug.DrawRay(this.transform.position, dirVec*0.7f, new Color(0, 1, 0)); <<레이를 실제로 보여줌
         RaycastHit2D rayHit = Physics2D.Raycast(this.transform.position, dirVec, 0.7f, LayerMask.GetMask("Interactable"));
         //chekcing if the ray hit the object that is in the layermask "Interactable" <<interactable 레이어는 상호 작용이 가능한 모든 오브젝트
-        if (rayHit.collider != null)
+        if (rayHit.collider != null) // 캐릭터앞에 있는 오브젝트를 스캔하여 저장.
         {
             scanedObject = rayHit.collider.gameObject;
         }
