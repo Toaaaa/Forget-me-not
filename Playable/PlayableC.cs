@@ -13,6 +13,8 @@ public class PlayableC : ScriptableObject
     public int exp;
     public int maxExp;
     public int priority;
+    public int fatigue;
+    public int maxFatigue;
 
     public int jobNum; // 0:Àü»ç 1:¸¶¹ı»ç 2:ÅÊÄ¿ 3:Èú·¯
     public Item equipedWeapon;
