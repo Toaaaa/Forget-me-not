@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +40,7 @@ public class DisplayInventory : MonoBehaviour
 
     private void Update()
     {
+        infoText.gameObject.SetActive(true);
         selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item;
         p_slotTotal = playableManager.joinedPlayer.Count;
         itemReplace();
@@ -195,22 +195,26 @@ public class DisplayInventory : MonoBehaviour
     {
         EquipItem equipItem = (EquipItem)selectedItem;
         EquipItem equiped = (EquipItem)playerslot[p_slotNumber].currentCharacter.equipedWeapon;
-        if (equipItem.isAcc) //선택된 아이템이 악세사리일 경우.
+
+        if(selectedItem.itemType == 0) //장비 아이템인 경우
         {
-            if (playerslot[p_slotNumber].currentCharacter.equipedAcc != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+            if (equipItem.isAcc) //선택된 아이템이 악세사리일 경우.
             {
-                inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedAcc.itemID].amount++;
-                equiped.itemOptionOffAcc(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
-                playerslot[p_slotNumber].currentCharacter.equipedAcc = null;
+                if (playerslot[p_slotNumber].currentCharacter.equipedAcc != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+                {
+                    inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedAcc.itemID].amount++;
+                    equiped.itemOptionOffAcc(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
+                    playerslot[p_slotNumber].currentCharacter.equipedAcc = null;
+                }
             }
-        }
-        else //선택된 아이템이 장비인 경우
-        {
-            if (playerslot[p_slotNumber].currentCharacter.equipedWeapon != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+            else //선택된 아이템이 장비인 경우
             {
-                inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedWeapon.itemID].amount++;
-                equiped.itemOptionOff(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
-                playerslot[p_slotNumber].currentCharacter.equipedWeapon = null;
+                if (playerslot[p_slotNumber].currentCharacter.equipedWeapon != null) //해당 슬롯에 이미 장착된 아이템이 있을경우
+                {
+                    inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedWeapon.itemID].amount++;
+                    equiped.itemOptionOff(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
+                    playerslot[p_slotNumber].currentCharacter.equipedWeapon = null;
+                }
             }
         }
     }

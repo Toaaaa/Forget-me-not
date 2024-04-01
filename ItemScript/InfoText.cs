@@ -20,6 +20,7 @@ public class InfoText : MonoBehaviour
     private void Update()
     {
 
+
         if (selectedItem != null)
         {
             switch (selectedItem.itemType)

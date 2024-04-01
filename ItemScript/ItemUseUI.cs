@@ -26,6 +26,7 @@ public class ItemUseUI : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Escape))
         {
             gameObject.SetActive(false);
+            displayInventory.gameObject.SetActive(true);
         }
 
         if(selecteditem != null)

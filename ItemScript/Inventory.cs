@@ -60,7 +60,13 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
     public void OnAfterDeserialize()
     {
         for(int i = 0; i < Container.Count; i++)
+        {
             Container[i].item = database.GetItem[Container[i].ID];
+            //if (Container[i].item == null)
+            //{
+            //    Container[i].item = database.GetItem[Container[i].ID]; //이걸로 하면 오류는 안생기던데 인벤에 아이템을 즉석으로 추가할때 귀찮아 지더라.. 일단은 임시로 보류
+            //}
+        }
     }
 
     public void OnBeforeSerialize()
