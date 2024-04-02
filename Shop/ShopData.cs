@@ -88,11 +88,12 @@ public class ShopData : ScriptableObject, ISerializationCallbackReceiver
 [System.Serializable]
 public class shopSlot //컨테이너에 저장될 정보
 {
-    public int ID;
+    public int ID; //얘는 데이터 베이스의 id값과 같음
     public Item item;
     public int amount;
     public int _itemType; // 0: weapon+acc  1:consumable 2:other
     public bool isAcc;
+    public int price;
 
     public shopSlot(int _id, Item _item, int _amount, int itemtype)
     {
