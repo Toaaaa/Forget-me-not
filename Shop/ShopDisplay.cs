@@ -10,7 +10,7 @@ public class ShopDisplay : MonoBehaviour
     
     public Inventory inventory;
     public List<shopSlot> container;//shop의 각종아이템이 저장된 리스트, 처음 npc와 대화시 , shopdate의 값을 받아 초기화됨
-    public InfoText infoText;
+    public ShopInfoText infoText; //아이템의 정보를 출력하는 ui
     public Item selectedItem;//인벤에서부터 엔터키를 통해 선택이된 아이템.
 
     public GameObject itemBuyUI; //아이템 사용시 나타나는 ui
@@ -47,6 +47,7 @@ public class ShopDisplay : MonoBehaviour
         if (container[itemInShop[shopNumber].GetComponent<IsGone>().itemID].item != null)
         {
             selectedItem = container[itemInShop[shopNumber].GetComponent<IsGone>().itemID].item;
+            infoText.itemPrice = container[itemInShop[shopNumber].GetComponent<IsGone>().itemID].price;
         }
         useSelectedItem();
         SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
@@ -96,6 +97,7 @@ public class ShopDisplay : MonoBehaviour
             {
                 itemInShop[i].GetComponent<Image>().color = new Color(0f, 66f, 0f);
                 infoText.selectedItem = selectedItem; //현재 선택된 아이템의 정보를 infoText에 전달.
+                infoText.itemPrice = container[itemInShop[shopNumber].GetComponent<IsGone>().itemID].price;
             }
             else//선택되지 않은 아이템들
             {
@@ -105,6 +107,7 @@ public class ShopDisplay : MonoBehaviour
         if (shopTotal == 0) //인벤토리에 아이템이 없을경우
         {
             infoText.selectedItem = null;
+            infoText.itemPrice = 0;
         }
 
         //선택한 아이템을 사용하는 함수 추가. useSelectedItem();        
