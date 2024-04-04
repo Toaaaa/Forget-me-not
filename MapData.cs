@@ -7,4 +7,5 @@ using UnityEngine;
 public class MapData : MonoBehaviour
 {
    
+    
 }

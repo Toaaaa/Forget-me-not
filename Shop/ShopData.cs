@@ -51,7 +51,7 @@ public class ShopData : ScriptableObject, ISerializationCallbackReceiver
     {
         for (int i = 0; i < StartStage.Count; i++)
         {
-            StartStage[i].item = database.GetItem[StartStage[i].ID];
+              StartStage[i].item = database.GetItem[StartStage[i].ID];
         }
         for (int i = 0; i < fisrtArea.Count; i++)
         {
