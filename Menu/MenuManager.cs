@@ -89,6 +89,9 @@ public class MenuManager : MonoBehaviour
 
     private void Update()
     {
+        if (menu[4].activeSelf)
+            IsSecondMenuOn = true;
+
         if (!IsSecondMenuOn) 
         {
             if (Input.GetKeyDown(KeyCode.LeftArrow) && menuselectionNum != 0)

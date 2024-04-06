@@ -6,10 +6,13 @@ public class PlayableC : ScriptableObject
 {
     public int level;
     public int hp;
+    public int maxHp;
     public int mp;
+    public int maxMp;
     public int atk;
     public int def;
     public int spd;
+    public int crit;
     public int exp;
     public int maxExp;
     public int priority;

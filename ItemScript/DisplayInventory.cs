@@ -26,7 +26,7 @@ public class DisplayInventory : MonoBehaviour
 
     int itemPerPage = 9; //한페이지에 표시되는 아이템의 갯수를 저장하는 변수. 
     int invenPage; // 현재 인벤의 페이지를 저장하는 변수, 한번의 창에 표시되는 아이템의 갯수에 제한이 있음. >> 일단은 한페이지에 9개의 아이템으로.
-    int p_slotNumber; //player슬롯
+    int p_slotNumber; //player슬롯 <<아이템 사용시 선택된 플레이어 슬롯의 번호.
     int p_slotTotal; 
 
     public bool isp_SlotOn;
@@ -50,7 +50,14 @@ public class DisplayInventory : MonoBehaviour
         useSelectedItem();
 
         if (!isp_SlotOn)
+        {
             SelectingItem();//여기에 인벤토리 선택을 위해 키보드 입력을 받아서 아이템 선택하는 함수도 넣기.
+            for (int i = 0; i < p_slotTotal; i++)
+            {
+                    playerslot[i].isSelected = false;
+                    p_slotNumber = 0;
+            }
+        }
         else
         {
             slotSelection();
@@ -154,7 +161,22 @@ public class DisplayInventory : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return)&& selectedItem != null)
         {
-            isp_SlotOn = true;
+            if (selectedItem.itemType == ItemType.Consumable)
+            {
+                ConsumeItem consumeItem = (ConsumeItem)selectedItem;
+                if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
+                {
+                    isp_SlotOn = false; //버프형 아이템은 화살표 표시가 안나오도록
+                }
+                else
+                {
+                    isp_SlotOn = true;
+                }
+            }
+            else
+            {
+                isp_SlotOn = true;
+            }
             menuManager.isItemUsing = true;
             itemUseUI.SetActive(true);
 
@@ -181,8 +203,7 @@ public class DisplayInventory : MonoBehaviour
                 menuManager.isItemUsing = false;
                 break;
             case 1:
-                Debug.Log("소비 아이템 사용"); 
-                UseConsume(itemInInven[invenNumber].GetComponent<IsGone>().itemID);//추후 소모아이템을 사용시 각각의 아이템에 따라 회복<< 스크립트와, 버프<< 스크립트등의 효과 적용.
+                UseConsume(selectedItem);//추후 소모아이템을 사용시 각각의 아이템에 따라 회복<< 스크립트와, 버프<< 스크립트등의 효과 적용.
                 inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].amount--;
                 menuManager.isItemUsing = false;
                 break;
@@ -219,9 +240,11 @@ public class DisplayInventory : MonoBehaviour
         }
     }
 
-    void UseConsume(int itemid)
+    void UseConsume(Item selected)
     {
-
+        PlayableC character =playerslot[p_slotNumber].currentCharacter;
+        ConsumeItem item = (ConsumeItem)selected;
+        item.OnUse(character);
     }
 
     public void UpdateDisplay(int inventype)

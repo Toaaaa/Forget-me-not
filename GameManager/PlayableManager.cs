@@ -10,6 +10,8 @@ public class PlayableManager : MonoBehaviour
     public List<PlayableC> joinedPlayer; //이거 private으로 하니깐 버그가 발생하네...
     public InParty inParty; //파티에 참가중인 캐릭터들.
 
+    public PlayableC selectedChar; //선택된 캐릭터 >> 전투 or 평상시 소비아이템을 사용할 대상.
+
     
     void Update()
     {

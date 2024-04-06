@@ -106,4 +106,6 @@ public class EquipItem : Item
         character.def -= def;
         character.spd -= spd;
     }
+
+    
 }

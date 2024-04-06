@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ItemUseUI : MonoBehaviour
 {
+    public MenuManager menuManager;
     public DisplayInventory displayInventory;
     Item selecteditem;
     TextMeshProUGUI text;
@@ -12,14 +13,24 @@ public class ItemUseUI : MonoBehaviour
     private void OnDisable()
     {
         displayInventory.isp_SlotOn= false;
+        menuManager.isItemUsing = false;
     }
 
+
     private void Update()
-    {
+    {       
         selecteditem = displayInventory.selectedItem ==null ?  null : displayInventory.selectedItem; //displayinventory에서 선택된 아이템을 가져옴.
-        if(Input.GetKeyDown(KeyCode.Return))
+        if (selecteditem.itemType == ItemType.Consumable)//만약 버프형 아이템일 경우 화살표 표시가 안나오도록 할것.
         {
-            displayInventory.returnItem();
+            ConsumeItem consumeItem = (ConsumeItem)selecteditem;
+            if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
+                displayInventory.isp_SlotOn = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if(selecteditem.itemType == ItemType.Equipment)
+                displayInventory.returnItem();
+
             displayInventory.useItem();
             gameObject.SetActive(false);
         }
