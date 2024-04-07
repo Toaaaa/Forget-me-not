@@ -6,6 +6,7 @@ public class CombatManager : Singleton<CombatManager>
 {
     [SerializeField]
     PlayableManager playableManager;
+    public MapData mapData;
 
     public List<PlayableC> playerList;
     public ConsumeItem consumeOnUse;
