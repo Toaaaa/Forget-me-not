@@ -8,7 +8,7 @@ public class RandomEncounter : MonoBehaviour
 
     [SerializeField] private int encounterStep=10; //처음 몬스터 타일에 진입후 몬스터 인카운터가 발생할수 있는 최소 스텝(1블록)횟수.
     [SerializeField] private int encounterCount=0; //현재 스텝 횟수.
-    [SerializeField] private int encounterRate = 9; //몬스터 인카운터 확률. random(1~100) < encounterrate이면 몬스터 인카운터.
+    public int encounterRate = 9; //몬스터 인카운터 확률. random(1~100) < encounterrate이면 몬스터 인카운터.
 
     private float timeMoved;
     private float encounterTime = 1.2f; //몬스터 인카운터 시간 간격.
@@ -22,7 +22,6 @@ public class RandomEncounter : MonoBehaviour
     {
         player = GetComponent<Player>();
         tilemanager = FindObjectOfType<TileManager>();
-        encounterRate = GameManager.Instance.eventManager.encounterRate;
     }
 
 
@@ -58,7 +57,7 @@ public class RandomEncounter : MonoBehaviour
     private void Encountered()//encounter monster
     {
         encounterCount = 0; //몬스터 인카운터가 발생하면 스텝을 초기화.
-        GameManager.Instance.eventManager.encounterEvent(); //Start the encounter event.
+        GameManager.Instance.combatManager.OnCombatStart();
     }
 
 
@@ -70,8 +69,8 @@ public class RandomEncounter : MonoBehaviour
             isMonsterZone = tilemanager.IsMonsterZone(player.transform.position); //플레이어가 있는 타일이 몬스터 타일인지 체크.
         }
          else 
-        { 
-            isMonsterZone = false;
+        {
+            tilemanager = FindObjectOfType<TileManager>();
             Debug.Log("TileManager is null");
         }
 

@@ -17,7 +17,7 @@ public class DBManager : ScriptableObject, ISerializationCallbackReceiver
     public Dictionary<int, Item> GetItem = new Dictionary<int, Item>(); //딕셔너리의 복제본
     //아이템 등의 대량의 정보 관리의 경우 List보다 Dictionary가 효율적이다.
 
-    public Monster[] monsters;
+    public Monster[] monsters; //몬스터의 db를 운용할 필요가 있나..? 추후 제거할수도 있음.
     public Dictionary<Monster, int> GetMonsterId = new Dictionary<Monster, int>();
     public Dictionary<int, Monster> GetMonster = new Dictionary<int, Monster>();
 

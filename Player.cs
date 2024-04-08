@@ -7,7 +7,6 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 {
     [SerializeField]
     float Speed = 5f;
-    RandomEncounter randomEncounter;
 
     float h;
     float v;

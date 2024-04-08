@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     public bool cantAction; //플레이어가 npc와 상호 작용 등의 움직이면 안되는 동작을 진행중일때 true.
 
     public MapData mapData;
+    public CombatManager combatManager;
     public EventManager eventManager;
     public GameObject MenuUI;
     public GameObject shopUI;
@@ -29,6 +30,7 @@ public class GameManager : Singleton<GameManager>
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Escape)&&!shopUI.activeSelf) 
             MenuUI.SetActive(true); //ui가 전부 담긴 메뉴 활성화.
         

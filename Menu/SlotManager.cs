@@ -64,7 +64,46 @@ public class SlotManager : MonoBehaviour
             selectingImage.SetActive(true);
         else
             selectingImage.SetActive(false);
+
+
     }
 
+    public void scaleup(int num)
+    {
+        if(num == 0)
+        {
+            weaponSlot.transform.localScale = new Vector3(1.1f, 1.1f, 1);
+            accSlot.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            weaponSlot.transform.localScale = new Vector3(1, 1, 1);
+            accSlot.transform.localScale = new Vector3(1.1f, 1.1f, 1);
+        }
+
+    }
+    public void scaleDown()
+    {
+        weaponSlot.transform.localScale = new Vector3(1, 1, 1);
+        accSlot.transform.localScale = new Vector3(1, 1, 1);
+    }
+    public void select(int num)
+    {
+        if (num == 0)
+        {
+            if(w_slot != null)
+            {
+
+            }
+        }
+        else
+        {
+            if(a_slot != null)
+            {
+
+            }
+        }
+        //선택된 장비가 있을경우 해당 장비 장착 해제.
+    }
     //해당하는 장비를 장착중이 아닐경우 해당 오브젝트를 비활성화 시키도록 하기.
 }
