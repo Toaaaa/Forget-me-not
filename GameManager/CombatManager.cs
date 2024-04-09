@@ -9,8 +9,8 @@ public class CombatManager : Singleton<CombatManager>
     public MapData mapData;
 
     public List<PlayableC> playerList;
-    public List<Monster> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
-    public Dictionary<Monster, GameObject> monstersInCombat; //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
+    public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
+    public Dictionary<TestMob, GameObject> monstersInCombat; //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
 
 
@@ -57,7 +57,7 @@ public class CombatManager : Singleton<CombatManager>
     {
         for (int i = 0; i < monsterList.Count; i++)
         {
-            var obj = Instantiate(monsterList[i].prefab, new Vector3(0, 0, 0), Quaternion.identity);
+            var obj = Instantiate(monsterList[i].gameObject, new Vector3(0, 0, 0), Quaternion.identity);
             monsterObject.Add(obj);
             monstersInCombat.Add(monsterList[i], monsterObject[i]);
         }
@@ -85,7 +85,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     private void tesq()
     {
-        Monster monster = new Monster();
+        TestMob monster = new TestMob();
         monster = monsterList[0];
     }
 }

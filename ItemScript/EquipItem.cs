@@ -97,6 +97,7 @@ public class EquipItem : Item
         {
             Debug.Log("옵션 적용 불가능");
         }
+        character.equipedWeapon = null;
     }
     public void itemOptionOffAcc(PlayableC character)
     {
@@ -105,6 +106,7 @@ public class EquipItem : Item
         character.atk -= atk;
         character.def -= def;
         character.spd -= spd;
+        character.equipedAcc = null;
     }
 
     

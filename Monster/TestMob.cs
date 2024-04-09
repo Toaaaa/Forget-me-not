@@ -5,6 +5,7 @@ using UnityEngine;
 public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 {
     public Monster monster;
+    public List<skills> monsterSkill;
 
     public int Hp;
     public int MaxHp;
@@ -22,5 +23,10 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         Speed = monster.mSpeed;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            monsterSkill[0].UseSkill(this);
+    }
     //죽으면 monster.whenDie() 호출
 }

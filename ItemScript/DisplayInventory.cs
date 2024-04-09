@@ -225,7 +225,6 @@ public class DisplayInventory : MonoBehaviour
                 {
                     inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedAcc.itemID].amount++;
                     equiped.itemOptionOffAcc(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
-                    playerslot[p_slotNumber].currentCharacter.equipedAcc = null;
                 }
             }
             else //선택된 아이템이 장비인 경우
@@ -234,7 +233,6 @@ public class DisplayInventory : MonoBehaviour
                 {
                     inventory.Container[playerslot[p_slotNumber].currentCharacter.equipedWeapon.itemID].amount++;
                     equiped.itemOptionOff(playerslot[p_slotNumber].currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
-                    playerslot[p_slotNumber].currentCharacter.equipedWeapon = null;
                 }
             }
         }

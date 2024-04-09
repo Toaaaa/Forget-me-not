@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class SlotManager : MonoBehaviour
 {
     public PlayableC currentCharacter;
+    public Inventory inventory;
     public GameObject weaponSlot;//보이는 무기슬롯 
     public GameObject accSlot;//보이는 악세사리슬롯
     public Item w_slot; //아이템 정보를 담아줄 슬롯
@@ -91,16 +92,22 @@ public class SlotManager : MonoBehaviour
     {
         if (num == 0)
         {
+            EquipItem equipitem = (EquipItem)w_slot;
             if(w_slot != null)
             {
-
+                inventory.Container[w_slot.itemID].amount++;
+                equipitem.itemOptionOff(currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
+                w_slot = null;
             }
         }
         else
         {
+            EquipItem equipitem = (EquipItem)a_slot;
             if(a_slot != null)
             {
-
+                inventory.Container[a_slot.itemID].amount++;
+                equipitem.itemOptionOff(currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
+                a_slot = null;
             }
         }
         //선택된 장비가 있을경우 해당 장비 장착 해제.
