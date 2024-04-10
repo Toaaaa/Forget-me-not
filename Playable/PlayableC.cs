@@ -19,6 +19,9 @@ public class PlayableC : ScriptableObject
     public int fatigue;
     public int maxFatigue;
 
+    //debuff
+    public bool isPoisoned;
+
     public int jobNum; // 0:Àü»ç 1:¸¶¹ı»ç 2:ÅÊÄ¿ 3:Èú·¯
     public Item equipedWeapon;
     public Item equipedAcc;

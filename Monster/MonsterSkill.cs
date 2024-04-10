@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New monsterskill", menuName = "skill/monster")]
 public class MonsterSkill : ScriptableObject
 {
     public List<skills> skillList; //이거 필요없긴 한데... 실제로 적용 되는 스킬은 testmob이 들고있는 monsterSkill이다.
-
 }
 
 [System.Serializable]
@@ -16,6 +16,9 @@ public class skills
     public int skillValue; //스킬을 사용할때 소모되는 시간값.
     public string skillName;
     public string skillDesc;
+
+   
+    
 
     public void UseSkill(TestMob mob)
     {
@@ -30,10 +33,10 @@ public class skills
                 hpRegen(mob);
                 break;
             case 3:
-                Debug.Log("스킬3 사용");
+                allAttackDebuff();
                 break;
             case 4:
-                Debug.Log("스킬4 사용");
+                WideAttack(mob);
                 break;
             case 5:
                 Debug.Log("스킬5 사용");
@@ -70,5 +73,28 @@ public class skills
     {
         mob.Hp += 10;
         Debug.Log(skillName);
+    }
+    private void allAttackDebuff() //모든 플레이어 공격력 감소
+    {
+        if (CombatManager.Instance.isAtkDebuff)//이미 해당 스킬이 적용 중인 경우.
+            //다른 공격스킬을 대신 사용하게 하기.
+            return;
+        for(int i=0; i<CombatManager.Instance.playerList.Count; i++)
+        {
+            CombatManager.Instance.playerList[i].atk -= 10;
+            CombatManager.Instance.isAtkDebuff = true;
+        }
+    }
+    private void WideAttack(TestMob mob) //모든 플레이어에게 공격력의 2배만큼 데미지를 줌.
+    {
+        for(int i=0; i<CombatManager.Instance.playerList.Count; i++)
+        {
+            CombatManager.Instance.playerList[i].hp -= 2*mob.Atk;
+        }
+    }
+    private void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.
+    {
+        mob.target.isPoisoned = true;
+        mob.target.hp -= 10;
     }
 }

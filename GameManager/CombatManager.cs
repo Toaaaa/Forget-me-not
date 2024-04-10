@@ -8,7 +8,7 @@ public class CombatManager : Singleton<CombatManager>
     PlayableManager playableManager;
     public MapData mapData;
 
-    public List<PlayableC> playerList;
+    public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
     public Dictionary<TestMob, GameObject> monstersInCombat; //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
@@ -17,6 +17,7 @@ public class CombatManager : Singleton<CombatManager>
     public ConsumeItem consumeOnUse;
     public float consumeTimer;
     public bool BuffIsOn; //버프아이템은 한번에 하나만 적용 되도록. //만약에 다른 버프 사용중에 버프아이템을 사용 할 경우 이전 버프는 사라짐.
+    public bool isAtkDebuff; //공격력 디버프가 적용중인 경우체크 >> 이를 토대로 전투가 끝나면 디버프 해제.
     //버프 아이템 사용중에는 파티원의 인원변경 불가능.
     public bool isBoss; //보스전투인지 아닌지 판별하는 변수.
     
@@ -40,6 +41,13 @@ public class CombatManager : Singleton<CombatManager>
     {
         monstersInCombat.Clear();
         monsterObject.Clear();
+
+        if (isAtkDebuff)
+        {
+            playerList.ForEach(x => x.atk = x.atk +10);
+            isAtkDebuff = false;
+        }
+
     }
 
     private void Update()
@@ -83,10 +91,15 @@ public class CombatManager : Singleton<CombatManager>
     {
 
     }
-    private void tesq()
+    private void DebuffDamageCount() //전투 한 싸이클이 끝날때마다 디버프 데미지를 계산하는 함수.
     {
-        TestMob monster = new TestMob();
-        monster = monsterList[0];
+        for(int i=0; i<playerList.Count; i++)
+        {
+            if (playerList[i].isPoisoned)
+            {
+                playerList[i].hp -= 10;
+            }
+        }
     }
 }
 

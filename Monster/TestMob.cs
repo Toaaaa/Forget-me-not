@@ -6,6 +6,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 {
     public Monster monster;
     public List<skills> monsterSkill;
+    public PlayableC target; //스킬을 사용할 대상.
 
     public int Hp;
     public int MaxHp;
