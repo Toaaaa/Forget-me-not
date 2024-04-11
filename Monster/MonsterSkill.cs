@@ -97,4 +97,8 @@ public class skills
         mob.target.isPoisoned = true;
         mob.target.hp -= 10;
     }
+    private void skillSeal(TestMob mob) //모든 플레이어의 스킬 봉인.
+    {
+        mob.target.isSkillSealed = true;
+    }
 }

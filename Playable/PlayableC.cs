@@ -21,6 +21,7 @@ public class PlayableC : ScriptableObject
 
     //debuff
     public bool isPoisoned;
+    public bool isSkillSealed;//스킬 봉인
 
     public int jobNum; // 0:전사 1:마법사 2:탱커 3:힐러
     public Item equipedWeapon;

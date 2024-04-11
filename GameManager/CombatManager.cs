@@ -7,6 +7,7 @@ public class CombatManager : Singleton<CombatManager>
     [SerializeField]
     PlayableManager playableManager;
     public MapData mapData;
+    public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
@@ -33,6 +34,8 @@ public class CombatManager : Singleton<CombatManager>
     { 
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
+        combatDisplay.playerList = playerList;
+        GoToFightScene();//전투 씬으로 넘어가는 함수. (해당 맵에 맞는 전투 뒷배경으로 이동됨)
         updateMonster();
         //...전투ui 로 넘어가는 함수 추가.
 
@@ -101,9 +104,11 @@ public class CombatManager : Singleton<CombatManager>
             }
         }
     }
+    private void GoToFightScene() //해당 전투 씬은 각 맵에 해당되는 전투 맵으로 이동. (각 스테이지 별로 정해져 있음.)
+    {
+        //mapdata에서 정보를 받아 해당 씬으로 이동.
+    }
 }
 
-public class monsterDummy : Monster
-{
 
-}
+
