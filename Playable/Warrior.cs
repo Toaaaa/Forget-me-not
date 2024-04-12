@@ -8,41 +8,53 @@ using UnityEngine.PlayerLoop;
 [CreateAssetMenu(fileName = "Warrior", menuName = "PlayableCharacter/Warrior")]
 public class Warrior : PlayableC
 {
-    public skillWarrior skillWarrior;
 
 
-    private void Awake()
+    override public void Attack()
     {
-        skillWarrior = new skillWarrior();
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk;
+        Debug.Log("전사의 기본 공격");
     }
-
-    void Update()
+    override public void Skill1()
     {
-        if(skillWarrior == null)
-        {
-            skillWarrior = new skillWarrior();
-        }
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk * 2;
+        Debug.Log("강하게 내려치기");
+    }
+    override public void Skill2()
+    {
+        
+    }
+    override public void Skill3()
+    {
+        
+    }
+    override public void Skill4()
+    {
+        
     }
 }
 
-[System.Serializable]
-public class skillWarrior //전사 스킬
+
+
+/*[System.Serializable]
+public class skillWarrior //이곳에 기능을 넣고. 위의 override public void Skill 에서 호출 하면 될듯.
 {
+    public void skill1()
+    {
+        Debug.Log("전사의 스킬1");
+    }
+    public void skill2()
+    {
+        Debug.Log("전사의 스킬2");
+    }
+    public void skill3()
+    {
+        Debug.Log("전사의 스킬3");
+    }
+    public void skill4()
+    {
+        Debug.Log("전사의 스킬4");
+    }
+}*/
 
-    void skill1(Warrior warrior)
-    {
-        Debug.Log("전사 스킬1 사용");
-    }
-    void skill2(Warrior warrior)
-    {
-        Debug.Log("전사 스킬2 사용");
-    }
-    void skill3(Warrior warrior)
-    {
-        Debug.Log("전사 스킬3 사용");
-    }
-    void skill4(Warrior warrior)
-    {
-        Debug.Log("전사 스킬4 사용");
-    }
-}
+

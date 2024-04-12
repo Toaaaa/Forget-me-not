@@ -11,10 +11,11 @@ public class CombatManager : Singleton<CombatManager>
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
-    public Dictionary<TestMob, GameObject> monstersInCombat; //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
+    public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
 
 
+    public GameObject monsterSelected; //공격,스킬을 사용할 지정된 몬스터.//몬스터의 경우 mob.target 에서 스스로 특정조건에 맞는 대상 판정.
     public ConsumeItem consumeOnUse;
     public float consumeTimer;
     public bool BuffIsOn; //버프아이템은 한번에 하나만 적용 되도록. //만약에 다른 버프 사용중에 버프아이템을 사용 할 경우 이전 버프는 사라짐.
@@ -34,6 +35,7 @@ public class CombatManager : Singleton<CombatManager>
     { 
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
+        combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
         GoToFightScene();//전투 씬으로 넘어가는 함수. (해당 맵에 맞는 전투 뒷배경으로 이동됨)
         updateMonster();
@@ -61,6 +63,11 @@ public class CombatManager : Singleton<CombatManager>
             consumeOnUse.OnEnd();
             BuffIsOn = false;
             consumeOnUse = null;
+        }
+        if(Input.GetKeyDown(KeyCode.F5))
+        {
+            monsterSelected = monstersInCombat[monsterList[0]];
+            playerList[0].Skill1();
         }
     }
 

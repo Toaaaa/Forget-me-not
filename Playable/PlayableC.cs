@@ -19,6 +19,15 @@ public class PlayableC : ScriptableObject
     public int fatigue;
     public int maxFatigue;
 
+    //오리지널 스텟 //전투가 끝나면 해당 스텟으로 리셋해주기.
+    public int originalMaxHp;
+    public int originalMaxMp;
+    public int originalAtk;
+    public int originalDef;
+    public int originalSpd;
+    public int originalCrit;
+
+
     //debuff
     public bool isPoisoned;
     public bool isSkillSealed;//스킬 봉인
@@ -29,12 +38,26 @@ public class PlayableC : ScriptableObject
 
 
 
-    //일단은 여기까지만
-
-    // Update is called once per frame
-    void Update()
+    
+    virtual public void Attack()
     {
-        
+        Debug.Log("공격");
+    }
+    virtual public void Skill1()
+    {
+        Debug.Log("스킬");
+    }
+    virtual public void Skill2()
+    {
+        Debug.Log("스킬");
+    }
+    virtual public void Skill3()
+    {
+        Debug.Log("스킬");
+    }
+    virtual public void Skill4()
+    {
+        Debug.Log("스킬");
     }
 }
 

@@ -5,38 +5,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Tank", menuName = "PlayableCharacter/Tank")]
 public class Tank : PlayableC
 {
-    public skillTank skillTank;
+    public bool isDefPlused;//방어력 증가 스킬 사용시.
+    public bool isAggroOn;//탱커의 어그로스킬 적용중.
 
-    private void Awake()
+    override public void Attack()
     {
-        skillTank = new skillTank();
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk;
+        Debug.Log("탱커의 기본 공격");
     }
-    void Update()
+    override public void Skill1()
     {
-        if(skillTank == null)
-        {
-            skillTank = new skillTank();
-        }
+        this.def = def * 2;
+        Debug.Log("방어력 증가");
     }
-    
-}
-[System.Serializable]
-public class skillTank //탱커 스킬
-{
-    void skill1(Tank tank)
+    override public void Skill2()
     {
-        Debug.Log("탱커 스킬1 사용");
+        Debug.Log("어그로");
     }
-    void skill2(Tank tank)
+    override public void Skill3()
     {
-        Debug.Log("탱커 스킬2 사용");
+
     }
-    void skill3(Tank tank)
+    override public void Skill4()
     {
-        Debug.Log("탱커 스킬3 사용");
-    }
-    void skill4(Tank tank)
-    {
-        Debug.Log("탱커 스킬4 사용");
+
     }
 }
+

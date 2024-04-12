@@ -5,39 +5,34 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Healer", menuName = "PlayableCharacter/Healer")]
 public class Healer : PlayableC
 {
-    public skillHealer skillHealer;
 
-
-    private void Awake()
+    override public void Attack()
     {
-        skillHealer = new skillHealer();
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk;
+        Debug.Log("힐러의 기본 공격");
     }
-    void Update()
+    override public void Skill1()
     {
-        if(skillHealer == null)
+        CombatManager.Instance.combatDisplay.selectedSlot.player.hp += 10;
+        if(CombatManager.Instance.combatDisplay.selectedSlot.player.hp > CombatManager.Instance.combatDisplay.selectedSlot.player.maxHp)
         {
-            skillHealer = new skillHealer();
+            CombatManager.Instance.combatDisplay.selectedSlot.player.hp = CombatManager.Instance.combatDisplay.selectedSlot.player.maxHp;
         }
-    }   
+    }
+    override public void Skill2()
+    {
+        Debug.Log("어그로");
+    }
+    override public void Skill3()
+    {
+
+    }
+    override public void Skill4()
+    {
+
+    }
+
+
 
 }
-[System.Serializable]
-public class skillHealer //힐러 스킬
-{
-    void skill1(Healer healer)
-    {
-        Debug.Log("힐러 스킬1 사용");
-    }
-    void skill2(Healer healer)
-    {
-        Debug.Log("힐러 스킬2 사용");
-    }
-    void skill3(Healer healer)
-    {
-        Debug.Log("힐러 스킬3 사용");
-    }
-    void skill4(Healer healer)
-    {
-        Debug.Log("힐러 스킬4 사용");
-    }
-}
+

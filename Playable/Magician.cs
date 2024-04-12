@@ -5,41 +5,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Magician", menuName = "PlayableCharacter/Magician")]
 public class Magician : PlayableC
 {
-   public skillMagician skillMagician;
 
-
-    private void Awake()
+    override public void Attack()
     {
-        skillMagician = new skillMagician();
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk;
+        Debug.Log("마법사의 기본 공격");
     }
-
-    void Update()
+    override public void Skill1()
     {
-        if(skillMagician == null)
+        for(int i =0; i<CombatManager.Instance.monsterList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
-            skillMagician = new skillMagician();
+            CombatManager.Instance.monsterList[i].Hp -= (int)(atk * 1.5f);
         }
     }
+    override public void Skill2()
+    {
+        Debug.Log("어그로");
+    }
+    override public void Skill3()
+    {
+
+    }
+    override public void Skill4()
+    {
+
+    }
 }
 
-[System.Serializable]
-public class skillMagician //마법사 스킬
-{
-
-    void skill1(Magician magician)
-    {
-        Debug.Log("마법사 스킬1 사용");
-    }
-    void skill2(Magician magician)
-    {
-        Debug.Log("마법사 스킬2 사용");
-    }
-    void skill3(Magician magician)
-    {
-        Debug.Log("마법사 스킬3 사용");
-    }
-    void skill4(Magician magician)
-    {
-        Debug.Log("마법사 스킬4 사용");
-    }
-}
