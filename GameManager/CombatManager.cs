@@ -64,10 +64,15 @@ public class CombatManager : Singleton<CombatManager>
             BuffIsOn = false;
             consumeOnUse = null;
         }
-        if(Input.GetKeyDown(KeyCode.F5))
+        if(Input.GetKeyDown(KeyCode.F5))//테스트용 코드(0번 몬스터에게 플레이어가 스킬을 사용)
         {
             monsterSelected = monstersInCombat[monsterList[0]];
             playerList[0].Skill1();
+        }
+        if(Input.GetKeyDown(KeyCode.F6))
+        {
+            playerList[0].hp -=5;
+            Debug.Log("플레이어 체력 감소");
         }
     }
 

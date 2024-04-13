@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayableC : ScriptableObject
 {
+    public Sprite characterImage;
     public int level;
-    public int hp;
+    public float hp;
     public int maxHp;
     public int mp;
     public int maxMp;
