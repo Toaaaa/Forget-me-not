@@ -19,13 +19,18 @@ public class CombatStatus : MonoBehaviour
         else
         {
             this.gameObject.SetActive(true);
-        }
-        playerImage.sprite = player.characterImage;
+            playerImage.sprite = player.characterImage;
 
-        if (playerHpBar.fillAmount != player.hp / player.maxHp)
-        {
-            PlayerhpUpdate();
+            if (playerHpBar.fillAmount != player.hp / player.maxHp)
+            {
+                PlayerhpUpdate();
+            }
+            if (playerMpBar.fillAmount != player.mp / player.maxMp)
+            {
+                PlayermpUpdate();
+            }
         }
+
     }
 
     private void PlayerhpUpdate()
@@ -41,12 +46,27 @@ public class CombatStatus : MonoBehaviour
             }
             //코루틴으로 체력바 줄이기.
     }
+    private void PlayermpUpdate()
+    {
+        if(playerMpBar.fillAmount > player.mp / player.maxMp)
+        {
+            StartCoroutine(mpreduce());
+        }
+        else if(playerMpBar.fillAmount < player.mp / player.maxMp)
+        {
+            StartCoroutine(mpIncrease());
+        }
+
+    }
 
     public void OnPlayerHpSet()
     {
         //처음 전투가 시작되고 플레이어가 등록이 되면 플레이어의 체력바를 세팅해줌.
         playerHpBar.fillAmount = player.hp / player.maxHp; //>> 정수/정수 를 하면 0또는 1만 출력되는 현상이 있어 float로 형변환 해줌.
-        Debug.Log(player.hp / player.maxHp);
+    }
+    public void OnPlayerMpSet()
+    {
+        playerMpBar.fillAmount = player.mp / player.maxMp;
     }
     IEnumerator hpreduce() //체력 감소시
     {
@@ -71,6 +91,33 @@ public class CombatStatus : MonoBehaviour
             if(playerHpBar.fillAmount > player.hp / player.maxHp)
             {
                 playerHpBar.fillAmount = player.hp / player.maxHp;
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    IEnumerator mpreduce()
+    {
+        while(playerMpBar.fillAmount > player.mp / player.maxMp)
+        {
+            playerMpBar.fillAmount -= 0.001f;
+            if(playerMpBar.fillAmount < player.mp / player.maxMp)
+            {
+                playerMpBar.fillAmount = player.mp / player.maxMp;
+                break;
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+    IEnumerator mpIncrease()
+    {
+        while(playerMpBar.fillAmount < player.mp / player.maxMp)
+        {
+            playerMpBar.fillAmount += 0.001f;
+            if(playerMpBar.fillAmount > player.mp / player.maxMp)
+            {
+                playerMpBar.fillAmount = player.mp / player.maxMp;
                 break;
             }
             yield return new WaitForSeconds(0.1f);

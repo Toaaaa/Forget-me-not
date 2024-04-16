@@ -35,6 +35,7 @@ public class CombatManager : Singleton<CombatManager>
     { 
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
+        combatDisplay.playerList = playerList;
         combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
         GoToFightScene();//전투 씬으로 넘어가는 함수. (해당 맵에 맞는 전투 뒷배경으로 이동됨)

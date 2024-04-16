@@ -19,6 +19,7 @@ public class CombatDisplay : MonoBehaviour
                 slotList[i].player = playerList[i];
                 statusUI[i].player = playerList[i];
                 statusUI[i].OnPlayerHpSet(); //플레이어의 체력바를 세팅해줌.
+                statusUI[i].OnPlayerMpSet(); //플레이어의 마나바를 세팅해줌.
             }
         }
     }
