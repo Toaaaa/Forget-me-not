@@ -22,6 +22,13 @@ public class CombatDisplay : MonoBehaviour
                 statusUI[i].OnPlayerMpSet(); //플레이어의 마나바를 세팅해줌.
             }
         }
+        for(int i = 0; i < statusUI.Count; i++)
+        {
+            if (statusUI[i].player != null)
+            {
+                statusUI[i].gameObject.SetActive(true);
+            }
+        }
     }
 
     private void OnEnable()

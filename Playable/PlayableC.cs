@@ -8,7 +8,7 @@ public class PlayableC : ScriptableObject
     public int level;
     public float hp;
     public int maxHp;
-    public int mp;
+    public float mp;
     public int maxMp;
     public int atk;
     public int def;
