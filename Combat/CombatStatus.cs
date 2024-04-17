@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,10 @@ public class CombatStatus : MonoBehaviour
     public PlayableC player;
     public Image playerImage;
     public Image playerHpBar;
+    public TextMeshProUGUI playerHpText;
     public Image playerMpBar;
+    public TextMeshProUGUI playerMpText;
+    public List<CombatBuffs> combatBuffs;
 
     private void Update()
     {
@@ -29,8 +33,39 @@ public class CombatStatus : MonoBehaviour
             {
                 PlayermpUpdate();
             }
+            for(int i = 0; i < combatBuffs.Count; i++)
+            {
+                combatBuffs[i].player = player;
+            }
+            buffcheck();
         }
 
+    }
+
+    private void buffcheck()
+    {
+        if(player.isBuffed == true)
+        {
+            //버프 이미지 변경.
+            //버프 이미지를 보여주는 패널을 활성화.
+            combatBuffs[0].BuffCheck(1);
+        }
+        if(player.isStunned == true)
+        {
+            combatBuffs[1].BuffCheck(2);
+        }
+        if(player.isPoisoned == true) //중독은 3번째 칸
+        {
+            combatBuffs[2].BuffCheck(3);
+        }
+        if(player.isSkillSealed == true) //스킬잠금도 3번째 칸 ??스킬잠금과 중독을 둘다 쓰는 적은 없도록 할것.
+        {
+            combatBuffs[2].BuffCheck(4);
+        }
+        if(player.isBuffed == false && player.isStunned == false && player.isPoisoned == false && player.isSkillSealed ==false)
+        {
+            combatBuffs[0].BuffCheck(0);
+        }
     }
 
     private void PlayerhpUpdate()

@@ -28,10 +28,19 @@ public class PlayableC : ScriptableObject
     public int originalSpd;
     public int originalCrit;
 
+    //buff
+    public bool isBuffed;
+    ///////////////////
+    public bool attackBuff;
+    public bool defenseBuff;
+    public bool speedBuff;
+    public bool critBuff;
 
     //debuff
+    public bool isStunned;
     public bool isPoisoned;
-    public bool isSkillSealed;//½ºÅ³ ºÀÀÎ
+    public bool isSkillSealed;
+
 
     public int jobNum; // 0:Àü»ç 1:¸¶¹ı»ç 2:ÅÊÄ¿ 3:Èú·¯
     public Item equipedWeapon;
