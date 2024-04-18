@@ -12,8 +12,7 @@ public class CombatStatus : MonoBehaviour
     public TextMeshProUGUI playerHpText;
     public Image playerMpBar;
     public TextMeshProUGUI playerMpText;
-    public List<CombatBuffs> combatBuffs;
-
+    public CombatBuffs combatbuff;
     private void Update()
     {
         if(player == null) //플레이어가 없을경우 slot의 비활성화.
@@ -22,6 +21,10 @@ public class CombatStatus : MonoBehaviour
         }
         else
         {
+            if(combatbuff.player == null)
+            {
+                combatbuff.player = player;
+            }
             this.gameObject.SetActive(true);
             playerImage.sprite = player.characterImage;
 
@@ -33,10 +36,6 @@ public class CombatStatus : MonoBehaviour
             {
                 PlayermpUpdate();
             }
-            for(int i = 0; i < combatBuffs.Count; i++)
-            {
-                combatBuffs[i].player = player;
-            }
             buffcheck();
         }
 
@@ -46,26 +45,32 @@ public class CombatStatus : MonoBehaviour
     {
         if(player.isBuffed == true)
         {
-            //버프 이미지 변경.
-            //버프 이미지를 보여주는 패널을 활성화.
-            combatBuffs[0].BuffCheck(1);
+            combatbuff.BuffCheck(1);
         }
+        else
+        {
+            combatbuff.BuffCheck(0);
+        }
+
         if(player.isStunned == true)
         {
-            combatBuffs[1].BuffCheck(2);
+            combatbuff.BuffCheck(2);
         }
-        if(player.isPoisoned == true) //중독은 3번째 칸
+        else
         {
-            combatBuffs[2].BuffCheck(3);
+            combatbuff.BuffCheck(5);
         }
-        if(player.isSkillSealed == true) //스킬잠금도 3번째 칸 ??스킬잠금과 중독을 둘다 쓰는 적은 없도록 할것.
+
+        if(player.isPoisoned == true)
         {
-            combatBuffs[2].BuffCheck(4);
+            combatbuff.BuffCheck(3);
         }
-        if(player.isBuffed == false && player.isStunned == false && player.isPoisoned == false && player.isSkillSealed ==false)
+        else
         {
-            combatBuffs[0].BuffCheck(0);
+            combatbuff.BuffCheck(6);
         }
+
+
     }
 
     private void PlayerhpUpdate()

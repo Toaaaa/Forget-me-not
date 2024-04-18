@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CombatManager : Singleton<CombatManager>
 {
@@ -33,6 +36,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 
+        mapData.GoToBattle();
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
@@ -54,6 +58,8 @@ public class CombatManager : Singleton<CombatManager>
             isAtkDebuff = false;
         }
 
+        
+        SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
     }
 
     private void Update()
@@ -74,6 +80,19 @@ public class CombatManager : Singleton<CombatManager>
         {
             playerList[0].hp -=5;
             Debug.Log("플레이어 체력 감소");
+        }
+        //몬스터가 전부 죽었을때 oncombatend를 실행시켜주는 함수.
+        for(int i = 0; i < monsterObject.Count; i++)
+        {
+            if (monsterObject[i].GetComponent<TestMob>().Hp <= 0)
+            {
+                monsterDie(i);
+                break;
+            }
+        }
+        if(monsterObject.Count == 0)
+        {
+            OnCombatEnd();
         }
     }
 
@@ -103,9 +122,10 @@ public class CombatManager : Singleton<CombatManager>
     {
 
     }
-    private void monsterDie()
+    private void monsterDie(int num)
     {
-
+        monsterObject.RemoveAt(num);
+        monstersInCombat.Remove(monsterList[num]);
     }
     private void DebuffDamageCount() //전투 한 싸이클이 끝날때마다 디버프 데미지를 계산하는 함수.
     {
