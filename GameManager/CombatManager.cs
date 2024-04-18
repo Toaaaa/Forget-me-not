@@ -26,6 +26,8 @@ public class CombatManager : Singleton<CombatManager>
     //버프 아이템 사용중에는 파티원의 인원변경 불가능.
     public bool isBoss; //보스전투인지 아닌지 판별하는 변수.
     
+    public bool isCombatStart; //전투가 시작되었는지 판별하는 변수.
+    public string battleSceneName; //전투 씬의 이름을 저장하는 변수.
 
 
     private void Start()
@@ -36,19 +38,21 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 
-        mapData.GoToBattle();
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
         combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
-        GoToFightScene();//전투 씬으로 넘어가는 함수. (해당 맵에 맞는 전투 뒷배경으로 이동됨)
-        updateMonster();
+        isCombatStart = true;
+        mapData.GoToBattle();
+        Player.Instance.combatPosition = mapData.playerPosition;
+        Player.Instance.CombatPositioning();
         //...전투ui 로 넘어가는 함수 추가.
 
     }
     public void OnCombatEnd() //전투 종료시 저장된 몬스터의 정보들 삭제.
     {
+        Debug.Log("전투가 종료되었습니다.");
         monstersInCombat.Clear();
         monsterObject.Clear();
 
@@ -58,8 +62,9 @@ public class CombatManager : Singleton<CombatManager>
             isAtkDebuff = false;
         }
 
-        
+        isCombatStart = false;
         SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
+        combatDisplay.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -90,14 +95,22 @@ public class CombatManager : Singleton<CombatManager>
                 break;
             }
         }
-        if(monsterObject.Count == 0)
+        if(isCombatStart &&monsterObject.Count == 0)
         {
+            Debug.Log("몬스터가 전멸하였습니다.");
             OnCombatEnd();
         }
     }
 
-    private void updateMonster()
+    public void updateMonster()
     {
+        Scene scene = SceneManager.GetActiveScene();
+        if(scene.name != battleSceneName)
+        {
+            Debug.Log("다른씬.");
+            return;
+        }
+        Debug.Log(scene.name);
         for (int i = 0; i < monsterList.Count; i++)
         {
             var obj = Instantiate(monsterList[i].gameObject, new Vector3(0, 0, 0), Quaternion.identity);
@@ -124,6 +137,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     private void monsterDie(int num)
     {
+        Debug.Log("몬스터가 죽었습니다.");
         monsterObject.RemoveAt(num);
         monstersInCombat.Remove(monsterList[num]);
     }
@@ -136,10 +150,6 @@ public class CombatManager : Singleton<CombatManager>
                 playerList[i].hp -= 10;
             }
         }
-    }
-    private void GoToFightScene() //해당 전투 씬은 각 맵에 해당되는 전투 맵으로 이동. (각 스테이지 별로 정해져 있음.)
-    {
-        //mapdata에서 정보를 받아 해당 씬으로 이동.
     }
 }
 

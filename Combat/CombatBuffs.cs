@@ -7,8 +7,7 @@ using UnityEngine;
 public class CombatBuffs : MonoBehaviour
 {
     public PlayableC player;
-    public Sprite currentBuff;
-    public List<Sprite> buffdebuffSprites;
+
 
     private void Update()
     {

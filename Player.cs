@@ -13,9 +13,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     bool isHorizonMove;
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
-    public 
-    Vector2 dirVec;//direction of where player is looking at
-
+    public Vector2 dirVec;//direction of where player is looking at
+    public Vector3 combatPosition;
     Rigidbody2D rigid;
     GameObject scanedObject;
 
@@ -85,6 +84,15 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                         break;
             }
         }
+
+        if (CombatManager.Instance.isCombatStart)
+        {
+            this.GetComponent<SpriteRenderer>().enabled = false;
+        }//전투가 시작되면 카메라 위치만 잡아주고 안보이게 하기.
+        else
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
     void FixedUpdate()
@@ -104,5 +112,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         else
             scanedObject = null;
 
+    }
+    public void CombatPositioning()
+    {
+        transform.position = combatPosition;
     }
 }
