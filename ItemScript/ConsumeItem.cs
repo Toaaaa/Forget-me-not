@@ -108,6 +108,8 @@ public class ConsumeItem : Item
             for(int i =0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].atk += effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = true;
+                GameManager.Instance.playableManager.joinedPlayer[i].attackBuff = true;
             }
         }
         else
@@ -115,6 +117,8 @@ public class ConsumeItem : Item
             for (int i = 0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].atk -= effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = false;
+                GameManager.Instance.playableManager.joinedPlayer[i].attackBuff = false;
             }
         }
     }
@@ -125,6 +129,8 @@ public class ConsumeItem : Item
             for (int i = 0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].def += effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = true;
+                GameManager.Instance.playableManager.joinedPlayer[i].defenseBuff = true;
             }
         }
         else
@@ -132,6 +138,8 @@ public class ConsumeItem : Item
             for (int i = 0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].def -= effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = false;
+                GameManager.Instance.playableManager.joinedPlayer[i].defenseBuff = false;
             }
         }
     }
@@ -142,6 +150,8 @@ public class ConsumeItem : Item
             for (int i = 0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].spd += effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = true;
+                GameManager.Instance.playableManager.joinedPlayer[i].speedBuff = true;
             }
         }
         else
@@ -149,6 +159,8 @@ public class ConsumeItem : Item
             for (int i = 0; GameManager.Instance.playableManager.joinedPlayer.Count > i; i++)
             {
                 GameManager.Instance.playableManager.joinedPlayer[i].spd -= effectAmount;
+                GameManager.Instance.playableManager.joinedPlayer[i].isBuffed = false;
+                GameManager.Instance.playableManager.joinedPlayer[i].speedBuff = false;
             }
         }
     }

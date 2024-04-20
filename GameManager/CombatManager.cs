@@ -61,7 +61,7 @@ public class CombatManager : Singleton<CombatManager>
             playerList.ForEach(x => x.atk = x.atk +10);
             isAtkDebuff = false;
         }
-
+        //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
         SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
         combatDisplay.gameObject.SetActive(false);
