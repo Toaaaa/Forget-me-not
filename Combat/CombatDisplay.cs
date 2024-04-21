@@ -8,14 +8,22 @@ public class CombatDisplay : MonoBehaviour
     public List<PlayableC> playerList;
     public List<CombatSlot> slotList; //플레이어의 애니메이션 등이 출력되는 곳.
     public List<CombatStatus> statusUI;
+    public List<MobSlot> mobSlotList; //슬롯만 저장됨
+    public List<GameObject> MobList; //위의 슬롯에서 몬스터가 있는곳만 찾아서 저장 
 
     public CombatSlot selectedSlot; //선택된 슬롯. 스킬 사용시 or 아이템 사용시 이 슬롯을 대상으로 함.
 
     private int selectedSlotIndex; //선택된 슬롯의 인덱스.
+    private int selectedMobIndex; //선택된 몬스터의 인덱스.
     public bool duringSceneChange; //현재 전투 입장 애니메이션이 출력 중일 경우.
     public float MyturnTime; //플레이어의 턴 시간.
     public float EnemyturnTime; //적의 턴 시간.
     public bool isPlayerTurn; //플레이어의 턴인지 아닌지 판별하는 변수. //플레이어의 턴을 다썼고 적의 턴일 경우 false가 됨.
+
+    public PlayableC selectingPlayer;//공격,아이템,스킬 등을 실행할 플레이어.
+    public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
+
+    public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
 
     private void Update()
     {
@@ -43,12 +51,15 @@ public class CombatDisplay : MonoBehaviour
 
         selectSlot();
         TurnTimeCheck();
+        if (attackSelected)
+        {
+            selectEnemy();
+        }
     }
 
     private void OnEnable()
     {
         selectedSlotIndex = 0;
-
         for(int i=0; i< statusUI.Count; i++)
         {
             statusUI[i].gameObject.SetActive(true);
@@ -66,7 +77,7 @@ public class CombatDisplay : MonoBehaviour
     }
     private void selectSlot()
     {
-        if (isPlayerTurn && !duringSceneChange)
+        if (isPlayerTurn && !duringSceneChange&& !combatManager.isFirstSelection)
         {
             if(Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -104,4 +115,42 @@ public class CombatDisplay : MonoBehaviour
             isPlayerTurn = true;
         }
     }//플레이어의 턴이 끝났는지 확인하는 함수.
+
+    private void selectEnemy()
+    {
+        if(Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if(selectedMobIndex < MobList.Count-1)
+            {
+                selectedMobIndex++;
+            }
+            else
+            {
+                selectedMobIndex = 0;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (selectedMobIndex > 0)
+            {
+                selectedMobIndex--;
+            }
+            else
+            {
+                selectedMobIndex = MobList.Count - 1;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            combatManager.monsterSelected = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
+            selectingPlayer.Attack();
+            attackSelected = false;
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            attackSelected = false;
+            combatSelection.firstSelection.SetActive(true);
+        }
+
+    }
 }

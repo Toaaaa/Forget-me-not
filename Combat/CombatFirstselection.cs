@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CombatFirstselection : MonoBehaviour
 {
+    /*
     int playerAverageSpeed;
     int fastestMonsterSpeed;
 
@@ -40,6 +41,7 @@ public class CombatFirstselection : MonoBehaviour
         {
             Debug.Log("도망에 실패했습니다.");
         }
-    }
+    }*/
+    //이거 안쓸거임.
 
 }

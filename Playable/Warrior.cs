@@ -12,25 +12,25 @@ public class Warrior : PlayableC
 
     override public void Attack()
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk;
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
         Debug.Log("전사의 기본 공격");
     }
     override public void Skill1()
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk * 2;
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk * 2 - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
         Debug.Log("강하게 내려치기");
     }
     override public void Skill2()
     {
-        
+        Debug.Log("전사의 스킬2");
     }
     override public void Skill3()
     {
-        
+        Debug.Log("전사의 스킬3");
     }
     override public void Skill4()
     {
-        
+        Debug.Log("전사의 스킬4");
     }
 }
 

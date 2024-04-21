@@ -13,12 +13,11 @@ public class CombatManager : Singleton<CombatManager>
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
-    public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용
+    public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
     public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
 
 
-    public GameObject monsterSelected; //공격,스킬을 사용할 지정된 몬스터.//몬스터의 경우 mob.target 에서 스스로 특정조건에 맞는 대상 판정.
     public ConsumeItem consumeOnUse;
     public float consumeTimer;
     public bool BuffIsOn; //버프아이템은 한번에 하나만 적용 되도록. //만약에 다른 버프 사용중에 버프아이템을 사용 할 경우 이전 버프는 사라짐.
@@ -28,6 +27,12 @@ public class CombatManager : Singleton<CombatManager>
     
     public bool isCombatStart; //전투가 시작되었는지 판별하는 변수.
     public string battleSceneName; //전투 씬의 이름을 저장하는 변수.
+
+    //ui
+    public bool isFirstSelection; //처음 선택창이 켜저있는지.
+    public PlayableC selectedPlayer; //선택된 플레이어. (스킬을 사용할때 사용)
+    public GameObject monsterSelected; //공격,스킬을 사용할 지정된 몬스터.//몬스터의 경우 mob.target 에서 스스로 특정조건에 맞는 대상 판정.
+
 
 
     private void Start()
@@ -47,6 +52,7 @@ public class CombatManager : Singleton<CombatManager>
         mapData.GoToBattle();
         Player.Instance.combatPosition = mapData.playerPosition;
         Player.Instance.CombatPositioning();
+
         //...전투ui 로 넘어가는 함수 추가.
 
     }
@@ -55,6 +61,13 @@ public class CombatManager : Singleton<CombatManager>
         Debug.Log("전투가 종료되었습니다.");
         monstersInCombat.Clear();
         monsterObject.Clear();
+        selectedPlayer = null;
+        monsterSelected = null;
+
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            playerList[i].resetStat();
+        }//전투가 끝나면 최대 hp, 치명타, 공격력, 방어력 등의 스탯을 초기화.
 
         if (isAtkDebuff)
         {
@@ -110,12 +123,17 @@ public class CombatManager : Singleton<CombatManager>
             Debug.Log("다른씬.");
             return;
         }
-        Debug.Log(scene.name);
         for (int i = 0; i < monsterList.Count; i++)
         {
-            var obj = Instantiate(monsterList[i].gameObject, new Vector3(0, 0, 0), Quaternion.identity);
+            var obj = Instantiate(monsterList[i].gameObject, combatDisplay.mobSlotList[i].transform.position, Quaternion.identity);
             monsterObject.Add(obj);
             monstersInCombat.Add(monsterList[i], monsterObject[i]);
+        }
+        combatDisplay.MobList.Clear();
+
+        for (int i = 0; i < monsterObject.Count; i++) //컴뱃 매니저의 몬스터 오브젝트를 컴뱃 디스플레이의 몬스터리스트에도 추가.
+        {
+            combatDisplay.MobList.Add(monsterObject[i]);
         }
     }
 
@@ -150,6 +168,11 @@ public class CombatManager : Singleton<CombatManager>
                 playerList[i].hp -= 10;
             }
         }
+    }
+
+    public void isAttackSelected(PlayableC player)
+    {
+
     }
 }
 

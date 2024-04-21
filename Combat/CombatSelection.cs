@@ -5,12 +5,12 @@ using UnityEngine;
 public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Çàµ¿ ¼±ÅÃ ui ÄÁÆ®·Ñ·¯
 {
     public CombatManager combatManager;
+    public PlayableC player;
 
     public GameObject charSelection; //Ã³À½ Á¶ÀÛÀ»ÇÒ Ä³¸¯ÅÍ ¼±ÅÃ.
     public GameObject firstSelection; //1.°ø°İ , 2.½ºÅ³ , 3.¾ÆÀÌÅÛ , 4.µµ¸Á
     public GameObject skillSelection; //½ºÅ³¼±ÅÃÃ¢
     public GameObject itemSelection; //¾ÆÀÌÅÛ¼±ÅÃÃ¢
-    public GameObject fleeSelectUI; //µµ¸Á ¼±ÅÃÃ¢
 
     public List<GameObject> selectionList; //À§ÀÇ ¼ø¼­´ë·Î ¸®½ºÆ®¿¡ ³Ö¾îÁÙ°Í.
     private int indexForList; //ÇöÀç ¼±ÅÃµÈ ÀÎµ¦½º.
@@ -22,14 +22,13 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
         charSelection.SetActive(true);
         firstSelection.SetActive(false);
         skillSelection.SetActive(false);
-        itemSelection.SetActive(false);
-        fleeSelectUI.SetActive(false);
+        //itemSelection.SetActive(false);
         indexForList = 0;
     }
 
     private void Update()
     {
-
+        
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -37,6 +36,7 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
             {
                 charSelection.SetActive(false);
                 firstSelection.SetActive(true);
+                combatManager.isFirstSelection = true;
             }
 
             
