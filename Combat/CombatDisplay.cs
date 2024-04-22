@@ -13,8 +13,8 @@ public class CombatDisplay : MonoBehaviour
 
     public CombatSlot selectedSlot; //선택된 슬롯. 스킬 사용시 or 아이템 사용시 이 슬롯을 대상으로 함.
 
-    private int selectedSlotIndex; //선택된 슬롯의 인덱스.
-    private int selectedMobIndex; //선택된 몬스터의 인덱스.
+    public int selectedSlotIndex; //선택된 슬롯의 인덱스.
+    public int selectedMobIndex; //선택된 몬스터의 인덱스.
     public bool duringSceneChange; //현재 전투 입장 애니메이션이 출력 중일 경우.
     public float MyturnTime; //플레이어의 턴 시간.
     public float EnemyturnTime; //적의 턴 시간.
@@ -24,6 +24,8 @@ public class CombatDisplay : MonoBehaviour
     public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
 
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
+    public bool skillSelected; //스킬이 선택되었는지 판별하는 변수.firstSelection에서 스킬 선택시.
+    public bool itemSelected; //아이템이 선택되었는지 판별하는 변수.firstSelection에서 아이템 선택시.
 
     private void Update()
     {
@@ -140,11 +142,21 @@ public class CombatDisplay : MonoBehaviour
                 selectedMobIndex = MobList.Count - 1;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격(기본공격)
         {
             combatManager.monsterSelected = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
             selectingPlayer.Attack();
+            combatManager.isFirstSelection = false;
             attackSelected = false;
+            Debug.Log("공격을 하였음.");
+            //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
+            if (isPlayerTurn)
+            {
+                selectedSlotIndex = 0;
+                combatSelection = slotList[selectedSlotIndex].combatSelection;
+                combatSelection.charSelection.SetActive(true);
+
+            }
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {

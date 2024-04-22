@@ -51,7 +51,7 @@ public class FirstSelection : MonoBehaviour
                     case 0:
                     combatManager.combatDisplay.selectingPlayer = combatSelection.player;
                     combatManager.combatDisplay.combatSelection = combatSelection;
-                    combatManager.combatDisplay.attackSelected = true;
+                    combatManager.combatDisplay.attackSelected = true;                    
                     this.gameObject.SetActive(false);
                         break;
                     case 1:
@@ -83,6 +83,7 @@ public class FirstSelection : MonoBehaviour
             playerAverageSpeed += combatManager.playerList[i].spd;
         }
         playerAverageSpeed = playerAverageSpeed / combatManager.playerList.Count;
+        Debug.Log(playerAverageSpeed);
 
         for (int i = 0; i < combatManager.monsterList.Count; i++)
         {

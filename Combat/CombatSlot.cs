@@ -16,11 +16,11 @@ public class CombatSlot : MonoBehaviour
         if (player != null)
         {
             this.GetComponent<Image>().sprite = player.characterImage;
+            combatSelection.player = player;
         }
         else
         {
             this.GetComponent<Image>().sprite = null; //이후 애니메이션 등의 추가가 완료되면 >> 투명화 하는방식으로 변경할것.
-            combatSelection.player = player;
         }
         // if(player.isdead) >>죽었으면 죽은 상태의 애니메이션.
 

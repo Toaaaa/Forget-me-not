@@ -12,7 +12,7 @@ public class Tank : PlayableC
 
     override public void Attack()
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
         Debug.Log("탱커의 기본 공격");
     }
     override public void Skill1()
@@ -38,7 +38,7 @@ public class Tank : PlayableC
     { //>> 높은 가치의 스킬이기에 코스트 높게 설정할것.
         for (int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
         {
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= atk - CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def;
+            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def;
             CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def -= 5;
             if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def < 0)
             {

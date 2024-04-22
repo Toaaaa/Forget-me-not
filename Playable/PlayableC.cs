@@ -51,7 +51,7 @@ public class PlayableC : ScriptableObject
     public Item equipedAcc;
 
 
-    public void resetStat()
+    public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {
         maxHp = originalMaxHp;
         maxMp = originalMaxMp;
@@ -80,6 +80,17 @@ public class PlayableC : ScriptableObject
     virtual public void Skill4()
     {
         Debug.Log("스킬");
+    }
+
+    virtual public float CheckCrit(float atkDMG,int critPercent)
+    {
+        if (Random.Range(0, 100) < critPercent)
+        {
+            Debug.Log("크리티컬 데미지!");
+            return atkDMG * 2.0f;
+        }
+        else
+            return atkDMG;
     }
 }
 

@@ -5,13 +5,13 @@ using UnityEngine;
 public class MobSlot : MonoBehaviour
 {
     public GameObject selectingArrow; //표시해주는 화살표.
-
+    public GameObject monster;
     // Update is called once per frame
     void Update()
     {
         if(CombatManager.Instance.monsterSelected != null)
         {
-            if (CombatManager.Instance.monsterSelected == this.gameObject)
+            if (CombatManager.Instance.monsterSelected == monster)
             {
                 selectingArrow.SetActive(true);
             }

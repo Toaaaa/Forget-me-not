@@ -8,10 +8,10 @@ public class Healer : PlayableC
 
     override public void Attack()
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= atk - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
+        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
         Debug.Log("힐러의 기본 공격");
     }
-    override public void Skill1()
+    override public void Skill1()//단일 회복
     {
         CombatManager.Instance.selectedPlayer.hp += this.atk *1.5f;
         if(CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
@@ -19,7 +19,7 @@ public class Healer : PlayableC
             CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
         }
     }
-    override public void Skill2()
+    override public void Skill2()//광역 회복
     {
         for(int i =0; i<CombatManager.Instance.playerList.Count; i++)
         {

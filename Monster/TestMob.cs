@@ -15,6 +15,8 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public float Def;
     public int Speed;
 
+    public bool isDead;
+
 
     private void OnEnable()
     {

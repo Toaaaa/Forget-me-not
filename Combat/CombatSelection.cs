@@ -30,7 +30,7 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
     {
         
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space)&&!combatManager.combatDisplay.attackSelected)
         {
             if (charSelection.activeSelf)
             {
