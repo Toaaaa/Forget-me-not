@@ -9,7 +9,7 @@ public class CombatDisplay : MonoBehaviour
     public List<CombatSlot> slotList; //플레이어의 애니메이션 등이 출력되는 곳.
     public List<CombatStatus> statusUI;
     public List<MobSlot> mobSlotList; //슬롯만 저장됨
-    public List<GameObject> MobList; //위의 슬롯에서 몬스터가 있는곳만 찾아서 저장 
+    public List<GameObject> MobList; //위의 슬롯에서 몬스터가 있는곳만 찾아서 저장 (사망시 제거 가능한 몬스터 오브젝트 리스트)
 
     public CombatSlot selectedSlot; //선택된 슬롯. 스킬 사용시 or 아이템 사용시 이 슬롯을 대상으로 함.
 
@@ -26,6 +26,8 @@ public class CombatDisplay : MonoBehaviour
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
     public bool skillSelected; //스킬이 선택되었는지 판별하는 변수.firstSelection에서 스킬 선택시.
     public bool itemSelected; //아이템이 선택되었는지 판별하는 변수.firstSelection에서 아이템 선택시.
+
+    public bool inAction;//플레이어가 행동 중인경우. 동시에 여러 행동이 겹치지 않게만든 변수.
 
     private void Update()
     {
@@ -53,9 +55,14 @@ public class CombatDisplay : MonoBehaviour
 
         selectSlot();
         TurnTimeCheck();
+        WhenDie();
         if (attackSelected)
         {
             selectEnemy();
+        }
+        if (skillSelected)
+        {
+            SkillOnSelect();
         }
     }
 
@@ -145,9 +152,13 @@ public class CombatDisplay : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격(기본공격)
         {
             combatManager.monsterSelected = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
+            inAction = true;
             selectingPlayer.Attack();
+            StartCoroutine(inaction());
             combatManager.isFirstSelection = false;
             attackSelected = false;
+            combatManager.monsterSelected = null;
+            selectedMobIndex = 0;
             Debug.Log("공격을 하였음.");
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
@@ -164,5 +175,90 @@ public class CombatDisplay : MonoBehaviour
             combatSelection.firstSelection.SetActive(true);
         }
 
+    }//기본공격시 몬스터 선택+공격하는 함수.
+    public void SkillOnSelect() //스킬을 사용할 대상 선택.
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (combatManager.combatDisplay.selectedMobIndex < combatManager.combatDisplay.MobList.Count - 1)
+            {
+                combatManager.combatDisplay.selectedMobIndex++;
+            }
+            else
+            {
+                combatManager.combatDisplay.selectedMobIndex = 0;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (combatManager.combatDisplay.selectedMobIndex > 0)
+            {
+                combatManager.combatDisplay.selectedMobIndex--;
+            }
+            else
+            {
+                combatManager.combatDisplay.selectedMobIndex = combatManager.combatDisplay.MobList.Count - 1;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격
+        {
+            combatManager.combatDisplay.combatManager.monsterSelected = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
+            combatManager.combatDisplay.inAction = true;
+            switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
+            {
+                case 0:
+                    combatManager.combatDisplay.selectingPlayer.Skill1();
+                    break;
+                case 1:
+                    combatManager.combatDisplay.selectingPlayer.Skill2();
+                    break;
+                case 2:
+                    combatManager.combatDisplay.selectingPlayer.Skill3();
+                    break;
+                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                    combatManager.combatDisplay.selectingPlayer.Skill4();
+                    break;
+            }
+            StartCoroutine(inaction());
+            combatManager.combatDisplay.combatManager.isFirstSelection = false;
+            combatManager.combatDisplay.skillSelected = false;
+            combatManager.combatDisplay.combatManager.monsterSelected = null;
+            combatManager.combatDisplay.selectedMobIndex = 0;
+            Debug.Log("공격을 하였음.");
+            //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
+            if (combatManager.combatDisplay.isPlayerTurn)
+            {
+                combatManager.combatDisplay.selectedSlotIndex = 0;
+                combatManager.combatDisplay.combatSelection = combatManager.combatDisplay.slotList[combatManager.combatDisplay.selectedSlotIndex].combatSelection;
+                combatManager.combatDisplay.combatSelection.charSelection.SetActive(true);
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            combatManager.combatDisplay.skillSelected = false;
+            combatManager.combatDisplay.combatSelection.skillSelection.SetActive(true);
+        }
+    }
+    private void WhenDie()
+    {
+        if (combatManager.isCombatStart)
+        {
+            for(int i = 0; i < MobList.Count; i++)
+            {
+                if (MobList[i].GetComponent<TestMob>().Hp <= 0)
+                {
+                    MobList[i].SetActive(false);
+                    MobList.RemoveAt(i);
+                }
+            }
+        }
+    }
+    
+    IEnumerator inaction() //전투 중 행동을 취하고 있을때 다른 스크립트와의 충돌을 방지하기 위한 코루틴.
+    {
+        yield return new WaitForSeconds(0.4f);
+        inAction = false;
     }
 }

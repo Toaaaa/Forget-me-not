@@ -107,7 +107,6 @@ public class CombatManager : Singleton<CombatManager>
             if (monsterObject[i].GetComponent<TestMob>().Hp <= 0)
             {
                 monsterDie(i);
-                break;
             }
         }//몬스터의 체력이 0이하가 되면 사망판정 + 사망한 몬스터를 리스트,monsterobject에서 제거.
         if(isCombatStart)//전투가 시작되었을때
@@ -136,9 +135,9 @@ public class CombatManager : Singleton<CombatManager>
             {
                 combatDisplay.isPlayerTurn = true;
             }//playerTurnTime != 0
-            if (combatDisplay.attackSelected /*||skillSelected*/)
+            if (combatDisplay.attackSelected ||combatDisplay.skillSelected)
             {
-                monsterSelected = monsterObject[combatDisplay.selectedMobIndex];
+                monsterSelected = monsterAliveList[combatDisplay.selectedMobIndex];
             }
             else
             {
@@ -147,7 +146,7 @@ public class CombatManager : Singleton<CombatManager>
         }
     }
 
-    public void updateMonster()
+    public void updateMonster()//incombatscene에서 해당 함수 호출하여 사용.
     {
         Scene scene = SceneManager.GetActiveScene();
         if(scene.name != battleSceneName)
@@ -254,13 +253,6 @@ public class CombatManager : Singleton<CombatManager>
     public void isAttackSelected(PlayableC player)
     {
 
-    }
-    public void MoblistSet()
-    {
-            for (int i = 0; i < monsterObject.Count; i++)
-            {
-                combatDisplay.mobSlotList[i].GetComponent<MobSlot>().monster = monsterObject[i];
-            }
     }
 }
 

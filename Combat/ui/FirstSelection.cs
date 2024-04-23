@@ -33,8 +33,8 @@ public class FirstSelection : MonoBehaviour
                     selectionIndex = 0;
                 }
             }
-            for (int i = 0; i < selection.Count; i++)
-            {
+            for (int i = 0; i < selection.Count; i++)//선택중인 스킬 표시.
+        {
                 if (i == selectionIndex)
                 {
                     selection[i].SetActive(true);
@@ -49,13 +49,17 @@ public class FirstSelection : MonoBehaviour
                 switch (selectionIndex)
                 {
                     case 0:
-                    combatManager.combatDisplay.selectingPlayer = combatSelection.player;
-                    combatManager.combatDisplay.combatSelection = combatSelection;
+                    combatManager.combatDisplay.selectingPlayer = combatSelection.player;//행동을 선택할 (공격, 스킬들을 실행할) 플레이어 저장.
+                    combatManager.combatDisplay.combatSelection = combatSelection;//현재 selection중인 selection오브젝트 저장.
                     combatManager.combatDisplay.attackSelected = true;                    
                     this.gameObject.SetActive(false);
                         break;
                     case 1:
-                        Debug.Log("스킬");
+                    combatManager.combatDisplay.selectingPlayer = combatSelection.player;
+                    combatManager.combatDisplay.combatSelection = combatSelection;
+                    //combatManager.combatDisplay.skillSelected = true;
+                    combatSelection.skillSelection.SetActive(true);
+                    this.gameObject.SetActive(false);
                         break;
                     case 2:
                         Debug.Log("아이템");
