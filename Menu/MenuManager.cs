@@ -128,7 +128,7 @@ public class MenuManager : MonoBehaviour
                 slotOn = true; //플레이어 슬롯메뉴에 접근.
             }
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 switch (menuselectionNum)
                 {
@@ -219,7 +219,7 @@ public class MenuManager : MonoBehaviour
                     slotItemNum = 0;
                 if (Input.GetKeyDown(KeyCode.RightArrow))
                     slotItemNum = 1;
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (Input.GetKeyDown(KeyCode.Space))
                     slots[slotNum].select(slotItemNum); //선택된 무기 or 악세의 슬롯에 아이템이 있을경우 장착해제.
                 slots[slotNum].scaleup(slotItemNum);
             }
@@ -254,7 +254,7 @@ public class MenuManager : MonoBehaviour
                     slots[i].isSelected = false;
                 }
             }//화살표 표시.
-            if (Input.GetKeyDown(KeyCode.Return) && !inSlotItemSelecting)
+            if (Input.GetKeyDown(KeyCode.Space) && !inSlotItemSelecting)
             {
                 inSlotItemSelecting = true;
             }
