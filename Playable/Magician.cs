@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Magician", menuName = "PlayableCharacter/Magician")]
@@ -20,7 +21,11 @@ public class Magician : PlayableC
     }
     override public void Skill2() //모든 플레이어들 치명타 확률 증가
     {
-        
+        if (CombatManager.Instance.playerList[0].critBuff)
+        {
+            Debug.Log("치명타 버프가 이미 적용중 입니다.");
+            return;
+        }
         for(int i = 0; i < CombatManager.Instance.playerList.Count; i++)
         {
             CombatManager.Instance.playerList[i].crit += 15;
