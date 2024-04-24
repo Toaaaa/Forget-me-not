@@ -250,10 +250,7 @@ public class CombatManager : Singleton<CombatManager>
 
 
 
-    public void isAttackSelected(PlayableC player)
-    {
-
-    }
+   
 }
 
 

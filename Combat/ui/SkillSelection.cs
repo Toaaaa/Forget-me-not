@@ -129,5 +129,5 @@ public class SkillSelection : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         combatManager.combatDisplay.inAction = false;
-    }*/
+    }*///해당 부분 combatdisplay로 이동.
 }

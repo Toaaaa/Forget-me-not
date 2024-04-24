@@ -255,7 +255,12 @@ public class CombatDisplay : MonoBehaviour
             }
         }
     }
-    
+    public void AtActionEnd()
+    {
+
+    }//플레이어의 행동이 끝났을때 실행되는 함수 (몬스터의 사망확인후, 사망 모션 실행, 버프형 스킬의 이펙트 실행등..)
+
+
     IEnumerator inaction() //전투 중 행동을 취하고 있을때 다른 스크립트와의 충돌을 방지하기 위한 코루틴.
     {
         yield return new WaitForSeconds(0.4f);
