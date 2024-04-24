@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CombatDisplay : MonoBehaviour
 {
+    public Inventory inventory;
     public CombatManager combatManager;
     public List<PlayableC> playerList;
     public List<CombatSlot> slotList; //플레이어의 애니메이션 등이 출력되는 곳.
@@ -22,6 +23,7 @@ public class CombatDisplay : MonoBehaviour
 
     public PlayableC selectingPlayer;//공격,아이템,스킬 등을 실행할 플레이어.
     public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
+    public Item selectingItem;//선택된 아이템.
 
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
     public bool skillSelected; //스킬이 선택되었는지 판별하는 변수.firstSelection에서 스킬 선택시.
@@ -52,7 +54,10 @@ public class CombatDisplay : MonoBehaviour
                 statusUI[i].gameObject.SetActive(false);
             }
         }
-
+        if (!isPlayerTurn)
+        {
+            IsNotPlayerTurn();           
+        }
         selectSlot();
         TurnTimeCheck();
         WhenDie();
@@ -63,6 +68,10 @@ public class CombatDisplay : MonoBehaviour
         if (skillSelected)
         {
             SkillOnSelect();
+        }
+        if(itemSelected)
+        {
+            ItemOnSelect();
         }
     }
 
@@ -241,6 +250,61 @@ public class CombatDisplay : MonoBehaviour
             combatManager.combatDisplay.combatSelection.skillSelection.SetActive(true);
         }
     }
+    private void ItemOnSelect()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if(selectedSlotIndex < slotList.Count-1)
+            {
+                selectedSlotIndex++;
+            }
+            else
+            {
+                selectedSlotIndex = 0;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (selectedSlotIndex > 0)
+            {
+                selectedSlotIndex--;
+            }
+            else
+            {
+                selectedSlotIndex = slotList.Count - 1;
+            }
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            inAction = true;
+            combatSelection.itemSelection.SetActive(false);
+            combatSelection.charSelection.SetActive(true);
+            selectingPlayer = slotList[selectedSlotIndex].player;
+            selectedSlotIndex = 0;
+            UseItem();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            itemSelected = false;
+            selectingItem = null;
+            combatSelection.itemSelection.SetActive(true);
+            combatSelection.charSelection.SetActive(false);
+            selectedSlotIndex = 0;
+        }
+        Debug.Log("아이템 사용중");
+    }//아이템을 사용할 플레이어 대상 선택
+    private void UseItem()
+    {
+        //seletingitem을 사용.+selectedplayer에게 사용.
+        StartCoroutine(inaction());
+        inventory.Container[selectingItem.itemID].amount--;
+        ConsumeItem consumeItem = (ConsumeItem)selectingItem;
+        consumeItem.OnUse(selectingPlayer);
+        combatManager.selectedPlayer = null;//아이템을 사용후 지정된 플레이어 초기화.
+        selectingItem = null;//아이템을 사용후 지정된 아이템 초기화.
+        itemSelected = false;//아이템 사용중 변수 초기화.
+    }
     private void WhenDie()
     {
         if (combatManager.isCombatStart)
@@ -260,6 +324,14 @@ public class CombatDisplay : MonoBehaviour
 
     }//플레이어의 행동이 끝났을때 실행되는 함수 (몬스터의 사망확인후, 사망 모션 실행, 버프형 스킬의 이펙트 실행등..)
 
+    private void IsNotPlayerTurn()//플레이어의 턴이 아닐때 실행되는 함수.
+    {
+        for (int i = 0; i < slotList.Count; i++)//플레이어의 턴이 아닐게 됫을때. 플레이어의 선택창 전부 비활성화.
+        {
+            slotList[i].combatSelection.charSelection.SetActive(false);
+        }
+        //플레이어 턴이 아니면 현재 띄워진 ui들을 전부 닫기.
+    }
 
     IEnumerator inaction() //전투 중 행동을 취하고 있을때 다른 스크립트와의 충돌을 방지하기 위한 코루틴.
     {

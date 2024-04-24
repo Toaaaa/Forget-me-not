@@ -354,7 +354,6 @@ public class DisplayInventory : MonoBehaviour
     public Vector3 GetPosition(int i)
     {
         return new Vector3(0, Y_Start+(-Y_SpaceBetweenItems*i), 0f);
-        //위의 방식이 아닌 새로운 방식으로. 세로 방향으로만 나열되는 방식으로 바꿀것.
     }
 
   

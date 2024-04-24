@@ -20,6 +20,7 @@ public class Magician : PlayableC
     }
     override public void Skill2() //모든 플레이어들 치명타 확률 증가
     {
+        
         for(int i = 0; i < CombatManager.Instance.playerList.Count; i++)
         {
             CombatManager.Instance.playerList[i].crit += 15;

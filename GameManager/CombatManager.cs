@@ -30,7 +30,7 @@ public class CombatManager : Singleton<CombatManager>
 
     //ui
     public bool isFirstSelection; //처음 선택창이 켜저있는지.
-    public PlayableC selectedPlayer; //선택된 플레이어. (스킬을 사용할때 사용)
+    public PlayableC selectedPlayer; //선택된 플레이어. (스킬+아이템을 사용할때 사용) << 이건 combatdisplay에서 사용.
     public GameObject monsterSelected; //공격,스킬을 사용할 지정된 몬스터.//몬스터의 경우 mob.target 에서 스스로 특정조건에 맞는 대상 판정.
 
     //turn
@@ -124,6 +124,9 @@ public class CombatManager : Singleton<CombatManager>
                 if(monsterTurnTime == 0)
                 {
                     timerSet();
+                    combatDisplay.isPlayerTurn = true;
+                    combatDisplay.combatSelection = combatDisplay.slotList[0].combatSelection;
+                    combatDisplay.combatSelection.charSelection.SetActive(true);
                 }//플레이어와 몬스터의 턴이 모두 소모되었을때, 타이머 리셋.
                 else
                 {

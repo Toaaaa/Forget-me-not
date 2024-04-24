@@ -57,12 +57,14 @@ public class FirstSelection : MonoBehaviour
                     case 1:
                     combatManager.combatDisplay.selectingPlayer = combatSelection.player;
                     combatManager.combatDisplay.combatSelection = combatSelection;
-                    //combatManager.combatDisplay.skillSelected = true;
                     combatSelection.skillSelection.SetActive(true);
                     this.gameObject.SetActive(false);
                         break;
                     case 2:
-                        Debug.Log("æ∆¿Ã≈€");
+                    combatManager.combatDisplay.selectingPlayer = combatSelection.player;
+                    combatManager.combatDisplay.combatSelection = combatSelection;
+                    combatSelection.itemSelection.SetActive(true);
+                    this.gameObject.SetActive(false);
                         break;
                     case 3:
                         WhenFlee();
@@ -71,6 +73,7 @@ public class FirstSelection : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Escape))
             {
+                selectionIndex = 0;
                 combatSelection.charSelection.SetActive(true);
                 combatSelection.firstSelection.SetActive(false);
                 combatManager.isFirstSelection = false;

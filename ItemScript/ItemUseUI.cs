@@ -26,7 +26,7 @@ public class ItemUseUI : MonoBehaviour
             if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
                 displayInventory.isp_SlotOn = false;
         }
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if(selecteditem.itemType == ItemType.Equipment)
                 displayInventory.returnItem();

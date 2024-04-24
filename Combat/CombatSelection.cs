@@ -12,10 +12,6 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
     public GameObject skillSelection; //½ºÅ³¼±ÅÃÃ¢
     public GameObject itemSelection; //¾ÆÀÌÅÛ¼±ÅÃÃ¢
 
-    public List<GameObject> selectionList; //À§ÀÇ ¼ø¼­´ë·Î ¸®½ºÆ®¿¡ ³Ö¾îÁÙ°Í.
-    private int indexForList; //ÇöÀç ¼±ÅÃµÈ ÀÎµ¦½º.
-
-    public int inSelectIndex; //°¢ selection³»ºÎ¿¡¼­ »ç¿ëÇÒ ÀÎµ¦½º.
 
     private void OnEnable()
     {
@@ -23,7 +19,6 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
         firstSelection.SetActive(false);
         skillSelection.SetActive(false);
         //itemSelection.SetActive(false);
-        indexForList = 0;
     }
 
     private void Update()

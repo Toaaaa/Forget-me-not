@@ -15,6 +15,7 @@ public enum ItemType
 public abstract class Item : ScriptableObject
 {
     public GameObject prefab;
+    public GameObject combatPrefab; //전투시 사용할 아이템 박스.
     public Sprite sprite;
 
     public int itemID;
