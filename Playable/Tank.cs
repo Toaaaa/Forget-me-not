@@ -19,7 +19,10 @@ public class Tank : PlayableC
     {
         if(isDefPlused == false)
         {
-            this.def = def * 2;
+            for (int i = 0; i < CombatManager.Instance.playerList.Count; i++)
+            {
+                CombatManager.Instance.playerList[i].def = CombatManager.Instance.playerList[i].def * 1.1f;
+            }
             Debug.Log("방어력 증가");
             isDefPlused = true;
             //30초 지나면 버프가 해제되는 코루틴 실행하기.(def = originalDef) //코루틴 이 아니라 combatmanager에서 변수로 시간을 체크하는게 나을수도..?
@@ -36,6 +39,7 @@ public class Tank : PlayableC
     }
     override public void Skill3() //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 5씩 감소시킴.
     { //>> 높은 가치의 스킬이기에 코스트 높게 설정할것.
+        Debug.Log("땅울리기");
         for (int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
         {
             CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def;

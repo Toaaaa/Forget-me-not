@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SkillSelection : MonoBehaviour
 {
@@ -14,7 +15,6 @@ public class SkillSelection : MonoBehaviour
 
     private void Update()
     {
-
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             skillIndex--;
@@ -48,14 +48,64 @@ public class SkillSelection : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                combatManager.combatDisplay.skillSelected = true;
+                if(combatManager.combatDisplay.selectingPlayer.name =="Healer")
+                {
+                    if(skillIndex == 0 || skillIndex == 2 || skillIndex == 3)
+                    {
+                        combatManager.combatDisplay.selectedSlotIndex = 0;
+                        combatManager.combatDisplay.slotList[0].combatSelection.charSelection.SetActive(true);
+                    }
+                    combatManager.combatDisplay.skillSelectedForPlayer = true;
+                }
+                if(combatManager.combatDisplay.selectingPlayer.name == "Tank")
+                {
+                    if (skillIndex == 0)
+                    {
+                        combatManager.combatDisplay.skillSelectedForPlayer = true;
+                    }
+                    else if (skillIndex == 3)
+                    {
+                        Debug.Log("탱커의 4번 스킬은 없습니다.");
+                    }
+                    else
+                    {
+                        combatManager.combatDisplay.skillSelected = true;
+                    }
+                }
+                if(combatManager.combatDisplay.selectingPlayer.name =="Warrior")
+                {
+                    combatManager.combatDisplay.skillSelected = true;
+                }
+                if(combatManager.combatDisplay.selectingPlayer.name == "Magician")
+                {
+                    if(skillIndex == 1)
+                    {
+                        combatManager.combatDisplay.skillSelectedForPlayer = true;
+                    }
+                    else
+                    {
+                        combatManager.combatDisplay.skillSelected = true;
+                    }
+                }
                 combatManager.combatDisplay.combatSelection.skillSelection.SetActive(false);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.Escape)&&!combatManager.combatDisplay.skillSelected)//이거 skillonselect와 겹치려나..?
         {
-            combatManager.combatDisplay.combatSelection.firstSelection.SetActive(true);
+            if (combatManager.combatDisplay.skillSelectedForPlayer)
+            {
+                Debug.Log("이거");
+                combatManager.combatDisplay.combatSelection.firstSelection.SetActive(false);
+                combatManager.combatDisplay.combatSelection.skillSelection.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("요거");
+                combatManager.combatDisplay.combatSelection.firstSelection.SetActive(true);
+                combatManager.combatDisplay.combatSelection.skillSelection.SetActive(false);
+            }
+            skillIndex = 0;
         }
     }
 

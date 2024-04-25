@@ -13,6 +13,7 @@ public class Healer : PlayableC
     }
     override public void Skill1()//단일 회복
     {
+        Debug.Log("단일 회복");
         CombatManager.Instance.selectedPlayer.hp += this.atk *1.5f;
         if(CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
         {
@@ -21,6 +22,7 @@ public class Healer : PlayableC
     }
     override public void Skill2()//광역 회복
     {
+        Debug.Log("광역 회복");
         for(int i =0; i<CombatManager.Instance.playerList.Count; i++)
         {
             CombatManager.Instance.playerList[i].hp += this.atk;

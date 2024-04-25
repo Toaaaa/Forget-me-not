@@ -15,10 +15,19 @@ public class MobSlot : MonoBehaviour
             {
                 selectingArrow.SetActive(true);
             }
+            else if(CombatManager.Instance.combatDisplay.skillForAllMob)
+            {
+                if(monster !=null &&!monster.GetComponent<TestMob>().isDead)
+                    selectingArrow.SetActive(true);
+            }
             else
             {
                 selectingArrow.SetActive(false);
             }
+        }
+        else if(CombatManager.Instance.combatDisplay.skillForAllMob)
+        {
+            selectingArrow.SetActive(true);
         }
         else
         {

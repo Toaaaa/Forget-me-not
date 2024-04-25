@@ -9,5 +9,6 @@ public class InCombatScene : MonoBehaviour
     {
         combatManager = CombatManager.Instance;
         combatManager.updateMonster();
+        combatManager.timerStart();
     }
 }

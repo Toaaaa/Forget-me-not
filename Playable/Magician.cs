@@ -14,9 +14,13 @@ public class Magician : PlayableC
     }
     override public void Skill1() //블레이즈
     {
+        Debug.Log("블레이즈");
         for(int i =0; i<CombatManager.Instance.monsterList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
-            CombatManager.Instance.monsterList[i].Hp -= CheckCrit(atk * 1.5f, this.crit);
+            float temp = CheckCrit(atk * 1.5f, this.crit);
+            Debug.Log(temp);
+            Debug.Log("공격 데미지는 :" + atk * 1.5f + "입니다.");
+            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= temp;
         }
     }
     override public void Skill2() //모든 플레이어들 치명타 확률 증가
@@ -33,7 +37,7 @@ public class Magician : PlayableC
         }
     }
     override public void Skill3() //속도 감소
-    {//코스트 상 (적의 속도를 감소키기기에 밸류가 높음)
+    {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
         for (int i = 0; i < CombatManager.Instance.monsterObject.Count; i++)
         {
             if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)

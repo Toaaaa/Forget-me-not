@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Çàµ¿ ¼±ÅÃ ui ÄÁÆ®·Ñ·¯
@@ -15,9 +16,20 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
 
     private void OnEnable()
     {
-        charSelection.SetActive(true);
+        if(combatManager.combatDisplay.skillForAllPlayer)//healerÀÇ ½ºÅ³°ú ¿¬°üµÈ SkillOnSelectedPlayer¿Í °ü·ÃÀÖÀ½.
+        {
+            if(combatManager.combatDisplay.selectingPlayer ==player)
+                skillSelection.SetActive(true);
+        }
+        else
+        {
+            skillSelection.SetActive(false);
+        }
+        if (!combatManager.combatDisplay.noCharObj)//healerÀÇ ½ºÅ³°ú ¿¬°üµÈ SkillOnSelectedPlayer¿Í °ü·ÃÀÖÀ½.
+        {
+            charSelection.SetActive(true);
+        }
         firstSelection.SetActive(false);
-        skillSelection.SetActive(false);
         //itemSelection.SetActive(false);
     }
 
@@ -33,8 +45,13 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
                 firstSelection.SetActive(true);
                 combatManager.isFirstSelection = true;
             }
-
-            
+           
         }
+        if (combatManager.combatDisplay.skillForAllPlayer)
+        {
+            charSelection.SetActive(true);
+        }
+
+
     }
 }

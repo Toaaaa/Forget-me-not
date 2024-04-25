@@ -9,7 +9,7 @@ public class FirstSelection : MonoBehaviour
     public List<GameObject> selection; // 1.공격 2.스킬 3.아이템 4.도망
 
 
-    private int selectionIndex = 0;
+    public int selectionIndex = 0;
 
     int playerAverageSpeed;
     int fastestMonsterSpeed;

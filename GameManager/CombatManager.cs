@@ -53,7 +53,6 @@ public class CombatManager : Singleton<CombatManager>
         combatDisplay.playerList = playerList;
         combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
-        timerStart();//iscombatstart전에 미리 턴시간 세팅.
         isCombatStart = true;
         mapData.GoToBattle();
         Player.Instance.combatPosition = mapData.playerPosition;
@@ -70,6 +69,7 @@ public class CombatManager : Singleton<CombatManager>
         {
             Destroy(monsterObject[i]);
         }
+        combatDisplay.inAction = false;
         monstersInCombat.Clear();
         monsterObject.Clear();
         monsterAliveList.Clear();       
@@ -196,9 +196,10 @@ public class CombatManager : Singleton<CombatManager>
             playerTurnTime = 0;
         }
     }
-    private void timerStart()//완전 처음 전투 시작시의 타이머.
+    public void timerStart()//완전 처음 전투 시작시의 타이머.
     {
         tempMonst = 0;
+        playerTurnTime = 0;
         for (int i = 0; i < playerList.Count; i++)
         {
             if (!playerList[i].isDead)
@@ -215,6 +216,7 @@ public class CombatManager : Singleton<CombatManager>
     private void timerSet()
     {
         tempMonst = 0;
+        playerTurnTime = 0;
         for(int i = 0; i < playerList.Count; i++)
         {
             if (!playerList[i].isDead)

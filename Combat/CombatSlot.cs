@@ -30,6 +30,10 @@ public class CombatSlot : MonoBehaviour
             {
                 combatSelection.gameObject.SetActive(true);
             }
+            else if(combatDisplay.skillForAllPlayer)
+            {
+                combatSelection.gameObject.SetActive(true);
+            }
             else
             {
                 combatSelection.gameObject.SetActive(false);

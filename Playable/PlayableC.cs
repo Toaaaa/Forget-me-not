@@ -90,6 +90,7 @@ public class PlayableC : ScriptableObject
             return atkDMG * 2.0f;
         }
         else
+            Debug.Log("일반 데미지");
             return atkDMG;
     }
 }
