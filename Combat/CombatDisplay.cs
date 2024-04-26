@@ -33,6 +33,7 @@ public class CombatDisplay : MonoBehaviour
     public bool skillForAllPlayer; //모든 플레이어를 대상으로 하는 스킬인지 판별하는 변수.
     public bool skillForAllMob; //모든 몬스터를 대상으로 하는 스킬인지 판별하는 변수.
     public bool itemSelected; //아이템이 선택되었는지 판별하는 변수.firstSelection에서 아이템 선택시.
+    public bool BuffItemSelected; //버프형 아이템이 선택되었는지 판별하는 변수.
 
     //코루틴에서 쓸 변수
     public bool inAction;//플레이어가 행동 중인경우. 동시에 여러 행동이 겹치지 않게만든 변수.
@@ -95,6 +96,10 @@ public class CombatDisplay : MonoBehaviour
         {
             ItemOnSelect();
         }
+        if(BuffItemSelected)
+        {
+            BuffItemOnselect();
+        }
         if(skillSelectedForPlayer)
         {
             if(selectingPlayer.name == "Magician" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 1)
@@ -136,7 +141,7 @@ public class CombatDisplay : MonoBehaviour
     }
     private void selectSlot()
     {
-        if (isPlayerTurn && !duringSceneChange&& !combatManager.isFirstSelection)
+        if (isPlayerTurn && !duringSceneChange&& !combatManager. isFirstSelection)
         {
             if(Input.GetKeyDown(KeyCode.DownArrow))
             {
@@ -165,26 +170,61 @@ public class CombatDisplay : MonoBehaviour
         }
         if (slotList[selectedSlotIndex].player.isDead)
         {
-            if(selectUp)
+            if(selectingPlayer != null)
             {
-                if (selectedSlotIndex > 0)
+                if (selectingPlayer.name == "Healer" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 3)
                 {
-                    selectedSlotIndex--;
+                    selectedSlot = slotList[selectedSlotIndex];
                 }
                 else
                 {
-                    selectedSlotIndex = slotList.Count - 1;
+                    if (selectUp)
+                    {
+                        if (selectedSlotIndex > 0)
+                        {
+                            selectedSlotIndex--;
+                        }
+                        else
+                        {
+                            selectedSlotIndex = slotList.Count - 1;
+                        }
+                    }
+                    else
+                    {
+                        if (selectedSlotIndex < slotList.Count - 1)
+                        {
+                            selectedSlotIndex++;
+                        }
+                        else
+                        {
+                            selectedSlotIndex = 0;
+                        }
+                    }
                 }
             }
             else
             {
-                if (selectedSlotIndex < slotList.Count - 1)
+                if (selectUp)
                 {
-                    selectedSlotIndex++;
+                    if (selectedSlotIndex > 0)
+                    {
+                        selectedSlotIndex--;
+                    }
+                    else
+                    {
+                        selectedSlotIndex = slotList.Count - 1;
+                    }
                 }
                 else
                 {
-                    selectedSlotIndex = 0;
+                    if (selectedSlotIndex < slotList.Count - 1)
+                    {
+                        selectedSlotIndex++;
+                    }
+                    else
+                    {
+                        selectedSlotIndex = 0;
+                    }
                 }
             }
         }
@@ -461,6 +501,7 @@ public class CombatDisplay : MonoBehaviour
             combatSelection = slotList[selectedSlotIndex].combatSelection;
             combatSelection.skillSelection.SetActive(true);
             noCharObj = true;
+            combatSelection.charSelection.SetActive(false);
             StartCoroutine(CoroutineForSkillSelection());
             skillSelectedForPlayer = false;
             skillSelected = false;
@@ -523,7 +564,7 @@ public class CombatDisplay : MonoBehaviour
         }
     }
 
-    private void ItemOnSelect()
+    private void ItemOnSelect()//아이템을 사용할 대상 선택
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -552,21 +593,61 @@ public class CombatDisplay : MonoBehaviour
             inAction = true;
             combatSelection.itemSelection.SetActive(false);
             combatSelection.charSelection.SetActive(true);
+            combatManager.isFirstSelection = false;
             selectingPlayer = slotList[selectedSlotIndex].player;
             selectedSlotIndex = 0;
+            itemSelected = false;
             UseItem();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            selectedSlotIndex = tempIndex;
             itemSelected = false;
             selectingItem = null;
             combatSelection.itemSelection.SetActive(true);
+            noCharObj = true;
+            StartCoroutine(CoroutineForNoChar());
             combatSelection.charSelection.SetActive(false);
-            selectedSlotIndex = 0;
         }
         Debug.Log("아이템 사용중");
     }//아이템을 사용할 플레이어 대상 선택
+    private void BuffItemOnselect()
+    {
+        for(int i = 0; i < slotList.Count; i++)
+        {
+            slotList[i].combatSelection.gameObject.SetActive(true);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inAction = true;
+            combatSelection.itemSelection.SetActive(false);
+            combatSelection.charSelection.SetActive(true);
+            selectingPlayer = slotList[selectedSlotIndex].player;
+            selectedSlotIndex = 0;
+            combatManager.isFirstSelection = false;
+            BuffItemSelected = false;
+            UseItem();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            selectedSlotIndex = tempIndex;
+            BuffItemSelected = false;
+            for (int i = 0; i < slotList.Count; i++)
+            {
+                slotList[i].combatSelection.charSelection.SetActive(false);
+                slotList[i].combatSelection.gameObject.SetActive(false);
+            }
+            noCharObj = true;
+
+            itemSelected = false;
+            selectingItem = null;
+            noCharObj = true;
+            StartCoroutine(CoroutineForselection());
+            combatSelection.itemSelection.SetActive(true);
+        }
+    }
     private void UseItem()
     {
         //seletingitem을 사용.+selectedplayer에게 사용.
@@ -613,6 +694,10 @@ public class CombatDisplay : MonoBehaviour
             slotList[i].combatSelection.charSelection.SetActive(false);
         }
     }
+    public void courountineGo()
+    {
+        StartCoroutine(CoroutineForItemSelection());
+    }
 
     IEnumerator inaction() //전투 중 행동을 취하고 있을때 다른 스크립트와의 충돌을 방지하기 위한 코루틴.
     {
@@ -625,6 +710,23 @@ public class CombatDisplay : MonoBehaviour
         noCharObj = false;
         combatSelection.skillSelection.SetActive(true);
     }
-
+    IEnumerator CoroutineForItemSelection()
+    {
+        combatSelection.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        noCharObj = false;
+        combatSelection.firstSelection.SetActive(true);
+    }
+    IEnumerator CoroutineForselection()
+    {
+        yield return new WaitForSeconds(0.1f);
+        noCharObj = false;
+        combatSelection.gameObject.SetActive(true);
+    }
+    IEnumerator CoroutineForNoChar()
+    {
+        yield return new WaitForSeconds(0.1f);
+        noCharObj = false;
+    }
 
 }

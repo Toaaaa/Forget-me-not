@@ -138,9 +138,9 @@ public class CombatManager : Singleton<CombatManager>
                 monsterDie(i);
             }
         }//몬스터의 체력이 0이하가 되면 사망판정 + 사망한 몬스터를 리스트,monsterobject에서 제거.
-        PlayerDieCheck();//플레이어의 사망여부를 체크하는 함수.+ 사망시 색깔을 임시로 변경
         if(isCombatStart)//전투가 시작되었을때
         {
+            PlayerDieCheck();//플레이어의 사망여부를 체크하는 함수.+ 사망시 색깔을 임시로 변경
             if (monsterAliveList.Count == 0)
             {
                 Debug.Log("몬스터가 전멸하였습니다.");
@@ -155,8 +155,6 @@ public class CombatManager : Singleton<CombatManager>
                 {
                     timerSet();
                     combatDisplay.isPlayerTurn = true;
-                    combatDisplay.combatSelection = combatDisplay.slotList[0].combatSelection;
-                    combatDisplay.combatSelection.charSelection.SetActive(true);
                 }//플레이어와 몬스터의 턴이 모두 소모되었을때, 타이머 리셋.
                 else
                 {
@@ -259,6 +257,22 @@ public class CombatManager : Singleton<CombatManager>
             tempMonst += 1.5f*monsterObject[i].GetComponent<TestMob>().Speed;
         }
         monsterTurnTime = tempMonst;
+
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (!playerList[i].isDead)
+            {
+                combatDisplay.selectedSlotIndex = i;
+                combatDisplay.slotList[i].combatSelection.charSelection.SetActive(true);
+                combatDisplay.attackSelected = false;
+                combatDisplay.skillSelected = false;
+                combatDisplay.skillSelectedForPlayer = false;
+                combatDisplay.skillForAllMob = false;
+                combatDisplay.skillForAllPlayer = false;
+                combatDisplay.itemSelected = false;
+                break;
+            }
+        }//마지막으로 모든 수치 초기화.
     }//플레이어와 몬스터의 속도에 따른 턴시간을 세팅해주는 함수.
     private void StartCombat()
     {

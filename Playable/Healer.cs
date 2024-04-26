@@ -40,6 +40,8 @@ public class Healer : PlayableC
     {
         CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp*0.5f;
         CombatManager.Instance.selectedPlayer.isDead = false;
+        CombatManager.Instance.selectedPlayer.isStunned = false;
+        CombatManager.Instance.selectedPlayer.isPoisoned = false;
     }
 
 

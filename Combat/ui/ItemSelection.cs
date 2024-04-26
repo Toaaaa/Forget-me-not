@@ -35,7 +35,9 @@ public class ItemSelection : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !combatDisplay.itemSelected)
         {
-            combatDisplay.combatSelection.firstSelection.SetActive(true);
+            Debug.Log("esc");
+            combatDisplay.noCharObj = true;
+            combatDisplay.courountineGo();
             gameObject.SetActive(false);
         }//인벤토리화면에서 esc누르면 firstselection으로 돌아가기.
         ItemReplace();
@@ -45,9 +47,19 @@ public class ItemSelection : MonoBehaviour
         SelectingItem();
         if(Input.GetKeyDown(KeyCode.Space) && !combatDisplay.itemSelected)//인벤토리에서 아이템을 골라서 스페이스바를 누르면.
         {
-            combatDisplay.itemSelected = true;
             combatDisplay.selectingItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item;
-            combatDisplay.combatSelection.charSelection.SetActive(true);
+            combatDisplay.tempIndex = combatDisplay.selectedSlotIndex;
+            combatDisplay.selectedSlotIndex = 0;
+            combatDisplay.slotList[combatDisplay.selectedSlotIndex].combatSelection.charSelection.SetActive(true);
+            ConsumeItem consumeItem = (ConsumeItem)combatDisplay.selectingItem;
+            if(consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
+            {
+                combatDisplay.BuffItemSelected =true;
+            }
+            else
+            {
+                combatDisplay.itemSelected = true;
+            }
             gameObject.SetActive(false);
         }
 
