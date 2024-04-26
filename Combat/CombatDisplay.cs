@@ -26,6 +26,7 @@ public class CombatDisplay : MonoBehaviour
     public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
     public Item selectingItem;//선택된 아이템.
 
+    private bool selectUp; //selectslot에서 방금 up키를 눌러서 변경 되었는지 판별.
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
     public bool skillSelected; //스킬이 선택되었는지 판별하는 변수.firstSelection에서 스킬 선택시.
     public bool skillSelectedForPlayer; //스킬이 선택되었는지 판별 + 해당 스킬이 플레이어 대상일때 사용.
@@ -139,6 +140,7 @@ public class CombatDisplay : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.DownArrow))
             {
+                selectUp = false;
                 if(selectedSlotIndex < slotList.Count-1)
                 {
                     selectedSlotIndex++;
@@ -150,6 +152,7 @@ public class CombatDisplay : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
+                selectUp = true;
                 if (selectedSlotIndex > 0)
                 {
                     selectedSlotIndex--;
@@ -160,7 +163,35 @@ public class CombatDisplay : MonoBehaviour
                 }
             }
         }
-        selectedSlot = slotList[selectedSlotIndex];
+        if (slotList[selectedSlotIndex].player.isDead)
+        {
+            if(selectUp)
+            {
+                if (selectedSlotIndex > 0)
+                {
+                    selectedSlotIndex--;
+                }
+                else
+                {
+                    selectedSlotIndex = slotList.Count - 1;
+                }
+            }
+            else
+            {
+                if (selectedSlotIndex < slotList.Count - 1)
+                {
+                    selectedSlotIndex++;
+                }
+                else
+                {
+                    selectedSlotIndex = 0;
+                }
+            }
+        }
+        else
+        {
+            selectedSlot = slotList[selectedSlotIndex];
+        }
     }//플레이어의 턴일때 플레이어 슬롯을 선택할 수 있다.
     private void TurnTimeCheck()
     {
@@ -354,6 +385,7 @@ public class CombatDisplay : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            selectUp = false;
             if (selectedSlotIndex < slotList.Count - 1)
             {
                 selectedSlotIndex++;
@@ -365,6 +397,7 @@ public class CombatDisplay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            selectUp = true;
             if (selectedSlotIndex > 0)
             {
                 selectedSlotIndex--;

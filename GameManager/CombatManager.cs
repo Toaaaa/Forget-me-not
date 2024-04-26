@@ -4,6 +4,7 @@ using System.Net;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CombatManager : Singleton<CombatManager>
 {
@@ -92,6 +93,33 @@ public class CombatManager : Singleton<CombatManager>
         SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
         combatDisplay.gameObject.SetActive(false);
     }
+    public void OnCombatLost() //전투에서 패배할시.
+    {
+        Debug.Log("전투에서 패배하였습니다.");
+        for (int i = 0; i < monsterObject.Count; i++)
+        {
+            Destroy(monsterObject[i]);
+        }
+        combatDisplay.inAction = false;
+        monstersInCombat.Clear();
+        monsterObject.Clear();
+        monsterAliveList.Clear();
+        selectedPlayer = null;
+        monsterSelected = null;
+
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            playerList[i].resetStat();
+        }//전투가 끝나면 최대 hp, 치명타, 공격력, 방어력 등의 스탯을 초기화.
+
+        if (isAtkDebuff)
+        {
+            playerList.ForEach(x => x.atk = x.atk + 10);
+            isAtkDebuff = false;
+        }
+        //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
+        isCombatStart = false;
+    }
 
     private void Update()
     {
@@ -110,6 +138,7 @@ public class CombatManager : Singleton<CombatManager>
                 monsterDie(i);
             }
         }//몬스터의 체력이 0이하가 되면 사망판정 + 사망한 몬스터를 리스트,monsterobject에서 제거.
+        PlayerDieCheck();//플레이어의 사망여부를 체크하는 함수.+ 사망시 색깔을 임시로 변경
         if(isCombatStart)//전투가 시작되었을때
         {
             if (monsterAliveList.Count == 0)
@@ -241,7 +270,30 @@ public class CombatManager : Singleton<CombatManager>
         monsterObject[num].GetComponent<TestMob>().isDead = true;
         monsterAliveList.Remove(monsterObject[num]);
     }
+    private void PlayerDieCheck()//추후 isdead에서의 색깔변화가 아닌. 애니메이션의 파라미터를 isdead로 변경하여 죽은 애니메이션을 실행하도록 변경할것.
+    {
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i].hp <= 0)
+            {
+                playerList[i].isDead = true;
+            }
+            if (playerList[i].isDead)
+            {
+                combatDisplay.slotList[i].GetComponent<Image>().color= new Color32(255, 0, 0, 255);
+            }
+            if (!playerList[i].isDead)
+            {
+                combatDisplay.slotList[i].GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+            }
+        }//플레이어의 체력이 0이하가 되면 사망판정.
+        if(playerList.TrueForAll(x => x.isDead == true))
+        {
+            Debug.Log("파티가 전멸하였습니다.");
+            OnCombatLost();
+        }//파티의 모든 인원이 사망시 전투종료.
 
+    }
 
     private void DebuffDamageCount() //전투 한 싸이클이 끝날때마다 디버프 데미지를 계산하는 함수.
     {
