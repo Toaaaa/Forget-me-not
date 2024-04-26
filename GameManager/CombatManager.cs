@@ -11,6 +11,7 @@ public class CombatManager : Singleton<CombatManager>
     PlayableManager playableManager;
     public MapData mapData;
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
+    public GameObject mobplace;
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
@@ -159,7 +160,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         for (int i = 0; i < monsterList.Count; i++)
         {
-            var obj = Instantiate(monsterList[i].gameObject, combatDisplay.mobSlotList[i].transform.position, Quaternion.identity,GameObject.Find("Combat system").transform);
+            var obj = Instantiate(monsterList[i].gameObject, combatDisplay.mobSlotList[i].transform.position, Quaternion.identity,mobplace.transform);
             monsterObject.Add(obj);
             combatDisplay.mobSlotList[i].GetComponent<MobSlot>().monster = obj;
             monsterAliveList.Add(obj);

@@ -275,6 +275,11 @@ public class CombatDisplay : MonoBehaviour
             combatManager.combatDisplay.selectedMobIndex = 0;
             combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
             combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            for (int i = 1; i < 4; i++)
+            {
+                combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
+            }
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (combatManager.combatDisplay.isPlayerTurn)
             {
@@ -323,6 +328,11 @@ public class CombatDisplay : MonoBehaviour
             selectedMobIndex = 0;
             combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
             combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            for (int i = 1; i < 4; i++)
+            {
+                combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
+            }
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -392,6 +402,11 @@ public class CombatDisplay : MonoBehaviour
             skillSelectedForPlayer = false;
             combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
             combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            for (int i = 1; i < 4; i++)
+            {
+                combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
+            }
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -450,6 +465,11 @@ public class CombatDisplay : MonoBehaviour
             skillForAllPlayer = false;
             combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
             combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            for(int i=1; i<4; i++)
+            {
+                combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
+            }
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
