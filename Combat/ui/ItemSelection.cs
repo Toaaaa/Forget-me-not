@@ -9,6 +9,7 @@ public class ItemSelection : MonoBehaviour
     public Inventory inventory;
     public CombatManager combatManager;
     public CombatDisplay combatDisplay;
+    public CombatItemInfo combatItemInfo;
 
     public int Y_Start;
     public int Y_SpaceBetween;
@@ -116,12 +117,13 @@ public class ItemSelection : MonoBehaviour
                 {
                     itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[0].text = inventory.Container[i].item.name;
                     ConsumeItem consumeItem = (ConsumeItem)inventory.Container[i].item;
-                    itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = consumeItem.consumeType.ToString();
+                    //itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = consumeItem.consumeType.ToString();
+                    itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[1].text = "";
                     itemDisplayed[inventory.Container[i]].GetComponent<ItemBoxDisplay>().itemboxText[2].text = inventory.Container[i].amount.ToString("n0");
                 }
                 else
                 {
-                    var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                    var obj = Instantiate(inventory.Container[i].item.combatPrefab, Vector3.zero, Quaternion.identity, transform);
                     obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                     obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID;
                     itemDisplayed.Add(inventory.Container[i], obj);
@@ -137,7 +139,7 @@ public class ItemSelection : MonoBehaviour
         {
             if (inventory.Container[i]._itemType == 1)
             {
-                var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                var obj = Instantiate(inventory.Container[i].item.combatPrefab, Vector3.zero, Quaternion.identity, transform);
                 //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                 obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID;
