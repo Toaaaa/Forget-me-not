@@ -43,7 +43,7 @@ public class ItemSelection : MonoBehaviour
         ItemReplace();
         UpdateDisplay();
         invenTotal = itemInInven.Count;
-        invenPage = invenTotal / itemPerPage;
+        invenPage = invenNumber / itemPerPage;
         SelectingItem();
         if(Input.GetKeyDown(KeyCode.Space) && !combatDisplay.itemSelected)//인벤토리에서 아이템을 골라서 스페이스바를 누르면.
         {
