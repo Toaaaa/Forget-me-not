@@ -10,6 +10,7 @@ public class SkillSelection : MonoBehaviour
 
     public CombatManager combatManager;
     public List<GameObject> skillSelection;//1~4번 스킬 선택창.
+    public List<GameObject> skillBehind;//스킬 선택창 뒤에 있는 이미지. (실제 선택은 아니고 표시용)
 
     public int skillIndex = 0;
 
