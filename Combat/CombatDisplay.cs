@@ -18,13 +18,12 @@ public class CombatDisplay : MonoBehaviour
     public int selectedSlotIndex; //선택된 슬롯의 인덱스.
     public int selectedMobIndex; //선택된 몬스터의 인덱스.
     public bool duringSceneChange; //현재 전투 입장 애니메이션이 출력 중일 경우.
-    public float MyturnTime; //플레이어의 턴 시간.
-    public float EnemyturnTime; //적의 턴 시간.
     public bool isPlayerTurn; //플레이어의 턴인지 아닌지 판별하는 변수. //플레이어의 턴을 다썼고 적의 턴일 경우 false가 됨.
 
     public PlayableC selectingPlayer;//공격,아이템,스킬 등을 실행할 플레이어.
     public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
     public Item selectingItem;//선택된 아이템.
+    public ItemSelection itemInven;//위의 아이템을 선택하는 곳.
 
     private bool selectUp; //selectslot에서 방금 up키를 눌러서 변경 되었는지 판별.
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
@@ -67,7 +66,6 @@ public class CombatDisplay : MonoBehaviour
             IsNotPlayerTurn();           
         }
         selectSlot();
-        TurnTimeCheck();
         WhenDie();
         if (attackSelected)
         {
@@ -230,20 +228,10 @@ public class CombatDisplay : MonoBehaviour
         }
         else
         {
-            selectedSlot = slotList[selectedSlotIndex];
+            if(isPlayerTurn)
+                 selectedSlot = slotList[selectedSlotIndex];
         }
     }//플레이어의 턴일때 플레이어 슬롯을 선택할 수 있다.
-    private void TurnTimeCheck()
-    {
-        if(MyturnTime<=0)
-        {
-            isPlayerTurn = false;
-        }
-        else
-        {
-            isPlayerTurn = true;
-        }
-    }//플레이어의 턴이 끝났는지 확인하는 함수.
 
     private void selectEnemy()
     {
@@ -681,6 +669,7 @@ public class CombatDisplay : MonoBehaviour
 
     private void IsNotPlayerTurn()//플레이어의 턴이 아닐때 실행되는 함수.
     {
+        OffUIWhenTurnOver();
         for (int i = 0; i < slotList.Count; i++)//플레이어의 턴이 아닐게 됫을때. 플레이어의 선택창 전부 비활성화.
         {
             slotList[i].combatSelection.charSelection.SetActive(false);
@@ -693,6 +682,23 @@ public class CombatDisplay : MonoBehaviour
         {
             slotList[i].combatSelection.charSelection.SetActive(false);
         }
+    }
+    public void OffUIWhenTurnOver()//플레이어의 턴이 끝났을때 ui전부 끄는 함수
+    {
+        //선택중이였던 셀렉션에서의 index 초기화 + selectedslot 초기화.
+        if(selectedSlot != null)
+        {
+            selectedSlot.combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            selectedSlot.combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            selectedSlot.combatSelection.firstSelection.gameObject.SetActive(false);
+            selectedSlot.combatSelection.skillSelection.SetActive(false);
+        }
+        selectedSlot = null;
+        for(int i =0; i< mobSlotList.Count; i++)
+        {
+            mobSlotList[i].selectingArrow.SetActive(false);
+        }
+        itemInven.gameObject.SetActive(false);
     }
     public void courountineGo()
     {

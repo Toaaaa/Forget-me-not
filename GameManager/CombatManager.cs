@@ -149,17 +149,17 @@ public class CombatManager : Singleton<CombatManager>
 
             PlayerTimerDelta();
             //MoblistSet();
-            if(playerTurnTime == 0)
+            if(playerTurnTime <= 0)
             {
                 if(monsterTurnTime == 0)
                 {
-                    timerSet();
                     combatDisplay.isPlayerTurn = true;
+                    timerSet();
                 }//플레이어와 몬스터의 턴이 모두 소모되었을때, 타이머 리셋.
                 else
                 {
                     combatDisplay.isPlayerTurn = false;
-                    //과 함께 몬스터의 나머지턴 소모.
+                    //과 함께 몬스터의 나머지턴 소모., ismonsterturn = true; 과함께 true일때 실행되는 함수를 제작?
                 }
             }
             else 
@@ -241,7 +241,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         monsterTurnTime = tempMonst;
     }
-    private void timerSet()
+    private void timerSet()//턴이 재시작 될때 사용하는 함수.
     {
         tempMonst = 0;
         playerTurnTime = 0;
@@ -264,6 +264,7 @@ public class CombatManager : Singleton<CombatManager>
             {
                 combatDisplay.selectedSlotIndex = i;
                 combatDisplay.slotList[i].combatSelection.charSelection.SetActive(true);
+                isFirstSelection = false;
                 combatDisplay.attackSelected = false;
                 combatDisplay.skillSelected = false;
                 combatDisplay.skillSelectedForPlayer = false;
