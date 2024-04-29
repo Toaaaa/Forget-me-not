@@ -67,7 +67,20 @@ public class SkillSelection : MonoBehaviour
         }
         else //10레벨 이상.
         {
-            
+            if(player.name == "Tank")//탱커의 경우 4번스킬이 없음.
+            {
+                if(skillIndex == 3)
+                {
+                    if(selectUp)
+                    {
+                        skillIndex = 2;
+                    }
+                    else
+                    {
+                        skillIndex = 0;
+                    }
+                }
+            }
         }
 
 
