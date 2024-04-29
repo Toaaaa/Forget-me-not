@@ -11,13 +11,16 @@ public class SkillSelection : MonoBehaviour
     public CombatManager combatManager;
     public List<GameObject> skillSelection;//1~4번 스킬 선택창.
     public List<GameObject> skillBehind;//스킬 선택창 뒤에 있는 이미지. (실제 선택은 아니고 표시용)
-
+    public PlayableC player;
+    public int PlayerLevel; //3번째 스킬과 4번째 스킬은 각각 5레벨 10레벨때 해금됨.
+    private bool selectUp;
     public int skillIndex = 0;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            selectUp = true;
             skillIndex--;
             if (skillIndex < 0)
             {
@@ -26,13 +29,50 @@ public class SkillSelection : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            selectUp = false;
             skillIndex++;
             if (skillIndex == skillSelection.Count)
             {
                 skillIndex = 0;
             }
         }
-        for (int i = 0; i < skillSelection.Count; i++)//선택중인 스킬 표시.
+        //5레벨,10레벨에 따른 스킬 선택 가능 불가능 조절.
+        if (PlayerLevel<5)
+        {
+            if(skillIndex == 2 || skillIndex == 3)
+            {
+                if(selectUp)
+                {
+                    skillIndex = 1;
+                }
+                else
+                {
+                    skillIndex = 0;
+                }
+            }
+        }
+        else if(PlayerLevel<10)//5레벨 이상 10레벨 미만.
+        {
+            if(skillIndex == 3)
+            {
+                if(selectUp)
+                {
+                    skillIndex = 2;
+                }
+                else
+                {
+                    skillIndex = 0;
+                }
+            }
+        }
+        else //10레벨 이상.
+        {
+            
+        }
+
+
+        //선택중인 스킬 표시.
+        for (int i = 0; i < skillSelection.Count; i++)
         {
             if (i == skillIndex)
             {

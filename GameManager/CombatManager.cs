@@ -144,6 +144,7 @@ public class CombatManager : Singleton<CombatManager>
             if (monsterAliveList.Count == 0)
             {
                 Debug.Log("몬스터가 전멸하였습니다.");
+                //여기서 전투종료후 경험치 계산등을 통해 레벨업 확인 + 레벨업시 스텟증가 스킬 해금등의 텍스트 출력 함수 + 이함수가 끝나면 oncombatend실행.
                 OnCombatEnd();
             }//몬스터 전멸시.           
 
