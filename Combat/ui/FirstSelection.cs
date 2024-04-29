@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class FirstSelection : MonoBehaviour
@@ -8,6 +9,7 @@ public class FirstSelection : MonoBehaviour
     public CombatSelection combatSelection; //여기에 player의 정보가 있음.
     public List<GameObject> selection; // 1.공격 2.스킬 3.아이템 4.도망
 
+    public GameObject selectCostText;
 
     public int selectionIndex = 0;
 
@@ -17,6 +19,22 @@ public class FirstSelection : MonoBehaviour
 
     private void Update()
     {
+        switch (selectionIndex)
+        {
+            case 0:
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "2";
+                break;
+            case 1:
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "0";
+                break;
+            case 2:
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                break;
+            case 3:
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                break;
+        }
+
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 selectionIndex--;

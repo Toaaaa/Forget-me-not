@@ -13,6 +13,9 @@ public class SkillSelection : MonoBehaviour
     public List<GameObject> skillSelection;//1~4번 스킬 선택창.
     public List<GameObject> skillBehind;//스킬 선택창 뒤에 있는 이미지. (실제 선택은 아니고 표시용)
     public PlayableC player;
+
+    public GameObject skillCostText;//스킬의 코스트를 표시할 텍스트.
+
     public int PlayerLevel; //3번째 스킬과 4번째 스킬은 각각 5레벨 10레벨때 해금됨.
     private bool selectUp;
     public int skillIndex = 0;
@@ -28,6 +31,24 @@ public class SkillSelection : MonoBehaviour
 
     private void Update()
     {
+        switch (skillIndex)
+        {
+            case 0:
+                skillCostText.GetComponentInChildren<TextMeshProUGUI>().text = player.skill1Cost.ToString();
+                break;
+            case 1:
+                skillCostText.GetComponentInChildren<TextMeshProUGUI>().text = player.skill2Cost.ToString();
+                break;
+            case 2:
+                skillCostText.GetComponentInChildren<TextMeshProUGUI>().text = player.skill3Cost.ToString();
+                break;
+            case 3:
+                skillCostText.GetComponentInChildren<TextMeshProUGUI>().text = player.skill4Cost.ToString();
+                break;
+            default:
+                break;
+        }
+
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             selectUp = true;

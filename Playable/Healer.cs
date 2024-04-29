@@ -38,7 +38,7 @@ public class Healer : PlayableC
         CombatManager.Instance.selectedPlayer.isPoisoned = false;
     }
     override public void Skill4() //레저렉션.
-    {
+    {//중 정도의 코스트에 모든 마나 소모. (기본적으로 1스킬 = 1마나)
         CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp*0.5f;
         CombatManager.Instance.selectedPlayer.isDead = false;
         CombatManager.Instance.selectedPlayer.isStunned = false;

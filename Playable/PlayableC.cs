@@ -55,6 +55,11 @@ public class PlayableC : ScriptableObject
     public string skill2Name;
     public string skill3Name;
     public string skill4Name;
+    //스킬 코스트
+    public int skill1Cost;
+    public int skill2Cost;
+    public int skill3Cost;
+    public int skill4Cost;
 
     public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {
