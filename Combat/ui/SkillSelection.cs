@@ -212,13 +212,11 @@ public class SkillSelection : MonoBehaviour
         {
             if (combatManager.combatDisplay.skillSelectedForPlayer)
             {
-                Debug.Log("이거");
                 combatManager.combatDisplay.combatSelection.firstSelection.SetActive(false);
                 combatManager.combatDisplay.combatSelection.skillSelection.SetActive(true);
             }
             else
             {
-                Debug.Log("요거");
                 combatManager.combatDisplay.combatSelection.firstSelection.SetActive(true);
                 combatManager.combatDisplay.combatSelection.skillSelection.SetActive(false);
             }
