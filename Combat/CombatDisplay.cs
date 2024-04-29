@@ -257,17 +257,17 @@ public class CombatDisplay : MonoBehaviour
                 selectedMobIndex = MobList.Count - 1;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격(기본공격)
+        if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime>=combatManager.attackCostTime)// 선택된 몬스터 공격(기본공격)
         {
             combatManager.monsterSelected = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
             inAction = true;
             selectingPlayer.Attack();
             StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.attackCostTime;
             combatManager.isFirstSelection = false;
             attackSelected = false;
             combatManager.monsterSelected = null;
             selectedMobIndex = 0;
-            Debug.Log("공격을 하였음.");
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -276,6 +276,10 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.charSelection.SetActive(true);
 
             }
+        }
+        else if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime< combatManager.attackCostTime)//턴시간이 부족할때.
+        {
+            Debug.Log("턴이 부족합니다.");
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -308,7 +312,7 @@ public class CombatDisplay : MonoBehaviour
                 combatManager.combatDisplay.selectedMobIndex = combatManager.combatDisplay.MobList.Count - 1;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격
+        if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
             combatManager.combatDisplay.combatManager.monsterSelected = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
             combatManager.combatDisplay.inAction = true;
@@ -328,6 +332,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.skillCostTime;
             combatManager.combatDisplay.combatManager.isFirstSelection = false;
             combatManager.combatDisplay.skillSelected = false;
             combatManager.combatDisplay.combatManager.monsterSelected = null;
@@ -348,6 +353,10 @@ public class CombatDisplay : MonoBehaviour
 
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -357,10 +366,9 @@ public class CombatDisplay : MonoBehaviour
     }
     public void SkillOnSelectAll() //광역 스킬.
     {
-        Debug.Log("광역 스킬 사용중");
         skillForAllMob = true;
         combatManager.monsterSelected = null;
-        if (Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격
+        if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
             combatManager.monsterSelected = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
             inAction = true;
@@ -382,6 +390,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -402,6 +411,10 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.charSelection.SetActive(true);
 
             }
+        }
+        else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -437,7 +450,7 @@ public class CombatDisplay : MonoBehaviour
                 selectedSlotIndex = slotList.Count - 1;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격
+        if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
 
             combatManager.selectedPlayer= slotList[selectedSlotIndex].player;
@@ -458,6 +471,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -479,6 +493,11 @@ public class CombatDisplay : MonoBehaviour
 
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             for(int i=0; i < slotList.Count; i++)
@@ -500,7 +519,7 @@ public class CombatDisplay : MonoBehaviour
     private void SkillOnSelectForAllPlayer()//모든 플레이어를 대상으로 쓰는 스킬.
     {       
         skillForAllPlayer = true;
-        if (Input.GetKeyDown(KeyCode.Space))// 선택된 몬스터 공격
+        if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
             CharAllOf();//캐릭터 화살표 전부 끄기.
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
@@ -521,6 +540,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -542,6 +562,10 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.charSelection.SetActive(true);
 
             }
+        }
+        else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -578,7 +602,7 @@ public class CombatDisplay : MonoBehaviour
                 selectedSlotIndex = slotList.Count - 1;
             }
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime >=combatManager.itemCostTime)
         {
             inAction = true;
             combatSelection.itemSelection.SetActive(false);
@@ -588,6 +612,10 @@ public class CombatDisplay : MonoBehaviour
             selectedSlotIndex = 0;
             itemSelected = false;
             UseItem();
+        }
+        else if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime < combatManager.itemCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -608,7 +636,7 @@ public class CombatDisplay : MonoBehaviour
         {
             slotList[i].combatSelection.gameObject.SetActive(true);
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime >=combatManager.itemCostTime)
         {
             inAction = true;
             combatSelection.itemSelection.SetActive(false);
@@ -618,6 +646,10 @@ public class CombatDisplay : MonoBehaviour
             combatManager.isFirstSelection = false;
             BuffItemSelected = false;
             UseItem();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.itemCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -642,6 +674,7 @@ public class CombatDisplay : MonoBehaviour
     {
         //seletingitem을 사용.+selectedplayer에게 사용.
         StartCoroutine(inaction());
+        combatManager.playerTurnTime -= combatManager.itemCostTime;
         inventory.Container[selectingItem.itemID].amount--;
         ConsumeItem consumeItem = (ConsumeItem)selectingItem;
         consumeItem.OnUse(selectingPlayer);

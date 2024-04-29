@@ -32,7 +32,8 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
         firstSelection.SetActive(false);
         //itemSelection.SetActive(false);
         skillSelection.GetComponent<SkillSelection>().player = player;
-        skillSelection.GetComponent<SkillSelection>().PlayerLevel = player.level;
+        if(player !=null)
+            skillSelection.GetComponent<SkillSelection>().PlayerLevel = player.level;
     }
 
     private void Update()

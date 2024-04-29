@@ -38,6 +38,10 @@ public class CombatManager : Singleton<CombatManager>
     //turn
     public float playerTurnTime; //플레이어의 턴 시간.
     public float monsterTurnTime; //몬스터의 턴 시간.
+    public int attackCostTime; //기본공격의 코스트 시간.
+    public int skillCostTime; //스킬 사용의 코스트 시간.
+    public int itemCostTime; //아이템 사용의 코스트 시간.
+    public int fleeCostTime; //도망가기의 코스트 시간.
     float tempMonst;
 
 
@@ -159,6 +163,8 @@ public class CombatManager : Singleton<CombatManager>
                 }//플레이어와 몬스터의 턴이 모두 소모되었을때, 타이머 리셋.
                 else
                 {
+                    //시간을 조금 가진뒤 combatdisplay.isplayerturn = false; 으로 바꾸어 몬스터의 턴을 실행.
+                    //플레이어의 남은 행동 애니메이션과 겹치지 않도록 하는것.
                     combatDisplay.isPlayerTurn = false;
                     //과 함께 몬스터의 나머지턴 소모., ismonsterturn = true; 과함께 true일때 실행되는 함수를 제작?
                 }

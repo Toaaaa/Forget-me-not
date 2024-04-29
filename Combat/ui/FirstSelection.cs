@@ -102,27 +102,34 @@ public class FirstSelection : MonoBehaviour
     {
         playerAverageSpeed = 0;
         fastestMonsterSpeed = 0;
-
-        for (int i = 0; i < combatManager.playerList.Count; i++)
+        if(combatManager.playerTurnTime >= combatManager.fleeCostTime)
         {
-            playerAverageSpeed += combatManager.playerList[i].spd;
-        }
-        playerAverageSpeed = playerAverageSpeed / combatManager.playerList.Count;
-        Debug.Log(playerAverageSpeed);
+            for (int i = 0; i < combatManager.playerList.Count; i++)
+            {
+                playerAverageSpeed += combatManager.playerList[i].spd;
+            }
+            playerAverageSpeed = playerAverageSpeed / combatManager.playerList.Count;
+            Debug.Log(playerAverageSpeed);
 
-        for (int i = 0; i < combatManager.monsterList.Count; i++)
-        {
-            fastestMonsterSpeed = Mathf.Max(fastestMonsterSpeed, combatManager.monsterList[i].Speed);
-        }
+            for (int i = 0; i < combatManager.monsterList.Count; i++)
+            {
+                fastestMonsterSpeed = Mathf.Max(fastestMonsterSpeed, combatManager.monsterList[i].Speed);
+            }
 
-        if (playerAverageSpeed > fastestMonsterSpeed)
-        {
-            Debug.Log("도망에 성공했습니다.");
-            combatManager.OnCombatEnd();
+            if (playerAverageSpeed > fastestMonsterSpeed)
+            {
+                Debug.Log("도망에 성공했습니다.");
+                combatManager.OnCombatEnd();
+            }
+            else
+            {
+                combatManager.playerTurnTime -= combatManager.fleeCostTime;
+                Debug.Log("도망에 실패했습니다.");
+            }
         }
         else
         {
-            Debug.Log("도망에 실패했습니다.");
+            Debug.Log("턴시간이 부족합니다.");
         }
     }
 

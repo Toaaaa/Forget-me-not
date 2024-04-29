@@ -189,6 +189,21 @@ public class SkillSelection : MonoBehaviour
                         combatManager.combatDisplay.skillSelected = true;
                     }
                 }
+                switch (skillIndex)
+                {
+                    case 0:
+                        combatManager.skillCostTime = player.skill1Cost;
+                        break;
+                    case 1:
+                        combatManager.skillCostTime = player.skill2Cost;
+                        break;
+                    case 2:
+                        combatManager.skillCostTime = player.skill3Cost;
+                        break;
+                    case 3:
+                        combatManager.skillCostTime = player.skill4Cost;
+                        break;
+                }
                 combatManager.combatDisplay.combatSelection.skillSelection.SetActive(false);
             }
         }
