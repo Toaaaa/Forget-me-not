@@ -368,6 +368,8 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     selectingPlayer.Skill1();
+                    //요런곳에 monsterselected 를 임시로 저장하면서 사망 확인 해주는 코루틴? 넣어도 좋을듯.
+                    //+코루틴에는 사망 애니메이션 출력에 실제로는 skill을 사용함과 동시에 이미 사망은 하였기에 애니메이션만 출력하는 코루틴.
                     break;
                 case 1:
                     selectingPlayer.Skill2();

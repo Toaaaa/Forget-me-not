@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 
 public class TextManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject textObject;
+
+    public void Textscript(string text)
     {
-        
+        textObject.GetComponent<TextMeshProUGUI>().text = text;
+        textObject.SetActive(true);
+        StartCoroutine(Turnof3Sec());
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Turnof3Sec()
     {
-        
+        yield return new WaitForSeconds(3f);
+        textObject.SetActive(false);
     }
 }
