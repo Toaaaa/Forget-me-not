@@ -8,6 +8,7 @@ public class FirstSelection : MonoBehaviour
     public CombatManager combatManager;
     public CombatSelection combatSelection; //여기에 player의 정보가 있음.
     public List<GameObject> selection; // 1.공격 2.스킬 3.아이템 4.도망
+    public List<GameObject> selectionBehind; //선택창 뒤에 있는 이미지들. (실제 선택은 아니고 표시용)
 
     public GameObject selectCostText;
 
