@@ -22,16 +22,16 @@ public class FirstSelection : MonoBehaviour
         switch (selectionIndex)
         {
             case 0:
-                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "2";
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = combatManager.attackCostTime.ToString();
                 break;
             case 1:
-                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "0";
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "";
                 break;
             case 2:
-                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = combatManager.itemCostTime.ToString();
                 break;
             case 3:
-                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = "1";
+                selectCostText.GetComponentInChildren<TextMeshProUGUI>().text = combatManager.fleeCostTime.ToString();
                 break;
         }
 
