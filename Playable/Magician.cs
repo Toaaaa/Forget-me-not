@@ -23,7 +23,7 @@ public class Magician : PlayableC
             CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= temp;
         }
     }
-    override public void Skill2() //모든 플레이어들 치명타 확률 증가
+    override public void Skill2() //모든 플레이어들 치명타 확률 증가 //Sharpening accuracy
     {
         if (CombatManager.Instance.playerList[0].critBuff)
         {
@@ -36,7 +36,7 @@ public class Magician : PlayableC
             CombatManager.Instance.playerList[i].critBuff = true;
         }
     }
-    override public void Skill3() //속도 감소
+    override public void Skill3() //속도 감소 //시간 비동기화
     {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
         for (int i = 0; i < CombatManager.Instance.monsterObject.Count; i++)
         {

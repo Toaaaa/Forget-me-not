@@ -9,7 +9,6 @@ using UnityEngine.PlayerLoop;
 public class Warrior : PlayableC
 {
 
-
     override public void Attack()
     {
         CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;

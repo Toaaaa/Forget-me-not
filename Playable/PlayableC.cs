@@ -50,6 +50,11 @@ public class PlayableC : ScriptableObject
     public Item equipedWeapon;
     public Item equipedAcc;
 
+    //스킬 이름
+    public string skill1Name;
+    public string skill2Name;
+    public string skill3Name;
+    public string skill4Name;
 
     public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {

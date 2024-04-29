@@ -8,7 +8,6 @@ public class Tank : PlayableC
     public bool isDefPlused;//방어력 증가 스킬 사용시.
     public bool isAggroOn;//탱커의 어그로스킬 적용중.
 
-    
 
     override public void Attack()
     {

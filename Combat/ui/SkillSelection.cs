@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -15,6 +16,15 @@ public class SkillSelection : MonoBehaviour
     public int PlayerLevel; //3번째 스킬과 4번째 스킬은 각각 5레벨 10레벨때 해금됨.
     private bool selectUp;
     public int skillIndex = 0;
+
+    private void OnEnable()
+    {
+        skillSelection[0].GetComponentInChildren<TextMeshProUGUI>().text = player.skill1Name;
+        skillSelection[1].GetComponentInChildren<TextMeshProUGUI>().text = player.skill2Name;
+
+        skillBehind[0].GetComponentInChildren<TextMeshProUGUI>().text = player.skill1Name;
+        skillBehind[1].GetComponentInChildren<TextMeshProUGUI>().text = player.skill2Name;
+    }
 
     private void Update()
     {
@@ -39,7 +49,13 @@ public class SkillSelection : MonoBehaviour
         //5레벨,10레벨에 따른 스킬 선택 가능 불가능 조절.
         if (PlayerLevel<5)
         {
-            if(skillIndex == 2 || skillIndex == 3)
+            skillSelection[2].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+            skillSelection[3].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+
+            skillBehind[2].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+            skillBehind[3].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+
+            if (skillIndex == 2 || skillIndex == 3)
             {
                 if(selectUp)
                 {
@@ -53,7 +69,12 @@ public class SkillSelection : MonoBehaviour
         }
         else if(PlayerLevel<10)//5레벨 이상 10레벨 미만.
         {
-            if(skillIndex == 3)
+            skillSelection[2].GetComponentInChildren<TextMeshProUGUI>().text = player.skill3Name;
+            skillSelection[3].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+
+            skillBehind[2].GetComponentInChildren<TextMeshProUGUI>().text = player.skill3Name;
+            skillBehind[3].GetComponentInChildren<TextMeshProUGUI>().text = "Skill Locked";
+            if (skillIndex == 3)
             {
                 if(selectUp)
                 {
@@ -67,7 +88,13 @@ public class SkillSelection : MonoBehaviour
         }
         else //10레벨 이상.
         {
-            if(player.name == "Tank")//탱커의 경우 4번스킬이 없음.
+            skillSelection[2].GetComponentInChildren<TextMeshProUGUI>().text = player.skill3Name;
+            skillSelection[3].GetComponentInChildren<TextMeshProUGUI>().text = player.skill4Name;
+
+            skillBehind[2].GetComponentInChildren<TextMeshProUGUI>().text = player.skill3Name;
+            skillBehind[3].GetComponentInChildren<TextMeshProUGUI>().text = player.skill4Name;
+
+            if (player.name == "Tank")//탱커의 경우 4번스킬이 없음.
             {
                 if(skillIndex == 3)
                 {

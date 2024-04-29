@@ -6,6 +6,7 @@ using UnityEngine;
 public class Healer : PlayableC
 {
 
+
     override public void Attack()
     {
         CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
@@ -20,7 +21,7 @@ public class Healer : PlayableC
             CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
         }
     }
-    override public void Skill2()//±¤¿ª È¸º¹
+    override public void Skill2()//±¤¿ª È¸º¹ //Earth Blessing
     {
         Debug.Log("±¤¿ª È¸º¹");
         for(int i =0; i<CombatManager.Instance.playerList.Count; i++)
