@@ -68,7 +68,7 @@ public class skills
 
     private void NormalAttack(TestMob mob) //일반 공격
     {
-        if(mob.target.def > mob.Atk)
+        if(mob.target.def >= mob.Atk)
         {
             mob.target.hp -= 1;
         }
@@ -101,11 +101,19 @@ public class skills
             CombatManager.Instance.isAtkDebuff = true;
         }
     }
-    private void WideAttack(TestMob mob) //모든 플레이어에게 공격력의 2배만큼 데미지를 줌.
+    private void WideAttack(TestMob mob) //모든 플레이어에게 공격력의 1배만큼 데미지를 줌.
     {
         for(int i=0; i<CombatManager.Instance.playerList.Count; i++)
         {
-            CombatManager.Instance.playerList[i].hp -= CombatManager.Instance.playerList[i].def - 2*mob.Atk;
+            mob.target = CombatManager.Instance.playerList[i];
+            if (mob.target.def >= mob.Atk*1f)
+            {
+                mob.target.hp -= 1;
+            }
+            else
+            {
+                mob.target.hp -= mob.Atk*1f - mob.target.def;
+            }
         }
     }
     private void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.

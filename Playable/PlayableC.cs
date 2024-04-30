@@ -97,7 +97,7 @@ public class PlayableC : ScriptableObject
         if (Random.Range(0, 100) < critPercent)
         {
             Debug.Log("크리티컬 데미지!");
-            return atkDMG * 2.0f;
+            return atkDMG * 1.5f;
         }
         else
             Debug.Log("일반 데미지");

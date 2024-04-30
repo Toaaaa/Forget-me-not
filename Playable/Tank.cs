@@ -11,7 +11,16 @@ public class Tank : PlayableC
 
     override public void Attack()
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Def;
+        float critatk = CheckCrit(atk, this.crit);
+        TestMob monster = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
+        if (monster.Def >= critatk)
+        {
+            monster.Hp -= 1;
+        }
+        else
+        {
+            monster.Hp -= critatk - monster.Def;
+        }
         Debug.Log("탱커의 기본 공격");
     }
     override public void Skill1()
