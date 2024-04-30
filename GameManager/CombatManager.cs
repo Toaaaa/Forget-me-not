@@ -266,9 +266,9 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime += 1.5f*playerList[i].spd;
             }
         }
-        for(int i = 0; i < monsterObject.Count; i++)
+        for(int i = 0; i < monsterAliveList.Count; i++)
         {
-            tempMonst += 1.5f*monsterObject[i].GetComponent<TestMob>().Speed;
+            tempMonst += 1.5f* monsterAliveList[i].GetComponent<TestMob>().Speed;
         }
         monsterTurnTime = tempMonst;
 
