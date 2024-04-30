@@ -10,6 +10,7 @@ public class CombatManager : Singleton<CombatManager>
 {
     [SerializeField]
     PlayableManager playableManager;
+    public MonsterAttackManager monsterAttackManager;
     public MapData mapData;
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
     public GameObject mobplace;
@@ -42,6 +43,7 @@ public class CombatManager : Singleton<CombatManager>
     public int skillCostTime; //스킬 사용의 코스트 시간.
     public int itemCostTime; //아이템 사용의 코스트 시간.
     public int fleeCostTime; //도망가기의 코스트 시간.
+
     float tempMonst;
 
 
@@ -57,6 +59,7 @@ public class CombatManager : Singleton<CombatManager>
         playerList = playableManager.joinedPlayer;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
+        combatDisplay.isPlayerTurn = true;
         combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
         isCombatStart = true;
@@ -205,6 +208,10 @@ public class CombatManager : Singleton<CombatManager>
         for (int i = 0; i < monsterObject.Count; i++) //컴뱃 매니저의 몬스터 오브젝트를 컴뱃 디스플레이의 몬스터리스트에도 추가.
         {
             combatDisplay.MobList.Add(monsterObject[i]);
+        }
+        for(int i =0; i< monsterObject.Count; i++)
+        {
+            monsterAttackManager.monsters.Add(monsterObject[i].GetComponent<TestMob>());
         }
     }
 

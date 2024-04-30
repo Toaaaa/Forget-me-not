@@ -24,6 +24,10 @@ public class skills
     {
         switch (skillNum)
         {
+            case 0:
+                //일반 공격
+                NormalAttack(mob);
+                break;
             case 1:
                 //공격력 강화
                 strongAttack(mob);
@@ -62,7 +66,19 @@ public class skills
         }
     }
 
-
+    private void NormalAttack(TestMob mob) //일반 공격
+    {
+        if(mob.target.def > mob.Atk)
+        {
+            mob.target.hp -= 1;
+        }
+        else
+        {
+            mob.target.hp -= mob.Atk - mob.target.def;
+        }
+        mob.target.hp -= mob.Atk;
+        Debug.Log(skillName);
+    }
 
     private void strongAttack(TestMob mob) //공격력 강화
     {
@@ -89,7 +105,7 @@ public class skills
     {
         for(int i=0; i<CombatManager.Instance.playerList.Count; i++)
         {
-            CombatManager.Instance.playerList[i].hp -= 2*mob.Atk;
+            CombatManager.Instance.playerList[i].hp -= CombatManager.Instance.playerList[i].def - 2*mob.Atk;
         }
     }
     private void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.
@@ -101,4 +117,23 @@ public class skills
     {
         mob.target.isSkillSealed = true;
     }
+
+
+    ///////특수 패턴 스킬
+
+    public void BattleCry(TestMob mob) //전투의 함성 (공격력 1.5배, 체력 30%회복)
+    {
+        for(int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
+        {
+            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk *= 1.5f;
+            if (!CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isDead)
+            {
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp *= CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().MaxHp*0.3f;
+            }
+        }
+        
+    }
+
+
+
 }

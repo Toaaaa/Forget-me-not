@@ -18,9 +18,9 @@ public class Monster : ScriptableObject
     public Sprite sprite;
     public MonsterType monsterType; //normal의 경우 도주가능, boss의 경우 도주 불가능.
 
-    public int mHp;
-    public int mAtk;
-    public int mDef;
+    public float mHp;
+    public float mAtk;
+    public float mDef;
     public int mSpeed;
     
 

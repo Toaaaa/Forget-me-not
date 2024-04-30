@@ -6,6 +6,7 @@ public class CombatDisplay : MonoBehaviour
 {
     public Inventory inventory;
     public CombatManager combatManager;
+    public MonsterAttackManager monsterAttackManager;
     public List<PlayableC> playerList;
     public List<CombatSlot> slotList; //플레이어의 애니메이션 등이 출력되는 곳.
     public List<CombatStatus> statusUI;

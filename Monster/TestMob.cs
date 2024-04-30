@@ -11,7 +11,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public bool isslowed; //스킬에 의해 속도가 감소되었는지 판별하는 변수.
 
     public float Hp;
-    public int MaxHp;
+    public float MaxHp;
     public float Atk;
     public float Def;
     public int Speed;
