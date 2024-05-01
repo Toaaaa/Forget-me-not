@@ -19,7 +19,7 @@ public class MonsterAttackManager : MonoBehaviour
     {
         if(monsterAttackAvailable)
         {
-                if(playerTurnUsed<6)
+                if(playerTurnUsed>=6)
                 {
                     MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
                     MonsterAttack();

@@ -131,12 +131,14 @@ public class skills
 
     public void BattleCry(TestMob mob) //전투의 함성 (공격력 1.5배, 체력 30%회복)
     {
+        float atk;
         for(int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
         {
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk *= 1.5f;
+            atk = CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk;
+            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk *= Mathf.Round(atk*1.5f);
             if (!CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isDead)
             {
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp *= CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().MaxHp*0.3f;
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp += CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().MaxHp*0.3f;
             }
         }
         
