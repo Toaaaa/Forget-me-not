@@ -135,7 +135,7 @@ public class skills
         for(int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
         {
             atk = CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk;
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk *= Mathf.Round(atk*1.5f);
+            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Atk = Mathf.Round(atk*1.5f);
             if (!CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isDead)
             {
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp += CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().MaxHp*0.3f;
