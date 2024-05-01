@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -50,6 +51,50 @@ public class MonsterAttackManager : MonoBehaviour
             monsterAttackAvailable = true;
         }
     }
+    private void AttackPattern(TestMob monster)
+    {
+        monster.target = null;
+        if (!combatManager.isAggroOn)
+        {
+            //플레이어들중 체력이 30프로 이하인 타겟을 가장먼저 타겟으로.
+            for (int i = 0; i < combatManager.playerList.Count; i++)
+            {
+                if (combatManager.playerList[i].hp <= combatManager.playerList[i].maxHp * 0.3f)
+                {
+                    monster.target = combatManager.playerList[i];
+                    break;
+                }
+            }
+            //만약 30프로 이하의 타겟이 없다면.
+            if (monster.target == null)
+            {
+                monster.target = combatManager.playerList[Random.Range(0, combatManager.playerList.Count)];
+            }
+        }
+        else
+        {
+            monster.target = combatManager.tank; //어그로가 켜져있을때 탱커를 타겟으로.
+        }
+        if(monster.target.isDead)//만약 선택된 플레이어가 이미 사망한 상태라면 다시 타겟 선정.
+        {
+            AttackPattern(monster);
+            return;
+        }
+        if(monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
+        {
+            monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+        }
+        else if(combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
+        {
+            Debug.Log("플레이어가 1명만 살아있을때");
+            monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+        }
+        else
+        {
+            monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
+        }
+    }
+
 
     private void MonsterAttack()
     {
@@ -58,13 +103,11 @@ public class MonsterAttackManager : MonoBehaviour
         Debug.Log("몬스터의 공격");
         if(!monster.isDead)
         {
-            monster.target = combatManager.playerList[Random.Range(0, combatManager.playerList.Count)];
-            monster.monsterSkill[Random.Range(0,monster.monsterSkill.Count)].UseSkill(monster);
+            AttackPattern(monster);
             return;
         }
         else
         {
-            Debug.Log("공격을 시도하였습니다. 다시 공격연산을 시작합니다.");
             MonsterAttack();
         }
 

@@ -21,7 +21,7 @@ public class CombatManager : Singleton<CombatManager>
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
     public List<GameObject> monsterAliveList; //살아있는 몬스터 리스트.
 
-
+    public int alivePlayerCount; //살아있는 플레이어의 수.
     public ConsumeItem consumeOnUse;
     public float consumeTimer;
     public bool BuffIsOn; //버프아이템은 한번에 하나만 적용 되도록. //만약에 다른 버프 사용중에 버프아이템을 사용 할 경우 이전 버프는 사라짐.
@@ -30,6 +30,8 @@ public class CombatManager : Singleton<CombatManager>
     public bool isBoss; //보스전투인지 아닌지 판별하는 변수.   
     public bool isCombatStart; //전투가 시작되었는지 판별하는 변수.
     public string battleSceneName; //전투 씬의 이름을 저장하는 변수.
+    public PlayableC tank;
+    public bool isAggroOn; //탱커의 어그로가 켜져있는지. //만약 켜져있을경우 공격의 대상은 항상 탱커로.
 
     //ui
     public bool isFirstSelection; //처음 선택창이 켜저있는지.
@@ -151,14 +153,10 @@ public class CombatManager : Singleton<CombatManager>
         if(isCombatStart)//전투가 시작되었을때
         {
             PlayerDieCheck();//플레이어의 사망여부를 체크하는 함수.+ 사망시 색깔을 임시로 변경
-            if (monsterAliveList.Count == 0)
-            {
-                Debug.Log("몬스터가 전멸하였습니다.");
-                //여기서 전투종료후 경험치 계산등을 통해 레벨업 확인 + 레벨업시 스텟증가 스킬 해금등의 텍스트 출력 함수 + 이함수가 끝나면 oncombatend실행.
-                OnCombatEnd();
-            }//몬스터 전멸시.           
-
+            MonsterAllDeadCount();//몬스터 전멸시.
+            alivePlayerCount = AliveCounting(); //살아있는 플레이어의 수를 세는 함수.
             PlayerTimerDelta();
+            TankChecking();
             //MoblistSet();
             if(playerTurnTime <= 0)
             {
@@ -356,7 +354,39 @@ public class CombatManager : Singleton<CombatManager>
             }
         }
     }
-   
+    private void MonsterAllDeadCount()
+    {
+        if (monsterAliveList.Count == 0)
+        {
+            Debug.Log("몬스터가 전멸하였습니다.");
+            //여기서 전투종료후 경험치 계산등을 통해 레벨업 확인 + 레벨업시 스텟증가 스킬 해금등의 텍스트 출력 함수 + 이함수가 끝나면 oncombatend실행.
+            OnCombatEnd();
+        }
+    }
+
+    private int AliveCounting()
+    {
+        int alivePlayerCount=0;
+
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            if (!playerList[i].isDead)
+            {
+                alivePlayerCount++;
+            }
+        }
+        return alivePlayerCount;
+    }
+    private void TankChecking()
+    {
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i].name == "Tank")
+            {
+                tank = playerList[i];
+            }
+        }
+    }
 }
 
 

@@ -43,7 +43,7 @@ public class skills
                 WideAttack(mob);
                 break;
             case 5:
-                Debug.Log("스킬5 사용");
+                DoubleAttack(mob);
                 break;
             case 6:
                 Debug.Log("스킬6 사용");
@@ -116,6 +116,23 @@ public class skills
             }
         }
     }
+    private void DoubleAttack(TestMob mob) //타겟 플레이어에게 2번만큼 데미지를 줌.
+    {
+        for (int i = 0; i < CombatManager.Instance.playerList.Count; i++)
+        {
+            mob.target = CombatManager.Instance.playerList[i];
+            if (mob.target.def >= mob.Atk)
+            {
+                mob.target.hp -= 1;
+            }
+            else
+            {
+                mob.target.hp -= mob.Atk * 1f - mob.target.def;
+                mob.target.hp -= mob.Atk * 1f - mob.target.def;
+            }
+        }
+    }
+
     private void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.
     {
         mob.target.isPoisoned = true;
@@ -143,7 +160,5 @@ public class skills
         }
         
     }
-
-
 
 }
