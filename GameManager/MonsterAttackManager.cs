@@ -11,7 +11,9 @@ public class MonsterAttackManager : MonoBehaviour
     public List<TestMob> monsters;
 
     public bool monsterAttackAvailable; //몬스터의 공격이 가능한지 판별하는 변수. (플레이어가 3턴시간 이상을 사용하였을때)
-    public int playerTurnUsed; //플레이어의 턴시간 누적 사용시간. 몬스터 공격을 하며 차감하기.
+    public float playerTurnUsed; //플레이어의 턴시간 누적 사용시간. 몬스터 공격을 하며 차감하기.
+
+    public bool isAttacking;//공격 중일때사용하는 bool.
 
     private void Update()
     {
@@ -19,7 +21,7 @@ public class MonsterAttackManager : MonoBehaviour
         {
                 if(playerTurnUsed<6)
                 {
-                    MonsterSpecialAttack();
+                    MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
                     MonsterAttack();
                     playerTurnUsed -= 6;
                     monsterAttackAvailable = false;
@@ -33,7 +35,14 @@ public class MonsterAttackManager : MonoBehaviour
         }
         else if(!combatDisplay.isPlayerTurn && combatManager.isCombatStart)//전투가 시작되었는데 플레이어이 턴이 아니게 되었을때
         {
-            MonsterAttack();
+            if(combatManager.monsterTurnTime >0)
+                MonsterAttack();
+            if(combatManager.monsterTurnTime <= 0)
+            {
+                combatDisplay.isPlayerTurn = true;
+                combatManager.timerSet();
+
+            }
         }
 
         if(playerTurnUsed >= 3)
@@ -44,6 +53,7 @@ public class MonsterAttackManager : MonoBehaviour
 
     private void MonsterAttack()
     {
+        combatManager.monsterTurnTime -= 3;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         Debug.Log("몬스터의 공격");
         if(!monster.isDead)
@@ -54,8 +64,8 @@ public class MonsterAttackManager : MonoBehaviour
         }
         else
         {
-            MonsterAttack();
             Debug.Log("공격을 시도하였습니다. 다시 공격연산을 시작합니다.");
+            MonsterAttack();
         }
 
     }

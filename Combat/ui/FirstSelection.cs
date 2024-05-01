@@ -14,8 +14,8 @@ public class FirstSelection : MonoBehaviour
 
     public int selectionIndex = 0;
 
-    int playerAverageSpeed;
-    int fastestMonsterSpeed;
+    float playerAverageSpeed;
+    float fastestMonsterSpeed;
 
 
     private void Update()
@@ -112,9 +112,9 @@ public class FirstSelection : MonoBehaviour
             playerAverageSpeed = playerAverageSpeed / combatManager.playerList.Count;
             Debug.Log(playerAverageSpeed);
 
-            for (int i = 0; i < combatManager.monsterList.Count; i++)
+            for (int i = 0; i < combatManager.monsterObject.Count; i++)
             {
-                fastestMonsterSpeed = Mathf.Max(fastestMonsterSpeed, combatManager.monsterList[i].Speed);
+                fastestMonsterSpeed = Mathf.Max(fastestMonsterSpeed, combatManager.monsterObject[i].GetComponent<TestMob>().Speed);
             }
 
             if (playerAverageSpeed > fastestMonsterSpeed)
@@ -125,6 +125,7 @@ public class FirstSelection : MonoBehaviour
             else
             {
                 combatManager.playerTurnTime -= combatManager.fleeCostTime;
+                combatManager.monsterAttackManager.playerTurnUsed += combatManager.fleeCostTime;
                 Debug.Log("도망에 실패했습니다.");
             }
         }

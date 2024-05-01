@@ -63,5 +63,11 @@ public class Tank : PlayableC
         //견습기사이기 때문에 스킬이 3개밖에 없음.
         //10레벨 달성시 스킬 해금 스크립트에서, "견습기사는 스킬이 3개밖에 없습니다." 라는 메세지를 띄워주면 될듯.
     }
+
+    override public void ResetBUff()
+    {
+        isDefPlused = false;
+        isAggroOn = false;
+    }
 }
 

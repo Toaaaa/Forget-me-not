@@ -39,7 +39,7 @@ public class CombatManager : Singleton<CombatManager>
     //turn
     public float playerTurnTime; //플레이어의 턴 시간.
     public float monsterTurnTime; //몬스터의 턴 시간.
-    public int attackCostTime; //기본공격의 코스트 시간.
+    public int attackCostTime; //기본공격의 코스트 시간unw.
     public int skillCostTime; //스킬 사용의 코스트 시간.
     public int itemCostTime; //아이템 사용의 코스트 시간.
     public int fleeCostTime; //도망가기의 코스트 시간.
@@ -95,6 +95,7 @@ public class CombatManager : Singleton<CombatManager>
             playerList.ForEach(x => x.atk = x.atk +10);
             isAtkDebuff = false;
         }
+        ResetPlayerBuff();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
         SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
@@ -124,6 +125,7 @@ public class CombatManager : Singleton<CombatManager>
             playerList.ForEach(x => x.atk = x.atk + 10);
             isAtkDebuff = false;
         }
+        ResetPlayerBuff();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
     }
@@ -251,11 +253,11 @@ public class CombatManager : Singleton<CombatManager>
         }
         for (int i = 0; i < monsterList.Count; i++)
         {
-            tempMonst +=1.5f* monsterList[i].GetComponent<TestMob>().Speed;
+            tempMonst +=1f* monsterList[i].GetComponent<TestMob>().Speed;
         }
         monsterTurnTime = tempMonst;
     }
-    private void timerSet()//턴이 재시작 될때 사용하는 함수.
+    public void timerSet()//턴이 재시작 될때 사용하는 함수.
     {
         tempMonst = 0;
         playerTurnTime = 0;
@@ -335,7 +337,13 @@ public class CombatManager : Singleton<CombatManager>
         }
     }
 
-
+    private void ResetPlayerBuff()
+    {
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            playerList[i].ResetBUff();
+        }
+    }
 
    
 }

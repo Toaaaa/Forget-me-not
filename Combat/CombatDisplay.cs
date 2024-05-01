@@ -265,6 +265,7 @@ public class CombatDisplay : MonoBehaviour
             selectingPlayer.Attack();
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.attackCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.attackCostTime;
             combatManager.isFirstSelection = false;
             attackSelected = false;
             combatManager.monsterSelected = null;
@@ -334,6 +335,7 @@ public class CombatDisplay : MonoBehaviour
             }
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.skillCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.combatDisplay.combatManager.isFirstSelection = false;
             combatManager.combatDisplay.skillSelected = false;
             combatManager.combatDisplay.combatManager.monsterSelected = null;
@@ -392,6 +394,7 @@ public class CombatDisplay : MonoBehaviour
             }
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.skillCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -473,6 +476,7 @@ public class CombatDisplay : MonoBehaviour
             }
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.skillCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -542,6 +546,7 @@ public class CombatDisplay : MonoBehaviour
             }
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.skillCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
             skillSelected = false;
             combatManager.monsterSelected = null;
@@ -676,6 +681,7 @@ public class CombatDisplay : MonoBehaviour
         //seletingitem을 사용.+selectedplayer에게 사용.
         StartCoroutine(inaction());
         combatManager.playerTurnTime -= combatManager.itemCostTime;
+        monsterAttackManager.playerTurnUsed += combatManager.itemCostTime;
         inventory.Container[selectingItem.itemID].amount--;
         ConsumeItem consumeItem = (ConsumeItem)selectingItem;
         consumeItem.OnUse(selectingPlayer);

@@ -103,5 +103,15 @@ public class PlayableC : ScriptableObject
             Debug.Log("일반 데미지");
             return atkDMG;
     }
+    virtual public void ResetBUff()
+    {
+        attackBuff = false;
+        defenseBuff = false;
+        speedBuff = false;
+        critBuff = false;
+        isSkillSealed = false;
+        isStunned = false;
+
+    }
 }
 
