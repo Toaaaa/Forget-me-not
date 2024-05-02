@@ -364,6 +364,15 @@ public class CombatDisplay : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -424,6 +433,15 @@ public class CombatDisplay : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -506,6 +524,15 @@ public class CombatDisplay : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -577,6 +604,15 @@ public class CombatDisplay : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -639,6 +675,15 @@ public class CombatDisplay : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
