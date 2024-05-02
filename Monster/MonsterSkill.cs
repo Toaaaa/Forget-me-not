@@ -27,6 +27,7 @@ public class skills
             case 0:
                 //일반 공격
                 NormalAttack(mob);
+                Debug.Log("몬스터의 일반 공격");
                 break;
             case 1:
                 //공격력 강화
@@ -44,6 +45,7 @@ public class skills
                 break;
             case 5:
                 DoubleAttack(mob);
+                Debug.Log("몬스터의 더블어택");
                 break;
             case 6:
                 Debug.Log("스킬6 사용");

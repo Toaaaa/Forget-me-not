@@ -61,8 +61,11 @@ public class MonsterAttackManager : MonoBehaviour
             {
                 if (combatManager.playerList[i].hp <= combatManager.playerList[i].maxHp * 0.3f)
                 {
-                    monster.target = combatManager.playerList[i];
-                    break;
+                    if (!combatManager.playerList[i].isDead)
+                    {
+                        monster.target = combatManager.playerList[i];
+                        break;
+                    }
                 }
             }
             //만약 30프로 이하의 타겟이 없다면.
@@ -85,9 +88,17 @@ public class MonsterAttackManager : MonoBehaviour
         }
         if(monster.target.isDead)//만약 선택된 플레이어가 이미 사망한 상태라면 다시 타겟 선정.
         {
-            AttackPattern(monster);
+            for(int i = 0; i<combatManager.playerList.Count; i++)
+            {
+                if (!combatManager.playerList[i].isDead)
+                {
+                    monster.target = combatManager.playerList[i];
+                    break;
+                }
+            }
             return;
         }
+
         if(monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
         {
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);

@@ -16,6 +16,7 @@ public class CombatManager : Singleton<CombatManager>
     public GameObject mobplace;
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
+    //public List<PlayableC> alivePlayerList;//현재 전투에 참여중인 살아있는 플레이어.
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬사용시만 접근 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
     public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
@@ -59,6 +60,14 @@ public class CombatManager : Singleton<CombatManager>
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 
         playerList = playableManager.joinedPlayer;
+        //alivePlayerList = playableManager.joinedPlayer;
+        /*for(int i = 0; i < alivePlayerList.Count; i++)
+        {
+            if (alivePlayerList[i].isDead)
+            {
+                alivePlayerList.Remove(alivePlayerList[i]);
+            }
+        }//전투 시작시 살아있는 플레이어 리스트를 만드는 함수.*/
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
         combatDisplay.isPlayerTurn = true;
@@ -305,9 +314,16 @@ public class CombatManager : Singleton<CombatManager>
     {
         for (int i = 0; i < playerList.Count; i++)
         {
-            if (playerList[i].hp <= 0)
+            if (playerList[i].hp <= 0 /*&& !playerList[i].isDead*/)
             {
                 playerList[i].isDead = true;
+                /*for (int j = 0; j < alivePlayerList.Count; j++)
+                {
+                    if (alivePlayerList[j].isDead)
+                    {
+                        alivePlayerList.Remove(alivePlayerList[j]);
+                    }
+                }*/
             }
             if (playerList[i].isDead)
             {
