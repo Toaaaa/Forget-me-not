@@ -10,6 +10,7 @@ public class CombatManager : Singleton<CombatManager>
 {
     [SerializeField]
     PlayableManager playableManager;
+    public CombatTimer combatTimer;
     public MonsterAttackManager monsterAttackManager;
     public MapData mapData;
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
@@ -259,6 +260,7 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime +=1.5f* playerList[i].spd;
             }
         }
+        CombatTimerSet();
         for (int i = 0; i < monsterList.Count; i++)
         {
             tempMonst +=1f* monsterList[i].GetComponent<TestMob>().monster.mSpeed;
@@ -276,7 +278,8 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime += 1.5f*playerList[i].spd;
             }
         }
-        for(int i = 0; i < monsterAliveList.Count; i++)
+        CombatTimerSet();
+        for (int i = 0; i < monsterAliveList.Count; i++)
         {
             tempMonst += 1* monsterAliveList[i].GetComponent<TestMob>().Speed;
         }
@@ -405,6 +408,10 @@ public class CombatManager : Singleton<CombatManager>
                 tank = playerList[i];
             }
         }
+    }
+    private void CombatTimerSet()
+    {
+        combatTimer.maxTime = playerTurnTime;
     }
 }
 
