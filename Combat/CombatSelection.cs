@@ -54,6 +54,10 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
         {
             charSelection.SetActive(true);
         }
+        if(combatManager.combatDisplay.skillForMe)
+        {
+            charSelection.SetActive(true);
+        }
 
 
     }

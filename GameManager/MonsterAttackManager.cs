@@ -71,6 +71,14 @@ public class MonsterAttackManager : MonoBehaviour
                 monster.target = combatManager.playerList[Random.Range(0, combatManager.playerList.Count)];
             }
         }
+        else if(combatManager.isAggroOn&&combatManager.tank.isDead)//어그로가 켜져있고 탱커가 죽어있을때
+        {
+            combatManager.isAggroOn = false;
+            if (monster.target == null)
+            {
+                monster.target = combatManager.playerList[Random.Range(0, combatManager.playerList.Count)];
+            }
+        }
         else
         {
             monster.target = combatManager.tank; //어그로가 켜져있을때 탱커를 타겟으로.

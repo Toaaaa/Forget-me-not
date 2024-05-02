@@ -16,7 +16,7 @@ public class CombatManager : Singleton<CombatManager>
     public GameObject mobplace;
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
-    public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬을 사용 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
+    public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬사용시만 접근 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
     public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
     public List<GameObject> monsterAliveList; //살아있는 몬스터 리스트.
@@ -252,7 +252,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         for (int i = 0; i < monsterList.Count; i++)
         {
-            tempMonst +=1f* monsterList[i].GetComponent<TestMob>().Speed;
+            tempMonst +=1f* monsterList[i].GetComponent<TestMob>().monster.mSpeed;
         }
         monsterTurnTime = tempMonst;
     }
@@ -269,7 +269,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         for(int i = 0; i < monsterAliveList.Count; i++)
         {
-            tempMonst += 1.5f* monsterAliveList[i].GetComponent<TestMob>().Speed;
+            tempMonst += 1* monsterAliveList[i].GetComponent<TestMob>().Speed;
         }
         monsterTurnTime = tempMonst;
 
@@ -285,6 +285,7 @@ public class CombatManager : Singleton<CombatManager>
                 combatDisplay.skillSelectedForPlayer = false;
                 combatDisplay.skillForAllMob = false;
                 combatDisplay.skillForAllPlayer = false;
+                combatDisplay.skillForMe = false;
                 combatDisplay.itemSelected = false;
                 break;
             }
@@ -342,6 +343,8 @@ public class CombatManager : Singleton<CombatManager>
         {
             playerList[i].ResetBUff();
         }
+        isAggroOn = false;
+
     }
     private void ReviveIfDead()//전투중 죽은 플레이어 체력 1로 살려두기.
     {

@@ -161,7 +161,7 @@ public class SkillSelection : MonoBehaviour
                 }
                 if(combatManager.combatDisplay.selectingPlayer.name == "Tank")
                 {
-                    if (skillIndex == 0)
+                    if (skillIndex == 0||skillIndex ==1)
                     {
                         combatManager.combatDisplay.skillSelectedForPlayer = true;
                     }

@@ -31,6 +31,7 @@ public class CombatDisplay : MonoBehaviour
     public bool skillSelected; //스킬이 선택되었는지 판별하는 변수.firstSelection에서 스킬 선택시.
     public bool skillSelectedForPlayer; //스킬이 선택되었는지 판별 + 해당 스킬이 플레이어 대상일때 사용.
     public bool skillForAllPlayer; //모든 플레이어를 대상으로 하는 스킬인지 판별하는 변수.
+    public bool skillForMe; //자신을 대상으로 하는 스킬인지 판별하는 변수.
     public bool skillForAllMob; //모든 몬스터를 대상으로 하는 스킬인지 판별하는 변수.
     public bool itemSelected; //아이템이 선택되었는지 판별하는 변수.firstSelection에서 아이템 선택시.
     public bool BuffItemSelected; //버프형 아이템이 선택되었는지 판별하는 변수.
@@ -111,7 +112,11 @@ public class CombatDisplay : MonoBehaviour
             }
             else if(selectingPlayer.name == "Tank" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 0)
             {
-                SkillOnSelectForAllPlayer();//모든 플레이어 대상 스킬.
+                SkillOnlyMe();//모든 플레이어 대상 스킬.
+            }
+            else if(selectingPlayer.name == "Tank" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 1)
+            {
+                SkillOnlyMe();//모든 플레이어 대상 스킬.
             }
             else
             {
@@ -583,6 +588,69 @@ public class CombatDisplay : MonoBehaviour
             combatSelection.skillSelection.SetActive(true);
         }
     }
+    private void SkillOnlyMe()
+    {
+        skillForMe = true;
+        if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
+        {
+            CharAllOf();//캐릭터 화살표 전부 끄기.
+            combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
+            inAction = true;
+            switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
+            {
+                case 0:
+                    selectingPlayer.Skill1();
+                    break;
+                case 1:
+                    selectingPlayer.Skill2();
+                    break;
+                case 2:
+                    selectingPlayer.Skill3();
+                    break;
+                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                    selectingPlayer.Skill4();
+                    break;
+            }
+            StartCoroutine(inaction());
+            combatManager.playerTurnTime -= combatManager.skillCostTime;
+            monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
+            combatManager.isFirstSelection = false;
+            skillSelected = false;
+            combatManager.monsterSelected = null;
+            selectedSlotIndex = 0;
+            skillSelectedForPlayer = false;
+            skillForMe = false;
+            combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;
+            for (int i = 1; i < 4; i++)
+            {
+                combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
+            }
+            combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
+            if (isPlayerTurn)
+            {
+                selectedSlotIndex = 0;
+                combatSelection = slotList[selectedSlotIndex].combatSelection;
+                combatSelection.charSelection.SetActive(true);
+
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
+        {
+            Debug.Log("턴시간이 부족합니다.");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            skillForMe = false;
+            skillForAllPlayer = false;
+            skillSelectedForPlayer = false;
+            skillSelected = false;
+            selectedSlot.combatSelection.charSelection.SetActive(false);
+            combatSelection.skillSelection.SetActive(true);
+        }
+    }//자신만을 대상으로 하는 스킬.
 
     private void ItemOnSelect()//아이템을 사용할 대상 선택
     {
