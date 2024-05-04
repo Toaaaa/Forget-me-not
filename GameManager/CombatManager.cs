@@ -47,6 +47,7 @@ public class CombatManager : Singleton<CombatManager>
     public int skillCostTime; //스킬 사용의 코스트 시간.
     public int itemCostTime; //아이템 사용의 코스트 시간.
     public int fleeCostTime; //도망가기의 코스트 시간.
+    public PlayableC lastAction; //마지막으로 행동한 플레이어. (피로도 시스템을 위한 변수)
 
     float tempMonst;
 

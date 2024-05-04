@@ -10,8 +10,7 @@ public class CombatStatus : MonoBehaviour
     public Image playerImage;
     public Image playerHpBar;
     public TextMeshProUGUI playerHpText;
-    public Image playerMpBar;
-    public TextMeshProUGUI playerMpText;
+    public Image playerFatique;
     public CombatBuffs combatbuff;
     private void Update()
     {
@@ -32,9 +31,9 @@ public class CombatStatus : MonoBehaviour
             {
                 PlayerhpUpdate();
             }
-            if (playerMpBar.fillAmount != player.mp / player.maxMp)
+            if(playerFatique.fillAmount != player.fatigue / player.maxFatigue)
             {
-                PlayermpUpdate();
+                PlayerftUpdate();
             }
             buffcheck();
         }
@@ -86,15 +85,15 @@ public class CombatStatus : MonoBehaviour
             }
             //코루틴으로 체력바 줄이기.
     }
-    private void PlayermpUpdate()
+    private void PlayerftUpdate()
     {
-        if(playerMpBar.fillAmount > player.mp / player.maxMp)
+        if(playerFatique.fillAmount > player.fatigue / player.maxFatigue)//피로도가 감소한 경우.
         {
-            StartCoroutine(mpreduce());
+            StartCoroutine(ftreduce());
         }
-        else if(playerMpBar.fillAmount < player.mp / player.maxMp)
+        else if(playerFatique.fillAmount < player.fatigue / player.maxFatigue)//피로도가 증가한 경우.
         {
-            StartCoroutine(mpIncrease());
+            StartCoroutine(ftIncrease());
         }
 
     }
@@ -104,9 +103,9 @@ public class CombatStatus : MonoBehaviour
         //처음 전투가 시작되고 플레이어가 등록이 되면 플레이어의 체력바를 세팅해줌.
         playerHpBar.fillAmount = player.hp / player.maxHp; //>> 정수/정수 를 하면 0또는 1만 출력되는 현상이 있어 float로 형변환 해줌.
     }
-    public void OnPlayerMpSet()
+    public void OnPlayerFtSet()
     {
-        playerMpBar.fillAmount = player.mp / player.maxMp;
+        playerFatique.fillAmount = player.fatigue / player.maxFatigue;
     }
     IEnumerator hpreduce() //체력 감소시
     {
@@ -136,28 +135,29 @@ public class CombatStatus : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
     }
-
-    IEnumerator mpreduce()
+    IEnumerator ftreduce() //피로도 감소시
     {
-        while(playerMpBar.fillAmount > player.mp / player.maxMp)
+        //피로도 바 줄이기.
+        while(playerFatique.fillAmount > player.fatigue / player.maxFatigue)
         {
-            playerMpBar.fillAmount -= 0.001f;
-            if(playerMpBar.fillAmount < player.mp / player.maxMp)
+            playerFatique.fillAmount -= 0.001f;
+            if(playerFatique.fillAmount < player.fatigue / player.maxFatigue)
             {
-                playerMpBar.fillAmount = player.mp / player.maxMp;
+                playerFatique.fillAmount = player.fatigue / player.maxFatigue;
                 break;
             }
             yield return new WaitForSeconds(0.1f);
         }
+        
     }
-    IEnumerator mpIncrease()
+    IEnumerator ftIncrease()//피로도 증가시
     {
-        while(playerMpBar.fillAmount < player.mp / player.maxMp)
+        while(playerFatique.fillAmount < player.fatigue / player.maxFatigue)
         {
-            playerMpBar.fillAmount += 0.001f;
-            if(playerMpBar.fillAmount > player.mp / player.maxMp)
+            playerFatique.fillAmount += 0.001f;
+            if(playerFatique.fillAmount > player.fatigue / player.maxFatigue)
             {
-                playerMpBar.fillAmount = player.mp / player.maxMp;
+                playerFatique.fillAmount = player.fatigue / player.maxFatigue;
                 break;
             }
             yield return new WaitForSeconds(0.1f);

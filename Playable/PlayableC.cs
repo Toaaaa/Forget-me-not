@@ -17,8 +17,8 @@ public class PlayableC : ScriptableObject
     public int exp;
     public int maxExp;
     public int priority;
-    public int fatigue;
-    public int maxFatigue;
+    public float fatigue;
+    public float maxFatigue;
 
     public bool isDead;
 
