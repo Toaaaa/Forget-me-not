@@ -95,6 +95,7 @@ public class ItemSelection : MonoBehaviour
             {
                 itemInInven[i].GetComponent<Image>().color = new Color32(0, 66, 0, 255);
                 combatDisplay.selectingItem = inventory.Container[itemInInven[i].GetComponent<IsGone>().itemID].item;
+                combatItemInfo.currentItem = combatDisplay.selectingItem;
             }
             else
             {
