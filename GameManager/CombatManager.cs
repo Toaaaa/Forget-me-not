@@ -332,6 +332,8 @@ public class CombatManager : Singleton<CombatManager>
             if (playerList[i].isDead)
             {
                 combatDisplay.slotList[i].GetComponent<Image>().color= new Color32(255, 0, 0, 255);
+                playerList[i].fatigue = 0;
+                playerList[i].isTired = false;
             }
             if (!playerList[i].isDead)
             {

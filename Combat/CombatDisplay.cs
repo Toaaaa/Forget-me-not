@@ -275,6 +275,7 @@ public class CombatDisplay : MonoBehaviour
             attackSelected = false;
             combatManager.monsterSelected = null;
             selectedMobIndex = 0;
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -352,6 +353,7 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
             }
             combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (combatManager.combatDisplay.isPlayerTurn)
             {
@@ -421,6 +423,7 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
             }
             combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -512,6 +515,7 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
             }
             combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -592,6 +596,7 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
             }
             combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -663,6 +668,7 @@ public class CombatDisplay : MonoBehaviour
                 combatSelection.firstSelection.GetComponent<FirstSelection>().selection[i].SetActive(false);
             }
             combatSelection.firstSelection.GetComponent<FirstSelection>().selection[0].SetActive(true);
+            AtActionEnd();//공격이 전부 끝나면 실행되는 마지막 행동 실행함수.
             //여기서 이제 시간이 남았을 경우 다음 플레이어의 동작 메뉴 오픈.
             if (isPlayerTurn)
             {
@@ -819,8 +825,36 @@ public class CombatDisplay : MonoBehaviour
     }
     public void AtActionEnd()
     {
+        if(selectingPlayer.fatigue == selectingPlayer.maxFatigue)
+        {
+            //이미 최대 피로도.
+            //피로도 최대의 애니메이션 출력.(이미 출력중일때는 출력되지 않도록 할것.)
+        }
+        else
+        {
+            selectingPlayer.fatigue += 1;
+        }//행동이 끝날때 피로도 추가.
+        for(int i = 0; i < playerList.Count; i++)
+        {
+            if (playerList[i] != selectingPlayer)
+            {
+                if (playerList[i].fatigue > 0)
+                {
+                    if (playerList[i].fatigue == playerList[i].maxFatigue)
+                    {
+                        playerList[i].fatigue -= 1;
+                        playerList[i].isTired = false;
+                        playerList[i].atk = playerList[i].originalAtk; //피로도가 max가 아니게 되면 공격력 원래대로 돌리기.
+                    }
+                    else
+                    {
+                        playerList[i].fatigue -= 1;
+                    }
+                }               
+            }
 
-    }//플레이어의 행동이 끝났을때 실행되는 함수 (몬스터의 사망확인후, 사망 모션 실행, 버프형 스킬의 이펙트 실행등..)
+        }
+    }//플레이어의 행동이 끝났을때 실행되는 함수 (몬스터의 사망확인, 사망 모션 실행, 버프형 스킬의 이펙트 실행등..)
 
     private void IsNotPlayerTurn()//플레이어의 턴이 아닐때 실행되는 함수.
     {

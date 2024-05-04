@@ -36,8 +36,16 @@ public class CombatStatus : MonoBehaviour
                 PlayerftUpdate();
             }
             buffcheck();
-        }
-
+            if (player.fatigue == player.maxFatigue)
+            {
+                player.isTired = true;
+                player.atk = Mathf.Round(player.originalAtk / 2); //피로도가 최대치일때 공격력이 1/2로 감소.
+            }
+            else
+            {
+                player.isTired = false;
+            }
+        }       
     }
 
     private void buffcheck()

@@ -9,7 +9,7 @@ public class PlayableC : ScriptableObject
     public float hp; //힐러는 공격력으로 힐을 해서 힐러의 공격력 수치에 주의.
     public float maxHp;
     public float mp;
-    public int maxMp;
+    public float maxMp;
     public float atk;
     public float def;
     public int spd;
@@ -23,10 +23,10 @@ public class PlayableC : ScriptableObject
     public bool isDead;
 
     //오리지널 스텟 //전투가 끝나면 해당 스텟으로 리셋해주기.
-    public int originalMaxHp;
-    public int originalMaxMp;
-    public int originalAtk;
-    public int originalDef;
+    public float originalMaxHp;
+    public float originalMaxMp;
+    public float originalAtk;
+    public float originalDef;
     public int originalSpd;
     public int originalCrit;
 
@@ -44,6 +44,7 @@ public class PlayableC : ScriptableObject
     public bool isStunned;
     public bool isPoisoned;
     public bool isSkillSealed;
+    public bool isTired; //fatique가 최대치 일때. //공격력이 maxAtk의 1/2로 감소.
 
 
     public int jobNum; // 0:전사 1:마법사 2:탱커 3:힐러
@@ -69,6 +70,7 @@ public class PlayableC : ScriptableObject
         def = originalDef;
         spd = originalSpd;
         crit = originalCrit;
+        fatigue = 0;
     }
     
     virtual public void Attack()
