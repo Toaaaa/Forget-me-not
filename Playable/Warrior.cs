@@ -50,10 +50,12 @@ public class Warrior : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def);
         }
     }
     override public void SkillDmgCalc2()

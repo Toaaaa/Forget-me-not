@@ -65,6 +65,7 @@ public class PlayableC : ScriptableObject
 
     public GameObject singleTarget;
     public List<GameObject> multiTarget;
+    public GameObject damagePrint; //데미지 출력용 오브젝트
 
     public PlayerSkill normalAttack;
     public GameObject skillEffect1;//임시로 1만 만들어서 다 쓰는중, 추후 1~4까지 각각 instantiate도 변경필요.

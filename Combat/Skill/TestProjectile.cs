@@ -27,8 +27,7 @@ public class TestProjectile : PlayerSkill //임시로 워리어의 스킬 1번의 전용 프로
         {
             targetMob = collision.gameObject.GetComponent<TestMob>();
             Debug.Log(collision.gameObject.name + "를 공격 하였습니다");
-            //여기에 데미지 출력 해주는 효과.
-            player.SkillDmgCalc1();
+            player.SkillDmgCalc1();//여기에 데미지 출력 효과도 포함되어있음.
             Destroy(gameObject);
         }
     }
