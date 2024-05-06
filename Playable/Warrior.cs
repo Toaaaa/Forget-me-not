@@ -23,8 +23,11 @@ public class Warrior : PlayableC
         }
         Debug.Log("전사의 기본 공격");
     }
-    override public void Skill1()
+    override public void Skill1(Transform trans)
     {
+        var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
+        obj.GetComponent<TestProjectile>().targetMob = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
+        obj.GetComponent<TestProjectile>().targetLocked();
         float critatk = CheckCrit(atk, this.crit);
         TestMob monster = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
         if (monster.Def >= critatk)
@@ -36,15 +39,15 @@ public class Warrior : PlayableC
             monster.Hp -= critatk*2f - monster.Def;
         }
     }
-    override public void Skill2()
+    override public void Skill2(Transform trans)
     {
         Debug.Log("전사의 스킬2");
     }
-    override public void Skill3()
+    override public void Skill3(Transform trans)
     {
         Debug.Log("전사의 스킬3");
     }
-    override public void Skill4()
+    override public void Skill4(Transform trans)
     {
         Debug.Log("전사의 스킬4");
     }

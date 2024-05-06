@@ -23,7 +23,7 @@ public class Tank : PlayableC
         }
         Debug.Log("탱커의 기본 공격");
     }
-    override public void Skill1()
+    override public void Skill1(Transform trans)
     {
         if(isDefPlused == false)
         {
@@ -41,13 +41,13 @@ public class Tank : PlayableC
             //30초 타이머 다시 시작.
         }
     }
-    override public void Skill2()
+    override public void Skill2(Transform trans)
     {
         Debug.Log("어그로");
         isAggroOn = true;
         CombatManager.Instance.isAggroOn = true;
     }
-    override public void Skill3() //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 5씩 감소시킴.
+    override public void Skill3(Transform trans) //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 5씩 감소시킴.
     { //>> 높은 가치의 스킬이기에 코스트 높게 설정할것.
         Debug.Log("땅울리기");
         for (int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
@@ -60,7 +60,7 @@ public class Tank : PlayableC
             }
         }
     }
-    override public void Skill4()
+    override public void Skill4(Transform trans)
     {
         //견습기사이기 때문에 스킬이 3개밖에 없음.
         //10레벨 달성시 스킬 해금 스크립트에서, "견습기사는 스킬이 3개밖에 없습니다." 라는 메세지를 띄워주면 될듯.

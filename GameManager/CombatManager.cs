@@ -57,7 +57,6 @@ public class CombatManager : Singleton<CombatManager>
     {
         playerList = new List<PlayableC>();
         playerList = playableManager.joinedPlayer;
-        
     }
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 

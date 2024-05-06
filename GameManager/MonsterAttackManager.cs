@@ -119,7 +119,6 @@ public class MonsterAttackManager : MonoBehaviour
     {
         combatManager.monsterTurnTime -= 3;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
-        Debug.Log("몬스터의 공격");
         if(!monster.isDead)
         {
             AttackPattern(monster);

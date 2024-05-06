@@ -14,6 +14,7 @@ public class CombatDisplay : MonoBehaviour
     public List<GameObject> MobList; //위의 슬롯에서 몬스터가 있는곳만 찾아서 저장 (사망시 제거 가능한 몬스터 오브젝트 리스트)
 
     public CombatSlot selectedSlot; //선택된 슬롯. 스킬 사용시 or 아이템 사용시 이 슬롯을 대상으로 함.
+    public GameObject skillPlace; //스킬이 생성될 transform의 임시 오브젝트.
 
     public int tempIndex;
     public int selectedSlotIndex; //선택된 슬롯의 인덱스.
@@ -322,21 +323,21 @@ public class CombatDisplay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
-            combatManager.combatDisplay.combatManager.monsterSelected = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
+            combatManager.monsterSelected = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
             combatManager.combatDisplay.inAction = true;
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    combatManager.combatDisplay.selectingPlayer.Skill1();
+                    combatManager.combatDisplay.selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
                     break;
                 case 1:
-                    combatManager.combatDisplay.selectingPlayer.Skill2();
+                    combatManager.combatDisplay.selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
                     break;
                 case 2:
-                    combatManager.combatDisplay.selectingPlayer.Skill3();
+                    combatManager.combatDisplay.selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    combatManager.combatDisplay.selectingPlayer.Skill4();
+                    combatManager.combatDisplay.selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -394,18 +395,18 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1();
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
                     //요런곳에 monsterselected 를 임시로 저장하면서 사망 확인 해주는 코루틴? 넣어도 좋을듯.
                     //+코루틴에는 사망 애니메이션 출력에 실제로는 skill을 사용함과 동시에 이미 사망은 하였기에 애니메이션만 출력하는 코루틴.
                     break;
                 case 1:
-                    selectingPlayer.Skill2();
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3();
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4();
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -488,16 +489,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1();
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2();
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3();
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4();
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -568,16 +569,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1();
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2();
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3();
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4();
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -640,16 +641,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1();
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2();
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3();
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4();
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
                     break;
             }
             StartCoroutine(inaction());

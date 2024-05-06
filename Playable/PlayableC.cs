@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayableC : ScriptableObject
@@ -62,6 +63,11 @@ public class PlayableC : ScriptableObject
     public int skill3Cost;
     public int skill4Cost;
 
+    public List<GameObject> multiTarget;
+
+    public PlayerSkill normalAttack;
+    public GameObject skillEffect1;//임시로 1만 만들어서 다 쓰는중, 추후 1~4까지 각각 instantiate도 변경필요.
+
     public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {
         maxHp = originalMaxHp;
@@ -75,21 +81,22 @@ public class PlayableC : ScriptableObject
     
     virtual public void Attack()
     {
+        //추후 여기서 normalAttack을 실행하게끔 수정.
         Debug.Log("공격");
     }
-    virtual public void Skill1()
+    virtual public void Skill1(Transform trans)
     {
         Debug.Log("스킬");
     }
-    virtual public void Skill2()
+    virtual public void Skill2(Transform trans)
     {
         Debug.Log("스킬");
     }
-    virtual public void Skill3()
+    virtual public void Skill3(Transform trans)
     {
         Debug.Log("스킬");
     }
-    virtual public void Skill4()
+    virtual public void Skill4(Transform trans)
     {
         Debug.Log("스킬");
     }

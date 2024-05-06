@@ -21,7 +21,7 @@ public class Healer : PlayableC
         }
         Debug.Log("힐러의 기본 공격");
     }
-    override public void Skill1()//단일 회복
+    override public void Skill1(Transform trans)//단일 회복
     {
         Debug.Log("단일 회복");
         CombatManager.Instance.selectedPlayer.hp += this.atk *3f;
@@ -30,7 +30,7 @@ public class Healer : PlayableC
             CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
         }
     }
-    override public void Skill2()//광역 회복 //Earth Blessing
+    override public void Skill2(Transform trans)//광역 회복 //Earth Blessing
     {
         Debug.Log("광역 회복");
         for(int i =0; i<CombatManager.Instance.playerList.Count; i++)
@@ -42,11 +42,11 @@ public class Healer : PlayableC
             }
         }
     }
-    override public void Skill3() //큐어.
+    override public void Skill3(Transform trans) //큐어.
     {
         CombatManager.Instance.selectedPlayer.isPoisoned = false;
     }
-    override public void Skill4() //레저렉션.
+    override public void Skill4(Transform trans) //레저렉션.
     {//중 정도의 코스트에 모든 마나 소모. (기본적으로 1스킬 = 1마나)
         if(CombatManager.Instance.selectedPlayer.isDead)
         {
