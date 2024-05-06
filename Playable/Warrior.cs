@@ -26,18 +26,9 @@ public class Warrior : PlayableC
     override public void Skill1(Transform trans)
     {
         var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
-        obj.GetComponent<TestProjectile>().targetMob = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
+        obj.GetComponent<TestProjectile>().player = this;
+        obj.GetComponent<TestProjectile>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<TestProjectile>().targetLocked();
-        float critatk = CheckCrit(atk, this.crit);
-        TestMob monster = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
-        if (monster.Def >= critatk)
-        {
-            monster.Hp -= 1;
-        }
-        else
-        {
-            monster.Hp -= critatk*2f - monster.Def;
-        }
     }
     override public void Skill2(Transform trans)
     {
@@ -50,6 +41,32 @@ public class Warrior : PlayableC
     override public void Skill4(Transform trans)
     {
         Debug.Log("전사의 스킬4");
+    }
+    
+    override public void SkillDmgCalc1()
+    {
+        float critatk = CheckCrit(atk, this.crit);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        if (monster.Def >= critatk)
+        {
+            monster.Hp -= 1;
+        }
+        else
+        {
+            monster.Hp -= critatk * 2f - monster.Def;
+        }
+    }
+    override public void SkillDmgCalc2()
+    {
+        Debug.Log("전사의 스킬2 데미지 계산");
+    }
+    override public void SkillDmgCalc3()
+    {
+        Debug.Log("전사의 스킬3 데미지 계산");
+    }
+    override public void SkillDmgCalc4()
+    {
+        Debug.Log("전사의 스킬4 데미지 계산");
     }
 }
 

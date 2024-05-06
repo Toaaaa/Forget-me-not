@@ -323,7 +323,7 @@ public class CombatDisplay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
-            combatManager.monsterSelected = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
+            selectingPlayer.singleTarget = combatManager.combatDisplay.MobList[combatManager.combatDisplay.selectedMobIndex].GetComponent<TestMob>().gameObject;
             combatManager.combatDisplay.inAction = true;
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
@@ -343,9 +343,9 @@ public class CombatDisplay : MonoBehaviour
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
-            combatManager.combatDisplay.combatManager.isFirstSelection = false;
+            combatManager.isFirstSelection = false;
             combatManager.combatDisplay.skillSelected = false;
-            combatManager.combatDisplay.combatManager.monsterSelected = null;
+            combatManager.monsterSelected = null;
             combatManager.combatDisplay.selectedMobIndex = 0;
             combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex = 0;
             combatSelection.firstSelection.GetComponent<FirstSelection>().selectionIndex = 0;

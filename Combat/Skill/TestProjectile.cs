@@ -3,10 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestProjectile : PlayerSkill
+public class TestProjectile : PlayerSkill //임시로 워리어의 스킬 1번의 전용 프로젝타일 스크립트.
 {
-
-    public TestMob targetMob;
 
     private void Start()
     {
@@ -30,6 +28,7 @@ public class TestProjectile : PlayerSkill
             targetMob = collision.gameObject.GetComponent<TestMob>();
             Debug.Log(collision.gameObject.name + "를 공격 하였습니다");
             //여기에 데미지 출력 해주는 효과.
+            player.SkillDmgCalc1();
             Destroy(gameObject);
         }
     }

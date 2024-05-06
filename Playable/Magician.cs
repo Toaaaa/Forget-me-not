@@ -15,14 +15,14 @@ public class Magician : PlayableC
     override public void Skill1(Transform trans) //블레이즈
     {
         Debug.Log("블레이즈");
-
+        /*
         multiTarget = CombatManager.Instance.monsterAliveList;
         for(int i=0; i<multiTarget.Count; i++)
         {
             var obj =Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
             obj.GetComponent<TestProjectile>().targetMob = multiTarget[i].GetComponent<TestMob>();
             obj.GetComponent<TestProjectile>().targetLocked();
-        }
+        }*/ //다중 타겟 공격시 projectile의 타겟 설정에 사용하는 코드.
         for(int i =0; i<CombatManager.Instance.monsterList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
             float temp = CheckCrit(atk * 1.5f, this.crit);

@@ -63,6 +63,7 @@ public class PlayableC : ScriptableObject
     public int skill3Cost;
     public int skill4Cost;
 
+    public GameObject singleTarget;
     public List<GameObject> multiTarget;
 
     public PlayerSkill normalAttack;
@@ -100,6 +101,25 @@ public class PlayableC : ScriptableObject
     {
         Debug.Log("½ºÅ³");
     }
+
+    virtual public void SkillDmgCalc1()
+    {
+
+    }
+    virtual public void SkillDmgCalc2()
+    {
+
+    }
+    virtual public void SkillDmgCalc3()
+    {
+
+    }
+    virtual public void SkillDmgCalc4()
+    {
+
+    }
+
+
 
     virtual public float CheckCrit(float atkDMG,int critPercent)
     {
