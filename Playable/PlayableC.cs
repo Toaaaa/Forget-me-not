@@ -133,6 +133,13 @@ public class PlayableC : ScriptableObject
             Debug.Log("일반 데미지");
             return atkDMG;
     }
+    virtual public bool IsCritical(float atkDMG, float DMG)
+    {
+        if (atkDMG * 1.5f == DMG)
+            return true;
+        else
+            return false;
+    }
     virtual public void ResetBUff()
     {
         attackBuff = false;

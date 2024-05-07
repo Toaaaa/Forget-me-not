@@ -10,7 +10,7 @@ public class DamagePrintManager : MonoBehaviour
 
     private void Awake()
     {
-        damagePrint = new GameObject[5];
+        damagePrint = new GameObject[6];
         Generate();
     }
     private void Generate()
@@ -23,13 +23,21 @@ public class DamagePrintManager : MonoBehaviour
         }
     }
 
-    public void PrintDamage(Vector3 position, float damage)
+    public void PrintDamage(Vector3 position, float damage,bool iscrit)
     {
         for(int i = 0; i < damagePrint.Length; i++)
         {
             if (!damagePrint[i].activeInHierarchy)
             {
                 damagePrint[i].transform.position = position + new Vector3(0,30,0);
+                if (iscrit)
+                {
+                    damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = 60;
+                }//폰트 사이즈
+                else
+                {
+                    damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = 40;
+                }
                 damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().text = damage.ToString();
                 damagePrint[i].SetActive(true);
                 break;

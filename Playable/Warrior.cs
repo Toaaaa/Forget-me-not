@@ -23,7 +23,7 @@ public class Warrior : PlayableC
         }
         Debug.Log("전사의 기본 공격");
     }
-    override public void Skill1(Transform trans)
+    override public void Skill1(Transform trans)//여기서는 투사체의 구현.
     {
         var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
         obj.GetComponent<TestProjectile>().player = this;
@@ -43,19 +43,20 @@ public class Warrior : PlayableC
         Debug.Log("전사의 스킬4");
     }
     
-    override public void SkillDmgCalc1()
+    override public void SkillDmgCalc1()//여기서 투사체의 피격시 데미지 계산방법.
     {
-        float critatk = CheckCrit(atk, this.crit);
+        float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산.
+        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def, isCrit);
         }
     }
     override public void SkillDmgCalc2()
