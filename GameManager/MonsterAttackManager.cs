@@ -18,9 +18,11 @@ public class MonsterAttackManager : MonoBehaviour
 
     private void Update()
     {
-        if(monsterAttackAvailable)
+        if (combatManager.isCombatStart)
         {
-                if(playerTurnUsed>=6)
+            if (monsterAttackAvailable)
+            {
+                if (playerTurnUsed >= 6)
                 {
                     MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
                     MonsterAttack();
@@ -33,22 +35,23 @@ public class MonsterAttackManager : MonoBehaviour
                     playerTurnUsed -= 3;
                     monsterAttackAvailable = false;
                 }
-        }
-        else if(!combatDisplay.isPlayerTurn && combatManager.isCombatStart)//전투가 시작되었는데 플레이어이 턴이 아니게 되었을때
-        {
-            if(combatManager.monsterTurnTime >0)
-                MonsterAttack();
-            if(combatManager.monsterTurnTime <= 0)
-            {
-                combatDisplay.isPlayerTurn = true;
-                combatManager.timerSet();
-
             }
-        }
+            else if (!combatDisplay.isPlayerTurn && combatManager.isCombatStart)//전투가 시작되었는데 플레이어이 턴이 아니게 되었을때
+            {
+                if (combatManager.monsterTurnTime > 0)
+                    MonsterAttack();
+                if (combatManager.monsterTurnTime <= 0)
+                {
+                    combatDisplay.isPlayerTurn = true;
+                    combatManager.timerSet();
 
-        if(playerTurnUsed >= 3)
-        {
-            monsterAttackAvailable = true;
+                }
+            }
+
+            if (playerTurnUsed >= 3)
+            {
+                monsterAttackAvailable = true;
+            }
         }
     }
     private void AttackPattern(TestMob monster)

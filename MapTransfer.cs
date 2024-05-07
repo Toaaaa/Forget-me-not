@@ -13,7 +13,8 @@ public class MapTransfer : MonoBehaviour
         if(collision.gameObject.name == "Player")
         {
             Player.Instance.currentMapName = SceneManager.GetActiveScene().name; //이동전 맵이름 받아주기
-            SceneManager.LoadScene(transferMapName);
+            SceneChangeManager.Instance.transferMapName = transferMapName;
+            SceneChangeManager.Instance.ChangeScene();
         }
     }
 }

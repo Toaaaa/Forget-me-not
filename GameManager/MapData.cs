@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.SearchService;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -35,7 +36,9 @@ public class MapData : MonoBehaviour
     public void GoToBattle()
     {
         Player.Instance.currentMapName = SceneManager.GetActiveScene().name; //이동전 맵이름 플레이어에 받아주기.
-        SceneManager.LoadScene(battleSceneName);
+        SceneChangeManager.Instance.battleSceneName = battleSceneName;
         CombatManager.Instance.battleSceneName = battleSceneName;
+        Player.Instance.combatPosition = playerPosition;
+        SceneChangeManager.Instance.ChangeBattleScene();
     }
 }

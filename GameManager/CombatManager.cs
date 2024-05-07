@@ -73,12 +73,8 @@ public class CombatManager : Singleton<CombatManager>
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
         combatDisplay.isPlayerTurn = true;
-        combatDisplay.gameObject.SetActive(true);
         combatDisplay.playerList = playerList;
-        isCombatStart = true;
         mapData.GoToBattle();
-        Player.Instance.combatPosition = mapData.playerPosition;
-        Player.Instance.CombatPositioning();
 
 
         //...전투ui 로 넘어가는 함수 추가.
@@ -112,8 +108,7 @@ public class CombatManager : Singleton<CombatManager>
         ReviveIfDead();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
-        SceneManager.LoadScene(Player.Instance.currentMapName);//전투가 끝나면 이전 맵으로 돌아가는 함수.
-        combatDisplay.gameObject.SetActive(false);
+        SceneChangeManager.Instance.LeaveBattleScene();
     }
     public void OnCombatLost() //전투에서 패배할시.
     {
@@ -261,6 +256,7 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime +=1.5f* playerList[i].spd;
             }
         }
+        playerTurnTime += 2f;
         CombatTimerSet();
         for (int i = 0; i < monsterList.Count; i++)
         {

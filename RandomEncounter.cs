@@ -7,10 +7,10 @@ public class RandomEncounter : MonoBehaviour
     private Player player;
 
     [SerializeField] private int encounterStep=10; //처음 몬스터 타일에 진입후 몬스터 인카운터가 발생할수 있는 최소 스텝(1블록)횟수.
-    [SerializeField] private int encounterCount=0; //현재 스텝 횟수.
+    public int encounterCount=0; //현재 스텝 횟수.
     public int encounterRate = 9; //몬스터 인카운터 확률. random(1~100) < encounterrate이면 몬스터 인카운터.
 
-    private float timeMoved;
+    public float timeMoved;
     private float encounterTime = 1.2f; //몬스터 인카운터 시간 간격.
 
     private bool checkEncounter; //몬스터 인카운터 체크.
