@@ -7,19 +7,12 @@ public class Healer : PlayableC
 {
 
 
-    override public void Attack()
+    override public void Attack(Transform trans)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        TestMob monster = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
-        if (monster.Def >= critatk)
-        {
-            monster.Hp -= 1;
-        }
-        else
-        {
-            monster.Hp -= critatk - monster.Def;
-        }
-        Debug.Log("힐러의 기본 공격");
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<AttackSkill>().targetLocked();
     }
     override public void Skill1(Transform trans)//단일 회복
     {
@@ -66,7 +59,38 @@ public class Healer : PlayableC
         }
     }
 
-
+    public override void AttackDmgCalc()
+    {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        if (monster.Def >= critatk)
+        {
+            monster.Hp -= 1;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit);
+        }
+        else
+        {
+            monster.Hp -= critatk - monster.Def;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit);
+        }
+    }
+    override public void SkillDmgCalc1()
+    {
+        
+    }
+    override public void SkillDmgCalc2()
+    {
+        
+    }
+    override public void SkillDmgCalc3()
+    {
+        
+    }
+    override public void SkillDmgCalc4()
+    {
+        
+    }
 
 }
 

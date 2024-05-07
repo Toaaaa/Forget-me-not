@@ -9,26 +9,19 @@ using UnityEngine.PlayerLoop;
 public class Warrior : PlayableC
 {
 
-    override public void Attack()
+    override public void Attack(Transform trans)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        TestMob monster = CombatManager.Instance.monsterSelected.GetComponent<TestMob>();
-        if (monster.Def >= critatk)
-        {
-            monster.Hp -= 1;
-        }
-        else
-        {
-            monster.Hp -= critatk - monster.Def;
-        }
-        Debug.Log("전사의 기본 공격");
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<AttackSkill>().targetLocked();
     }
     override public void Skill1(Transform trans)//여기서는 투사체의 구현.
     {
         var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
-        obj.GetComponent<TestProjectile>().player = this;
-        obj.GetComponent<TestProjectile>().targetMob = this.singleTarget.GetComponent<TestMob>();
-        obj.GetComponent<TestProjectile>().targetLocked();
+        obj.GetComponent<WarriorSkill1>().player = this;
+        obj.GetComponent<WarriorSkill1>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<WarriorSkill1>().targetLocked();
     }
     override public void Skill2(Transform trans)
     {
@@ -42,7 +35,23 @@ public class Warrior : PlayableC
     {
         Debug.Log("전사의 스킬4");
     }
-    
+
+    public override void AttackDmgCalc()
+    {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        if (monster.Def >= critatk)
+        {
+            monster.Hp -= 1;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit);
+        }
+        else
+        {
+            monster.Hp -= critatk - monster.Def;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def,isCrit);
+        }
+    }
     override public void SkillDmgCalc1()//여기서 투사체의 피격시 데미지 계산방법.
     {
         float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산.

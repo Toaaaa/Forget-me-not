@@ -7,10 +7,12 @@ using UnityEngine;
 public class Magician : PlayableC
 {
 
-    override public void Attack()
+    override public void Attack(Transform trans)
     {
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk , this.crit);
-        Debug.Log("마법사의 기본 공격");
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<AttackSkill>().targetLocked();
     }
     override public void Skill1(Transform trans) //블레이즈
     {
@@ -65,6 +67,31 @@ public class Magician : PlayableC
     { //>>높은 데미지 높은 코스트
         CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk * 3.5f,this.crit);
     }
-    
+
+
+    public override void AttackDmgCalc()
+    {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        monster.Hp -= critatk;
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk, isCrit);
+    }
+    override public void SkillDmgCalc1()
+    {
+
+    }
+    override public void SkillDmgCalc2()
+    {
+
+    }
+    override public void SkillDmgCalc3()
+    {
+
+    }
+    override public void SkillDmgCalc4()
+    {
+
+    }
 }
 
