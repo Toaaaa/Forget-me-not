@@ -75,7 +75,7 @@ public class Magician : PlayableC
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         monster.Hp -= critatk;
-        CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk, isCrit);
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk, isCrit,false);
     }
     override public void SkillDmgCalc1()
     {

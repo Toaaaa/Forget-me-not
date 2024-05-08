@@ -68,6 +68,9 @@ public class PlayableC : ScriptableObject
 
     public GameObject normalAttack;
     public GameObject skillEffect1;//임시로 1만 만들어서 다 쓰는중, 추후 1~4까지 각각 instantiate도 변경필요.
+    public GameObject skillEffect2;
+    public GameObject skillEffect3;
+    public GameObject skillEffect4;
 
     public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {

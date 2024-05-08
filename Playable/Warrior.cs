@@ -44,12 +44,12 @@ public class Warrior : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit, false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def,isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def,isCrit, false);
         }
     }
     override public void SkillDmgCalc1()//여기서 투사체의 피격시 데미지 계산방법.
@@ -60,12 +60,12 @@ public class Warrior : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit, false);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def, isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def, isCrit, false);
         }
     }
     override public void SkillDmgCalc2()

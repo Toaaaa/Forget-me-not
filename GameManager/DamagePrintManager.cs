@@ -23,7 +23,7 @@ public class DamagePrintManager : MonoBehaviour
         }
     }
 
-    public void PrintDamage(Vector3 position, float damage,bool iscrit)
+    public void PrintDamage(Vector3 position, float damage,bool iscrit,bool isheal)
     {
         for(int i = 0; i < damagePrint.Length; i++)
         {
@@ -37,6 +37,14 @@ public class DamagePrintManager : MonoBehaviour
                 else
                 {
                     damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = 40;
+                }
+                if(isheal)
+                {
+                    damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                }
+                else
+                {
+                    damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
                 }
                 damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().text = damage.ToString();
                 damagePrint[i].SetActive(true);

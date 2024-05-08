@@ -16,12 +16,12 @@ public class Healer : PlayableC
     }
     override public void Skill1(Transform trans)//단일 회복
     {
-        Debug.Log("단일 회복");
-        CombatManager.Instance.selectedPlayer.hp += this.atk *3f;
-        if(CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
-        {
-            CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
-        }
+        var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity, CombatManager.Instance.combatDisplay.transform);
+        obj.GetComponent<HealSkill1>().player = this;
+        obj.GetComponent<HealSkill1>().targetPlayer = CombatManager.Instance.selectedPlayer;
+        obj.GetComponent<HealSkill1>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
+        obj.GetComponent<HealSkill1>().targetLocked();
+
     }
     override public void Skill2(Transform trans)//광역 회복 //Earth Blessing
     {
@@ -67,12 +67,12 @@ public class Healer : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit,false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit, false);
         }
     }
     override public void SkillDmgCalc1()
@@ -92,5 +92,11 @@ public class Healer : PlayableC
         
     }
 
+    private float WhenMaxHpPrint(PlayableC player) //힐량이 최대 체력을 넘어갈때, 얼마나 회복되는지 출력.
+    {
+        float print;
+        print = player.maxHp - player.hp;
+        return print;
+    }
 }
 

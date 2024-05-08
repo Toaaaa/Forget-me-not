@@ -73,12 +73,12 @@ public class Tank : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit, false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit, false);
         }
     }
     override public void SkillDmgCalc1()
