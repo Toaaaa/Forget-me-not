@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
@@ -16,14 +17,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
 
 
     [SerializeField]
-    float fadeDuration = 0.7f; //암전되는 시간
+    float fadeDuration; //암전되는 시간
     [SerializeField]
-    float fadeOutDuration = 0.4f;
+    float fadeOutDuration;
 
     [SerializeField]
-    float combatFadeDuration = 0.7f; //화면이 닫히는 속도
+    float combatFadeDuration; //화면이 닫히는 속도
     [SerializeField]
-    float combatFadeOutDuration = 0.7f; //화면이 열리는 속도
+    float combatFadeOutDuration; //화면이 열리는 속도
 
     private void Start()
     {
@@ -45,12 +46,23 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         })
         .OnComplete(() =>
         {
+            VirtualCamera.Instance.GetComponent<CinemachineVirtualCamera>().enabled = false; //비활성화 >> 활성화 해주면 자동으로 플레이어 위치에 세팅됨.
             StartCoroutine(LoadScene());
         });
     }
     private void OnSceneLoaded(Scene scene,LoadSceneMode loadSceneMode)
     {
-        Fade_img.DOFade(0, fadeDuration)
+        Fade_img.DOFade(0, fadeOutDuration)
+            .OnStart(() =>
+            {
+                VirtualCamera.Instance.GetComponent<CinemachineVirtualCamera>().enabled = true;
+                Camera.main.transform.position = new Vector3(Player.Instance.transform.position.x, Player.Instance.transform.position.y, Camera.main.transform.position.z);
+            })
+            .OnUpdate(() =>
+            {
+                VirtualCamera.Instance.transform.position = new Vector3(Player.Instance.transform.position.x, Player.Instance.transform.position.y, VirtualCamera.Instance.transform.position.z);
+                Camera.main.transform.position = new Vector3(Player.Instance.transform.position.x, Player.Instance.transform.position.y, Camera.main.transform.position.z);
+            })
             .OnComplete(() =>
             {
                 GameManager.Instance.onSceneChange = false;

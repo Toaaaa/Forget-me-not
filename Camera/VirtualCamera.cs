@@ -57,4 +57,9 @@ public class VirtualCamera :MonoBehaviour
             cineconf.m_BoundingShape2D = FindObjectOfType<PolygonCollider2D>();
         }
     }
+    private void OnEnable()
+    {
+       this.transform.position = new Vector3(Player.Instance.transform.position.x, Player.Instance.transform.position.y, this.transform.position.z);
+
+    }
 }
