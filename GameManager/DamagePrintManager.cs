@@ -10,7 +10,7 @@ public class DamagePrintManager : MonoBehaviour
 
     private void Awake()
     {
-        damagePrint = new GameObject[6];
+        damagePrint = new GameObject[12];
         Generate();
     }
     private void Generate()

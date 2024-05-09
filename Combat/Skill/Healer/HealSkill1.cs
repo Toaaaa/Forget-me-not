@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class HealSkill1 : PlayerSkill
+public class HealSkill1 : PlayerSkill //(단일 힐)
 {
     public void targetLocked()
     {
@@ -18,14 +18,13 @@ public class HealSkill1 : PlayerSkill
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("충돌이 감지되었습니다.");
         if (collision.GetComponent<CombatSlot>().player == targetPlayer)
         {
-            CombatManager.Instance.selectedPlayer.hp += player.atk * 3f;
-            if (CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
+            targetPlayer.hp += player.atk * 3f;
+            if (targetPlayer.hp > targetPlayer.maxHp)
             {
                 CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
-                CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
+                targetPlayer.hp = targetPlayer.maxHp;
             }
             else
             {

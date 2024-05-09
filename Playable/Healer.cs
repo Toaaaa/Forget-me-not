@@ -28,35 +28,29 @@ public class Healer : PlayableC
         Debug.Log("광역 회복");
         for(int i =0; i<CombatManager.Instance.playerList.Count; i++)
         {
-            CombatManager.Instance.playerList[i].hp += this.atk*2;
-            if (CombatManager.Instance.playerList[i].hp > CombatManager.Instance.playerList[i].maxHp)
-            {
-                CombatManager.Instance.playerList[i].hp = CombatManager.Instance.playerList[i].maxHp;
-            }
+            var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity, CombatManager.Instance.combatDisplay.transform);
+            obj.GetComponent<HealSkill2>().player = this;
+            obj.GetComponent<HealSkill2>().targetPlayer = CombatManager.Instance.selectedPlayer;
+            obj.GetComponent<HealSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
+            obj.GetComponent<HealSkill2>().targetLocked();
         }
     }
     override public void Skill3(Transform trans) //큐어.
     {
-        CombatManager.Instance.selectedPlayer.isPoisoned = false;
+        var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity, CombatManager.Instance.combatDisplay.transform);
+        obj.GetComponent<HealSkill3>().player = this;
+        obj.GetComponent<HealSkill3>().targetPlayer = CombatManager.Instance.selectedPlayer;
+        obj.GetComponent<HealSkill3>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
+        obj.GetComponent<HealSkill3>().targetLocked();
     }
     override public void Skill4(Transform trans) //레저렉션.
     {//중 정도의 코스트에 모든 마나 소모. (기본적으로 1스킬 = 1마나)
-        if(CombatManager.Instance.selectedPlayer.isDead)
-        {
-            CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp*0.5f;
-            CombatManager.Instance.selectedPlayer.isDead = false;
-            CombatManager.Instance.selectedPlayer.isStunned = false;
-            CombatManager.Instance.selectedPlayer.isPoisoned = false;
-        }
-        else
-        {
-            CombatManager.Instance.selectedPlayer.hp += CombatManager.Instance.selectedPlayer.maxHp * 0.5f;
-            if (CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
-            {
-                CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
-            }
-            Debug.Log("이미 살아있는 대상, 절반의 체력 회복.");
-        }
+        var obj = Instantiate(skillEffect4, trans.transform.position, Quaternion.identity, CombatManager.Instance.combatDisplay.transform);
+        obj.GetComponent<HealSkill4>().player = this;
+        obj.GetComponent<HealSkill4>().targetPlayer = CombatManager.Instance.selectedPlayer;
+        obj.GetComponent<HealSkill4>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
+        obj.GetComponent<HealSkill4>().targetLocked();
+
     }
 
     public override void AttackDmgCalc()
