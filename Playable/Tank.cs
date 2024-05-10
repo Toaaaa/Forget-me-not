@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Tank", menuName = "PlayableCharacter/Tank")]
 public class Tank : PlayableC
 {
+    public Animator TankSkillAnim;
     public bool isDefPlused;//방어력 증가 스킬 사용시.
     public bool isAggroOn;//탱커의 어그로스킬 적용중.
 
@@ -43,13 +45,17 @@ public class Tank : PlayableC
     override public void Skill3(Transform trans) //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 5씩 감소시킴.
     { //>> 높은 가치의 스킬이기에 코스트 높게 설정할것.
         Debug.Log("땅울리기");
-        for (int i=0; i<CombatManager.Instance.monsterObject.Count; i++)
+        for (int i=0; i<CombatManager.Instance.monsterAliveList.Count; i++)
         {
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= CheckCrit(atk, this.crit) - CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def;
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def -= 5;
-            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def < 0)
+            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+            obj.GetComponent<TankSkill3>().player = this;
+            obj.GetComponent<TankSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
+            obj.GetComponent<TankSkill3>().targetLocked();
+
+            CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def -= 5;
+            if (CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def < 0)
             {
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Def = 0;
+                CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def = 0;
             }
         }
     }
@@ -91,11 +97,20 @@ public class Tank : PlayableC
     }
     override public void SkillDmgCalc3()
     {
-
+               
     }
     override public void SkillDmgCalc4()
     {
 
+    }
+
+    override public void MultiDmg3(PlayableC player, TestMob mob)
+    {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+
+        mob.Hp -= CheckCrit(atk, this.crit);
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.transform.position, critatk, isCrit, false);
     }
 }
 

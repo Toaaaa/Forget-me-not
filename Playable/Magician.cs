@@ -25,7 +25,7 @@ public class Magician : PlayableC
             obj.GetComponent<TestProjectile>().targetMob = multiTarget[i].GetComponent<TestMob>();
             obj.GetComponent<TestProjectile>().targetLocked();
         }*/ //다중 타겟 공격시 projectile의 타겟 설정에 사용하는 코드.
-        for(int i =0; i<CombatManager.Instance.monsterList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
+        for(int i =0; i<CombatManager.Instance.monsterAliveList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
             float temp = CheckCrit(atk * 1.5f, this.crit);
             Debug.Log(temp);
@@ -49,7 +49,7 @@ public class Magician : PlayableC
     override public void Skill3(Transform trans) //속도 감소 //시간 비동기화
     {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
         multiTarget = CombatManager.Instance.monsterAliveList;
-        for (int i = 0; i < CombatManager.Instance.monsterObject.Count; i++)
+        for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
             if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)
             {
