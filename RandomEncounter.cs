@@ -71,7 +71,6 @@ public class RandomEncounter : MonoBehaviour
          else 
         {
             tilemanager = FindObjectOfType<TileManager>();
-            Debug.Log("TileManager is null");
         }
 
         if (player.isMoving && isMonsterZone)
