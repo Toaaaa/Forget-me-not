@@ -31,8 +31,8 @@ public class HealSkill4 : PlayerSkill //(리저렉션)
                 targetPlayer.hp += targetPlayer.maxHp * 0.5f;
                 if (targetPlayer.hp > targetPlayer.maxHp)
                 {
-                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
                     targetPlayer.hp = targetPlayer.maxHp;
+                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
                 }
                 else
                 {

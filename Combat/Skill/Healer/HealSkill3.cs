@@ -19,8 +19,11 @@ public class HealSkill3 : PlayerSkill //큐어(일단은 독만 해제)
     {
         if (collision.GetComponent<CombatSlot>().player == targetPlayer)
         {
-            Debug.Log("큐어");
-            targetPlayer.isPoisoned = false;
+            if (!targetPlayer.isDead)
+            {
+                Debug.Log("큐어");
+                targetPlayer.isPoisoned = false;
+            }
             Destroy(gameObject);
         }
     }

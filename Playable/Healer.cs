@@ -30,8 +30,8 @@ public class Healer : PlayableC
         {
             var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity, CombatManager.Instance.combatDisplay.transform);
             obj.GetComponent<HealSkill2>().player = this;
-            obj.GetComponent<HealSkill2>().targetPlayer = CombatManager.Instance.selectedPlayer;
-            obj.GetComponent<HealSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
+            obj.GetComponent<HealSkill2>().targetPlayer = CombatManager.Instance.playerList[i];
+            obj.GetComponent<HealSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[i];
             obj.GetComponent<HealSkill2>().targetLocked();
         }
     }

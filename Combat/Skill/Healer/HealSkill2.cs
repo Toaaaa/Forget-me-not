@@ -17,17 +17,25 @@ public class HealSkill2 : PlayerSkill //(±¤¿ªÈú)
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.tag == "Skill")
+        {
+            return;
+        }
+
         if (collision.GetComponent<CombatSlot>().player == targetPlayer)
         {
-            CombatManager.Instance.selectedPlayer.hp += player.atk * 2f;
-            if (CombatManager.Instance.selectedPlayer.hp > CombatManager.Instance.selectedPlayer.maxHp)
+            if (!targetPlayer.isDead)
             {
-                CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
-                CombatManager.Instance.selectedPlayer.hp = CombatManager.Instance.selectedPlayer.maxHp;
-            }
-            else
-            {
-                CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, player.atk * 2f, false, true);
+                targetPlayer.hp += player.atk * 2f;
+                if (targetPlayer.hp > targetPlayer.maxHp)
+                {
+                    targetPlayer.hp = targetPlayer.maxHp;
+                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
+                }
+                else
+                {
+                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, player.atk * 2f, false, true);
+                }
             }
             Destroy(gameObject);
         }
