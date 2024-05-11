@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
@@ -17,6 +19,14 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public Vector3 combatPosition;
     Rigidbody2D rigid;
     GameObject scanedObject;
+    ///대화 시스템
+    public TextManager textManager;
+    public GameObject textPanel;
+    public TextMeshProUGUI talkText;
+    public int talkIndex;
+    public bool talking;
+    public bool isOnTalking;//대화중일때 esc둥을 누르면 설정창 등이 뜨지 않게 하기 위한 변수.
+
 
      void Start()
     {
@@ -68,7 +78,18 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             switch(scanedObject.tag)
             {
                 case "NPC":
+                    Debug.Log("NPC");
+                    TalkAction(scanedObject);
                     //talk
+                    break;
+                case "ExtraNPC":
+                    Debug.Log("ExtraNPC");
+                    TalkAction(scanedObject);
+                    //talk
+                    break;
+                case "Object":
+                    Debug.Log("Object");
+                    TalkAction(scanedObject);
                     break;
                 case "Shop":
                     GameManager.Instance.shopUI.SetActive(true);
@@ -94,6 +115,43 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
+
+    public void TalkAction(GameObject talkObject)
+    {
+        scanedObject = talkObject;
+        ObjectId objectId = scanedObject.GetComponent<ObjectId>();
+        Talk(objectId.ID, objectId.isNPC);
+
+        textPanel.SetActive(talking);
+    }
+
+    private void Talk(int ID, bool isNPC)
+    {
+        string talkData = textManager.GetTalk(ID, talkIndex);
+
+        if(talkData == null)
+        {
+            talking = false;
+            talkIndex = 0;
+            return;
+        }
+
+        if(isNPC)
+        {
+            talkText.text = talkData;
+        }
+        else
+        {
+            talkText.text = talkData;
+        }
+
+        talking = true;
+        talkIndex++;
+    }
+
+
+
+
 
     void FixedUpdate()
     {
