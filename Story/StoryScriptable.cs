@@ -23,4 +23,24 @@ public class StoryScriptable : ScriptableObject
     public bool isOnStage4;
     public bool isStage4Completed;
     public bool isAllCompleted;
+
+    public void restAll()
+    {
+        firstTime = false;
+        secondTime = false;
+        second_map1 = false;
+        second_map2 = false;
+        second_map3 = false;
+        isTutorial = false;
+        isTutorialCompleted = false;
+        isOnStage1 = false;
+        isStage1Completed = false;
+        isOnStage2 = false;
+        isStage2Completed = false;
+        isOnStage3 = false;
+        isStage3Completed = false;
+        isOnStage4 = false;
+        isStage4Completed = false;
+        isAllCompleted = false;
+    }
 }

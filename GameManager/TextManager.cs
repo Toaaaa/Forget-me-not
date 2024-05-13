@@ -26,6 +26,8 @@ public class TextManager : MonoBehaviour
         portraitData.Add(1000 + 0, portraitArr[0]);
         portraitData.Add(1000 + 1, portraitArr[1]);
     }
+    // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
+    // 대화가 여러개인 npc는 1000,2000,3000....으로 구분.
 
     public string GetTalk(int id, int talkIndex)
     { 

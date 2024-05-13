@@ -29,7 +29,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public TextMeshProUGUI talkText;
     public int talkIndex;
     public bool talking;
-    public bool isOnTalking;//대화중일때 esc둥을 누르면 설정창 등이 뜨지 않게 하기 위한 변수.
+
 
 
      void Start()
@@ -95,6 +95,10 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     Debug.Log("Object");
                     TalkAction(scanedObject);
                     break;
+                case "Story":
+                    //스토리 진행 오브젝트로. 해당 오브젝트가 들고있는 변수 참고 or 함수 실행을 통해
+                    //자동 재생 스토리 스크립트 재생.
+                    break;
                 case "Shop":
                     GameManager.Instance.shopUI.SetActive(true);
                     GameManager.Instance.shopUI.GetComponent<ShopUI>().shopName = scanedObject.name;
@@ -125,7 +129,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         scanedObject = talkObject;
         ObjectId objectId = scanedObject.GetComponent<ObjectId>();
         Talk(objectId.ID, objectId.isNPC);
-
+        GameManager.Instance.isTalk = true;
         textPanel.SetActive(talking);
 
     }
@@ -137,6 +141,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         if(talkData == null)
         {
             talking = false;
+            GameManager.Instance.isTalk = false;
             talkIndex = 0;
             return;
         }
