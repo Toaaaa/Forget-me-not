@@ -10,5 +10,7 @@ public class TileData : ScriptableObject
     public TileBase[] tiles;
 
     public bool isMonsterZone;
+    public bool isStoryTile;
+    public int storyNum;
 
 }

@@ -7,15 +7,20 @@ using UnityEngine;
 public class TextManager : MonoBehaviour
 {
     Dictionary<int, string[]> talkData;
+    Dictionary<int, string[]> storyTalkData;//자동재생 스크립트용 대화 데이터.
     Dictionary<int, Sprite> portraitData;
+    Dictionary<int, Sprite> storyData;
 
     public Sprite[] portraitArr;
+    public Sprite[] storyArr;
 
     private void Awake()
     {
         talkData = new Dictionary<int, string[]>();
+        storyTalkData = new Dictionary<int, string[]>();
         portraitData = new Dictionary<int, Sprite>();
         GenerateData();
+        GenerateStoryData();
     }
     
     void GenerateData()//이곳에 대화 데이터들 입력
@@ -28,6 +33,14 @@ public class TextManager : MonoBehaviour
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
     // 대화가 여러개인 npc는 1000,2000,3000....으로 구분.
+
+    void GenerateStoryData()//이곳에 스토리 데이터들 입력
+    {
+        storyTalkData.Add(0, new string[] { "스토리재생:0", "스토리재생:1" });
+
+        storyData.Add(0 + 0, storyArr[0]);
+        storyData.Add(0 + 1, storyArr[1]);
+    }
 
     public string GetTalk(int id, int talkIndex)
     { 
@@ -44,5 +57,27 @@ public class TextManager : MonoBehaviour
     public Sprite GetPortrait(int id, int portraitIndex) //id는 상대의 id번호
     {
         return portraitData[id + portraitIndex];
+    }
+
+
+    public string GetStoryTalk(int id, int talkIndex)
+    {
+        if (talkIndex == storyTalkData[id].Length)
+        {
+            return null;
+        }
+        else
+        {
+            return storyTalkData[id][talkIndex];
+        }
+    }
+    public Sprite GetStoryPortrait(int id, int storyIndex)
+    {
+        return storyData[id + storyIndex];
+    }
+
+    public void storyScriptPlay(int storyNum)
+    {
+        GameManager.Instance.Player.StoryAction(storyNum);
     }
 }

@@ -15,6 +15,7 @@ public class GameManager : Singleton<GameManager>
 
 
     public MapData mapData;
+    public TextManager textManager;//자동 재생 대화일 경우. istalk켜주고, istalk일때는 함수(storyscriptplay) 재생 안되게 주의.
     public CombatManager combatManager;
     public CombatDisplay combatDisplay;
     public EventManager eventManager;

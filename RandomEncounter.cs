@@ -79,6 +79,15 @@ public class RandomEncounter : MonoBehaviour
             EncounterCheck(); //몬스터 인카운터 체크.
         }
 
+        /////////////////////////// 이 밑은 스토리 이벤트 타일.
+        if(tilemanager != null)
+        {
+            tilemanager.IsStoryTile(player.transform.position); //플레이어가 있는 타일이 스토리 타일인지 체크.
+        }
+         else
+        {
+            tilemanager = FindObjectOfType<TileManager>();
+        }
     }
 
 }

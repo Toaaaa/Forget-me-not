@@ -167,8 +167,15 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         talkIndex++;
     }
 
+    public void StoryAction(int storyNum)
+    {
 
+    }
 
+    private void Story(int ID, bool isNPC)//변수 수정해야 함.
+    {
+
+    }
 
 
     void FixedUpdate()
