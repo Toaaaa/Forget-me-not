@@ -22,6 +22,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     ///대화 시스템
     public TextManager textManager;
     public GameObject textPanel;
+    public GameObject imageBox; //초상화가 담긴 박스.
+    public Image portrait;
     public TextMeshProUGUI talkText;
     public int talkIndex;
     public bool talking;
@@ -123,6 +125,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         Talk(objectId.ID, objectId.isNPC);
 
         textPanel.SetActive(talking);
+
     }
 
     private void Talk(int ID, bool isNPC)
@@ -138,11 +141,16 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
         if(isNPC)
         {
-            talkText.text = talkData;
+            talkText.text = talkData.Split(':')[0];
+            imageBox.SetActive(true);
+            portrait.sprite = textManager.GetPortrait(ID, int.Parse(talkData.Split(':')[1]));
+            portrait.color = new Color32(255, 255, 255, 255);
         }
         else
         {
             talkText.text = talkData;
+            imageBox.SetActive(false);
+            portrait.color = new Color32(255, 255, 255, 0);
         }
 
         talking = true;
