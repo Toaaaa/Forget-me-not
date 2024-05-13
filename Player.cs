@@ -21,7 +21,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     GameObject scanedObject;
     ///대화 시스템
     public TextManager textManager;
-    public GameObject textPanel;
+    public GameObject textPanel;//대화창 전체.
+    public GameObject nameBox;
+    public GameObject nameText;
     public GameObject imageBox; //초상화가 담긴 박스.
     public Image portrait;
     public TextMeshProUGUI talkText;
@@ -139,10 +141,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             return;
         }
 
-        if(isNPC)
+        if(isNPC) //대화 상대가 npc일 경우.
         {
             talkText.text = talkData.Split(':')[0];
             imageBox.SetActive(true);
+            nameBox.SetActive(true);
+            nameText.GetComponent<TextMeshProUGUI>().text = scanedObject.name;
             portrait.sprite = textManager.GetPortrait(ID, int.Parse(talkData.Split(':')[1]));
             portrait.color = new Color32(255, 255, 255, 255);
         }
@@ -150,6 +154,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         {
             talkText.text = talkData;
             imageBox.SetActive(false);
+            nameBox.SetActive(false);
             portrait.color = new Color32(255, 255, 255, 0);
         }
 
