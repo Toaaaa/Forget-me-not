@@ -26,7 +26,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public GameObject nameText;
     public GameObject imageBox; //초상화가 담긴 박스.
     public Image portrait;
-    public TextMeshProUGUI talkText;
+    public TypeEffect talk;
     public int talkIndex;
     public bool talking;
 
@@ -129,18 +129,30 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         scanedObject = talkObject;
         ObjectId objectId = scanedObject.GetComponent<ObjectId>();
         Talk(objectId.ID, objectId.isNPC);
-        GameManager.Instance.isTalk = true;
+        if(!textPanel.activeSelf)
+            GameManager.Instance.isTalk = true;
         textPanel.SetActive(talking);
 
     }
 
     private void Talk(int ID, bool isNPC)
     {
-        string talkData = textManager.GetTalk(ID, talkIndex);
+        string talkData = "";
+
+        if (talk.isAnim)
+        {
+            talk.SetMsg("");
+            return;
+        }
+        else
+        {
+            talkData = textManager.GetTalk(ID, talkIndex);
+        }
 
         if(talkData == null)
         {
             talking = false;
+            Debug.Log("End of talk");
             GameManager.Instance.isTalk = false;
             talkIndex = 0;
             return;
@@ -148,7 +160,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
         if(isNPC) //대화 상대가 npc일 경우.
         {
-            talkText.text = talkData.Split(':')[0];
+            talk.SetMsg(talkData.Split(':')[0]);
             imageBox.SetActive(true);
             nameBox.SetActive(true);
             nameText.GetComponent<TextMeshProUGUI>().text = scanedObject.name;
@@ -157,7 +169,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         }
         else
         {
-            talkText.text = talkData;
+            talk.SetMsg(talkData);
             imageBox.SetActive(false);
             nameBox.SetActive(false);
             portrait.color = new Color32(255, 255, 255, 0);
