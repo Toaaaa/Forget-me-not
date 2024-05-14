@@ -19,6 +19,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public Vector3 combatPosition;
     Rigidbody2D rigid;
     GameObject scanedObject;
+    public GameManager gameManager;
     ///대화 시스템
     public TextManager textManager;
     public GameObject textPanel;//대화창 전체.
@@ -44,19 +45,21 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     private void Awake()
     {
        rigid = GetComponent<Rigidbody2D>();
+        if (gameManager == null)
+            gameManager = GameManager.Instance;
     }
 
     void Update()
     {
         isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
         
-        h = GameManager.Instance.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
-        v = GameManager.Instance.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
+        h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
+        v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
 
-        bool hDown = GameManager.Instance.cantAction ? false : Input.GetButtonDown("Horizontal");
-        bool vDown = GameManager.Instance.cantAction ? false : Input.GetButtonDown("Vertical");
-        bool hUp = GameManager.Instance.cantAction ? false : Input.GetButtonUp("Horizontal");
-        bool vUp = GameManager.Instance.cantAction ? false : Input.GetButtonUp("Vertical");
+        bool hDown = gameManager.cantAction ? false : Input.GetButtonDown("Horizontal");
+        bool vDown = gameManager.cantAction ? false : Input.GetButtonDown("Vertical");
+        bool hUp = gameManager.cantAction ? false : Input.GetButtonUp("Horizontal");
+        bool vUp = gameManager.cantAction ? false : Input.GetButtonUp("Vertical");
 
         if(hDown)
             isHorizonMove = true;
@@ -100,8 +103,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     //자동 재생 스토리 스크립트 재생.
                     break;
                 case "Shop":
-                    GameManager.Instance.shopUI.SetActive(true);
-                    GameManager.Instance.shopUI.GetComponent<ShopUI>().shopName = scanedObject.name;
+                    gameManager.shopUI.SetActive(true);
+                    gameManager.shopUI.GetComponent<ShopUI>().shopName = scanedObject.name;
                     //여기를 통해서 추가로 shopUI에 대한 정보에 접근 가능.
                     break;
                 case "Portal":
@@ -130,7 +133,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         ObjectId objectId = scanedObject.GetComponent<ObjectId>();
         Talk(objectId.ID, objectId.isNPC);
         if(!textPanel.activeSelf)
-            GameManager.Instance.isTalk = true;
+            gameManager.isTalk = true;
         textPanel.SetActive(talking);
 
     }
@@ -153,7 +156,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         {
             talking = false;
             Debug.Log("End of talk");
-            GameManager.Instance.isTalk = false;
+            gameManager.isTalk = false;
             talkIndex = 0;
             return;
         }
