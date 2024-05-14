@@ -31,6 +31,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public int talkIndex;
     public bool talking;
 
+    public bool storyTalking;
+
 
 
      void Start()
@@ -184,14 +186,92 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
     public void StoryAction(int storyNum)
     {
-
+        if (!CheckTheProgress(storyNum))
+            return;
+        storyTalking = true;
+        Story(storyNum);
+        if(!textPanel.activeSelf)
+            gameManager.isTalk = true;
+        textPanel.SetActive(talking);
     }
 
-    private void Story(int ID, bool isNPC)//변수 수정해야 함.
+    private void Story(int storyNum)//변수 수정해야 함.
     {
+        string talkData = "";
 
+        if (talk.isAnim)
+        {
+            talk.SetMsg("");
+            return;
+        }
+        else
+        {
+            
+            talkData = textManager.GetStoryTalk(storyNum, talkIndex);
+        }
+
+        if (talkData == null)
+        {
+            talking = false;
+            storyTalking = false;
+            SetTheProgress(storyNum);
+            gameManager.isTalk = false;
+            talkIndex = 0;
+            return;
+        }
+        //
+            talk.SetMsg(talkData.Split(':')[0]);
+            imageBox.SetActive(true);
+            nameBox.SetActive(true);
+            portrait.sprite = textManager.GetStoryPortrait(storyNum, int.Parse(talkData.Split(':')[1]));
+            nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
+        portrait.color = new Color32(255, 255, 255, 255);
+        //
+
+        talking = true;
+        talkIndex++;
     }
-
+    bool CheckTheProgress(int storyNum)//진행상황을 확인하는 함수. >>storyscriptable의 변수 확인, 만약 이미 진행된 대사일 경우 스킵.
+    {
+        switch(storyNum)
+        {
+            case 1000:
+                if (!gameManager.storyScriptable.firstTime)
+                    return true;//진행되지 않은 대사일 경우
+                else
+                    return false;//진행된 대사일 경우 
+            case 2000:
+                if(!gameManager.storyScriptable.secondTime)
+                    return true;
+                else
+                    return false;
+            case 3000:
+                if(gameManager.storyScriptable.second_map1&&gameManager.storyScriptable.second_map2&&!gameManager.storyScriptable.isTutorial)
+                    return true;
+                else
+                    return false;
+            default:
+                Debug.Log("Wrong StoryNum");
+                return false;
+        }
+    }
+    void SetTheProgress(int storyNum)//대사가 끝난뒤 진행상황을 저장하는 함수. >>storyscriptable의 변수 수정.
+    {
+        switch(storyNum)
+        {
+            case 1000:
+                gameManager.storyScriptable.firstTime = true;
+                break;
+            case 2000:
+                gameManager.storyScriptable.secondTime = true;
+                break;
+            case 3000:
+                gameManager.storyScriptable.isTutorial = true;
+                break;
+            default:
+                break;
+        }
+    }
 
     void FixedUpdate()
     {

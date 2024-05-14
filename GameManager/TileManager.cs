@@ -69,6 +69,9 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
     {
          switch (storynum)
          {
+            case 0:
+                //오른쪽으로 가려할때(istage1completed가 아닐때는), (이벤트 스크립트textbox를 띄우며 "여기로는 갈 필요가 없을것 같아" 라며 )
+                break;
             case 1:
                 if(!GameManager.Instance.storyScriptable.second_map1)
                     GameManager.Instance.storyScriptable.second_map1 = true;
@@ -76,6 +79,9 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
             case 2:
                 if(!GameManager.Instance.storyScriptable.second_map2)
                     GameManager.Instance.storyScriptable.second_map2 = true;
+                break;
+            case 4:
+                //강쪽에서 아직 튜토리얼 전일때 진입 차단.
                 break;
             default:
                 break;

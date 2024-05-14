@@ -9,7 +9,7 @@ public class TextManager : MonoBehaviour
     Dictionary<int, string[]> talkData;
     Dictionary<int, string[]> storyTalkData;//자동재생 스크립트용 대화 데이터.
     Dictionary<int, Sprite> portraitData;
-    Dictionary<int, Sprite> storyData;
+    Dictionary<int, Sprite> storyPortraitData;
 
     public Sprite[] portraitArr;
     public Sprite[] storyArr;
@@ -19,8 +19,9 @@ public class TextManager : MonoBehaviour
         talkData = new Dictionary<int, string[]>();
         storyTalkData = new Dictionary<int, string[]>();
         portraitData = new Dictionary<int, Sprite>();
+        storyPortraitData = new Dictionary<int, Sprite>();
         GenerateData();
-        //GenerateStoryData();
+        GenerateStoryData();
     }
     
     void GenerateData()//이곳에 대화 데이터들 입력
@@ -36,10 +37,10 @@ public class TextManager : MonoBehaviour
 
     void GenerateStoryData()//이곳에 스토리 데이터들 입력
     {
-        storyTalkData.Add(0, new string[] { "스토리재생:0", "스토리재생:1" });
+        storyTalkData.Add(3000, new string[] { "스토리재생1:0:주인공", "스토리재생2:1:고양이", "스토리재생3:0:주인공" });
 
-        storyData.Add(0 + 0, storyArr[0]);
-        storyData.Add(0 + 1, storyArr[1]);
+        storyPortraitData.Add(3000 + 0, storyArr[0]);
+        storyPortraitData.Add(3000 + 1, storyArr[1]);
     }
 
     public string GetTalk(int id, int talkIndex)
@@ -73,11 +74,23 @@ public class TextManager : MonoBehaviour
     }
     public Sprite GetStoryPortrait(int id, int storyIndex)
     {
-        return storyData[id + storyIndex];
+        return storyPortraitData[id + storyIndex];
     }
 
     public void storyScriptPlay(int storyNum)
     {
-        GameManager.Instance.Player.StoryAction(storyNum);
+        if (GameManager.Instance.storyScriptable.isScript)
+        {
+            if(GameManager.Instance.Player.storyTalking)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                    GameManager.Instance.Player.StoryAction(storyNum);
+            }
+            else
+            {
+                GameManager.Instance.Player.StoryAction(storyNum);
+            }
+        }
+            //GameManager.Instance.Player.StoryAction(storyNum);
     }
 }
