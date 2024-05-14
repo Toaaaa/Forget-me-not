@@ -47,7 +47,7 @@ public class TypeEffect : MonoBehaviour
         }
         msgText.text += targetMsg[index];
         //Sound
-        if (targetMsg[index]!=' '&& targetMsg[index] != '.'&& targetMsg[index] != ',')
+        if (targetMsg[index]!=' '&& targetMsg[index] != ',')
             audioSource.Play();
         index++;
         Invoke("Effecting", 1f / CharPerSeconds);
