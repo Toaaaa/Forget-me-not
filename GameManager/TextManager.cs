@@ -20,7 +20,7 @@ public class TextManager : MonoBehaviour
         storyTalkData = new Dictionary<int, string[]>();
         portraitData = new Dictionary<int, Sprite>();
         GenerateData();
-        GenerateStoryData();
+        //GenerateStoryData();
     }
     
     void GenerateData()//이곳에 대화 데이터들 입력

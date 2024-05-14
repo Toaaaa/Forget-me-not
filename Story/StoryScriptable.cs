@@ -10,8 +10,7 @@ public class StoryScriptable : ScriptableObject
     public bool firstTime;//제일 처음 맵에서 시작할 때. //처음 왔을때 false고 스크립트가 끝나면 true로 바뀜.
     public bool secondTime;//두번째 맵을 처음 올 때. //처음 왔을때 false고 스크립트가 끝나면 true로 바뀜.
     public bool second_map1;
-    public bool second_map2;
-    public bool second_map3;//두번째 맵에서의 주변 맵들 탐색완료 여부. //탐색이 전부 true고 두번째 맵으로 돌아왔을 때 다음 스크립트로 넘어감.
+    public bool second_map2;//주변 맵들 탐색완료 여부. //탐색이 전부 true고 두번째 맵으로 돌아왔을 때 다음 스크립트로 넘어감.
     public bool isTutorial;
     public bool isTutorialCompleted;
     public bool isOnStage1;
@@ -30,7 +29,6 @@ public class StoryScriptable : ScriptableObject
         secondTime = false;
         second_map1 = false;
         second_map2 = false;
-        second_map3 = false;
         isTutorial = false;
         isTutorialCompleted = false;
         isOnStage1 = false;

@@ -52,8 +52,33 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
 
         if (tile == null) //타일이 없을때는 false 리턴. (ismonsterzone이 없는 타일) 이라는 false가 됨.
             return;
-        int storyNum = dataFromTiles[tile].storyNum; 
-        GameManager.Instance.textManager.storyScriptPlay(storyNum);
+        int storyNum = dataFromTiles[tile].storyNum;
+        if (!dataFromTiles[tile].isStoryTile) //스토리타일이 아닌 데이터 세팅 타일일 경우.
+        {
+            DataTile(storyNum);
+        }
+        else
+        {
+            GameManager.Instance.textManager.storyScriptPlay(storyNum);
+        }
         return;
+    }
+
+
+    void DataTile(int storynum)
+    {
+         switch (storynum)
+         {
+            case 1:
+                if(!GameManager.Instance.storyScriptable.second_map1)
+                    GameManager.Instance.storyScriptable.second_map1 = true;
+                break;
+            case 2:
+                if(!GameManager.Instance.storyScriptable.second_map2)
+                    GameManager.Instance.storyScriptable.second_map2 = true;
+                break;
+            default:
+                break;
+         }           
     }
 }

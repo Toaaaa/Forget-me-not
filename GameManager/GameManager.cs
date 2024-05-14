@@ -24,6 +24,7 @@ public class GameManager : Singleton<GameManager>
     public CameraManager Camera;
     public DBManager database;
     public Inventory inventory; //inventory.save // inventory.load 메서드 사용가능.
+    public StoryScriptable storyScriptable;
     public PlayableManager playableManager;
 
 
