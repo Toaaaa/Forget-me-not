@@ -225,10 +225,10 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             nameBox.SetActive(true);
             portrait.sprite = textManager.GetStoryPortrait(storyNum, int.Parse(talkData.Split(':')[1]));
             nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
-        /*if (talkData.Split(':')[3] != null) //3이 1일 경우 암전 한번.
+        if (talkData.Split(':')[3] == "1") //3이 1일 경우 암전 한번.
         {
-            암전 기능을 넣고싶은데.. 일단 보류.
-        }*/
+            SceneChangeManager.Instance.BlackOut();
+        }
         portrait.color = new Color32(255, 255, 255, 255);
         //
 

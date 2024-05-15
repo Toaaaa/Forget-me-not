@@ -15,12 +15,16 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     public string transferMapName; //이동할 맵의 이름
     public string battleSceneName; //전투씬 이름
 
+    public bool duringBlackout; //암전중인지
 
     [SerializeField]
     float fadeDuration; //암전되는 시간
     [SerializeField]
     float fadeOutDuration;
-
+    [SerializeField]
+    float blackoutDuration; //스토리 암전 되는 시간
+    [SerializeField]
+    float whiteoutDuration;
     [SerializeField]
     float combatFadeDuration; //화면이 닫히는 속도
     [SerializeField]
@@ -34,6 +38,19 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
+    public void BlackOut()
+    {
+        Fade_img.DOFade(1, blackoutDuration)
+        .OnStart(() =>
+        {
+            duringBlackout = true;
+        })
+        .OnComplete(() =>
+        {
+            StartCoroutine(BlackOutout());
+        });
+    }
+
     public void ChangeScene()
     {
         Fade_img.DOFade(1, fadeDuration)
@@ -67,6 +84,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
             {
                 GameManager.Instance.onSceneChange = false;
                 Fade_img.blocksRaycasts = false;
+            });
+    }
+    public void OnBlackOutFin()
+    {
+        Fade_img.DOFade(0, whiteoutDuration)
+            .OnStart(() =>
+            {
+                duringBlackout = false;
             });
     }
     public void ChangeBattleScene()
@@ -111,6 +136,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 CombatManager.Instance.combatDisplay.gameObject.SetActive(false);
             });
     }
+    IEnumerator BlackOutout()
+    { 
+        yield return new WaitForSeconds(1f);
+        OnBlackOutFin();
+    }
 
     IEnumerator LoadScene()
     {
@@ -138,4 +168,5 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
         Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
     }
+
 }
