@@ -19,6 +19,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public Vector3 combatPosition;
     Rigidbody2D rigid;
     GameObject scanedObject;
+    public GameObject CAT;//고양이 오브젝트.
     public GameManager gameManager;
     ///대화 시스템
     public TextManager textManager;
@@ -225,9 +226,17 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             nameBox.SetActive(true);
             portrait.sprite = textManager.GetStoryPortrait(storyNum, int.Parse(talkData.Split(':')[1]));
             nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
-        if (talkData.Split(':')[3] == "1") //3이 1일 경우 암전 한번.
+
+        switch (talkData.Split(':')[3])
         {
-            SceneChangeManager.Instance.BlackOut();
+            case "1":
+                SceneChangeManager.Instance.BlackOut();
+                break;
+            case "2"://고양이 추가 (inparty에)
+                //고양이 추가.+고양이 오브젝트 fadeout (고양이 오브젝트 >>CAT)
+                break;
+            default:
+                break;
         }
         portrait.color = new Color32(255, 255, 255, 255);
         //

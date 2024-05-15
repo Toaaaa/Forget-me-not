@@ -94,6 +94,14 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 duringBlackout = false;
             });
     }
+    public void OnBlackOutFinCust(float duration)
+    {
+        Fade_img.DOFade(0, duration)
+            .OnStart(() =>
+            {
+                duringBlackout = false;
+            });
+    }
     public void ChangeBattleScene()
     {
         //여기서 좌우로 닫는 효과 넣고

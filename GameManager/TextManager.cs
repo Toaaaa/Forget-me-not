@@ -37,6 +37,20 @@ public class TextManager : MonoBehaviour
 
     void GenerateStoryData()//이곳에 스토리 데이터들 입력
     {
+        storyTalkData.Add(1000, new string[]
+        {
+            "일어나세요...:7:???:0"
+        });
+        storyTalkData.Add(2000, new string[]
+        {
+            //여기서 고양이 오브젝트 fadein.
+            "야옹 :4:고양이:0",
+            "야옹아 안녕:0:나:2",
+            "야옹 (고양이는 당신을 바라보고 있다) :4:고양이:0",
+            "(밤이라도 너무 조용한데..?):0:나:0",
+            //여기에 스마트폰을 보는 모션을 취하고.
+            "요즘 바빠서 전혀 운동을 못해서 답답하네. 잠도 안오는데 잠시 산책이나 할까.:0:나:0"
+        });
         storyTalkData.Add(3000, new string[] 
         {
             "역시 다른 사람은 없구나... 이렇게 차원의 경계로 넘어오는 경우는 흔치 않지.:4:고양이:0",
@@ -62,12 +76,13 @@ public class TextManager : MonoBehaviour
             "아까 잠시 확인을 해 보니, 마을 윗쪽의 강변에 있었던거 같아요:4:고양이:0",
         });
 
-        storyPortraitData.Add(3000 + 0, storyArr[0]);
-        storyPortraitData.Add(3000 + 1, storyArr[1]);
-        storyPortraitData.Add(3000 + 2, storyArr[2]);
-        storyPortraitData.Add(3000 + 3, storyArr[3]);
-        storyPortraitData.Add(3000 + 4, storyArr[4]);
-        //추후 이거 for문으로 한번에 다돌리기.
+
+        for(int i = 0; i < 8; i++)
+        {
+            storyPortraitData.Add(1000 + i, storyArr[i]);
+            storyPortraitData.Add(2000 + i, storyArr[i]);
+            storyPortraitData.Add(3000 + i, storyArr[i]);
+        }//0번 스테이지 초상화.
     }
 
     public string GetTalk(int id, int talkIndex)
