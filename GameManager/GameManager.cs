@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     public bool cantAction; //플레이어가 npc와 상호 작용 등의 움직이면 안되는 동작을 진행중일때 true.
     public bool onSceneChange; //씬이 바뀌는 중일때 true.
     public bool isTalk; //대화중일때 true.
+    public bool isOtherUI; //다른 UI가 활성화 되어있을때 true.
 
 
     public MapData mapData;
@@ -27,6 +28,7 @@ public class GameManager : Singleton<GameManager>
     public StoryScriptable storyScriptable;
     public PlayableManager playableManager;
 
+    public UIPanelEffect portalUI;
 
     private void Awake()
     {
@@ -40,7 +42,7 @@ public class GameManager : Singleton<GameManager>
     void Update()
     {
 
-        if (Input.GetKeyDown(KeyCode.Escape)&&!shopUI.activeSelf&&!combatDisplay.gameObject.activeSelf&&!isTalk) 
+        if (Input.GetKeyDown(KeyCode.Escape)&&!shopUI.activeSelf&&!combatDisplay.gameObject.activeSelf&&!isTalk&&!isOtherUI) 
             MenuUI.SetActive(true); //ui가 전부 담긴 메뉴 활성화.
         
         /*
@@ -49,7 +51,7 @@ public class GameManager : Singleton<GameManager>
             inventory.AddItem(database.GetItem[1], 1, 0);
         }*/
 
-        cantAction = MenuUI.activeSelf || shopUI.activeSelf || combatDisplay.gameObject.activeSelf||onSceneChange||isTalk ? true : false; //메뉴가 활성화 되어있으면 cantAction은 true.
+        cantAction = MenuUI.activeSelf || shopUI.activeSelf || combatDisplay.gameObject.activeSelf||onSceneChange||isTalk||isOtherUI ? true : false; //메뉴가 활성화 되어있으면 cantAction은 true.
     }
     private void OnApplicationQuit()
     {

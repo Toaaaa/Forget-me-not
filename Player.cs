@@ -83,7 +83,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
 
         //scan object
-        if(Input.GetButtonDown("Jump") && scanedObject != null)
+        if(Input.GetButtonUp("Jump") && scanedObject != null)
         {
             switch(scanedObject.tag)
             {
@@ -111,7 +111,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     //여기를 통해서 추가로 shopUI에 대한 정보에 접근 가능.
                     break;
                 case "Portal":
-                    scanedObject.GetComponent<Portal>().portalOn();
+                    scanedObject.GetComponent<Portal>().portalUseUI.SetActive(true);
                     //추후 portalOn에서 ui를 띠워서 이동할지 물어보는 기능 추가.
                     break;
 

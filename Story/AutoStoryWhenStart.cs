@@ -10,24 +10,27 @@ public class AutoStoryWhenStart : MonoBehaviour
     private void Start()
     {
         gameManager = GameManager.Instance;
-        switch(storyIndex)
+        if (gameManager.storyScriptable.isScript)
         {
-            case 1000:
-                SceneChangeManager.Instance.Fade_img.alpha = 1;//첫 장면은 검정색화면에서
-                if (!gameManager.storyScriptable.firstTime)
-                {
-                    SceneChangeManager.Instance.OnBlackOutFinCust(2f);//천천히 암전이 풀림.
-                    StartCoroutine(AutoStoryTime(1000, 4.0f));
-                }
-                break;
-            case 2000:
-                if (!gameManager.storyScriptable.secondTime)
-                {
-                    //gameManager.Player.CAT.SetActive(true);//고양이 켜주기.(고양이는 Onenable시 fadein 이미지가 켜지는 함수 보유)
-                    StartCoroutine(AutoStoryTime(2000, 2.0f));
-                }
-                break;
+            switch (storyIndex)
+            {
+                case 1000:
+                    if (!gameManager.storyScriptable.firstTime)
+                    {
+                        SceneChangeManager.Instance.Fade_img.alpha = 1;//첫 장면은 검정색화면에서
+                        SceneChangeManager.Instance.OnBlackOutFinCust(2f);//천천히 암전이 풀림.
+                        StartCoroutine(AutoStoryTime(1000, 4.0f));
+                    }
+                    break;
+                case 2000:
+                    if (!gameManager.storyScriptable.secondTime)
+                    {
+                        //gameManager.Player.CAT.SetActive(true);//고양이 켜주기.(고양이는 Onenable시 fadein 이미지가 켜지는 함수 보유)
+                        StartCoroutine(AutoStoryTime(2000, 2.0f));
+                    }
+                    break;
 
+            }
         }
     }
 
