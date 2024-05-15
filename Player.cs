@@ -263,6 +263,11 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     return true;
                 else
                     return false;
+            case 4000:
+                if(gameManager.storyScriptable.isTutorial&&!gameManager.storyScriptable.isTutorialCompleted)
+                    return true;
+                else
+                    return false;
             default:
                 Debug.Log("Wrong StoryNum");
                 return false;
@@ -280,6 +285,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case 3000:
                 gameManager.storyScriptable.isTutorial = true;
+                break;
+            case 4000:
+                gameManager.storyScriptable.isTutorialCompleted = true;
                 break;
             default:
                 break;

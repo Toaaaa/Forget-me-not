@@ -44,8 +44,8 @@ public class TextManager : MonoBehaviour
         storyTalkData.Add(2000, new string[]
         {
             //여기서 고양이 오브젝트 fadein.
-            "야옹 :4:고양이:0",
-            "야옹아 안녕:0:나:2",
+            "야옹 :4:고양이:2", //여기 끝의 2가 splie[3]에서 고양이 fadein을 위한 인덱스.
+            "야옹아 안녕:0:나:0",
             "야옹 (고양이는 당신을 바라보고 있다) :4:고양이:0",
             "(밤이라도 너무 조용한데..?):0:나:0",
             //여기에 스마트폰을 보는 모션을 취하고.
@@ -75,9 +75,16 @@ public class TextManager : MonoBehaviour
             "먼저 빠르게 첫번째 각인 부터 찾으러 가도록 하죠.:4:고양이:0",
             "아까 잠시 확인을 해 보니, 마을 윗쪽의 강변에 있었던거 같아요:4:고양이:0",
         });
+        storyTalkData.Add(4000, new string[]
+        {
+            "저기 있는 하수구 구멍으로 들어가라는 소리는 아니지?? :3:나:0",
+            "맞아요! 저곳이 저희 차원과 연결된 통로에요!:5:고양이:0",
+            "...... :3:나:0",
+            "가까이 다가가면 포탈을 사용하실 수 있으실 거에요.:4:고양이:0"
+        });
 
 
-        for(int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)
         {
             storyPortraitData.Add(1000 + i, storyArr[i]);
             storyPortraitData.Add(2000 + i, storyArr[i]);
