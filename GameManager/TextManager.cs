@@ -37,6 +37,13 @@ public class TextManager : MonoBehaviour
 
     void GenerateStoryData()//이곳에 스토리 데이터들 입력
     {
+        /////알람 스크립트/////
+        storyTalkData.Add(0, new string[]
+        {
+            "여기로는 갈 필요가 없을것 같아"
+        });
+
+        /////스토리 스크립트/////
         storyTalkData.Add(1000, new string[]
         {
             "일어나세요...:7:???:0"
@@ -142,4 +149,5 @@ public class TextManager : MonoBehaviour
         }
             //GameManager.Instance.Player.StoryAction(storyNum);
     }
+
 }

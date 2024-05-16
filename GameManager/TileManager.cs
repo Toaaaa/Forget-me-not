@@ -11,7 +11,6 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
 
 
     private Dictionary<TileBase, TileData> dataFromTiles;
-    
 
     private void Awake()
     {
@@ -65,12 +64,25 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
     }
 
 
-    void DataTile(int storynum)
+    void DataTile(int storynum) //update로 계속 출력되고 있음.
     {
          switch (storynum)
          {
             case 0:
                 //오른쪽으로 가려할때(istage1completed가 아닐때는), (이벤트 스크립트textbox를 띄우며 "여기로는 갈 필요가 없을것 같아" 라며 )
+                if (!GameManager.Instance.storyScriptable.isStage1Completed&&GameManager.Instance.Player.h>0)
+                {
+                    GameManager.Instance.Player.h = 0;
+                    GameManager.Instance.Player.alarmOn = true;
+                }
+                if (GameManager.Instance.Player.alarmOn)
+                {
+                    GameManager.Instance.Player.ShowAlarm(storynum);//알람 출력.(타이핑 애니메이션)
+                }
+                if(!GameManager.Instance.storyScriptable.isStage1Completed&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
+                {
+                    GameManager.Instance.Player.AlarmOff();
+                }
                 break;
             case 1:
                 if(!GameManager.Instance.storyScriptable.second_map1)
@@ -87,4 +99,6 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 break;
          }           
     }
+
+
 }

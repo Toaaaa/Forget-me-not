@@ -10,8 +10,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     [SerializeField]
     float Speed = 5f;
 
-    float h;
-    float v;
+    public float h;
+    public float v;
     bool isHorizonMove;
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
@@ -31,6 +31,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public TypeEffect talk;
     public int talkIndex;
     public bool talking;
+    public bool alarmOn;//알람용 텍스트 메시지 변수.
 
     public bool storyTalking;
 
@@ -129,7 +130,58 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
+    public void ShowAlarm(int storyNum)
+    {
+        storyTalking = true;
+        Alarm(storyNum);
+        if (!textPanel.activeSelf)
+            gameManager.isTalk = true;
+        if (alarmOn)
+            textPanel.SetActive(true);
+        alarmOn = false;
+    }
 
+    void Alarm(int storyNum)
+    {
+        string talkData = "";
+
+        if (talk.isAnim)
+        {
+            talk.SetMsg("");
+            return;
+        }
+        else
+        {
+
+            talkData = textManager.GetStoryTalk(storyNum, talkIndex);
+        }
+
+        if (talkData == null)
+        {
+            alarmOn = false;
+            talking = false;
+            storyTalking = false;
+            gameManager.isTalk = false;
+            talkIndex = 0;
+            return;
+        }
+        //
+        talk.SetMsg(talkData);
+        imageBox.SetActive(false);
+        nameBox.SetActive(false);
+
+        talking = true;
+    }
+    public void AlarmOff()
+    {
+        alarmOn = false;
+        talking = false;
+        storyTalking = false;
+        gameManager.isTalk = false;
+        talkIndex = 0;
+        textPanel.SetActive(talking);
+
+    }
     public void TalkAction(GameObject talkObject)
     {
         scanedObject = talkObject;
@@ -315,5 +367,38 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public void CombatPositioning()
     {
         transform.position = combatPosition;
+    }
+
+    public void MovePlayer(int i)//i == 0 : up, i == 1 : down, i == 2 : left, i == 3 : right
+    {
+        switch(i)
+        {
+            case 0:
+                v = 1;
+                h = 0;
+                break;
+            case 1:
+                v = -1;
+                h = 0;
+                break;
+            case 2:
+                v = 0;
+                h = -1;
+                break;
+            case 3:
+                v = 0;
+                h = 1;
+                break;
+            default:
+                break;
+        }
+        StartCoroutine(MoveCoroutine());
+    }
+    
+    IEnumerator MoveCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+        v = 0;
+        h = 0;
     }
 }
