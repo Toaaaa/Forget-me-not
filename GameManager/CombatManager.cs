@@ -74,6 +74,11 @@ public class CombatManager : Singleton<CombatManager>
         combatDisplay.playerList = playerList;
         combatDisplay.isPlayerTurn = true;
         combatDisplay.playerList = playerList;
+        for (int i = 0; i < playerList.Count; i++)
+        {
+            playerList[i].resetStat();
+        }
+        ResetPlayerBuff();
         mapData.GoToBattle();
 
 
