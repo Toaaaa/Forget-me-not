@@ -1,3 +1,4 @@
+using DG.Tweening.Core.Easing;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,11 +78,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 }
                 if (GameManager.Instance.Player.alarmOn)
                 {
-                    GameManager.Instance.Player.ShowAlarm(storynum);//알람 출력.(타이핑 애니메이션)
-                }
-                if(!GameManager.Instance.storyScriptable.isStage1Completed&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
-                {
-                    GameManager.Instance.Player.AlarmOff();
+                    GameManager.Instance.Player.ShowAlarm(storynum,2);//알람 출력.(타이핑 애니메이션)
                 }
                 break;
             case 1:
@@ -93,12 +90,26 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                     GameManager.Instance.storyScriptable.second_map2 = true;
                 break;
             case 4:
-                //강쪽에서 아직 튜토리얼 전일때 진입 차단.
+                if(!GameManager.Instance.storyScriptable.isTutorial&& GameManager.Instance.Player.v > 0)
+                {
+                    GameManager.Instance.Player.v = 0;
+                    GameManager.Instance.Player.alarmOn = true;
+                }
+                if(GameManager.Instance.Player.alarmOn)
+                {
+                    GameManager.Instance.Player.ShowAlarm(storynum,1);
+                }
                 break;
             default:
                 break;
          }           
     }
 
-
+    private void Update()
+    {
+        if (GameManager.Instance.Player.alarmOn&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
+        {
+            GameManager.Instance.Player.AlarmOff();
+        }
+    }
 }

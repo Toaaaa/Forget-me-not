@@ -13,6 +13,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public float h;
     public float v;
     bool isHorizonMove;
+    bool isAutoMove;// 잘못된 경로로 가고 있어서 자동으로 이동 시켜줘야 할 경우 쓰는 변수.
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
     public Vector2 dirVec;//direction of where player is looking at
@@ -56,9 +57,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     void Update()
     {
         isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
-        
-        h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
-        v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
+
+        if (!isAutoMove)
+        {
+            h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
+            v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
+        }
 
         bool hDown = gameManager.cantAction ? false : Input.GetButtonDown("Horizontal");
         bool vDown = gameManager.cantAction ? false : Input.GetButtonDown("Vertical");
@@ -130,21 +134,23 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
-    public void ShowAlarm(int storyNum)
+    public void ShowAlarm(int storyNum,int vec)
     {
         storyTalking = true;
-        Alarm(storyNum);
         if (!textPanel.activeSelf)
             gameManager.isTalk = true;
         if (alarmOn)
+        {
             textPanel.SetActive(true);
-        alarmOn = false;
+            alarmOn = false;
+        }
+        MovePlayer(vec);
+        Alarm(storyNum);
     }
 
     void Alarm(int storyNum)
     {
         string talkData = "";
-
         if (talk.isAnim)
         {
             talk.SetMsg("");
@@ -152,7 +158,6 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         }
         else
         {
-
             talkData = textManager.GetStoryTalk(storyNum, talkIndex);
         }
 
@@ -369,8 +374,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         transform.position = combatPosition;
     }
 
-    public void MovePlayer(int i)//i == 0 : up, i == 1 : down, i == 2 : left, i == 3 : right
+    public void MovePlayer(int i) //i == 0 : up, i == 1 : down, i == 2 : left, i == 3 : right
     {
+        isAutoMove = true;
         switch(i)
         {
             case 0:
@@ -397,8 +403,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     
     IEnumerator MoveCoroutine()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.4f);
+        isAutoMove = false;
         v = 0;
         h = 0;
-    }
+    } //가면 안될곳을 가고있을 경우 강제로 이동시키는 함수.
 }
