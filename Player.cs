@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
@@ -33,6 +34,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public int talkIndex;
     public bool talking;
     public bool alarmOn;//알람용 텍스트 메시지 변수.
+    public bool isStory;//스토리 진행용 텍스트 메시지 변수.
 
     public bool storyTalking;
 
@@ -256,7 +258,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     private void Story(int storyNum)//변수 수정해야 함.
     {
         string talkData = "";
-
+        isStory = true;
         if (talk.isAnim)
         {
             talk.SetMsg("");
@@ -270,6 +272,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
         if (talkData == null)
         {
+            isStory = false;
+            alarmOn = false;
             talking = false;
             storyTalking = false;
             SetTheProgress(storyNum);
@@ -290,7 +294,13 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 SceneChangeManager.Instance.BlackOut();
                 break;
             case "2"://고양이 추가 (inparty에)
-                //고양이 추가.+고양이 오브젝트 fadeout (고양이 오브젝트 >>CAT)
+                //고양이 추가.+고양이 오브젝트 fadein (고양이 오브젝트 >>CAT)
+                break;
+            case "3":
+                //고양이오브젝트 fadeout
+                break;
+            case "4":
+                TextBoxShake();
                 break;
             default:
                 break;
@@ -349,6 +359,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             default:
                 break;
         }
+    }
+
+    //텍스트 박스
+    public void TextBoxShake()
+    {
+        textPanel.gameObject.transform.DOShakePosition(0.5f, 20, 50, 90, false, true);        
     }
 
     void FixedUpdate()

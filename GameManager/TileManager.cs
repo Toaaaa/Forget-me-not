@@ -67,7 +67,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
 
     void DataTile(int storynum) //update로 계속 출력되고 있음.
     {
-         switch (storynum)
+         switch (storynum)//스토리 넘버 타일에 따른, 자동 ssobj 변수값 변경 OR 이벤트 발생. (ex. 알람 출력)
          {
             case 0:
                 //오른쪽으로 가려할때(istage1completed가 아닐때는), (이벤트 스크립트textbox를 띄우며 "여기로는 갈 필요가 없을것 같아" 라며 )
@@ -107,7 +107,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
 
     private void Update()
     {
-        if (GameManager.Instance.Player.alarmOn&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
+        if (!GameManager.Instance.Player.isStory&GameManager.Instance.Player.alarmOn&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
         {
             GameManager.Instance.Player.AlarmOff();
         }
