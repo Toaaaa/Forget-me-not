@@ -56,7 +56,7 @@ public class VirtualCamera :MonoBehaviour
         {
             cineconf.m_BoundingShape2D = FindObjectOfType<PolygonCollider2D>();
         }
-        if(Player.Instance.virtualCamera == null)
+        if (Player.Instance.virtualCamera == null)
         {
             Player.Instance.virtualCamera = this;
         }
