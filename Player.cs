@@ -24,6 +24,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public GameObject CAT;//고양이 오브젝트.
     public GameManager gameManager;
     ///대화 시스템
+    public VirtualCamera virtualCamera; //메인 카메라. (이것을 온오프 하면서 스토리 출력시의 카메라 이동 조절)
     public TextManager textManager;
     public GameObject textPanel;//대화창 전체.
     public GameObject nameBox;
@@ -302,6 +303,16 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case "4":
                 TextBoxShake();
                 break;
+            case "5"://카메라 이동
+                TurnOffMainCamera();
+                break;
+            case "6"://카메라 이동 + 채팅 박스 진동
+                TurnOffMainCamera();
+                TextBoxShake();
+                break;
+            case "7"://카메라 이동 원상 복구
+                TurnOnMainCamera();
+                break;
             default:
                 break;
         }
@@ -365,6 +376,14 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public void TextBoxShake()
     {
         textPanel.gameObject.transform.DOShakePosition(0.5f, 20, 50, 90, false, true);        
+    }
+    public void TurnOffMainCamera()
+    {
+        virtualCamera.gameObject.SetActive(false);
+    }
+    public void TurnOnMainCamera()
+    {
+        virtualCamera.gameObject.SetActive(true);
     }
 
     void FixedUpdate()
