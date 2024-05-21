@@ -261,7 +261,7 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime +=1.5f* playerList[i].spd;
             }
         }
-        playerTurnTime += 2f;
+        playerTurnTime += 3f;
         CombatTimerSet();
         for (int i = 0; i < monsterList.Count; i++)
         {
@@ -280,6 +280,7 @@ public class CombatManager : Singleton<CombatManager>
                 playerTurnTime += 1.5f*playerList[i].spd;
             }
         }
+        playerTurnTime += 2.5f;
         CombatTimerSet();
         for (int i = 0; i < monsterAliveList.Count; i++)
         {

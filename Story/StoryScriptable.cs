@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "StoryProgress", menuName = "StoryProgress")]
 public class StoryScriptable : ScriptableObject
 {
+    public List<bool> storyScriptable;
+
     public bool isScript;// if(!isScript)로 해서 다른 내용 테스트 중일때 해당맵용 스크립트가 실행 되지 않게 하기.
     //스크립트적용을 테스트 할 때는 true, 다른 기능을 테스트 할 때는 false.
     public bool firstTime;//제일 처음 맵에서 시작할 때. //처음 왔을때 false고 스크립트가 끝나면 true로 바뀜.
@@ -41,4 +43,5 @@ public class StoryScriptable : ScriptableObject
         isStage4Completed = false;
         isAllCompleted = false;
     }
+
 }
