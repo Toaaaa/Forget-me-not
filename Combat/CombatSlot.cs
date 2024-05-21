@@ -15,6 +15,7 @@ public class CombatSlot : MonoBehaviour
     {
         if (player != null)
         {
+            //마법사의 경우, stage1complete 가 되었을 경우, 고양이가 아니라 마법사의 스프라이트로.
             this.GetComponent<Image>().sprite = player.characterImage;
             combatSelection.player = player;
         }

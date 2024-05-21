@@ -313,6 +313,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case "7"://카메라 이동 원상 복구
                 TurnOnMainCamera();
                 break;
+            case "8"://스테이지 1 종료 시점에서 고양이 >> 마법사로 이미지 변경.
+                //이펙트와 함께 스프라이트 변경.
+                break;
+            case "101"://스테이지 1 완료
+                gameManager.storyScriptable.isStage1Completed = true;
+                break;
             default:
                 break;
         }
