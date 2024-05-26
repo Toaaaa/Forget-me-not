@@ -19,6 +19,7 @@ public class Portal : MonoBehaviour
     public void portalOn()
     {
         Player.Instance.currentMapName = SceneManager.GetActiveScene().name; //이동전 맵이름 받아주기
+        Player.Instance.isDown = false;
         SceneChangeManager.Instance.transferMapName = portalTo;
         SceneChangeManager.Instance.ChangeScene();
     }

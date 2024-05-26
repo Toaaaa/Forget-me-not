@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReturnTransferPoint : MonoBehaviour
+public class ReturnTransferPoint : MonoBehaviour //쓸일 없을듯.
 {
     public string linkedMapName; //연결된 맵 이름
 

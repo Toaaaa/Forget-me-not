@@ -17,6 +17,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     bool isAutoMove;// 잘못된 경로로 가고 있어서 자동으로 이동 시켜줘야 할 경우 쓰는 변수.
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
+    public bool isDown;
     public Vector2 dirVec;//direction of where player is looking at
     public Vector3 combatPosition;
     Rigidbody2D rigid;
