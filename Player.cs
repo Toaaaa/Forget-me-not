@@ -106,7 +106,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     TalkAction(scanedObject);
                     //talk
                     break;
-                case "Object":
+                case "Object":// 짧은 설명이 나오는 오브젝트. (낡은 책이다. 등)
                     Debug.Log("Object");
                     TalkAction(scanedObject);
                     break;
@@ -122,6 +122,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 case "Portal":
                     scanedObject.GetComponent<Portal>().portalUseUI.SetActive(true);
                     //추후 portalOn에서 ui를 띠워서 이동할지 물어보는 기능 추가.
+                    break;
+                case "Item":
+                    //획득 가능한 아이템의 경우 상호작용.
                     break;
 
                     default:
