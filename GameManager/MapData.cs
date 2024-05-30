@@ -17,13 +17,14 @@ public class MapData : MonoBehaviour
     public string battleSceneName; //해당 맵에서 전투가 일어날 때 사용할 배틀 씬 이름.
     public Vector3 playerPosition; //플레이어가 해당 맵에 처음 들어왔을 때 위치할 좌표. (플레이어는 안보이게 할것.)
 
-    private void Start() //새로운 씬이 로드되면 해당 맵의 데이터를 매니저에 전달.
+    private void Start()
     {
         GameManager.Instance.Player.GetComponent<RandomEncounter>().encounterRate = encounterRate;
         GameManager.Instance.mapData = this;
         CombatManager.Instance.mapData = this;
-        
     }
+
+   
 
     private void Update()
     {
@@ -43,4 +44,5 @@ public class MapData : MonoBehaviour
         Player.Instance.combatPosition = playerPosition;
         SceneChangeManager.Instance.ChangeBattleScene();
     }
+
 }

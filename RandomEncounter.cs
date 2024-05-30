@@ -8,7 +8,8 @@ public class RandomEncounter : MonoBehaviour
 
     [SerializeField] private int encounterStep=10; //처음 몬스터 타일에 진입후 몬스터 인카운터가 발생할수 있는 최소 스텝(1블록)횟수.
     public int encounterCount=0; //현재 스텝 횟수.
-    public int encounterRate = 9; //몬스터 인카운터 확률. random(1~100) < encounterrate이면 몬스터 인카운터.
+    public int encounterRate ; //몬스터 인카운터 확률. random(1~100) < encounterrate이면 몬스터 인카운터.
+    public int extraEncounterRate; //엔카운터 실패시 인카운터 확률을 올리기 위한 변수.
 
     public float timeMoved;
     private float encounterTime = 1.2f; //몬스터 인카운터 시간 간격.
@@ -22,6 +23,7 @@ public class RandomEncounter : MonoBehaviour
     {
         player = GetComponent<Player>();
         tilemanager = FindObjectOfType<TileManager>();
+        Debug.Log("test");
     }
 
 
