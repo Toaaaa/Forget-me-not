@@ -126,7 +126,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 case "Item":
                     //획득 가능한 아이템의 경우 상호작용.
                     break;
-
+                case "Box":
+                    //상자를 열어서 아이템 획득 + 상자의 상태 변경.
+                    ItemBox box = scanedObject.GetComponent<ItemBox>();
+                    if(!box.isOpened)
+                        box.OpenBox();
+                    break;
                     default:
                         break;
             }

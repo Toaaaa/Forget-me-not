@@ -25,6 +25,13 @@ public class StoryScriptable : ScriptableObject
     public bool isStage4Completed;
     public bool isAllCompleted;
 
+
+    public bool stage1_box1;//box1
+    public bool stage1_box2;//box2
+    public bool stage1_box3;//box3
+    public bool stage1_bossbox1;//box4
+    public bool stage1_bossbox2;//box5
+
     public void restAll()
     {
         firstTime = false;
@@ -42,6 +49,15 @@ public class StoryScriptable : ScriptableObject
         isOnStage4 = false;
         isStage4Completed = false;
         isAllCompleted = false;
+
+        stage1_box1 = false;
+        stage1_box2 = false;
+        stage1_box3 = false;
+        stage1_bossbox1 = false;
+        stage1_bossbox2 = false;
     }
+
+
+
 
 }
