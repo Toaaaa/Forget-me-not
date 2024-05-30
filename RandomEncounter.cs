@@ -61,9 +61,12 @@ public class RandomEncounter : MonoBehaviour
 
     private void Encountered()//encounter monster
     {
-        encounterCount = 0; //몬스터 인카운터가 발생하면 스텝을 초기화.
-        extraEncounterRate = 0; //몬스터 인카운터가 발생하면 추가 확률을 초기화.
-        GameManager.Instance.combatManager.OnCombatStart();
+        if(encounterRate != 0) //사전에 축적된 extraEncounterRate때문에 0이 아닌곳에서 인카운터 발생가능성 방지.
+        {
+            encounterCount = 0; //몬스터 인카운터가 발생하면 스텝을 초기화.
+            extraEncounterRate = 0; //몬스터 인카운터가 발생하면 추가 확률을 초기화.
+            GameManager.Instance.combatManager.OnCombatStart();
+        }
     }
 
 
