@@ -27,15 +27,37 @@ public class TextManager : MonoBehaviour
     void GenerateData()//이곳에 대화 데이터들 입력
     {
         talkData.Add(1, new string[] { "최신식 컴퓨터다." });
-        talkData.Add(1000, new string[] { "안녕123123123:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시로 초상화넣기.
+        talkData.Add(1000, new string[] { "안녕123123123:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시초상화 사용중.
+        talkData.Add(2000, new string[] 
+        { 
+            "안녕123123123:0", 
+            "이곳은 처음이지?:1" 
+        });//1스테이지 책 1번
+        talkData.Add(3000, new string[] 
+        { 
+            "안녕123123123:0", 
+            "이곳은 처음이지?:1"
+        });//1스테이지 책 2번
+        talkData.Add(4000, new string[] 
+        { 
+            "나는 이 검을 마왕 과의 전투를 끝내고 돌아온 용사 파티의 전사에게 주려고 한것 같았다,:0", 
+            "이곳은 하지만 용사 파티는 전사가 없다고 하는데..?:0",
+            "나는 누구에게 이 검을 주려고 했던 거지...?:0"
+        });//1스테이지 책 3번 (용사의 검)
         
-        portraitData.Add(1000 + 0, portraitArr[0]);
-        portraitData.Add(1000 + 1, portraitArr[1]);
+
+        for (int i = 0; i < portraitArr.Length; i++)
+        {
+            portraitData.Add(1000 + i, portraitArr[i]);
+            portraitData.Add(2000 + i, portraitArr[i]);
+            portraitData.Add(3000 + i, portraitArr[i]);
+            portraitData.Add(4000 + i, portraitArr[i]);
+        }
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
     // 대화가 여러개인 npc는 1000,2000,3000....으로 구분.
 
-    void GenerateStoryData()//이곳에 스토리 데이터들 입력
+    void GenerateStoryData()//이곳에 스토리 데이터들 입력 0~3:플레이어,4~7:고양이, 8~11:견습기사, 12~15:마법사, 16~19:힐러, 20:엘더고블린
     {
         /////알람 스크립트/////
         storyTalkData.Add(0, new string[]
@@ -46,6 +68,7 @@ public class TextManager : MonoBehaviour
         {
             "여기로는 갈 필요가 없을것 같아"
         });
+
 
         /////스토리 스크립트/////스테이지 0
         storyTalkData.Add(1000, new string[]
@@ -181,7 +204,7 @@ public class TextManager : MonoBehaviour
             "하수구 냄새때문에 속이 나빠지고있어...:10:견습 기사:101", //stage1complete 세팅하기.
         });
         //이후 설원에서 마법사의 저주에 관한 간략한 이야기.
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 22; i++)
         {
             storyPortraitData.Add(1000 + i, storyArr[i]);
             storyPortraitData.Add(2000 + i, storyArr[i]);

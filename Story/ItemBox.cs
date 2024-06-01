@@ -83,6 +83,7 @@ public class ItemBox : MonoBehaviour
 
     public void OpenBox()
     {
+
         GetBoxItem();
         switch (ID)
         {
