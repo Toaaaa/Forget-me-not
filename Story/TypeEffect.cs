@@ -57,7 +57,8 @@ public class TypeEffect : MonoBehaviour
 
     void EffectEnd()
     {
-        GameManager.Instance.Player.alarmOn = true;//알람글 출력이 끝나면 tilemanager의 update문에서 활용할수 있게 다시 true로 세팅.
+        if(Player.Instance.storyTalking)//알람글 일때만.
+            GameManager.Instance.Player.alarmOn = true;//알람글 출력이 끝나면 tilemanager의 update문에서 활용할수 있게 다시 true로 세팅.
         isAnim = false;
         if (EndCursor != null)
             EndCursor.SetActive(true);

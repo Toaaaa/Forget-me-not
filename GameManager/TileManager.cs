@@ -53,7 +53,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
         if (tile == null) //타일이 없을때는 false 리턴. (ismonsterzone이 없는 타일) 이라는 false가 됨.
             return;
         int storyNum = dataFromTiles[tile].storyNum;
-        if (!dataFromTiles[tile].isStoryTile) //스토리타일이 아닌 데이터 세팅 타일일 경우.
+        if (!dataFromTiles[tile].isStoryTile) //스토리타일이 아닌 데이터 세팅(ssobj 변수 변경) 타일일 경우.
         {
             DataTile(storyNum);
         }
@@ -105,7 +105,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
          }           
     }
 
-    private void Update()
+    private void Update() //알람 끄기 이기에 해당 코드가 다른 코드와 충돌해서 버그가 생길수 있으니 항상 예외처리 잘하기.
     {
         if (!GameManager.Instance.Player.isStory&GameManager.Instance.Player.alarmOn&&Input.GetKeyDown(KeyCode.Space)) //켜진 알람 스페이스로 끄기.
         {

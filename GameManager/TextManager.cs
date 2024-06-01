@@ -27,7 +27,7 @@ public class TextManager : MonoBehaviour
     void GenerateData()//이곳에 대화 데이터들 입력
     {
         talkData.Add(1, new string[] { "최신식 컴퓨터다." });
-        talkData.Add(1000, new string[] { "안녕:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시로 초상화넣기.
+        talkData.Add(1000, new string[] { "안녕123123123:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시로 초상화넣기.
         
         portraitData.Add(1000 + 0, portraitArr[0]);
         portraitData.Add(1000 + 1, portraitArr[1]);

@@ -146,7 +146,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
-    public void ShowAlarm(int storyNum,int vec)
+    public void ShowAlarm(int storyNum,int vec)// 알람 일때는 talking 과 storytalking이 true가 된다 << npc나 오브젝트의 대화일 경우 talking 만 true가 된다.
     {
         storyTalking = true;
         if (!textPanel.activeSelf)
