@@ -70,6 +70,7 @@ public class CombatManager : Singleton<CombatManager>
                 alivePlayerList.Remove(alivePlayerList[i]);
             }
         }//전투 시작시 살아있는 플레이어 리스트를 만드는 함수.*/
+        isBoss = mapData.isBossMap;
         monsterList = isBoss ? mapData.specialMonsters : mapData.monsters;
         combatDisplay.playerList = playerList;
         combatDisplay.isPlayerTurn = true;

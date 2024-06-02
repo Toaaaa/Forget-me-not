@@ -11,6 +11,7 @@ public class MapData : MonoBehaviour
 {
     public int encounterRate;
     public DBManager database;
+    public bool isBossMap;
     public List<TestMob> monsters; //해당 맵에 등장하는 몬스터들.
     public List<TestMob> specialMonsters; //기본 등장 몬스터가 아닌 특수한 조건에서 등장하는 몬스터들.
     public List<GameObject> StoryObject;//스토리의 진행 상황 등에 따라 활성화/비활성화를 해 줄 맵의 오브젝트 or 타일.

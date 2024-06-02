@@ -29,7 +29,20 @@ public class AutoStoryWhenStart : MonoBehaviour
                         StartCoroutine(AutoStoryTime(2000, 2.0f));
                     }
                     break;
-
+                case 5000:
+                    if (!gameManager.storyScriptable.isOnStage1)
+                    {
+                        StartCoroutine(AutoStoryTime(5000, 2.0f));
+                        gameManager.storyScriptable.isOnStage1 = true;
+                    }
+                    break;
+                case 8000:
+                    if (!gameManager.storyScriptable.Stage1BossCompleted)
+                    {
+                        StartCoroutine(AutoStoryTime(8000, 2.0f));
+                        gameManager.storyScriptable.Stage1BossCompleted = true;
+                    }
+                    break;
             }
         }
     }

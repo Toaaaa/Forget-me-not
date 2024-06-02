@@ -57,7 +57,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
         {
             DataTile(storyNum);
         }
-        else
+        else //스토리 타일일 경우 스토리 스크립트 재생
         {
             GameManager.Instance.textManager.storyScriptPlay(storyNum);
         }
@@ -98,6 +98,14 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 if(GameManager.Instance.Player.alarmOn)
                 {
                     GameManager.Instance.Player.ShowAlarm(storynum,1);
+                }
+                break;
+
+            case 7100:
+                if (!GameManager.Instance.storyScriptable.Stage1Encountered)
+                {
+                    GameManager.Instance.combatManager.OnCombatStart();
+                    GameManager.Instance.storyScriptable.Stage1Encountered = true;
                 }
                 break;
             default:

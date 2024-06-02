@@ -15,8 +15,11 @@ public class StoryScriptable : ScriptableObject
     public bool second_map2;//주변 맵들 탐색완료 여부. //탐색이 전부 true고 두번째 맵으로 돌아왔을 때 다음 스크립트로 넘어감.
     public bool isTutorial;
     public bool isTutorialCompleted;
-    public bool isOnStage1;
-    public bool isStage1Completed;
+    public bool isOnStage1;//스테이지1에 들어왔을때.
+    public bool Stage1Started;//견습 기사 합류시점
+    public bool Stage1Encountered;//스테이지1 보스방 입장전 몬스터 조우
+    public bool Stage1BossCompleted;//스테이지1 보스방 입장할때.true가됨
+    public bool isStage1Completed;//스토리9000의 대사가 끝나면 true.
     public bool isOnStage2;
     public bool isStage2Completed;
     public bool isOnStage3;
@@ -41,6 +44,8 @@ public class StoryScriptable : ScriptableObject
         isTutorial = false;
         isTutorialCompleted = false;
         isOnStage1 = false;
+        Stage1Started = false;
+        Stage1BossCompleted = false;
         isStage1Completed = false;
         isOnStage2 = false;
         isStage2Completed = false;
