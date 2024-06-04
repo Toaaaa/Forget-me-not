@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Cysharp.Threading.Tasks;
 
 public class MonsterAttackManager : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class MonsterAttackManager : MonoBehaviour
                 if (playerTurnUsed >= 6)
                 {
                     MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
-                    MonsterAttack();
                     playerTurnUsed -= 6;
                     monsterAttackAvailable = false;
                 }
@@ -133,7 +133,7 @@ public class MonsterAttackManager : MonoBehaviour
         }
 
     }
-    private void MonsterSpecialAttack()
+    private async void MonsterSpecialAttack()
     {
         Debug.Log("몬스터의 특수패턴");
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
@@ -154,23 +154,29 @@ public class MonsterAttackManager : MonoBehaviour
         }
         else //일반 몬스터의 특수 패턴
         {
-            switch (currentScene.name)
-            {
-                case "battle in stage0"://튜토리얼맵
-                    monster.monsterSkill[0].BattleCry(monster);//전투의 함성
-                    break;
-                case "battle in stage1":
-                    break;
-                case "battle in stage2":
-                    break;
-                case "battle in stage3":
-                    break;
-                case "battle in stage4"://마왕성
-                    break;
-            }
+            await SpecialAttackStartDelay(0.7f, monster); //턴타임 6초 이상일시 0.7초 딜레이 후 특수공격 시작.
+           
         }
-        //여기에 코루틴..?
     }
 
+    private async UniTask SpecialAttackStartDelay(float delay, TestMob monster)
+    {
+        await UniTask.Delay((int)(delay * 1000));
+        switch (currentScene.name)
+        {
+            case "battle in stage0"://튜토리얼맵
+                monster.monsterSkill[0].BattleCry(monster);//전투의 함성
+                break;
+            case "battle in stage1":
+                break;
+            case "battle in stage2":
+                break;
+            case "battle in stage3":
+                break;
+            case "battle in stage4"://마왕성
+                break;
+        }
 
+    }
+    
 }
