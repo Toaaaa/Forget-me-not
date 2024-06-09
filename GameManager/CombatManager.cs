@@ -172,7 +172,7 @@ public class CombatManager : Singleton<CombatManager>
             //MoblistSet();
             if(playerTurnTime <= 0)
             {
-                if(monsterTurnTime == 0)
+                if(monsterTurnTime <= 0)
                 {
                     combatDisplay.isPlayerTurn = true;
                     timerSet();
