@@ -16,6 +16,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public float Atk;
     public float Def;
     public int Speed;
+    public int MinimumSpeed;
 
     public bool isDead;
 
@@ -27,6 +28,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         Atk = monster.mAtk;
         Def = monster.mDef;
         Speed = monster.mSpeed;
+        MinimumSpeed = monster.mMinimumSpeed;
     }
     private void OnDisable()
     {

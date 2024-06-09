@@ -272,6 +272,16 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void timerSet()//턴이 재시작 될때 사용하는 함수.
     {
+        //몬스터의 속도가 최소속도보다 낮을경우 최소속도로 설정. 마법사의 속도감소 스킬의 보정을 위함.
+        for (int i =0; i<monsterAliveList.Count; i++) 
+        {
+            TestMob m =monsterAliveList[i].GetComponent<TestMob>();
+            if (m.Speed < m.MinimumSpeed)
+            {
+                monsterAliveList[i].GetComponent<TestMob>().Speed = m.MinimumSpeed;
+            }
+        }
+
         tempMonst = 0;
         playerTurnTime = 0;
         for(int i = 0; i < playerList.Count; i++)

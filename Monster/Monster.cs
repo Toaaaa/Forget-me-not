@@ -22,6 +22,7 @@ public class Monster : ScriptableObject
     public float mAtk;
     public float mDef;
     public int mSpeed;
+    public int mMinimumSpeed;
     
 
     public int ExpReward;
