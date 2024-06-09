@@ -25,21 +25,28 @@ public class MonsterAttackManager : MonoBehaviour
             {
                 if (playerTurnUsed >= 6)
                 {
-                    MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
-                    playerTurnUsed -= 6;
-                    monsterAttackAvailable = false;
+                    if (!isAttacking)
+                    {
+                        MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
+                        playerTurnUsed -= 6;
+                        monsterAttackAvailable = false;
+                    }                   
                 }
                 else//3~5턴시간 사용시 일반 공격패턴.
                 {
-                    MonsterAttack();
-                    playerTurnUsed -= 3;
-                    monsterAttackAvailable = false;
+                    if (!isAttacking)
+                    {
+                        MonsterAttack();
+                        playerTurnUsed -= 3;
+                        monsterAttackAvailable = false;
+                    }
                 }
             }
             else if (!combatDisplay.isPlayerTurn && combatManager.isCombatStart)//전투가 시작되었는데 플레이어이 턴이 아니게 되었을때
             {
-                if (combatManager.monsterTurnTime > 0)
-                    MonsterAttack();
+                if (combatManager.monsterTurnTime > 0 && !isAttacking)
+                    MonsterExtraAttack();
+
                 if (combatManager.monsterTurnTime <= 0)
                 {
                     combatDisplay.isPlayerTurn = true;
@@ -54,7 +61,7 @@ public class MonsterAttackManager : MonoBehaviour
             }
         }
     }
-    private void AttackPattern(TestMob monster)
+    private async void AttackPattern(TestMob monster)
     {
         monster.target = null;
         if (!combatManager.isAggroOn)
@@ -105,26 +112,30 @@ public class MonsterAttackManager : MonoBehaviour
         if(monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
         {
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+            await AttackingDone();
         }
         else if(combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
         {
             Debug.Log("플레이어가 1명만 살아있을때");
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+            await AttackingDone();
         }
         else
         {
             monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
+            await AttackingDone();
         }
     }
 
 
-    private void MonsterAttack()
+    private async void MonsterAttack()
     {
+        isAttacking = true;
         combatManager.monsterTurnTime -= 3;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         if(!monster.isDead)
         {
-            AttackPattern(monster);
+            await AttackStartDelay(monster);
             return;
         }
         else
@@ -133,6 +144,22 @@ public class MonsterAttackManager : MonoBehaviour
         }
 
     }
+    private async void MonsterExtraAttack()//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
+    {
+        isAttacking = true;
+        combatManager.monsterTurnTime -= 3;
+        TestMob monster = monsters[Random.Range(0, monsters.Count)];
+        if (!monster.isDead)
+        {
+            await AttackStartExtraDelay(monster);
+            return;
+        }
+        else
+        {
+            MonsterExtraAttack();
+        }
+    }
+
     private async void MonsterSpecialAttack()
     {
         Debug.Log("몬스터의 특수패턴");
@@ -177,6 +204,24 @@ public class MonsterAttackManager : MonoBehaviour
                 break;
         }
 
+    }
+
+    private async UniTask AttackStartDelay(TestMob monster)
+    {
+        await UniTask.Delay(600);
+        AttackPattern(monster);
+    }
+    private async UniTask AttackStartExtraDelay(TestMob monster)//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
+    {
+        await UniTask.Delay(900);
+        AttackPattern(monster);
+    }
+
+
+    private async UniTask AttackingDone() //몬스터의 useskill이 실행과 동시에 재생되는 태스크.
+    {
+        await UniTask.Delay(800);
+        isAttacking = false;
     }
     
 }

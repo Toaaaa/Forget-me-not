@@ -38,7 +38,7 @@ public class CombatDisplay : MonoBehaviour
     public bool BuffItemSelected; //버프형 아이템이 선택되었는지 판별하는 변수.
 
     //코루틴에서 쓸 변수
-    public bool inAction;//플레이어가 행동 중인경우. 동시에 여러 행동이 겹치지 않게만든 변수.
+    public bool inAction;//플레이어가 행동 중인경우. 동시에 여러 행동이 겹치지 않게만든 변수.//로 만들긴 했는데 실제로 안쓸듯.. 그냥 무시.
     public bool noCharObj;//charselection오브젝트를 비활성화 하기위해 사용하는 변수.
 
     private void Update()

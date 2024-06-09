@@ -10,9 +10,13 @@ public class CombatSlot : MonoBehaviour
     public PlayableC player;
     public CombatSelection combatSelection;
     public CombatDisplay combatDisplay;
+    public bool isActionPlaying; //모션이 진행 중일때 다른 선택을 막기위한 변수. //추후 캐릭터의 애니메이션이 출력될때 true로 세팅 끝나면 false.
+
 
     private void Update()
     {
+        combatSelection.isSlotActionPlaying = isActionPlaying;
+
         if (player != null)
         {
             //마법사의 경우, stage1complete 가 되었을 경우, 고양이가 아니라 마법사의 스프라이트로.

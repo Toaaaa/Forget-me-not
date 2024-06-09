@@ -13,6 +13,8 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
     public GameObject skillSelection; //½ºÅ³¼±ÅÃÃ¢
     public GameObject itemSelection; //¾ÆÀÌÅÛ¼±ÅÃÃ¢
 
+    public bool isSlotActionPlaying; //¸ğ¼ÇÀÌ ÁøÇà ÁßÀÏ¶§ ´Ù¸¥ ¼±ÅÃÀ» ¸·±âÀ§ÇÑ º¯¼ö. combatSlot¿¡¼­ º¯¼ö ¹Ş¾Æ¿È.
+
 
     private void OnEnable()
     {
@@ -40,7 +42,7 @@ public class CombatSelection : MonoBehaviour //ÀüÅõ½Ã¿¡ °¢ Ä³¸¯ÅÍ¸¶´Ù µé¾îÀÖ´Â Ç
     {
         
 
-        if (Input.GetKeyDown(KeyCode.Space)&&!combatManager.combatDisplay.attackSelected)
+        if (Input.GetKeyDown(KeyCode.Space)&&!combatManager.combatDisplay.attackSelected&&!isSlotActionPlaying)
         {
             if (charSelection.activeSelf&&!combatManager.combatDisplay.inAction)//¾×¼ÇÁßÀÌ ¾Æ´Ò¶§.
             {
