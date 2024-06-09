@@ -27,7 +27,11 @@ public class MobSlot : MonoBehaviour
         }
         else if(CombatManager.Instance.combatDisplay.skillForAllMob)
         {
-            selectingArrow.SetActive(true);
+            if(monster != null)
+            {
+                selectingArrow.SetActive(true);
+                Debug.Log("ÀÌ°Å");
+            }
         }
         else
         {

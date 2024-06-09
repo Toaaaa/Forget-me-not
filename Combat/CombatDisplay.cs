@@ -437,6 +437,7 @@ public class CombatDisplay : MonoBehaviour
         else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
             Debug.Log("턴시간이 부족합니다.");
+            skillForAllMob = false;
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
             skillSelected = false;
