@@ -75,6 +75,18 @@ public class ItemBox : MonoBehaviour
                     isOpened = false;
                 }
                 break;
+            case 6:
+                if(storyScriptable.stage1_Sword)
+                {
+                    openedBoxTilemap.gameObject.SetActive(true);
+                    gameObject.SetActive(false);
+                    isOpened = true;
+                }
+                else
+                {
+                    isOpened = false;
+                }
+                break;
             default:
                 Debug.Log("Box ID not found");
                 break;
@@ -111,5 +123,6 @@ public class ItemBox : MonoBehaviour
     private void GetBoxItem()//박스의 아이템 획득
     {
         GameManager.Instance.inventory.AddItem(itemInBox, 1, (int)itemInBox.itemType);
+        //획득 하며 "(아이템이름) 을 획득 하였습니다" 라는 알림 출력.
     }
 }

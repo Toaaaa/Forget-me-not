@@ -16,7 +16,6 @@ public class EquipItem : Item
     public OptionType[] options;
     public List<CharacterType> characterType;
     public EquipType equipType;
-    public bool optionOn;
     
 
     public bool isAcc;

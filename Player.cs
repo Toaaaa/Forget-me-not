@@ -124,13 +124,18 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     //추후 portalOn에서 ui를 띠워서 이동할지 물어보는 기능 추가.
                     break;
                 case "Item":
-                    //획득 가능한 아이템의 경우 상호작용.
+                    //획득 가능한 아이템의 경우 상호작용.>>일반적으로는 Box를 이용해서 하나
+                    //혹시 사용할 일이 있으면 이용할 것.
                     break;
                 case "Box":
                     //상자를 열어서 아이템 획득 + 상자의 상태 변경.
                     ItemBox box = scanedObject.GetComponent<ItemBox>();
                     if(!box.isOpened)
                         box.OpenBox();
+                    break;
+                case "Interactable":
+                    //상호작용 가능한 오브젝트(부수는 문, 벽, 등..)
+                    GetComponent<CheckSSForStatus>().Interaction();
                     break;
                     default:
                         break;

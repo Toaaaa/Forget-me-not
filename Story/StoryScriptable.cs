@@ -34,6 +34,9 @@ public class StoryScriptable : ScriptableObject
     public bool stage1_box3;//box3
     public bool stage1_bossbox1;//box4
     public bool stage1_bossbox2;//box5
+    public bool stage1_Sword;//sword
+    public bool stage1_Statue;//statue
+    public bool stage1_roomDoor;//roomDoor
 
     public void restAll()
     {
@@ -60,6 +63,9 @@ public class StoryScriptable : ScriptableObject
         stage1_box3 = false;
         stage1_bossbox1 = false;
         stage1_bossbox2 = false;
+        stage1_Sword = false;
+        stage1_Statue = false;
+        stage1_roomDoor = false;
     }
 
 
