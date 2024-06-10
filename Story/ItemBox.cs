@@ -114,6 +114,9 @@ public class ItemBox : MonoBehaviour
             case 5:
                 storyScriptable.stage1_bossbox2 = true;
                 break;
+            case 6:
+                storyScriptable.stage1_Sword = true;
+                break;
             default:
                 Debug.Log("Box ID not found");
                 break;

@@ -26,7 +26,7 @@ public class TextManager : MonoBehaviour
     
     void GenerateData()//이곳에 대화 데이터들 입력
     {
-        talkData.Add(1, new string[] { "최신식 컴퓨터다." });
+        talkData.Add(1, new string[] { "오랫동안 방치된 해골이 있다. " });
         talkData.Add(1000, new string[] { "안녕123123123:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시초상화 사용중.
         talkData.Add(2000, new string[] 
         {
@@ -38,7 +38,7 @@ public class TextManager : MonoBehaviour
         talkData.Add(3000, new string[] 
         {
             "우리가 사용하는 약초와 연금술 비법은 단순한 치료제 그 이상이다.:0",
-            "과거의 용사들이 우리 마을을 방문했을 때, 그들은 우리의 지혜와 약초의 힘을 경험했다.:1",
+            "과거 용사와 그 동료들이 우리 마을을 방문했을 때, 그들은 우리의 지혜와 약초의 힘을 경험했다.:1",
             "특히, 용사는 우리의 약초에 깊은 관심을 보였고, :0",
             "블러드루트로 만든 강화 포션을 전투에서 자주 사용하였다.:0",
         });//1스테이지 책 2번
@@ -80,6 +80,10 @@ public class TextManager : MonoBehaviour
         {
             "여기로는 갈 필요가 없을것 같아"
         });
+        storyTalkData.Add(100, new string[]
+        {
+            " 획득."
+        }); //아이템 획득시 출력 알람.
 
         /////스토리 스크립트/////
         /////기본 형식 >>  "대사:초상화번호:대상의이름:기타효과"

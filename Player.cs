@@ -130,8 +130,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 case "Box":
                     //상자를 열어서 아이템 획득 + 상자의 상태 변경.
                     ItemBox box = scanedObject.GetComponent<ItemBox>();
-                    if(!box.isOpened)
+                    if (!box.isOpened)
+                    {
                         box.OpenBox();
+                        alarmOn = true;
+                        ShowExtraAlarm(box.itemInBox);
+                    }
                     break;
                 case "Interactable":
                     //상호작용 가능한 오브젝트(부수는 문, 벽, 등..)
@@ -164,6 +168,19 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         MovePlayer(vec);
         Alarm(storyNum);
     }
+    public void ShowExtraAlarm(Item item)// 알람 일때는 talking 과 storytalking이 true가 된다 << npc나 오브젝트의 대화일 경우 talking 만 true가 된다.
+    {
+        storyTalking = true;
+        if (!textPanel.activeSelf)
+            gameManager.isTalk = true;
+        if (alarmOn)
+        {
+            textPanel.SetActive(true);
+            alarmOn = false;
+        }
+        AlarmForItem(item);
+    }
+
 
     void Alarm(int storyNum)
     {
@@ -189,6 +206,36 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         }
         //
         talk.SetMsg(talkData);
+        imageBox.SetActive(false);
+        nameBox.SetActive(false);
+
+        talking = true;
+    }
+    public void AlarmForItem(Item item)
+    {
+
+        string talkData = "";
+        if (talk.isAnim)
+        {
+            talk.SetMsg("");
+            return;
+        }
+        else
+        {
+            talkData = textManager.GetStoryTalk(100, talkIndex); // 아이템 획득시 대사 번호는 storyTalkData 100에 있음.
+        }
+
+        if (talkData == null)
+        {
+            alarmOn = false;
+            talking = false;
+            storyTalking = false;
+            gameManager.isTalk = false;
+            talkIndex = 0;
+            return;
+        }
+        //
+        talk.SetExtraMsg(talkData, item);
         imageBox.SetActive(false);
         nameBox.SetActive(false);
 

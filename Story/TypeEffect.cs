@@ -30,6 +30,22 @@ public class TypeEffect : MonoBehaviour
             EffectStart();
         }
     }
+    public void SetExtraMsg(string msg,Item item)
+    {
+        if (isAnim)
+        {
+            Debug.Log("isAnim");
+            msgText.text = targetMsg;
+            CancelInvoke();
+            EffectEnd();
+        }
+        else
+        {
+            Debug.Log("isNotAnim");
+            targetMsg =item.name + " " +msg;
+            EffectStart();
+        }
+    }
     void EffectStart()
     {
         msgText.text = "";
