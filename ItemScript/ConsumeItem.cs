@@ -46,7 +46,7 @@ public class ConsumeItem : Item
                 restoreStamina(character);
                 break;
             case ConsumeType.Buff:
-                BuffUse();//버프아이템의 경우 파티원 전체에 적용된다.
+                BuffUse(character);//버프아이템의 경우 파티원 전체에 적용된다. //버프 아이템중 special일 경우 개별의 캐릭터에게 영구적인 효과를 주기에 character를 받아온다.
                 break;
             default:
                 break;
@@ -68,33 +68,37 @@ public class ConsumeItem : Item
                     BuffSpeed(false);
                     break;
                 case BuffType.Special:
-                    BuffSpecial();
+                    //영구적인 버프아이템의 경우 아무것도 하지 않는다.
                     break;
                 default:
                     break;
             }
         }
     }
-    private void BuffUse()
+    private void BuffUse(PlayableC c)
     {
-        Debug.Log("버프아이템 사용");
-        CombatManager.Instance.consumeTimer = buffDuration;
-        CombatManager.Instance.BuffIsOn = true;
-        CombatManager.Instance.consumeOnUse = this;
-
         switch (buffType)
         {
             case BuffType.Attack:
+                CombatManager.Instance.consumeTimer = buffDuration;
+                CombatManager.Instance.BuffIsOn = true;
+                CombatManager.Instance.consumeOnUse = this;
                 BuffAtt(true);
                 break;
             case BuffType.Defence:
+                CombatManager.Instance.consumeTimer = buffDuration;
+                CombatManager.Instance.BuffIsOn = true;
+                CombatManager.Instance.consumeOnUse = this;
                 BuffDef(true);
                 break;
             case BuffType.Speed:
+                CombatManager.Instance.consumeTimer = buffDuration;
+                CombatManager.Instance.BuffIsOn = true;
+                CombatManager.Instance.consumeOnUse = this;
                 BuffSpeed(true);
                 break;
             case BuffType.Special:
-                BuffSpecial();
+                BuffSpecial(c);
                 break;
             default:
                 break;
@@ -164,15 +168,17 @@ public class ConsumeItem : Item
             }
         }
     }
-    private void BuffSpecial() //영구적인 능력치 상승.
+    private void BuffSpecial(PlayableC c) //영구적인 능력치 상승.
     {
         switch (this.name)
         {
             case "CRITICAL":
                 Debug.Log("Potion");
                 break;
-            case "Elixir":
-                Debug.Log("Elixir");
+            case "Blood Elixir":
+                Debug.Log("복용자 체력 10 증가. + 체력 최대치로 회복.");
+                c.maxHp += 10;
+                c.hp = c.maxHp;
                 break;
             case "Ether":
                 Debug.Log("Ether");
