@@ -164,9 +164,17 @@ public class DisplayInventory : MonoBehaviour
             if (selectedItem.itemType == ItemType.Consumable)
             {
                 ConsumeItem consumeItem = (ConsumeItem)selectedItem;
-                if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
+                if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)//버프형 아이템은 화살표 표시가 안나오도록.
                 {
-                    isp_SlotOn = false; //버프형 아이템은 화살표 표시가 안나오도록
+                    if(consumeItem.buffType == ConsumeItem.BuffType.Special)//영구효과 버프일 경우 선택 가능하게.
+                    {
+                        isp_SlotOn = true;
+                        Debug.Log(isp_SlotOn);
+                    }
+                    else
+                    {
+                        isp_SlotOn = false;
+                    }
                 }
                 else
                 {

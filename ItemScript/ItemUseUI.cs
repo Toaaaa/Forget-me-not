@@ -24,7 +24,16 @@ public class ItemUseUI : MonoBehaviour
         {
             ConsumeItem consumeItem = (ConsumeItem)selecteditem;
             if (consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
-                displayInventory.isp_SlotOn = false;
+            {
+                if(consumeItem.buffType == ConsumeItem.BuffType.Special)
+                {
+                    displayInventory.isp_SlotOn = true;
+                }
+                else
+                {
+                    displayInventory.isp_SlotOn = false;
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {

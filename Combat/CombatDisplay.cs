@@ -755,7 +755,6 @@ public class CombatDisplay : MonoBehaviour
             StartCoroutine(CoroutineForNoChar());
             combatSelection.charSelection.SetActive(false);
         }
-        Debug.Log("아이템 사용중");
     }//아이템을 사용할 플레이어 대상 선택
     private void BuffItemOnselect()
     {

@@ -55,7 +55,15 @@ public class ItemSelection : MonoBehaviour
             ConsumeItem consumeItem = (ConsumeItem)combatDisplay.selectingItem;
             if(consumeItem.consumeType == ConsumeItem.ConsumeType.Buff)
             {
-                combatDisplay.BuffItemSelected =true;
+                if(consumeItem.buffType == ConsumeItem.BuffType.Special)
+                {
+                    combatDisplay.itemSelected = true;
+                }
+                else
+                {
+                    combatDisplay.BuffItemSelected = true;
+                }
+
             }
             else
             {
