@@ -40,8 +40,18 @@ public class DisplayInventory : MonoBehaviour
 
     private void Update()
     {
-        infoText.gameObject.SetActive(true);
-        selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item;
+        if(itemInInven.Count == 0)
+        {
+            infoText.gameObject.SetActive(false);
+        }
+        else
+        {
+            infoText.gameObject.SetActive(true);
+        }
+        if(itemInInven.Count != 0)
+        {
+            selectedItem = inventory.Container[itemInInven[invenNumber].GetComponent<IsGone>().itemID].item;
+        }
         p_slotTotal = playableManager.joinedPlayer.Count;
         itemReplace();
         UpdateDisplay(inventype);
@@ -340,6 +350,7 @@ public class DisplayInventory : MonoBehaviour
 
     public void CreateDisplay(int inventype)
     {
+        itemInInven = new List<GameObject>();
         for(int i =0; i< inventory.Container.Count; i++)
         {
             if (inventory.Container[i]._itemType == inventype)
