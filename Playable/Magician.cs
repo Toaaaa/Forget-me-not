@@ -9,7 +9,7 @@ public class Magician : PlayableC
 
     override public void Attack(Transform trans)
     {
-        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
@@ -75,7 +75,7 @@ public class Magician : PlayableC
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         monster.Hp -= critatk;
-        CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk, isCrit,false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk, isCrit,false);
     }
     override public void SkillDmgCalc1()
     {

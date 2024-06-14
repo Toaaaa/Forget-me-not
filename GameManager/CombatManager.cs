@@ -16,6 +16,7 @@ public class CombatManager : Singleton<CombatManager>
     public MapData mapData;
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
     public GameObject mobplace;
+    public SlotPlacement slotPlacement;
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     //public List<PlayableC> alivePlayerList;//현재 전투에 참여중인 살아있는 플레이어.
@@ -93,6 +94,7 @@ public class CombatManager : Singleton<CombatManager>
         {
             Destroy(monsterObject[i]);
         }
+        slotPlacement = null;
         combatDisplay.inAction = false;
         monstersInCombat.Clear();
         monsterObject.Clear();
@@ -210,7 +212,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         for (int i = 0; i < monsterList.Count; i++)
         {
-            var obj = Instantiate(monsterList[i].gameObject, combatDisplay.mobSlotList[i].transform.position, Quaternion.identity,mobplace.transform);
+            var obj = Instantiate(monsterList[i].gameObject, slotPlacement.M_slotPlace[i].transform.position, Quaternion.identity);
             monsterObject.Add(obj);
             combatDisplay.mobSlotList[i].GetComponent<MobSlot>().monster = obj;
             monsterAliveList.Add(obj);

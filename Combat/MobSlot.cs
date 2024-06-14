@@ -9,6 +9,11 @@ public class MobSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(monster !=null && monster.GetComponent<TestMob>().thisSlot != this)
+        {
+            monster.GetComponent<TestMob>().thisSlot = this;
+        }
+
         if(CombatManager.Instance.monsterSelected != null)
         {
             if (CombatManager.Instance.monsterSelected == monster)

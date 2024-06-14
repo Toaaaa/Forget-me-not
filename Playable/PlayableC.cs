@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayableC : ScriptableObject
 {
+    public GameObject Char_Prefab;
     public Sprite characterImage;
     public int level;
     public float hp; //힐러는 공격력으로 힐을 해서 힐러의 공격력 수치에 주의.

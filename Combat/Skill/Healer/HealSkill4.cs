@@ -17,31 +17,35 @@ public class HealSkill4 : PlayerSkill //(리저렉션)
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<CombatSlot>().player == targetPlayer)
+        if (collision.tag == "PlayerPrefab")
         {
-            if (targetPlayer.isDead)
+            if (targetPlayer != null && collision.GetComponent<CharacterPrefab>().player == targetPlayer)
             {
-                targetPlayer.hp = targetPlayer.maxHp * 0.5f;
-                targetPlayer.isDead = false;
-                targetPlayer.isStunned = false;
-                targetPlayer.isPoisoned = false;
-            }
-            else
-            {
-                targetPlayer.hp += targetPlayer.maxHp * 0.5f;
-                if (targetPlayer.hp > targetPlayer.maxHp)
+                if (targetPlayer.isDead)
                 {
-                    targetPlayer.hp = targetPlayer.maxHp;
-                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
+                    targetPlayer.hp = targetPlayer.maxHp * 0.5f;
+                    targetPlayer.isDead = false;
+                    targetPlayer.isStunned = false;
+                    targetPlayer.isPoisoned = false;
                 }
                 else
                 {
-                    CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, targetPlayer.maxHp * 0.5f, false, true);
+                    targetPlayer.hp += targetPlayer.maxHp * 0.5f;
+                    if (targetPlayer.hp > targetPlayer.maxHp)
+                    {
+                        targetPlayer.hp = targetPlayer.maxHp;
+                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, WhenMaxHpPrint(player), false, true);
+                    }
+                    else
+                    {
+                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.transform.position, targetPlayer.maxHp * 0.5f, false, true);
+                    }
+                    Debug.Log("이미 살아있는 대상, 절반의 체력 회복.");
                 }
-                Debug.Log("이미 살아있는 대상, 절반의 체력 회복.");
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
+            
     }
     private float WhenMaxHpPrint(PlayableC player) //힐량이 최대 체력을 넘어갈때, 얼마나 회복되는지 출력.
     {

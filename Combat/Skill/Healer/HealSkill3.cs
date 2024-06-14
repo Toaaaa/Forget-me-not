@@ -8,7 +8,7 @@ public class HealSkill3 : PlayerSkill //큐어(일단은 독만 해제)
     public void targetLocked()
     {
         if (targetPlayer != null)
-            transform.DOMove(targetplayerPlace.gameObject.transform.position, 0.5f).SetEase(Ease.Linear); //0.5초안에 이동.
+            transform.DOMove(targetplayerPlace.playerPrefab.transform.position, 0.5f).SetEase(Ease.Linear); //0.5초안에 이동.
         else
         {
             Debug.Log("타겟이 없습니다.");
@@ -17,14 +17,18 @@ public class HealSkill3 : PlayerSkill //큐어(일단은 독만 해제)
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<CombatSlot>().player == targetPlayer)
+        if (collision.tag == "PlayerPrefab")
         {
-            if (!targetPlayer.isDead)
+            if (targetPlayer != null && collision.GetComponent<CharacterPrefab>().player == targetPlayer)
             {
-                Debug.Log("큐어");
-                targetPlayer.isPoisoned = false;
+                if (!targetPlayer.isDead)
+                {
+                    Debug.Log("큐어");
+                    targetPlayer.isPoisoned = false;
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
+            
     }
 }

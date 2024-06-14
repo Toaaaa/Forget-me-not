@@ -266,9 +266,9 @@ public class CombatDisplay : MonoBehaviour
         }
         if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime>=combatManager.attackCostTime)// 선택된 몬스터 공격(기본공격)
         {
-            selectingPlayer.singleTarget = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
+            selectingPlayer.singleTarget = MobList[selectedMobIndex].gameObject;
             inAction = true;
-            selectingPlayer.Attack(slotList[selectedSlotIndex].transform);
+            selectingPlayer.Attack(slotList[selectedSlotIndex].playerPrefab.transform);
             StartCoroutine(inaction());
             combatManager.playerTurnTime -= combatManager.attackCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.attackCostTime;
@@ -323,21 +323,21 @@ public class CombatDisplay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&& combatManager.playerTurnTime >= combatManager.skillCostTime)// 선택된 몬스터 공격
         {
-            selectingPlayer.singleTarget = MobList[selectedMobIndex].GetComponent<TestMob>().gameObject;
+            selectingPlayer.singleTarget = MobList[selectedMobIndex].gameObject;
             combatManager.combatDisplay.inAction = true;
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    combatManager.combatDisplay.selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
+                    combatManager.combatDisplay.selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 1:
-                    combatManager.combatDisplay.selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
+                    combatManager.combatDisplay.selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 2:
-                    combatManager.combatDisplay.selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
+                    combatManager.combatDisplay.selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    combatManager.combatDisplay.selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
+                    combatManager.combatDisplay.selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -395,18 +395,18 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
                     //요런곳에 monsterselected 를 임시로 저장하면서 사망 확인 해주는 코루틴? 넣어도 좋을듯.
                     //+코루틴에는 사망 애니메이션 출력에 실제로는 skill을 사용함과 동시에 이미 사망은 하였기에 애니메이션만 출력하는 코루틴.
                     break;
                 case 1:
-                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -490,16 +490,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -570,16 +570,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
             }
             StartCoroutine(inaction());
@@ -642,16 +642,16 @@ public class CombatDisplay : MonoBehaviour
             switch (combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex)
             {
                 case 0:
-                    selectingPlayer.Skill1(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 1:
-                    selectingPlayer.Skill2(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 2:
-                    selectingPlayer.Skill3(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
                 case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
-                    selectingPlayer.Skill4(slotList[selectedSlotIndex].transform);
+                    selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
                     break;
             }
             StartCoroutine(inaction());

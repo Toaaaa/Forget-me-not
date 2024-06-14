@@ -13,7 +13,7 @@ public class Tank : PlayableC
 
     override public void Attack(Transform trans)
     {
-        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
@@ -47,7 +47,7 @@ public class Tank : PlayableC
         Debug.Log("¶¥¿ï¸®±â");
         for (int i=0; i<CombatManager.Instance.monsterAliveList.Count; i++)
         {
-            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
             obj.GetComponent<TankSkill3>().player = this;
             obj.GetComponent<TankSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<TankSkill3>().targetLocked();
@@ -79,12 +79,12 @@ public class Tank : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit, false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def, isCrit, false);
         }
     }
     override public void SkillDmgCalc1()
@@ -110,7 +110,7 @@ public class Tank : PlayableC
         bool isCrit = IsCritical(critatk, atk);
 
         mob.Hp -= CheckCrit(atk, this.crit);
-        CombatManager.Instance.damagePrintManager.PrintDamage(mob.transform.position, critatk, isCrit, false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);
     }
 }
 

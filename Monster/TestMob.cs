@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 {
-    public MobSlot mobSlot;
     public Monster monster;
+    public MobSlot thisSlot;//이 몹위치에 대응되는 Canvas 상의 슬롯.
     public List<skills> monsterSkill;
     public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모와놓은 리스트.
     public PlayableC target; //스킬을 사용할 대상.

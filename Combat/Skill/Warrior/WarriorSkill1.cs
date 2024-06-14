@@ -9,7 +9,7 @@ public class WarriorSkill1 : PlayerSkill //임시로 워리어의 스킬 1번의 전용 프로�
     public void targetLocked()
     {
         if (targetMob != null)
-            transform.DOMove(targetMob.GetComponent<RectTransform>().position, 1f).SetEase(Ease.Linear);
+            transform.DOMove(targetMob.transform.position, 1f).SetEase(Ease.Linear);
         else
         {
             Debug.Log("타겟이 없습니다.");

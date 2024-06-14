@@ -11,14 +11,14 @@ public class Warrior : PlayableC
 
     override public void Attack(Transform trans)
     {
-        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity, CombatManager.Instance.mobplace.transform);
+        var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
     override public void Skill1(Transform trans)//여기서는 투사체의 구현.
     {
-        var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
+        var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
         obj.GetComponent<WarriorSkill1>().player = this;
         obj.GetComponent<WarriorSkill1>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<WarriorSkill1>().targetLocked();
@@ -44,12 +44,12 @@ public class Warrior : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1,isCrit, false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk - monster.Def,isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def,isCrit, false);
         }
     }
     override public void SkillDmgCalc1()//여기서 투사체의 피격시 데미지 계산방법.
@@ -60,12 +60,12 @@ public class Warrior : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, 1,isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1,isCrit, false);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.transform.position, critatk * 2f - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
         }
     }
     override public void SkillDmgCalc2()
