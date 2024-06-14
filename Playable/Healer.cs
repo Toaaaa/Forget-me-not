@@ -53,7 +53,7 @@ public class Healer : PlayableC
 
     }
 
-    public override void AttackDmgCalc()
+    public override void AttackDmgCalc(GameObject g)
     {
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
@@ -68,8 +68,9 @@ public class Healer : PlayableC
             monster.Hp -= critatk - monster.Def;
             CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def, isCrit, false);
         }
+        Destroy(g);
     }
-    override public void SkillDmgCalc1()
+    override public void SkillDmgCalc1(GameObject g)
     {
         
     }

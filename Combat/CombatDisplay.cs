@@ -12,6 +12,7 @@ public class CombatDisplay : MonoBehaviour
     public List<CombatStatus> statusUI;
     public List<MobSlot> mobSlotList; //슬롯만 저장됨
     public List<GameObject> MobList; //위의 슬롯에서 몬스터가 있는곳만 찾아서 저장 (사망시 제거 가능한 몬스터 오브젝트 리스트)
+    public Canvas canvas;
 
     public CombatSlot selectedSlot; //선택된 슬롯. 스킬 사용시 or 아이템 사용시 이 슬롯을 대상으로 함.
     public GameObject skillPlace; //스킬이 생성될 transform의 임시 오브젝트.

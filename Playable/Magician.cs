@@ -25,7 +25,7 @@ public class Magician : PlayableC
             obj.GetComponent<TestProjectile>().targetMob = multiTarget[i].GetComponent<TestMob>();
             obj.GetComponent<TestProjectile>().targetLocked();
         }*/ //다중 타겟 공격시 projectile의 타겟 설정에 사용하는 코드.
-        for(int i =0; i<CombatManager.Instance.monsterAliveList.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
+        for(int i =0; i<CombatManager.Instance.monsterObject.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
             float temp = CheckCrit(atk * 1.5f, this.crit);
             Debug.Log(temp);
@@ -69,15 +69,16 @@ public class Magician : PlayableC
     }
 
 
-    public override void AttackDmgCalc()
+    public override void AttackDmgCalc(GameObject g)
     {
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         monster.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk, isCrit,false);
+        Destroy(g);
     }
-    override public void SkillDmgCalc1()
+    override public void SkillDmgCalc1(GameObject g)
     {
 
     }

@@ -27,8 +27,8 @@ public class AttackSkill : PlayerSkill //모든 캐릭터의 기본 공격
         if (collision.gameObject.tag == "Mob")
         {
             Debug.Log("몹에게 데미지를 입힙니다.");
-            player.AttackDmgCalc();//여기에 데미지 출력 효과도 포함되어있음.
-            Destroy(gameObject);
+            player.AttackDmgCalc(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
+            //Destroy(gameObject);//데미지 계산 안에 destroy 넣음.
         }
     }
 }

@@ -21,8 +21,8 @@ public class WarriorSkill1 : PlayerSkill //임시로 워리어의 스킬 1번의 전용 프로�
         Debug.Log("충돌이 감지되었습니다.");
         if (collision.gameObject.tag == "Mob")
         {
-            player.SkillDmgCalc1();//여기에 데미지 출력 효과도 포함되어있음.
-            Destroy(gameObject);
+            player.SkillDmgCalc1(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
+            //Destroy(gameObject);
         }
     }
 }

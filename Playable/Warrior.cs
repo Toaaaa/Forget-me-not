@@ -36,7 +36,7 @@ public class Warrior : PlayableC
         Debug.Log("전사의 스킬4");
     }
 
-    public override void AttackDmgCalc()
+    public override void AttackDmgCalc(GameObject g)
     {
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
@@ -51,8 +51,9 @@ public class Warrior : PlayableC
             monster.Hp -= critatk - monster.Def;
             CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def,isCrit, false);
         }
+        Destroy(g);
     }
-    override public void SkillDmgCalc1()//여기서 투사체의 피격시 데미지 계산방법.
+    override public void SkillDmgCalc1(GameObject g)//여기서 투사체의 피격시 데미지 계산방법.
     {
         float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산.
         bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
@@ -67,6 +68,7 @@ public class Warrior : PlayableC
             monster.Hp -= critatk * 2f - monster.Def;
             CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
         }
+        Destroy(g);
     }
     override public void SkillDmgCalc2()
     {

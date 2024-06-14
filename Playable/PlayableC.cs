@@ -106,11 +106,11 @@ public class PlayableC : ScriptableObject
         Debug.Log("½ºÅ³");
     }
 
-    virtual public void AttackDmgCalc()
+    virtual public void AttackDmgCalc(GameObject g)
     {
 
     }
-    virtual public void SkillDmgCalc1()
+    virtual public void SkillDmgCalc1(GameObject g)
     {
 
     }
