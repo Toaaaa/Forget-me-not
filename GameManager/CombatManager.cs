@@ -45,6 +45,7 @@ public class CombatManager : Singleton<CombatManager>
     //turn
     public float playerTurnTime; //플레이어의 턴 시간.
     public float monsterTurnTime; //몬스터의 턴 시간.
+    public float playerNoAttackTime; //플레이어가 아무런 선택없이 6초동안 시간을 보낸경우, 자동으로 몬스터 공격 실행을 위한 변수.
     public int attackCostTime; //기본공격의 코스트 시간unw.
     public int skillCostTime; //스킬 사용의 코스트 시간.
     public int itemCostTime; //아이템 사용의 코스트 시간.
@@ -170,6 +171,7 @@ public class CombatManager : Singleton<CombatManager>
             MonsterAllDeadCount();//몬스터 전멸시.
             alivePlayerCount = AliveCounting(); //살아있는 플레이어의 수를 세는 함수.
             PlayerTimerDelta();
+            PlayerNoAttackTime();
             TankChecking();
             //MoblistSet();
             if(playerTurnTime <= 0)
@@ -253,6 +255,16 @@ public class CombatManager : Singleton<CombatManager>
             playerTurnTime = 0;
         }
     }
+    private void PlayerNoAttackTime()
+    {
+        playerNoAttackTime += Time.deltaTime;
+        if(playerNoAttackTime >= 6 && monsterTurnTime>=3)
+        {
+            monsterAttackManager.playerTurnUsed += 3;//플레이어가 6초간 아무런 행동을 하지 않으면 playerturnused에 3초를 추가하여 몬스터의 공격 유도.
+            playerNoAttackTime = 0;
+        }
+    }
+
     public void timerStart()//완전 처음 전투 시작시의 타이머.
     {
         tempMonst = 0;

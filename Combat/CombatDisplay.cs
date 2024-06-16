@@ -271,6 +271,7 @@ public class CombatDisplay : MonoBehaviour
             inAction = true;
             selectingPlayer.Attack(slotList[selectedSlotIndex].playerPrefab.transform);
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.attackCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.attackCostTime;
             combatManager.isFirstSelection = false;
@@ -342,6 +343,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
@@ -411,6 +413,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
@@ -504,6 +507,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
@@ -584,6 +588,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
@@ -656,6 +661,7 @@ public class CombatDisplay : MonoBehaviour
                     break;
             }
             StartCoroutine(inaction());
+            combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
             combatManager.playerTurnTime -= combatManager.skillCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.skillCostTime;
             combatManager.isFirstSelection = false;
@@ -801,6 +807,7 @@ public class CombatDisplay : MonoBehaviour
     {
         //seletingitem을 사용.+selectedplayer에게 사용.
         StartCoroutine(inaction());
+        combatManager.playerNoAttackTime = 0;//아이템 사용시 noattacktime 초기화.
         combatManager.playerTurnTime -= combatManager.itemCostTime;
         monsterAttackManager.playerTurnUsed += combatManager.itemCostTime;
         inventory.Container[selectingItem.itemID].amount--;
