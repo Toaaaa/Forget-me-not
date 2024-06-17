@@ -185,7 +185,10 @@ public class PlayableC : ScriptableObject
     {
 
     }
+    virtual public void HolyRayDmgCalc(GameObject g)
+    {
 
+    }
 
     virtual public float CheckCrit(float atkDMG,int critPercent)
     {

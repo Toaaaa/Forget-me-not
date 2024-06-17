@@ -152,12 +152,21 @@ public class SkillSelection : MonoBehaviour
             {
                 if(combatManager.combatDisplay.selectingPlayer.name =="Healer")
                 {
-                    if(skillIndex == 0 || skillIndex == 2 || skillIndex == 3)
+                    if(skillIndex == 0 ||  skillIndex == 3)
                     {
                         combatManager.combatDisplay.selectedSlotIndex = 0;
                         combatManager.combatDisplay.slotList[0].combatSelection.charSelection.SetActive(true);
+                        combatManager.combatDisplay.skillSelectedForPlayer = true;
                     }
-                    combatManager.combatDisplay.skillSelectedForPlayer = true;
+                    else if(skillIndex == 1)
+                    {
+                        combatManager.combatDisplay.skillSelectedForPlayer = true;
+                    }
+
+                    else if(skillIndex == 2)//단일 공격스킬
+                    {
+                        combatManager.combatDisplay.skillSelected = true;
+                    }
                 }
                 if(combatManager.combatDisplay.selectingPlayer.name == "Tank")
                 {

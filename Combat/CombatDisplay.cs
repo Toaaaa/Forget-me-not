@@ -114,11 +114,11 @@ public class CombatDisplay : MonoBehaviour
             }
             else if(selectingPlayer.name == "Tank" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 0)
             {
-                SkillOnlyMe();//모든 플레이어 대상 스킬.
+                SkillOnlyMe();//본인대상 스킬.
             }
             else if(selectingPlayer.name == "Tank" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 1)
             {
-                SkillOnlyMe();//모든 플레이어 대상 스킬.
+                SkillOnlyMe();//본인대상 스킬.
             }
             else
             {
