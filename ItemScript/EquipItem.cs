@@ -16,10 +16,10 @@ public class EquipItem : Item
     public OptionType[] options;
     public List<CharacterType> characterType;
     public EquipType equipType;
-    
+    public SkillType element; //해당 악세사리의 속성.
 
-    public bool isAcc;
-
+    public bool isAcc; //악세사리인지 판별하는 bool. (속성변환은 악세사리만 가능)
+    public bool isElemental;//속성 변환 악세사리의 경우, 착용자의 공격을 해당속성으로 고정시킴.
     
     public enum EquipType
     {
@@ -71,13 +71,16 @@ public class EquipItem : Item
         }
         
     }
-    public void itemOptionAcc(PlayableC character)
+    public void itemOptionAcc(PlayableC character) //악세사리 장착시 효과 적용.
     {
         character.hp += hp;
         character.mp += mp;
         character.atk += atk;
         character.def += def;
         character.spd += spd;
+
+        if(this.isElemental) //해당 악세사리가 속성변환 악세사리일때, 캐릭터의 공격 속성을 해당 속성으로 고정시킴.
+            character.SetElement(this.element);
     }
 
 
@@ -105,6 +108,11 @@ public class EquipItem : Item
         character.atk -= atk;
         character.def -= def;
         character.spd -= spd;
+        if (this.isElemental) //해당 악세사리가 속성변환 악세사리일때, 캐릭터의 공격 속성을 원래대로 돌려놓음.
+        {
+            character.ResetElement();
+        }
+
         character.equipedAcc = null;
     }
 

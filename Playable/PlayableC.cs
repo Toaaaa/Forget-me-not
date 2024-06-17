@@ -3,8 +3,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+public enum SkillType
+{
+    Fire,
+    Water,
+    Wood,
+    none,//공격이 아닌 버프,디버프형 스킬의 경우
+}
+
 public class PlayableC : ScriptableObject
 {
+    
+
     public GameObject Char_Prefab;
     public Sprite characterImage;
     public int level;
@@ -64,16 +74,32 @@ public class PlayableC : ScriptableObject
     public int skill3Cost;
     public int skill4Cost;
 
+    //사용할 스킬의 타입(아이템 등으로 변경될 수도 있는 부분)
+    public SkillType normalAttackType;
+    public SkillType skill1Type;
+    public SkillType skill2Type;
+    public SkillType skill3Type;
+    public SkillType skill4Type;
+
+    //원래 스킬 타입
+    public SkillType Ori_normalAttackType;
+    public SkillType Ori_skill1Type;
+    public SkillType Ori_skill2Type;
+    public SkillType Ori_skill3Type;
+    public SkillType Ori_skill4Type;
+
+
+
     public GameObject singleTarget;
     public List<GameObject> multiTarget;
 
     public GameObject normalAttack;
-    public GameObject skillEffect1;//임시로 1만 만들어서 다 쓰는중, 추후 1~4까지 각각 instantiate도 변경필요.
+    public GameObject skillEffect1;//각각의 투사체들 추후 1~4까지 각각 instantiate도 변경필요.
     public GameObject skillEffect2;
     public GameObject skillEffect3;
     public GameObject skillEffect4;
 
-    public void resetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
+    public void ResetStat()//나중에 맵에 따라서 리셋이 안되는 스탯도 만들어 두기 (설원맵에서는 기본 이속이 2/3로 됨)
     {
         maxHp = originalMaxHp;
         maxMp = originalMaxMp;
@@ -83,6 +109,23 @@ public class PlayableC : ScriptableObject
         crit = originalCrit;
         fatigue = 0;
     }
+    public void SetElement(SkillType st)//스킬의 속성을 변경하는 함수(하나의 속성으로 세팅하기).
+    {
+        normalAttackType = st;
+        skill1Type = st;
+        skill2Type = st;
+        skill3Type = st;
+        skill4Type = st;
+    }
+    public void ResetElement()//스킬의 속성을 리셋하는 함수.
+    {
+        normalAttackType = Ori_normalAttackType;
+        skill1Type = Ori_skill1Type;
+        skill2Type = Ori_skill2Type;
+        skill3Type = Ori_skill3Type;
+        skill4Type = Ori_skill4Type;
+    }
+
     
     virtual public void Attack(Transform trans)
     {
@@ -173,4 +216,5 @@ public class PlayableC : ScriptableObject
 
     }
 }
+
 

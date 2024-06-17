@@ -106,7 +106,7 @@ public class SlotManager : MonoBehaviour
             if(a_slot != null)
             {
                 inventory.Container[a_slot.itemID].amount++;
-                equipitem.itemOptionOff(currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
+                equipitem.itemOptionOffAcc(currentCharacter); //아이템 해제시 캐릭터에게 적용된 옵션을 해제하는 함수.
                 a_slot = null;
             }
         }

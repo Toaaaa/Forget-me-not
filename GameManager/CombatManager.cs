@@ -79,7 +79,7 @@ public class CombatManager : Singleton<CombatManager>
         combatDisplay.playerList = playerList;
         for (int i = 0; i < playerList.Count; i++)
         {
-            playerList[i].resetStat();
+            playerList[i].ResetStat();
         }
         ResetPlayerBuff();
         mapData.GoToBattle();
@@ -105,7 +105,7 @@ public class CombatManager : Singleton<CombatManager>
 
         for(int i = 0; i < playerList.Count; i++)
         {
-            playerList[i].resetStat();
+            playerList[i].ResetStat();
         }//전투가 끝나면 최대 hp, 치명타, 공격력, 방어력 등의 스탯을 초기화.
 
         if (isAtkDebuff)
@@ -135,7 +135,7 @@ public class CombatManager : Singleton<CombatManager>
 
         for (int i = 0; i < playerList.Count; i++)
         {
-            playerList[i].resetStat();
+            playerList[i].ResetStat();
         }//전투가 끝나면 최대 hp, 치명타, 공격력, 방어력 등의 스탯을 초기화.
 
         if (isAtkDebuff)
