@@ -18,12 +18,19 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
     public bool isDown;
+    private float hori_time;//h인풋 지속시간
+    private float verti_time;//v인풋 지속시간
+    private float hori_delta;
+    private float verti_delta;
     public Vector2 dirVec;//direction of where player is looking at
     public Vector3 combatPosition;
     Rigidbody2D rigid;
     GameObject scanedObject;
     public GameObject CAT;//고양이 오브젝트.
     public GameManager gameManager;
+    public Animator animator;
+
+
     ///대화 시스템
     public VirtualCamera virtualCamera; //메인 카메라. (이것을 온오프 하면서 스토리 출력시의 카메라 이동 조절)
     public TextManager textManager;
@@ -61,24 +68,57 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     void Update()
     {
         isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
-
         if (!isAutoMove)
         {
-            h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
-            v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
+            if(hori_time != 0 && verti_time != 0)//만약 두개가 동시에 눌러지고 있을 경우 마지막에 입력된 값을 출력하기
+            {
+                CheckTheLastDir();
+            }
+            else
+            {
+                h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal"); //if cantAction is true, h is 0.
+                v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical"); //if cantAction is true, v is 0.
+            }
         }
 
-        bool hDown = gameManager.cantAction ? false : Input.GetButtonDown("Horizontal");
-        bool vDown = gameManager.cantAction ? false : Input.GetButtonDown("Vertical");
+        bool hDown = gameManager.cantAction ? false : Input.GetButton("Horizontal");
+        bool vDown = gameManager.cantAction ? false : Input.GetButton("Vertical");
         bool hUp = gameManager.cantAction ? false : Input.GetButtonUp("Horizontal");
         bool vUp = gameManager.cantAction ? false : Input.GetButtonUp("Vertical");
+        Debug.Log(hDown);
+        //////시간 세팅 + 리셋
+        ///
+        hori_delta += Time.deltaTime;
+        verti_delta += Time.deltaTime;
 
+        if (hDown)
+            hori_time = hori_delta;
+        if (vDown)
+            verti_time = verti_delta;
+        if (hUp)
+        {
+            hori_time = 0;
+            hori_delta = 0;
+        }
+        if (vUp)
+        {
+            verti_time = 0;
+            verti_delta = 0;
+        }
+        if (h == 0 & v == 0)
+        {
+            verti_delta = 0;
+            hori_delta = 0;
+        }
+        /////
         if(hDown)
             isHorizonMove = true;
-        else if(vDown)
+        else
             isHorizonMove = false;
-        else if(hUp || vUp)
+        if(hUp || vUp)
             isHorizonMove = h != 0; //if h is not 0, isHorizonMove is true. (if h is 0, isHorizonMove is false.
+        if(hDown&&vDown)
+            isHorizonMove = hori_time > verti_time;//두개가 동시에 눌렸을때 마지막에 눌린것을 우선으로 출력하기 위한 변수 설정.
 
         //direction
         if(vDown && v == 1)
@@ -90,9 +130,13 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         else if(hDown && h == -1)
             dirVec = Vector3.left;
 
+        //움직임 애니메이터
+        animator.SetFloat("Horizontal", h);
+        animator.SetFloat("Vertical", v);
+        animator.SetBool("isMoving", isMoving);
 
         //scan object
-        if(Input.GetButtonUp("Jump") && scanedObject != null)
+        if (Input.GetButtonUp("Jump") && scanedObject != null)
         {
             switch(scanedObject.tag)
             {
@@ -144,7 +188,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     default:
                         break;
             }
-        }
+        }//각요소별 interaction
 
         if (CombatManager.Instance.isCombatStart)
         {
@@ -155,6 +199,25 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }
     }
+    void FixedUpdate()
+    {
+        //move
+        Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
+        rigid.velocity = moveVec * Speed;
+        Debug.Log(rigid.velocity);
+        //ray
+        //Debug.DrawRay(this.transform.position, dirVec*0.7f, new Color(0, 1, 0)); <<레이를 실제로 보여줌
+        RaycastHit2D rayHit = Physics2D.Raycast(this.transform.position, dirVec, 0.7f, LayerMask.GetMask("Interactable"));
+        //chekcing if the ray hit the object that is in the layermask "Interactable" <<interactable 레이어는 상호 작용이 가능한 모든 오브젝트
+        if (rayHit.collider != null) // 캐릭터앞에 있는 오브젝트를 스캔하여 저장.
+        {
+            scanedObject = rayHit.collider.gameObject;
+        }
+        else
+            scanedObject = null;
+
+    }
+
     public void ShowAlarm(int storyNum,int vec)// 알람 일때는 talking 과 storytalking이 true가 된다 << npc나 오브젝트의 대화일 경우 talking 만 true가 된다.
     {
         storyTalking = true;
@@ -456,27 +519,23 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         virtualCamera.gameObject.SetActive(true);
     }
 
-    void FixedUpdate()
-    {
-        //move
-        Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
-        rigid.velocity = moveVec * Speed;
-
-        //ray
-        //Debug.DrawRay(this.transform.position, dirVec*0.7f, new Color(0, 1, 0)); <<레이를 실제로 보여줌
-        RaycastHit2D rayHit = Physics2D.Raycast(this.transform.position, dirVec, 0.7f, LayerMask.GetMask("Interactable"));
-        //chekcing if the ray hit the object that is in the layermask "Interactable" <<interactable 레이어는 상호 작용이 가능한 모든 오브젝트
-        if (rayHit.collider != null) // 캐릭터앞에 있는 오브젝트를 스캔하여 저장.
-        {
-            scanedObject = rayHit.collider.gameObject;
-        }
-        else
-            scanedObject = null;
-
-    }
     public void CombatPositioning()
     {
         transform.position = combatPosition;
+    }
+
+    private void CheckTheLastDir()//방향 인풋 h,v를 당담하는 입력중 동시에 입력중일떄 마지막으로 입력된 인풋을 우선으로 제공하는 함수.
+    {
+        if(hori_time > verti_time)
+        {
+            h = gameManager.cantAction ? 0 : Input.GetAxisRaw("Horizontal");
+            v = 0;
+        }
+        else
+        {
+            h = 0;
+            v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical");
+        }
     }
 
     public void MovePlayer(int i) //i == 0 : up, i == 1 : down, i == 2 : left, i == 3 : right
