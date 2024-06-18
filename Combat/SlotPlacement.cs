@@ -24,7 +24,7 @@ public class SlotPlacement : MonoBehaviour
         worldObject = new Transform[P_slotPlace.Length];
         worldMobObject = new Transform[M_slotPlace.Length];
         UiInCanvas = new RectTransform[P_slotPlace.Length];
-        UiMobInCanvas = new RectTransform[M_slotPlace.Length];
+        UiMobInCanvas = new RectTransform[combatManager.monsterList.Count];
         for (int i = 0; i < P_slotPlace.Length; i++)
         {
             worldObject[i] = P_slotPlace[i].GetComponent<Transform>();
@@ -66,7 +66,7 @@ public class SlotPlacement : MonoBehaviour
                 UiInCanvas[i].localPosition = localPoint;
             }
 
-            for (int i = 0; i < worldMobObject.Length; i++)
+            for (int i = 0; i < combatManager.monsterList.Count; i++)
             {
                 Vector3 worldPosition = worldMobObject[i].position;
                 Vector3 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
