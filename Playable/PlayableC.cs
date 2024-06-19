@@ -68,6 +68,11 @@ public class PlayableC : ScriptableObject
     public string skill2Name;
     public string skill3Name;
     public string skill4Name;
+    //스킬 설명
+    public string skill1Desc;
+    public string skill2Desc;
+    public string skill3Desc;
+    public string skill4Desc;
     //스킬 코스트
     public int skill1Cost;
     public int skill2Cost;

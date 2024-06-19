@@ -55,9 +55,13 @@ public class MonsterAttackManager : MonoBehaviour
                 }
             }
 
-            if (playerTurnUsed >= 3)
+            if (playerTurnUsed >= 3 && combatManager.monsterTurnTime > 0)
             {
                 monsterAttackAvailable = true;
+            }
+            else if(playerTurnUsed >= 3 && combatManager.monsterTurnTime <= 0) //플레이어의 턴이 리필 되자말자 누적된턴의 공격이 바로 실행되는것 방지.
+            {
+                playerTurnUsed = 0;
             }
         }
     }
@@ -130,11 +134,12 @@ public class MonsterAttackManager : MonoBehaviour
 
     private async void MonsterAttack()
     {
+        Debug.Log("MonsterAttack");
         isAttacking = true;
-        combatManager.monsterTurnTime -= 3;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         if(!monster.isDead)
         {
+            combatManager.monsterTurnTime -= 3;
             await AttackStartDelay(monster);
             return;
         }
@@ -146,11 +151,12 @@ public class MonsterAttackManager : MonoBehaviour
     }
     private async void MonsterExtraAttack()//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
     {
+        Debug.Log("MonsterExtraAttack");
         isAttacking = true;
-        combatManager.monsterTurnTime -= 3;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         if (!monster.isDead)
         {
+            combatManager.monsterTurnTime -= 3;
             await AttackStartExtraDelay(monster);
             return;
         }

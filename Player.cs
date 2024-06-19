@@ -85,7 +85,6 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         bool vDown = gameManager.cantAction ? false : Input.GetButton("Vertical");
         bool hUp = gameManager.cantAction ? false : Input.GetButtonUp("Horizontal");
         bool vUp = gameManager.cantAction ? false : Input.GetButtonUp("Vertical");
-        Debug.Log(hDown);
         //////시간 세팅 + 리셋
         ///
         hori_delta += Time.deltaTime;
@@ -204,7 +203,6 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         //move
         Vector2 moveVec = isHorizonMove ? new Vector2(h, 0) : new Vector2(0, v);
         rigid.velocity = moveVec * Speed;
-        Debug.Log(rigid.velocity);
         //ray
         //Debug.DrawRay(this.transform.position, dirVec*0.7f, new Color(0, 1, 0)); <<레이를 실제로 보여줌
         RaycastHit2D rayHit = Physics2D.Raycast(this.transform.position, dirVec, 0.7f, LayerMask.GetMask("Interactable"));

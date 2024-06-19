@@ -52,7 +52,6 @@ public class Healer : PlayableC
 
     public override void AttackDmgCalc(GameObject g)
     {
-        Debug.Log("홀리 레이 피격");
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
@@ -91,7 +90,6 @@ public class Healer : PlayableC
             monster.Hp -= critatk * 2f - monster.Def;
             CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
         }
-        Debug.Log("홀리 레이 데미지는 :" + critatk + "입니다.");
         Destroy(g);
     }
     override public void SkillDmgCalc4()
@@ -109,7 +107,6 @@ public class Healer : PlayableC
     {
         for (int i = 0; i < repetitions; i++)
         {
-            Debug.Log("홀리 레이 발사");
             var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
             obj.GetComponent<HealSkill3>().player = this;
             obj.GetComponent<HealSkill3>().targetMob = this.singleTarget.GetComponent<TestMob>();

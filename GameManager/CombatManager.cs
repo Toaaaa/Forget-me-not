@@ -258,7 +258,7 @@ public class CombatManager : Singleton<CombatManager>
     private void PlayerNoAttackTime()
     {
         playerNoAttackTime += Time.deltaTime;
-        if(playerNoAttackTime >= 6 && monsterTurnTime>=3)
+        if(playerNoAttackTime >= 6 && monsterTurnTime>0)
         {
             monsterAttackManager.playerTurnUsed += 3;//플레이어가 6초간 아무런 행동을 하지 않으면 playerturnused에 3초를 추가하여 몬스터의 공격 유도.
             playerNoAttackTime = 0;
