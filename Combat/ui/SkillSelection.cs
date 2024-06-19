@@ -12,6 +12,7 @@ public class SkillSelection : MonoBehaviour
     public CombatManager combatManager;
     public List<GameObject> skillSelection;//1~4번 스킬 선택창.
     public List<GameObject> skillBehind;//스킬 선택창 뒤에 있는 이미지. (실제 선택은 아니고 표시용)
+    public GameObject skillDesc;//선택된 스킬의 설명을 표시할 텍스트.
     public PlayableC player;
 
     public GameObject skillCostText;//스킬의 코스트를 표시할 텍스트.
@@ -31,6 +32,7 @@ public class SkillSelection : MonoBehaviour
 
     private void Update()
     {
+        SkillDescText();
         switch (skillIndex)
         {
             case 0:
@@ -233,6 +235,24 @@ public class SkillSelection : MonoBehaviour
         }
     }
 
+    private void SkillDescText()
+    {
+        switch (skillIndex)
+        {
+            case 0:
+                skillDesc.GetComponent<TextMeshProUGUI>().text = player.skill1Desc;
+                break;
+            case 1:
+                skillDesc.GetComponent<TextMeshProUGUI>().text = player.skill2Desc;
+                break;
+            case 2:
+                skillDesc.GetComponent<TextMeshProUGUI>().text = player.skill3Desc;
+                break;
+            case 3:
+                skillDesc.GetComponent<TextMeshProUGUI>().text = player.skill4Desc;
+                break;
+        }
+    }
     /*
     public void SkillOnSelect() //스킬을 사용할 대상 선택.
     {

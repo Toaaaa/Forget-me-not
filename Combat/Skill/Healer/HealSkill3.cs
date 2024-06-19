@@ -13,7 +13,6 @@ public class HealSkill3 : PlayerSkill //큐어(일단은 독만 해제)
         }
         else
         {
-            Debug.Log("타겟이 없습니다.");
             Destroy(gameObject);
         }
     }
@@ -21,7 +20,6 @@ public class HealSkill3 : PlayerSkill //큐어(일단은 독만 해제)
     {
         if (collision.gameObject.tag == "Mob")
         {
-            Debug.Log("홀리 레이 충돌");
             player.HolyRayDmgCalc(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             //Destroy(gameObject);
         }

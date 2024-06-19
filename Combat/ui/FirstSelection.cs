@@ -110,8 +110,6 @@ public class FirstSelection : MonoBehaviour
                 playerAverageSpeed += combatManager.playerList[i].spd;
             }
             playerAverageSpeed = playerAverageSpeed / combatManager.playerList.Count;
-            Debug.Log(playerAverageSpeed);
-
             for (int i = 0; i < combatManager.monsterObject.Count; i++)
             {
                 fastestMonsterSpeed = Mathf.Max(fastestMonsterSpeed, combatManager.monsterObject[i].GetComponent<TestMob>().Speed);

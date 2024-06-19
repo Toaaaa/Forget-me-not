@@ -12,7 +12,6 @@ public class HealSkill1 : PlayerSkill //(단일 힐)
             transform.DOMove(targetplayerPlace.playerPrefab.transform.position, 0.5f).SetEase(Ease.Linear); //0.5초안에 이동.
         else
         {
-            Debug.Log("타겟이 없습니다.");
             Destroy(gameObject);
         }
     }

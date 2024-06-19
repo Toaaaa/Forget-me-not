@@ -88,7 +88,7 @@ public class CombatManager : Singleton<CombatManager>
         //...전투ui 로 넘어가는 함수 추가.
 
     }
-    public void OnCombatEnd() //전투 종료시 저장된 몬스터의 정보들 삭제.
+    public void OnCombatEnd() //전투 종료시 저장된 몬스터의 정보들 삭제. (flee 시에도 바로 해당 함수만 호출)
     {
         Debug.Log("전투가 종료되었습니다.");
         for (int i = 0; i < monsterObject.Count; i++)
