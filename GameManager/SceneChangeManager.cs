@@ -16,6 +16,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     public string battleSceneName; //전투씬 이름
 
     public bool duringBlackout; //암전중인지
+    public bool keepPlayerNoSprite;//플레이어 스프라이트 끄기 유지를 위한 임시 변수(player 스크립트에서 사용)
 
     [SerializeField]
     float fadeDuration; //암전되는 시간
@@ -135,6 +136,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Fade_battle2.GetComponent<RectTransform>().DOLocalMoveY(-615, combatFadeDuration).SetEase(Ease.InOutSine)
             .OnStart(() =>
             {
+                keepPlayerNoSprite= true;
                 GameManager.Instance.onSceneChange = true;
                 //Fade_img.blocksRaycasts = true; //레이캐스트 막기
             })
@@ -171,10 +173,13 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         //결과창 확인이 다 끝나면
         //GameManager.Instance.onSceneChange = false; 이거 하기.
         //그리고 원래 씬으로 돌아가기.
-        SceneManager.LoadScene(Player.Instance.currentMapName);
+        SceneManager.LoadScene(Player.Instance.currentMapName);//지금은 여기서 onscenechange를 false로
+        //하고 있기에 (결과창 출력시, 개별 코루틴 사용등) 추후에 해당 코루틴 수정 필요.
         yield return new WaitForSeconds(1.0f);
+        keepPlayerNoSprite= false;
         Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
         Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        //닫은거 다시 열어주는 효과.
     }
 
 }

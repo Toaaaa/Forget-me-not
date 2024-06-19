@@ -189,10 +189,15 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             }
         }//각요소별 interaction
 
+        //플레이어의 스프라이트 on/off 관련 스크립트.
         if (CombatManager.Instance.isCombatStart)
         {
             this.GetComponent<SpriteRenderer>().enabled = false;
-        }//전투가 시작되면 카메라 위치만 잡아주고 안보이게 하기.
+        }//전투가 시작되면 카메라 위치만 잡아주고 플레이어 안보이게 하기.
+        else if(SceneChangeManager.Instance.keepPlayerNoSprite)
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        }
         else
         {
             this.gameObject.GetComponent<SpriteRenderer>().enabled = true;
