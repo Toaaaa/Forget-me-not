@@ -94,6 +94,7 @@ public class CombatManager : Singleton<CombatManager>
         for (int i = 0; i < monsterObject.Count; i++)
         {
             Destroy(monsterObject[i]);
+            Debug.Log("몬스터 오브젝트 삭제");
         }
         slotPlacement = null;
         combatDisplay.inAction = false;
