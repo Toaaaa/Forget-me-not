@@ -63,7 +63,7 @@ public class SlotPlacement : MonoBehaviour
                     out Vector2 localPoint
                 );
 
-                UiInCanvas[i].localPosition = localPoint;
+                UiInCanvas[i].localPosition =new Vector2(localPoint.x*1.4085f,localPoint.y*1.4085f);
             }
 
             for (int i = 0; i < combatManager.monsterList.Count; i++)
@@ -78,7 +78,7 @@ public class SlotPlacement : MonoBehaviour
                 out Vector2 localPoint
                 );
 
-                UiMobInCanvas[i].localPosition = localPoint;
+                UiMobInCanvas[i].localPosition = new Vector2(localPoint.x * 1.4085f, localPoint.y * 1.4085f);
             }
         }
     }
