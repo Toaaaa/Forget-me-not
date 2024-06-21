@@ -58,12 +58,12 @@ public class RewardPageManager : MonoBehaviour
 
     private async UniTask TurnOnSpotlight() //리워드 페이지가 시작되면 1.8초뒤 스포트 라이트를 켜주며 동시에 리워드 보상도 표시.+경험치 배분
     {
+        RewardDisplayShow();//보상 설정 + 표시
         await UniTask.Delay(1800);
         for (int i = 0; i < charactersInParty.Length; i++)
         {
             spotLightSingle[i].SetActive(true);
         }
-        RewardDisplayShow();//보상 설정 + 표시
         await UniTask.Delay(1800);//1.8초뒤 캐릭터들에게 경험치 배분
         ExpAdding();//경험치 배분
     }

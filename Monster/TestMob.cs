@@ -36,8 +36,30 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     private void OnDisable()
     {
         isslowed = false;
-    
+        CombatManager.Instance.DeadMobExpCount += monster.ExpReward;
+        CombatManager.Instance.DeadMobGoldCount += monster.GoldReward;
+        Item mitem = GetItemFromList();
+        if(mitem != null)
+        {
+            CombatManager.Instance.DeadMobItemDrop.Add(mitem);
+        }//드랍된 아이템이 있을경우(null이 아닐경우) list에 추가
     }
+    private Item GetItemFromList()
+    {
+        int randomValue = Random.Range(0, 100);
+        int sum = 0;
+        for (int i = 0; i < monster.mItems.Count; i++)
+        {
+            sum += monster.mItems[i].dropRate;
+            if (randomValue < sum)
+            {
+                return monster.mItems[i].item;
+            }
+        }
+        return null;
+    }
+    
+
 
     private void Update()
     {

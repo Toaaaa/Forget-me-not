@@ -25,6 +25,9 @@ public class CombatManager : Singleton<CombatManager>
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
     public List<GameObject> monsterAliveList; //살아있는 몬스터 리스트.
 
+    public int DeadMobExpCount; //현재 전투에서 죽은 몬스터들의 총 경험치.
+    public int DeadMobGoldCount; //현재 전투에서 죽은 몬스터들의 총 골드.
+    public List<Item> DeadMobItemDrop; //현재 전투에서 죽은 몬스터들이 드랍한 아이템들.
     public int alivePlayerCount; //살아있는 플레이어의 수.
     public ConsumeItem consumeOnUse;
     public float consumeTimer;
@@ -96,6 +99,7 @@ public class CombatManager : Singleton<CombatManager>
             Destroy(monsterObject[i]);
             Debug.Log("몬스터 오브젝트 삭제");
         }
+        
         slotPlacement = null;
         combatDisplay.inAction = false;
         monstersInCombat.Clear();
@@ -127,6 +131,9 @@ public class CombatManager : Singleton<CombatManager>
         {
             Destroy(monsterObject[i]);
         }
+        DeadMobItemDrop.Clear();
+        DeadMobGoldCount = 0;
+        DeadMobExpCount = 0;
         combatDisplay.inAction = false;
         monstersInCombat.Clear();
         monsterObject.Clear();

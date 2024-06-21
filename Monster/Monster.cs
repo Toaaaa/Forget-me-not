@@ -9,6 +9,13 @@ public enum MonsterType
 }
 
 [System.Serializable]
+public class MonsterItem
+{
+    public int dropRate;
+    public Item item;
+}
+
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Monster", menuName = "Monster")]
 public class Monster : ScriptableObject
 {
@@ -27,9 +34,11 @@ public class Monster : ScriptableObject
 
     public int ExpReward;
     public int GoldReward;
+    public List<MonsterItem> mItems;
 
 
-    public void WhenDie()
+
+    /*public void WhenDie()
     {
         int count =GameManager.Instance.playableManager.joinedPlayer.Count;
         for (int i = 0; i < count; i++)
@@ -37,7 +46,8 @@ public class Monster : ScriptableObject
             GameManager.Instance.playableManager.joinedPlayer[i].exp += GiveExp()/count;
             GameManager.Instance.inventory.goldHave += GiveGold();
         }
-    }
+    }*/
+    //해당 코드는 rewardDisplay에서 처리하도록 변경함.
 
     public int GiveGold()
     {
