@@ -47,7 +47,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
     public bool storyTalking;
 
-
+    public PlayableC magician;//마법사 캐릭터 스크립트.
 
      void Start()
     {
@@ -448,6 +448,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case "101"://스테이지 1 완료
                 gameManager.storyScriptable.isStage1Completed = true;
+                magician.isPerson = true;
                 break;
             default:
                 break;

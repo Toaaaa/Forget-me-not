@@ -146,6 +146,26 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
                 CombatManager.Instance.combatDisplay.gameObject.SetActive(false);
             });
     }
+    public void RewardEnd()//보상상이 끝나면 호출될 함수 (창닫고,플레이어 스프라이트 키고,보상창 끄고, 다시열기)
+    {
+        //좌우로 닫히는 효과
+        Fade_battle1.GetComponent<RectTransform>().DOLocalMoveY(690, combatFadeDuration).SetEase(Ease.InOutSine);
+        Fade_battle2.GetComponent<RectTransform>().DOLocalMoveY(-615, combatFadeDuration).SetEase(Ease.InOutSine)
+            .OnStart(() =>
+            {
+                GameManager.Instance.rewardPageManager.gameObject.SetActive(false);
+                keepPlayerNoSprite = true;//플레이어 스프라이트 끄기 유지
+                GameManager.Instance.onSceneChange = true;
+                //Fade_img.blocksRaycasts = true; //레이캐스트 막기
+            })
+            .OnComplete(() =>
+            {
+                StartCoroutine(EndReward());
+                CombatManager.Instance.combatDisplay.gameObject.SetActive(false);
+            });
+    }
+
+
     IEnumerator BlackOutout()
     { 
         yield return new WaitForSeconds(1f);
@@ -166,20 +186,24 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         yield return 1.0f;
         OnBattleScene();
     }
-    IEnumerator EndBattleInfo()
+    IEnumerator EndBattleInfo()//전투 끝난뒤 보상창 띄우기
     {
         yield return new WaitForSeconds(1.0f);
-        //여기서 여러 결과창 표시.
-        //결과창 확인이 다 끝나면
-        //GameManager.Instance.onSceneChange = false; 이거 하기.
-        //그리고 원래 씬으로 돌아가기.
-        SceneManager.LoadScene(Player.Instance.currentMapName);//지금은 여기서 onscenechange를 false로
-        //하고 있기에 (결과창 출력시, 개별 코루틴 사용등) 추후에 해당 코루틴 수정 필요.
-        yield return new WaitForSeconds(1.0f);
-        keepPlayerNoSprite= false;
+        GameManager.Instance.onSceneChange = false;
+        //좌우로 열리는 효과
         Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
         Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
-        //닫은거 다시 열어주는 효과.
+        GameManager.Instance.rewardPageManager.gameObject.SetActive(true);
     }
+    IEnumerator EndReward()
+    {
+        yield return new WaitForSeconds(1.0f);
+        SceneManager.LoadScene(Player.Instance.currentMapName);
+        keepPlayerNoSprite = false;//플레이어 스프라이트 다시 켜기
+        Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
+    }
+
+
 
 }
