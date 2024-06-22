@@ -99,6 +99,11 @@ public class RewardDisplay : MonoBehaviour
     }
     public void GiveReward()//골드와 아이템을 인벤토리로 보내주는 함수
     {
+        GameManager.Instance.inventory.goldHave += gold;
 
+        for(int i = 0; i<rewardItems.Count; i++)
+        {
+            GameManager.Instance.inventory.AddItem(rewardItems[i], 1, (int)rewardItems[i].itemType);
+        }
     }
 }

@@ -88,6 +88,7 @@ public class RewardPageManager : MonoBehaviour
 
     private void CloseRewardPage()
     {
+        rewardDisplay.GiveReward();//보상을 주는 함수(아이템 + 골드)
         rewardDisplay.expAllGiven = false;
         SceneChangeManager.Instance.RewardEnd();
         
