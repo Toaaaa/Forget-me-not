@@ -29,8 +29,8 @@ public class PlayableC : ScriptableObject
     public float def;
     public int spd;
     public int crit; //요 크리티컬 데미지 반영 하려면. 따로 singleton으로 데미지 매니저 만들어서 거기의 함수와 int 파라미터를 받아서 데미지 계산하는 방식으로 하는것도 좋을듯.
-    public int exp;
-    public int maxExp;
+    public float exp;
+    public float maxExp;
     public int priority;
     public float fatigue;
     public float maxFatigue;

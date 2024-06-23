@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,9 +12,11 @@ public class RewardDisplay : MonoBehaviour
     public GameObject itemDisplay;
 
     public float exp;//경험치
+    public float OriginalExp;//나눠주기전 처음 경험치.
     public int gold;//골드
     public List<Item> rewardItems;//보상 아이템 리스트
     public bool expAllGiven;//경험치가 모두 주어졌는지 남은 경험치가 0이됨
+    public float decreaseRate = 80f; // 경험치 배분시 초당 감소할 경험치 양
 
     // (보상의 경우,monster list에 남아있는 데이터를 기반으로 아이템 보상 고르기
     // (경험치는 고정값, 골드는 기본 +-random수치로,보상의 경우 보상의 정해진 각 확률에 따라
@@ -23,12 +26,16 @@ public class RewardDisplay : MonoBehaviour
         expAllGiven = false;
         rewardItems = new List<Item>();
     }
-
+    private void Update()
+    {
+        expDisplay.GetComponent<TextMeshProUGUI>().text = exp.ToString();
+    }
 
     public void SetReward()//보상을 설정해주는 함수, 각종 계산식들 포함
     {
         expAllGiven = false;//경험치 리필하면서, 초기화 해주기
         exp = CombatManager.Instance.DeadMobExpCount;//경험치 세팅
+        OriginalExp = exp;
         gold = RandomGold();//골드 세팅
 
 
@@ -105,5 +112,28 @@ public class RewardDisplay : MonoBehaviour
         {
             GameManager.Instance.inventory.AddItem(rewardItems[i], 1, (int)rewardItems[i].itemType);
         }
+    }
+    public void ExpGive()//경험치를 초당 80씩 나눠주는 함수
+    {
+        DecreaseExperienceOverTime().Forget();
+    }
+    private async UniTaskVoid DecreaseExperienceOverTime()
+    {
+        while (exp > 0)
+        {
+            float decreaseAmount = decreaseRate * Time.deltaTime; // 한 프레임에서 감소할 양
+            exp -= decreaseAmount;
+
+            // 경험치가 0보다 작아지지 않도록 설정
+            if (exp <= 0)
+            {
+                expAllGiven = true;
+                exp = 0;
+            }
+
+            // 다음 프레임까지 대기
+            await UniTask.Yield();
+        }
+
     }
 }

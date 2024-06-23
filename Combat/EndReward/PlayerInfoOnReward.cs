@@ -10,17 +10,25 @@ public class PlayerInfoOnReward : MonoBehaviour
     public GameObject Exp;
     public Image ExpBar;//경험치 바
 
+    public bool levelUp;//레벨업을 했는지 체크
     public GameObject levelUpEffect;//레벨업시 사용할 이펙트(텍스트)
     public GameObject statIncreaseEffect;//스탯이 증가할때 사용할 이펙트(텍스트)//atk,def,hp,spd
     public GameObject skillUnlockEffect;//스킬이 해금될때 사용할 이펙트(텍스트)
     //// statIncreaseEffect와skillUnlockEffect 오브젝트에 개별적으로 dotween함수 넣기.
 
-    // Start is called before the first frame update
+    private void Start()
+    {
+        levelUpEffect.SetActive(false);
+        statIncreaseEffect.SetActive(false);
+        skillUnlockEffect.SetActive(false);
+        levelUp = false;
+    }
     void Update()
     {
         SetInfo();
         CheckLevelUp();
         ExpMaxSet();
+        ExpDisplay();
     }
 
     private void SetInfo()//레벨과 exp를 해당 캐릭터에 맞게 설정
@@ -39,6 +47,7 @@ public class PlayerInfoOnReward : MonoBehaviour
         {
             character.exp = character.exp - character.maxExp;
             character.level++;
+            levelUp = true;
             character.LevelUpStat();//레벨업시 스텟 증가.
             LevelUpEffect(character.LevelUpEffectInfo());//LevelUpEffectinfo에는 어떤스탯이 올랏는지 정보가 있지만, 그냥 스텟 상승 이펙트는 통일하자, 너무 지저분해 보일듯..
         }
@@ -116,5 +125,9 @@ public class PlayerInfoOnReward : MonoBehaviour
             }
             skillUnlockEffect.SetActive(true);
         }
+    }
+    private void ExpDisplay()
+    {
+        ExpBar.fillAmount = character.exp / character.maxExp;
     }
 }

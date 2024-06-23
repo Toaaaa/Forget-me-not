@@ -25,7 +25,7 @@ public class CombatManager : Singleton<CombatManager>
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
     public List<GameObject> monsterAliveList; //살아있는 몬스터 리스트.
 
-    public int DeadMobExpCount; //현재 전투에서 죽은 몬스터들의 총 경험치.
+    public float DeadMobExpCount; //현재 전투에서 죽은 몬스터들의 총 경험치.
     public int DeadMobGoldCount; //현재 전투에서 죽은 몬스터들의 총 골드.
     public List<Item> DeadMobItemDrop; //현재 전투에서 죽은 몬스터들이 드랍한 아이템들.
     public int alivePlayerCount; //살아있는 플레이어의 수.
@@ -229,6 +229,7 @@ public class CombatManager : Singleton<CombatManager>
             monstersInCombat.Add(monsterList[i], monsterObject[i]);
         }
         combatDisplay.MobList.Clear();
+        monsterAttackManager.monsters.Clear();
 
         for (int i = 0; i < monsterObject.Count; i++) //컴뱃 매니저의 몬스터 오브젝트를 컴뱃 디스플레이의 몬스터리스트에도 추가.
         {

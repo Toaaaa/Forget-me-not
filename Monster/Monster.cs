@@ -32,7 +32,7 @@ public class Monster : ScriptableObject
     public int mMinimumSpeed;
     
 
-    public int ExpReward;
+    public float ExpReward;
     public int GoldReward;
     public List<MonsterItem> mItems;
 
@@ -56,8 +56,9 @@ public class Monster : ScriptableObject
     }
     public int GiveExp()
     {
-        int exp = ExpReward * (int)Random.Range(0.9f, 1.1f);
-        return exp;
+        //int exp = ExpReward * (int)Random.Range(0.9f, 1.1f);
+        //return exp;
+        return 0;
     }
 
     public void Attack()

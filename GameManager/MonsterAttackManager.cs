@@ -212,6 +212,10 @@ public class MonsterAttackManager : MonoBehaviour
 
     }
 
+    private void OnDisable()
+    {
+        monsters.Clear();
+    }
     private async UniTask AttackStartDelay(TestMob monster)
     {
         await UniTask.Delay(600);
