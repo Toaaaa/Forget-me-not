@@ -16,7 +16,7 @@ public class PlayerInfoOnReward : MonoBehaviour
     public GameObject skillUnlockEffect;//스킬이 해금될때 사용할 이펙트(텍스트)
     //// statIncreaseEffect와skillUnlockEffect 오브젝트에 개별적으로 dotween함수 넣기.
 
-    private void Start()
+    private void OnEnable()
     {
         levelUpEffect.SetActive(false);
         statIncreaseEffect.SetActive(false);
@@ -34,7 +34,7 @@ public class PlayerInfoOnReward : MonoBehaviour
     private void SetInfo()//레벨과 exp를 해당 캐릭터에 맞게 설정
     {
         Level.GetComponent<TMPro.TextMeshProUGUI>().text = character.level.ToString();
-        Exp.GetComponent<TMPro.TextMeshProUGUI>().text = character.exp.ToString() + "/" + character.maxExp.ToString();
+        Exp.GetComponent<TMPro.TextMeshProUGUI>().text = ((int)character.exp).ToString() + "/" + ((int)character.maxExp).ToString();
     }
     private void CheckLevelUp()//레벨업을 체크하는 함수
     {

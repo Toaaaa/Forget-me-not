@@ -18,7 +18,7 @@ public class RewardPageManager : MonoBehaviour
     private bool CanClose;//보상창을 닫을 수 있는지 여부
     public float decreaseRate = 80f; // 경험치 배분시 초당 감소할 경험치 양
 
-    private async void Start()
+    private async void OnEnable()
     {
         charactersInParty = new PlayableC[CombatManager.Instance.playerList.Count];
         charactersInParty = CombatManager.Instance.playerList.ToArray();
@@ -128,8 +128,9 @@ public class RewardPageManager : MonoBehaviour
         while (rewardDisplay.OriginalExp > 0)
         {
             float decreaseAmount = decreaseRate * Time.deltaTime; // 한 프레임에서 감소할 양
+            Debug.Log("OriginalExp : " + rewardDisplay.OriginalExp);
             rewardDisplay.OriginalExp -= decreaseAmount;
-            c.exp += decreaseAmount;
+            c.exp += decreaseAmount*charactersInParty.Length; //for문이 4번 돌면서 deltatime의 수치가 1/n로 줄어들더라 그래서 캐릭터 인원수 곱해줌.
 
             // 경험치가 0보다 작아지지 않도록 설정
             if (rewardDisplay.OriginalExp <= 0)
