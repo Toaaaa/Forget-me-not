@@ -82,7 +82,114 @@ public class Warrior : PlayableC
     {
         Debug.Log("전사의 스킬4 데미지 계산");
     }
+
+    override public void LevelUpStat()//전사의 경우 공격력 증가 위주의 스탯.
+    {
+        switch (level)//2레벨부터 15레벨까지의 레벨업시 스텟 증가량
+        {
+            case 2:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 3:
+                atk += 2;
+                break;
+            case 4:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 5:
+                atk += 2;
+                spd += 2;
+                break;
+            case 6:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 7:
+                atk += 2;
+                break;
+            case 8:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 9:
+                atk += 2;
+                break;
+            case 10: //10레벨때 def,hp를 1이 아닌 2 증가.
+                atk += 2;
+                spd += 2;
+                def += 2;
+                hp += 2;
+                break;
+            case 11:
+                atk += 2;
+                break;
+            case 12:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 13:
+                atk += 2;
+                break;
+            case 14:
+                atk += 2;
+                def += 1;
+                hp += 1;
+                break;
+            case 15:
+                atk += 2;
+                spd += 2;
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    public override int LevelUpEffectInfo()//a:1,b:2,ab:3,ac:4,bc:5,abc:6
+    {
+        switch (level)
+        {
+            case 2:
+                return 3;
+            case 3:
+                return 1;
+            case 4:
+                return 3;
+            case 5:
+                return 4;
+            case 6:
+                return 3;
+            case 7:
+                return 1;
+            case 8:
+                return 3;
+            case 9:
+                return 1;
+            case 10:
+                return 6;
+            case 11:
+                return 1;
+            case 12:
+                return 3;
+            case 13:
+                return 1;
+            case 14:
+                return 3;
+            case 15:
+                return 4;
+            default:
+                return 0;
+        }
+    }
 }
+
 
 
 

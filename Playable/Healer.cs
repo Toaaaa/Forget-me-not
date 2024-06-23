@@ -121,5 +121,110 @@ public class Healer : PlayableC
         print = player.maxHp - player.hp;
         return print;
     }
+
+    override public void LevelUpStat()//힐러의 경우 힐량이 공격력 비례이기에 공격력 수치 주의.
+    {
+        switch (level)//2레벨부터 15레벨까지의 레벨업시 스텟 증가량
+        {
+            case 2:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 3:
+                atk += 1;
+                break;
+            case 4:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 5:
+                atk += 1;
+                spd += 2;
+                break;
+            case 6:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 7:
+                atk += 1;
+                break;
+            case 8:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 9:
+                atk += 1;
+                break;
+            case 10: //10레벨때 전스텟2
+                atk += 2;
+                spd += 2;
+                def += 2;
+                hp += 2;
+                break;
+            case 11:
+                atk += 1;
+                break;
+            case 12:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 13:
+                atk += 1;
+                break;
+            case 14:
+                atk += 1;
+                def += 1;
+                hp += 1;
+                break;
+            case 15:
+                atk += 1;
+                spd += 2;
+                break;
+            default:
+                break;
+
+        }
+    }
+    public override int LevelUpEffectInfo()//atk는 a, def와 hp는 b, spd는 c에 해당함
+    {
+        switch (level)
+        {
+            case 2:
+                return 3;
+            case 3:
+                return 1;
+            case 4:
+                return 3;
+            case 5:
+                return 4;
+            case 6:
+                return 3;
+            case 7:
+                return 1;
+            case 8:
+                return 3;
+            case 9:
+                return 1;
+            case 10:
+                return 6;
+            case 11:
+                return 1;
+            case 12:
+                return 3;
+            case 13:
+                return 1;
+            case 14:
+                return 3;
+            case 15:
+                return 4;
+            default:
+                return 0;
+        }
+    }
 }
 

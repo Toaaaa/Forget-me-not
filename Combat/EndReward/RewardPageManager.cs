@@ -28,6 +28,7 @@ public class RewardPageManager : MonoBehaviour
         for (int i = 0; i < charactersInParty.Length; i++)
         {
             rewardCharacter[i].SetActive(true);
+            rewardCharacter[i].GetComponent<PlayerInfoOnReward>().character = charactersInParty[i];
             rewardCharacter[i].GetComponent<Image>().sprite = charactersInParty[i].charaterRewardImage;
             if (charactersInParty[i].name == "Magician" && !charactersInParty[i].isPerson)
             {

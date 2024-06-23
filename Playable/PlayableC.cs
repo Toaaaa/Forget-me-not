@@ -226,6 +226,14 @@ public class PlayableC : ScriptableObject
         isStunned = false;
 
     }
+    virtual public void LevelUpStat()
+    {
+        
+    }
+    virtual public int LevelUpEffectInfo()
+    {
+        return 0;
+    }
 }
 
 
