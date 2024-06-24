@@ -119,75 +119,77 @@ public class Tank : PlayableC
         switch (level)//2레벨부터 15레벨까지의 레벨업시 스텟 증가량
         {
             case 2://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 3://b
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 4://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 5://bc
-                def += 1;
-                hp += 2;
-                spd += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
+                originalSpd += 1;
                 break;
             case 6://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 7://b
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 8://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 9://b
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 10: //10레벨때 전스텟 2씩 증가//abc
-                atk += 2;
+                originalAtk += 2;
                 spd += 2;
-                def += 2;
-                hp += 2;
+                originalDef += 2;
+                originalMaxHp += 2;
                 break;
             case 11://b
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 12://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 13://b
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 14://ab
-                atk += 1;
-                def += 1;
-                hp += 2;
+                originalAtk += 1;
+                originalDef += 1;
+                originalMaxHp += 2;
                 break;
             case 15://bc
-                def += 1;
-                hp += 2;
+                originalDef += 1;
+                originalMaxHp += 2;
                 spd += 1;
                 break;
             default:
                 break;
 
         }
+        //1레벨 시작 스텟
+        //atk: 5, def: 15, hp: 22, spd:3, crit: 0
     }
     public override int LevelUpEffectInfo()//a:1,b:2,ab:3,ac:4,bc:5,abc:6
     {

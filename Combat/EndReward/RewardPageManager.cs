@@ -128,7 +128,6 @@ public class RewardPageManager : MonoBehaviour
         while (rewardDisplay.OriginalExp > 0)
         {
             float decreaseAmount = decreaseRate * Time.deltaTime; // 한 프레임에서 감소할 양
-            Debug.Log("OriginalExp : " + rewardDisplay.OriginalExp);
             rewardDisplay.OriginalExp -= decreaseAmount/charactersInParty.Length;
             c.exp += decreaseAmount; //for문이 4번 돌면서 deltatime의 수치가 1/n로 줄어들더라 그래서 캐릭터 인원수 곱해줌.
 

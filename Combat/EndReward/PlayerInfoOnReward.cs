@@ -12,14 +12,14 @@ public class PlayerInfoOnReward : MonoBehaviour
 
     public bool levelUp;//레벨업을 했는지 체크
     public GameObject levelUpEffect;//레벨업시 사용할 이펙트(텍스트)
-    public GameObject statIncreaseEffect;//스탯이 증가할때 사용할 이펙트(텍스트)//atk,def,hp,spd
+    //public GameObject statIncreaseEffect;//스탯이 증가할때 사용할 이펙트(텍스트)//atk,def,hp,spd
     public GameObject skillUnlockEffect;//스킬이 해금될때 사용할 이펙트(텍스트)
     //// statIncreaseEffect와skillUnlockEffect 오브젝트에 개별적으로 dotween함수 넣기.
 
     private void OnEnable()
     {
         levelUpEffect.SetActive(false);
-        statIncreaseEffect.SetActive(false);
+        //statIncreaseEffect.SetActive(false);
         skillUnlockEffect.SetActive(false);
         levelUp = false;
     }
@@ -55,7 +55,7 @@ public class PlayerInfoOnReward : MonoBehaviour
     private void LevelUpEffect(int statVar)//레벨업시 이펙트를 보여주는 함수.1:atk 2:def,hp 3:atk,def,hp 4:atk,spd 5:def,hp,spd 6:atk,def,hp,spd
     {
         levelUpEffect.SetActive(true);
-        statIncreaseEffect.SetActive(true);
+        //statIncreaseEffect.SetActive(true);
         CheckSkillUnlock();
     }
     private void ExpMaxSet()
