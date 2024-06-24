@@ -52,6 +52,18 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         });
     }
 
+    public void BlackOutEndJourney()
+    {
+        Fade_img.DOFade(1, blackoutDuration)
+        .OnStart(() =>
+        {
+            duringBlackout = true;
+        })
+        .OnComplete(() =>
+        {
+            StartCoroutine(BlackOutJourneyout());
+        });
+    }
     public void ChangeScene()
     {
         Fade_img.DOFade(1, fadeDuration)
@@ -92,6 +104,16 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Fade_img.DOFade(0, whiteoutDuration)
             .OnStart(() =>
             {
+                duringBlackout = false;
+            });
+    }
+    public void OnBlackOutJourneyFin()
+    {
+        Fade_img.DOFade(0, 0.1f)
+            .OnStart(() =>
+            {
+                CombatManager.Instance.EndOfJourney.gameObject.SetActive(true);
+                CombatManager.Instance.LostCombatMobClear();//전투에서 죽은 몬스터들 제거, 이곳에서 제거해야지, 멋대로 combatend()함수가 진행 안됨.
                 duringBlackout = false;
             });
     }
@@ -170,6 +192,11 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     { 
         yield return new WaitForSeconds(1f);
         OnBlackOutFin();
+    }
+    IEnumerator BlackOutJourneyout()
+    {
+        yield return new WaitForSeconds(0.5f);
+        OnBlackOutJourneyFin();
     }
 
     IEnumerator LoadScene()

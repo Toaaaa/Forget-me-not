@@ -17,6 +17,7 @@ public class CombatManager : Singleton<CombatManager>
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
     public GameObject mobplace;
     public SlotPlacement slotPlacement;
+    public GameObject EndOfJourney;
 
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     //public List<PlayableC> alivePlayerList;//현재 전투에 참여중인 살아있는 플레이어.
@@ -126,17 +127,16 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void OnCombatLost() //전투에서 패배할시.
     {
-        Debug.Log("전투에서 패배하였습니다.");
-        for (int i = 0; i < monsterObject.Count; i++)
+        /*for (int i = 0; i < monsterObject.Count; i++)
         {
             Destroy(monsterObject[i]);
         }
+        monsterObject.Clear();*///여기서 실행해버리면 combatend도 실행해 버려서 꼬임. scenechangemanager에서 실행하도록 변경.
         DeadMobItemDrop.Clear();
         DeadMobGoldCount = 0;
         DeadMobExpCount = 0;
         combatDisplay.inAction = false;
         monstersInCombat.Clear();
-        monsterObject.Clear();
         monsterAliveList.Clear();
         selectedPlayer = null;
         monsterSelected = null;
@@ -154,6 +154,8 @@ public class CombatManager : Singleton<CombatManager>
         ResetPlayerBuff();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
+        SceneChangeManager.Instance.BlackOutEndJourney();//블랙아웃 후 여정의 끝 화면 활성화.
+
     }
 
     private void Update()
@@ -417,7 +419,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     private void MonsterAllDeadCount()
     {
-        if (monsterAliveList.Count == 0)
+        if (monsterAliveList.Count == 0&&!playerList.TrueForAll(x => x.isDead == true))//endofjourney가 비활성화 되어있을때만 실행.
         {
             Debug.Log("몬스터가 전멸하였습니다.");
             //여기서 전투종료후 경험치 계산등을 통해 레벨업 확인 + 레벨업시 스텟증가 스킬 해금등의 텍스트 출력 함수 + 이함수가 끝나면 oncombatend실행.
@@ -451,6 +453,14 @@ public class CombatManager : Singleton<CombatManager>
     private void CombatTimerSet()
     {
         combatTimer.maxTime = playerTurnTime;
+    }
+    public void LostCombatMobClear()
+    {
+        for (int i = 0; i < monsterObject.Count; i++)
+        {
+            Destroy(monsterObject[i]);
+        }
+        monsterObject.Clear();
     }
 }
 
