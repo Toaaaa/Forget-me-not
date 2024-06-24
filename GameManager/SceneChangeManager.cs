@@ -153,15 +153,15 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Fade_battle2.GetComponent<RectTransform>().DOLocalMoveY(-615, combatFadeDuration).SetEase(Ease.InOutSine)
             .OnStart(() =>
             {
-                GameManager.Instance.rewardPageManager.gameObject.SetActive(false);
                 keepPlayerNoSprite = true;//플레이어 스프라이트 끄기 유지
                 GameManager.Instance.onSceneChange = true;
                 //Fade_img.blocksRaycasts = true; //레이캐스트 막기
             })
             .OnComplete(() =>
             {
-                StartCoroutine(EndReward());
+                GameManager.Instance.rewardPageManager.gameObject.SetActive(false);
                 CombatManager.Instance.combatDisplay.gameObject.SetActive(false);
+                StartCoroutine(EndReward());
             });
     }
 

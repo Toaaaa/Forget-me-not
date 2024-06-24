@@ -28,7 +28,7 @@ public class RewardDisplay : MonoBehaviour
     }
     private void Update()
     {
-        expDisplay.GetComponent<TextMeshProUGUI>().text = exp.ToString();
+        expDisplay.GetComponent<TextMeshProUGUI>().text = ((int)exp).ToString();
     }
 
     public void SetReward()//보상을 설정해주는 함수, 각종 계산식들 포함
