@@ -132,7 +132,7 @@ public class FirstSelection : MonoBehaviour
         }
         else
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
         }
     }
 

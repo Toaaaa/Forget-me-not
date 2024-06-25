@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -290,7 +291,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime< combatManager.attackCostTime)//턴시간이 부족할때.
         {
-            Debug.Log("턴이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
         }
         if(Input.GetKeyDown(KeyCode.Escape))
         {
@@ -369,7 +370,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
             skillSelected = false;
@@ -440,7 +441,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
             skillForAllMob = false;
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
@@ -534,7 +535,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
             skillSelected = false;
@@ -616,7 +617,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
             skillSelected = false;
@@ -689,7 +690,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.skillCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
             combatManager.selectedPlayer = slotList[selectedSlotIndex].player;
             combatManager.isFirstSelection = false;
             skillSelected = false;
@@ -749,7 +750,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if(Input.GetKeyDown(KeyCode.Space)&&combatManager.playerTurnTime < combatManager.itemCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -782,7 +783,7 @@ public class CombatDisplay : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Space) && combatManager.playerTurnTime < combatManager.itemCostTime)
         {
-            Debug.Log("턴시간이 부족합니다.");
+            combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))

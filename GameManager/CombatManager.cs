@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks.Triggers;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -461,6 +463,10 @@ public class CombatManager : Singleton<CombatManager>
             Destroy(monsterObject[i]);
         }
         monsterObject.Clear();
+    }
+    public void TimerShake()//액션 코스트 대비 턴타임이 부족할때 타이머 흔들림 효과.
+    {
+        combatTimer.gameObject.transform.DOPunchPosition(new Vector3(5.5f, 0, 0), 0.6f, 10, 1);
     }
 }
 
