@@ -36,14 +36,12 @@ public class ItemSelection : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && !combatDisplay.itemSelected)
         {
-            Debug.Log("esc");
             combatDisplay.noCharObj = true;
             combatDisplay.courountineGo();
             gameObject.SetActive(false);
         }//인벤토리화면에서 esc누르면 firstselection으로 돌아가기.
         ItemReplace();
         UpdateDisplay();
-        invenTotal = itemInInven.Count;
         invenPage = invenNumber / itemPerPage;
         SelectingItem();
         if(Input.GetKeyDown(KeyCode.Space) && !combatDisplay.itemSelected)//인벤토리에서 아이템을 골라서 스페이스바를 누르면.
@@ -141,12 +139,13 @@ public class ItemSelection : MonoBehaviour
                 }
             }
         }
+        invenTotal = itemInInven.Count;
     }
     public void CreateDisplay()
     {
         for (int i = 0; i < inventory.Container.Count; i++)
         {
-            if (inventory.Container[i]._itemType == 1)
+            if (inventory.Container[i]._itemType == 1 && inventory.Container[i].amount != 0)
             {
                 var obj = Instantiate(inventory.Container[i].item.combatPrefab, Vector3.zero, Quaternion.identity, transform);
                 //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
@@ -157,6 +156,7 @@ public class ItemSelection : MonoBehaviour
                 itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
             }
         }
+        invenTotal = itemInInven.Count;
     }
     void ItemReplace()
     {

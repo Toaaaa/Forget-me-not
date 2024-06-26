@@ -265,7 +265,6 @@ public class DisplayInventory : MonoBehaviour
 
     public void UpdateDisplay(int inventype)
     {
-
         for (int i = 0; i < inventory.Container.Count; i++)
         {
             // if(inventory.Container[].itemtype ==1) , if(inventory.Container[].itemtype ==1), if(inventory.Container[].itemtype ==2) 으로 나눠서 각각의 종류의 아이템 인벤 구분.
@@ -298,7 +297,7 @@ public class DisplayInventory : MonoBehaviour
                     obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                     obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID; //처음 만들때 itemID를 저장. 해서 자체적으로 아이템이 0개가 되면 삭제되게 유도.
                     itemDisplayed.Add(inventory.Container[i], obj);
-                    itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.                   
+                    itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
                 }
             }
         }
