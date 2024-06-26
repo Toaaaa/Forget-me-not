@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -200,8 +201,19 @@ public class ConsumeItem : Item
     {
         character.mp = (character.mp + effectAmount > character.maxMp) ? character.maxMp : character.mp + effectAmount;
     }
-    private void restoreStamina(PlayableC character)
+    private void restoreStamina(PlayableC character)//불굴의 포션 전용 함수. //30초간 피로도0으로 유지.
     {
-        character.fatigue = (character.fatigue - effectAmount < 0) ? 0 : character.fatigue - effectAmount;
+        //character.fatigue = (character.fatigue - effectAmount < 0) ? 0 : character.fatigue - effectAmount;
+        StaminaReset(character).Forget();
+    }
+    private async UniTask StaminaReset(PlayableC c)
+    {
+        float endTime = Time.time + 30f; //불굴의 포션의 지속시간 설정(현재 30초)
+
+        while (Time.time < endTime)
+        {
+            c.fatigue = 0; //해당 캐릭터의 피로도를 설정된 시간동안 0으로 유지한다
+            await UniTask.Yield(); // 다음 프레임까지 대기
+        }
     }
 }
