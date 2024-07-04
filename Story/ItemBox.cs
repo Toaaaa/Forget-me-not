@@ -87,6 +87,19 @@ public class ItemBox : MonoBehaviour
                     isOpened = false;
                 }
                 break;
+
+             case 7:
+                if(storyScriptable.stage2_CaveBox)
+                {
+                    openedBoxTilemap.gameObject.SetActive(true);
+                    gameObject.SetActive(false);
+                    isOpened = true;
+                }
+                else
+                {
+                    isOpened = false;
+                }
+                break;
             default:
                 Debug.Log("Box ID not found");
                 break;

@@ -38,6 +38,8 @@ public class StoryScriptable : ScriptableObject
     public bool stage1_Statue;//statue
     public bool stage1_roomDoor;//roomDoor
 
+    public bool stage2_CaveBox;//caveBox
+
     public void restAll()
     {
         firstTime = false;
@@ -66,6 +68,7 @@ public class StoryScriptable : ScriptableObject
         stage1_Sword = false;
         stage1_Statue = false;
         stage1_roomDoor = false;
+        stage2_CaveBox = false;
     }
 
 
