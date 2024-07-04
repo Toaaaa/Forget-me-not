@@ -31,7 +31,7 @@ public class MapData : MonoBehaviour
     {
         if (GameManager.Instance.Player == null)
         {
-            GameManager.Instance.Player = FindObjectOfType<Player>();
+            GameManager.Instance.Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             GameManager.Instance.Player.GetComponent<RandomEncounter>().encounterRate = encounterRate;
         }
 

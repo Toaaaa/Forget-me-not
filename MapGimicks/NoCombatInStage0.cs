@@ -13,6 +13,7 @@ public class NoCombatInStage0 : MonoBehaviour
         if (story.isTutorialCompleted)
         {
             mapData.encounterRate = 0;
+            GameManager.Instance.Player.GetComponent<RandomEncounter>().encounterRate = 0;
         }
     }
 
