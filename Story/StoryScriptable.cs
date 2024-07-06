@@ -20,8 +20,22 @@ public class StoryScriptable : ScriptableObject
     public bool Stage1Encountered;//스테이지1 보스방 입장전 몬스터 조우
     public bool Stage1BossCompleted;//스테이지1 보스방 입장할때.true가됨
     public bool isStage1Completed;//스토리9000의 대사가 끝나면 true.
+    ////////////////스테이지 2
     public bool isOnStage2;
+    public bool Stage2Check1;
+    public bool Stage2Check2;
+    public bool Stage2Check3;
+    public bool Stage2Check4;
+    public bool Stage2Check5;
+    public bool Stage2Check6;
+    public bool Stage2Check7;
+    public bool Stage2Check8;
     public bool isStage2Completed;
+    public bool Stage2Extra0;
+    public bool Stage2Extra1;
+    public bool Stage2Extra2;
+    public bool Stage2Extra3;
+    public bool Stage2Extra4;
     public bool isOnStage3;
     public bool isStage3Completed;
     public bool isOnStage4;
@@ -53,7 +67,20 @@ public class StoryScriptable : ScriptableObject
         Stage1BossCompleted = false;
         isStage1Completed = false;
         isOnStage2 = false;
+        Stage2Check1 = false;
+        Stage2Check2 = false;
+        Stage2Check3 = false;
+        Stage2Check4 = false;
+        Stage2Check5 = false;
+        Stage2Check6 = false;
+        Stage2Check7 = false;
+        Stage2Check8 = false;
         isStage2Completed = false;
+        Stage2Extra0 = false;
+        Stage2Extra1 = false;
+        Stage2Extra2 = false;
+        Stage2Extra3 = false;
+        Stage2Extra4 = false;
         isOnStage3 = false;
         isStage3Completed = false;
         isOnStage4 = false;
