@@ -29,6 +29,7 @@ public class StoryScriptable : ScriptableObject
     public bool Stage2Check5;
     public bool Stage2Check6;
     public bool Stage2Check7;
+    public bool Stage2Check7Dragon;
     public bool Stage2Check8;
     public bool isStage2Completed;
     public bool Stage2Extra0;
@@ -74,6 +75,7 @@ public class StoryScriptable : ScriptableObject
         Stage2Check5 = false;
         Stage2Check6 = false;
         Stage2Check7 = false;
+        Stage2Check7Dragon = false;
         Stage2Check8 = false;
         isStage2Completed = false;
         Stage2Extra0 = false;

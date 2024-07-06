@@ -4,6 +4,8 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
+using UnityEditor.SearchService;
+using UnityEngine.SceneManagement;
 
 public class RewardPageManager : MonoBehaviour
 {
@@ -118,10 +120,25 @@ public class RewardPageManager : MonoBehaviour
 
     private void CloseRewardPage()
     {
+        CheckStageBossClear();//보스방에서 보스를 클리어 했을경우 스토리 진행 체크포인트 저장.
         rewardDisplay.GiveReward();//보상을 주는 함수(아이템 + 골드)
         rewardDisplay.expAllGiven = false;
         SceneChangeManager.Instance.RewardEnd();
         
+    }
+
+    private void CheckStageBossClear()//보스방에서 보스를 클리어 했을경우 스토리 진행 체크포인트 저장.
+    {
+        UnityEngine.SceneManagement.Scene scene = SceneManager.GetActiveScene();
+        switch (scene.name)
+        {
+            case "battle in stage1 Boss":
+                GameManager.Instance.storyScriptable.Stage1BossCompleted = true;
+                break;
+            case "battle in stage2 Boss"://스테이지 2 보스 클리어
+                GameManager.Instance.storyScriptable.Stage2Check7Dragon = true;
+                break;
+        }
     }
     private async UniTaskVoid ExpGiveToChar(PlayableC c)
     {

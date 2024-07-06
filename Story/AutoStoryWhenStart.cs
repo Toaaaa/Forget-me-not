@@ -40,7 +40,6 @@ public class AutoStoryWhenStart : MonoBehaviour
                     if (!gameManager.storyScriptable.Stage1BossCompleted)
                     {
                         StartCoroutine(AutoStoryTime(8000, 2.0f));
-                        gameManager.storyScriptable.Stage1BossCompleted = true;
                     }
                     break;
             }
