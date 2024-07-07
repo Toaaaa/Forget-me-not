@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class GameManager : Singleton<GameManager>
     public PlayableManager playableManager;
     public RewardPageManager rewardPageManager;
     public UIPanelEffect portalUI;
+    public CinemachineVirtualCamera virtualCamera;
 
     private void Awake()
     {

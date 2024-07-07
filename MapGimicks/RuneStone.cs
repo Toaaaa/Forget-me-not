@@ -34,10 +34,6 @@ public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 r
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.Escape))
-        {
-            DistoryRune();
-        }
         if(storyScriptable.Stage2Check7Dragon)
         {
             stoneDragon.SetActive(false);

@@ -34,7 +34,7 @@ public class MapData : MonoBehaviour
             GameManager.Instance.Player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
             GameManager.Instance.Player.GetComponent<RandomEncounter>().encounterRate = encounterRate;
         }
-
+        GameManager.Instance.virtualCamera.m_Lens.OrthographicSize = 5;
     }
 
     public void GoToBattle()

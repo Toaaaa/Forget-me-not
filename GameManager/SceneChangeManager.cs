@@ -218,8 +218,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         yield return new WaitForSeconds(1.0f);
         GameManager.Instance.onSceneChange = false;
         //좌우로 열리는 효과
-        Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
-        Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        Fade_battle1.transform.DOMoveY(2690, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        Fade_battle2.transform.DOMoveY(-2615, combatFadeOutDuration).SetEase(Ease.InOutSine);
         GameManager.Instance.rewardPageManager.gameObject.SetActive(true);
     }
     IEnumerator EndReward()
@@ -227,8 +227,8 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         yield return new WaitForSeconds(1.0f);
         SceneManager.LoadScene(Player.Instance.currentMapName);
         keepPlayerNoSprite = false;//플레이어 스프라이트 다시 켜기
-        Fade_battle1.transform.DOMoveY(2190, combatFadeOutDuration).SetEase(Ease.InOutSine);
-        Fade_battle2.transform.DOMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        Fade_battle1.transform.DOMoveY(2690, combatFadeOutDuration).SetEase(Ease.InOutSine);
+        Fade_battle2.transform.DOMoveY(-2615, combatFadeOutDuration).SetEase(Ease.InOutSine);
     }
 
 

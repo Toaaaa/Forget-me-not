@@ -81,6 +81,8 @@ public class SlotPlacement : MonoBehaviour
                 UiMobInCanvas[i].localPosition = new Vector2(localPoint.x * 1.4085f, localPoint.y * 1.4085f);
             }
         }
+
+        GameManager.Instance.virtualCamera.m_Lens.OrthographicSize = 6.6f;
     }
 
     public void PlayerSlotPlace() //몬스터의 경우 combatManager 에서 SlotPlacement를 통해 배치시킴.
