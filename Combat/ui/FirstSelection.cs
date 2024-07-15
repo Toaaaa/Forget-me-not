@@ -117,6 +117,7 @@ public class FirstSelection : MonoBehaviour
 
             if (playerAverageSpeed > fastestMonsterSpeed)
             {
+                combatManager.turnTimeUsedShow.PrintUsedTime(combatManager.fleeCostTime);
                 Debug.Log("도망에 성공했습니다.");
                 combatManager.DeadMobExpCount = 0;
                 combatManager.DeadMobGoldCount = 0;

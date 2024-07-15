@@ -13,6 +13,7 @@ public class CombatManager : Singleton<CombatManager>
     [SerializeField]
     PlayableManager playableManager;
     public DamagePrintManager damagePrintManager;
+    public TurnTimeUsedShow turnTimeUsedShow;
     public CombatTimer combatTimer;
     public MonsterAttackManager monsterAttackManager;
     public MapData mapData;
