@@ -17,6 +17,7 @@ public class StoryScriptable : ScriptableObject
     public bool isTutorialCompleted;
     public bool isOnStage1;//스테이지1에 들어왔을때.
     public bool Stage1Started;//견습 기사 합류시점
+    public bool Stage1beforEncounter;//보스방 입정전 몬스터 조우직전의 대화
     public bool Stage1Encountered;//스테이지1 보스방 입장전 몬스터 조우
     public bool Stage1BossCompleted;//스테이지1 보스방 입장할때.true가됨
     public bool isStage1Completed;//스토리9000의 대사가 끝나면 true.
@@ -65,6 +66,8 @@ public class StoryScriptable : ScriptableObject
         isTutorialCompleted = false;
         isOnStage1 = false;
         Stage1Started = false;
+        Stage1beforEncounter = false;
+        Stage1Encountered = false;
         Stage1BossCompleted = false;
         isStage1Completed = false;
         isOnStage2 = false;

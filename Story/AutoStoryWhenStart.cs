@@ -40,6 +40,7 @@ public class AutoStoryWhenStart : MonoBehaviour
                     if (!gameManager.storyScriptable.Stage1BossCompleted)
                     {
                         StartCoroutine(AutoStoryTime(8000, 2.0f));
+                        //전투 리워드 창에서 stage1bosscompleted =true로 해주고 있음.
                     }
                     break;
             }

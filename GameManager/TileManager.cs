@@ -105,7 +105,6 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 if (!GameManager.Instance.storyScriptable.Stage1Encountered)
                 {
                     GameManager.Instance.combatManager.OnCombatStart();
-                    GameManager.Instance.storyScriptable.Stage1Encountered = true;
                 }
                 break;
             default:

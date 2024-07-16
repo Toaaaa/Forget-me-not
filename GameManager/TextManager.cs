@@ -138,7 +138,7 @@ public class TextManager : MonoBehaviour
             "가까이 다가가면 포탈을 사용하실 수 있으실 거에요.:4:고양이:0"
         });
         /////스토리 스크립트/////스테이지 1
-        storyTalkData.Add(5000, new string[]
+        storyTalkData.Add(5000, new string[] //스테이지 1입장시 출력 (autostorywhenstart 에서 트리거 되면 자동으로 ss =true해주고 있음)
         {
             "윽... 진짜 하수구 잖아.. :3:나:0",
             "이곳은 드워프의 마을이였던 곳이네요.:4:고양이:0",
@@ -151,7 +151,7 @@ public class TextManager : MonoBehaviour
             "(저 초록색 물에 닿으면 아프겟지..?):0:나:0",
             "일단 주변을 둘러 볼까요, 각인된 물건의 기운이 확실히 느껴지는게, 이곳 어딘가에 있는건 분명한것 같아요:4:고양이:0",
         });
-        storyTalkData.Add(6000, new string[]
+        storyTalkData.Add(6000, new string[] //1-2에서 타일 트리거
         {
             //다음 맵에 입장하며 카메라 무빙과 함께 새로운 플레이어 탱커 합류
             "와!!! 드디어 사람이다!!:8:???:6",
@@ -181,14 +181,14 @@ public class TextManager : MonoBehaviour
             "애초에 기사 수행이 목적이라 이후의 계획도 크게 없고 정처없이 떠돌아 다닐 뿐이니깐. :8:견습 기사:0",
             "그럼 한동안 저희들과 함께 하실래요? 저희도 여러지역을 돌아 다닐것 같아요 :4:고양이:1",//암전 효과
         });
-        storyTalkData.Add(7000, new string[]
+        storyTalkData.Add(7000, new string[] //1-5에서 타일 트리거
         {
             "저곳이 그곳이야. 숨어서 지키는 고블린이 있는지 근처에 다가가면 금방 나오더라고.:8:견습 기사:0",
             "주변에 딱히 적은 안보이는데.:0:나:0",
             "싸움이 시작되면 어딘가에 숨어있던 고블린들이 줄줄이 나와서 긴장해야해.:8:견습 기사:0",
             "그렇다면 빠르게 전투를 끝내는게 제일 중요할 것 같네요:4:고양이:0",
         });
-        storyTalkData.Add(8000, new string[]
+        storyTalkData.Add(8000, new string[] //1-6입장시 출력
         {
             "진짜 약속이라도 한것처럼 끊임없이 몰려왔네.:0:나:0",
             "그래도 주변에 있는 고블린들은 저게 다겠죠?:4:고양이:0",
@@ -200,7 +200,7 @@ public class TextManager : MonoBehaviour
             "온다! 조심해!:0:나:7", //다시 카메라 주인공으로 바로 리턴
             ":0:?:9"//보스 전투 시작
         });
-        storyTalkData.Add(9000, new string[]
+        storyTalkData.Add(9000, new string[] //1-6에서 타일 트리거
         {
             "이게 그거야?:0:나:0", //동상주변에서 대화를 나눔
             "네, 용사 파티의 동상이네요, 아마 드워프들이 전쟁의 승리를 기원하기 위해 만든것 같아요. :4:고양이:0",

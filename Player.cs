@@ -433,8 +433,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case "5"://카메라 이동
                 TurnOffMainCamera();
                 break;
-            case "6"://카메라 이동 + 채팅 박스 진동
-                TurnOffMainCamera();
+            case "6"://카메라 이동 + 채팅 박스 진동 (포커싱할 인물에게 카메라를 이동시켜주는 함수)
+                TurnOffMainCamera();//추후 내용물 수정
                 TextBoxShake();
                 break;
             case "7"://카메라 이동 원상 복구
@@ -443,7 +443,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case "8"://스테이지 1 종료 시점에서 고양이 >> 마법사로 이미지 변경.
                 //이펙트와 함께 스프라이트 변경.
                 break;
-            case "9"://mapdata 에서 데이터 가져와서 전투 시작
+            case "9"://mapdata 에서 데이터 가져와서 전투 시작 (스테이지 1에서의 보스전투)
                 gameManager.combatManager.OnCombatStart();
                 break;
             case "101"://스테이지 1 완료
@@ -483,6 +483,16 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     return true;
                 else
                     return false;
+            case 6000:
+                if(gameManager.storyScriptable.Stage1Started)
+                    return true;
+                else
+                    return false;
+            case 7000:
+                if(gameManager.storyScriptable.Stage1beforEncounter)
+                    return true;
+                else
+                    return false;
             default:
                 Debug.Log("Wrong StoryNum");
                 return false;
@@ -503,6 +513,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case 4000:
                 gameManager.storyScriptable.isTutorialCompleted = true;
+                break;
+            case 6000:
+                gameManager.storyScriptable.Stage1Started = true;
+                break;
+            case 7000:
+                gameManager.storyScriptable.Stage1beforEncounter = true;
                 break;
             default:
                 break;

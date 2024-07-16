@@ -121,6 +121,7 @@ public class RewardPageManager : MonoBehaviour
     private void CloseRewardPage()
     {
         CheckStageBossClear();//보스방에서 보스를 클리어 했을경우 스토리 진행 체크포인트 저장.
+        CheckIfStoryEnemy();//스토리상 진행되는 전투일 경우 해당 경우 체크포인트 저장.
         rewardDisplay.GiveReward();//보상을 주는 함수(아이템 + 골드)
         rewardDisplay.expAllGiven = false;
         SceneChangeManager.Instance.RewardEnd();
@@ -137,6 +138,20 @@ public class RewardPageManager : MonoBehaviour
                 break;
             case "battle in stage2 Boss"://스테이지 2 보스 클리어
                 GameManager.Instance.storyScriptable.Stage2Check7Dragon = true;
+                break;
+            default:
+                break;
+        }
+    }
+    private void CheckIfStoryEnemy()
+    {
+        string mapName = Player.Instance.currentMapName;
+        switch(mapName)
+        {
+            case "Stage1-5"://스테이지 1-5에서의 고블린 타일맵 트리거 전투
+                GameManager.Instance.storyScriptable.Stage1Encountered = true;
+                break;
+            default:
                 break;
         }
     }
