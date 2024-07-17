@@ -48,7 +48,6 @@ public class RandomEncounter : MonoBehaviour
         {
             if(encounterRate != 0) //혹시 몬스터가 등장하지 않는 곳일 경우를 대비하여 0일때만 확률 올림.
             {
-                Debug.Log("ExtraEncounterRate ++");
                 extraEncounterRate += 1; //몬스터 인카운터 실패시 추가 확률을 올림.
             }
             int random = Random.Range(1, 100);
@@ -68,14 +67,12 @@ public class RandomEncounter : MonoBehaviour
             encounterCount = 0; //몬스터 인카운터가 발생하면 스텝을 초기화.
             extraEncounterRate = 0; //몬스터 인카운터가 발생하면 추가 확률을 초기화.
             GameManager.Instance.combatManager.OnCombatStart();
-            Debug.Log("Encountered");
         }
     }
 
 
     private void Update()
     {
-        Debug.Log("encounterRate :" + encounterRate);
         if(tilemanager != null)
         {
             isMonsterZone = tilemanager.IsMonsterZone(player.transform.position); //플레이어가 있는 타일이 몬스터 타일인지 체크.
