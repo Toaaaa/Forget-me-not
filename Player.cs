@@ -18,6 +18,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     public bool isMoving;
     public string currentMapName;//이동전 맵이름을 받아주기
     public bool isDown;//이동전 맵 세부 데이터를 받아줌.
+    public int buildingNum;//이동전 맵의 빌딩 번호를 받아줌.
     private float hori_time;//h인풋 지속시간
     private float verti_time;//v인풋 지속시간
     private float hori_delta;
