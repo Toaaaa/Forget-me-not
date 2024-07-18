@@ -229,7 +229,7 @@ public class TextManager : MonoBehaviour
         });
 
         /////스토리 스크립트/////스테이지 1
-        storyTalkData.Add(10000, new string[]//스테이지 2 입장시 출력 + checkpoint1
+        storyTalkData.Add(10000, new string[]//스테이지 2 입장시 출력 + isOnStage2
         {
             "으앗! 하수구 밖에 이런곳이 있었나??:10:견습 기사:0",
             "저희의 다음 목적지 까지 바로 이동하는 마법을 사용하였어요.:12:마법사:0",
@@ -249,13 +249,13 @@ public class TextManager : MonoBehaviour
             "그냥 제가 고양이를 좋아한다고 해둘게요.:12:마법사:0",
             "먼저 마을로 가보자, 나 멀쩡한 음식을 먹은지 너무 오래되서 배고프군.:8:견습기사:0",
         });
-        storyTalkData.Add(11000, new string[]//마을에 도착(타일) 하면 출력 + checkpoint2
+        storyTalkData.Add(11000, new string[]//마을에 도착(타일) 하면 출력 + checkpoint1
         {
             "나는 먼저 먹을것좀 찾으러 갈게, 볼일이 다 끝나면 불러줘 :8:견습 기사:0",
             "(견습 기사가 파티에서 이탈 하였습니다) :8:견습 기사:0",
             "그럼 저희는 마을의 장로를 찾으러 가볼까요:12:마법사:0",
         });
-        storyTalkData.Add(12000, new string[]//(checkpoint2만 되어있을때) 장로에게 말을 걸면 출력 + checkpoint3
+        storyTalkData.Add(12000, new string[]//(checkpoint2만 되어있을때) 장로에게 말을 걸면 출력 + checkpoint2
         {
             "안녕하세요, 혹시 이 마을의 장로님 되시는분 맞으신가요?:0:나:0",
             "어서 오게 , 여행자들이여. 험한 날씨를 뚫고 오느라 고생많았소.:21:장로:0",
@@ -280,7 +280,7 @@ public class TextManager : MonoBehaviour
             "이 아이가 마을의 지리와 저희 마을에 계시면서의 신분을 보증해 드릴겁니다.:21:에랄드:0",
             "부디 또 한번 저희 마을을 지켜주십쇼..:21:에랄드:0",
         });
-        storyTalkData.Add(13000, new string[]//장로 집에서 나오면 출력
+        storyTalkData.Add(13000, new string[]//장로 집에서 나오면 출력checkpoint3
         {
             "그... 마법사님? 혹시.. 올해 연세가 어떻게 되시는..지?:3:나:0",
             "숙녀의 나이를 묻는건 그쪽 세상에서도 예의가 아니라고 알고있어요.:13:마법사:0",
@@ -387,6 +387,23 @@ public class TextManager : MonoBehaviour
             storyPortraitData.Add(1000 + i, storyArr[i]);
             storyPortraitData.Add(2000 + i, storyArr[i]);
             storyPortraitData.Add(3000 + i, storyArr[i]);
+            storyPortraitData.Add(4000 + i, storyArr[i]);
+            storyPortraitData.Add(5000 + i, storyArr[i]);
+            storyPortraitData.Add(6000 + i, storyArr[i]);
+            storyPortraitData.Add(7000 + i, storyArr[i]);
+            storyPortraitData.Add(8000 + i, storyArr[i]);
+            storyPortraitData.Add(9000 + i, storyArr[i]);
+            storyPortraitData.Add(10000 + i, storyArr[i]);
+            storyPortraitData.Add(11000 + i, storyArr[i]);
+            storyPortraitData.Add(12000 + i, storyArr[i]);
+            storyPortraitData.Add(13000 + i, storyArr[i]);
+            storyPortraitData.Add(14000 + i, storyArr[i]);
+            storyPortraitData.Add(15000 + i, storyArr[i]);
+            storyPortraitData.Add(16000 + i, storyArr[i]);
+            storyPortraitData.Add(17000 + i, storyArr[i]);
+            storyPortraitData.Add(18000 + i, storyArr[i]);
+            storyPortraitData.Add(19000 + i, storyArr[i]);
+
         }//0번 스테이지 초상화.
     }
 

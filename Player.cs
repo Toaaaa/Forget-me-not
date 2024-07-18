@@ -157,6 +157,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     TalkAction(scanedObject);
                     break;
                 case "Story":
+                    int i=scanedObject.GetComponent<ObjectId>().tempID;
+                    StoryAction(i);
                     //스토리 진행 오브젝트로. 해당 오브젝트가 들고있는 변수 참고 or 함수 실행을 통해
                     //자동 재생 스토리 스크립트 재생.
                     break;
@@ -375,7 +377,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         talkIndex++;
     }
 
-    public void StoryAction(int storyNum)
+    public void StoryAction(int storyNum)//이곳에서 스토리 진행
     {
         if (!CheckTheProgress(storyNum))
             return;
@@ -407,6 +409,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             alarmOn = false;
             talking = false;
             storyTalking = false;
+            Debug.Log(talkData == null);
             SetTheProgress(storyNum);
             gameManager.isTalk = false;
             talkIndex = 0;
@@ -455,7 +458,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 //리시아가 파티에 추가됨
                 break;
             case "11"://드래곤의 봉인석 파괴
-                RuneStone.Instance.DistoryRune();
+                FindObjectOfType<RuneStone>().DistoryRune();
                 break;
             case "101"://스테이지 1 완료
                 gameManager.storyScriptable.isStage1Completed = true;
@@ -495,12 +498,72 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 else
                     return false;
             case 6000:
-                if(gameManager.storyScriptable.Stage1Started)
+                if(!gameManager.storyScriptable.Stage1Started&&gameManager.storyScriptable.isOnStage1)
                     return true;
                 else
                     return false;
             case 7000:
-                if(gameManager.storyScriptable.Stage1beforEncounter)
+                if(!gameManager.storyScriptable.Stage1beforEncounter&&gameManager.storyScriptable.Stage1Started)
+                    return true;
+                else
+                    return false;
+            case 8000:
+                if(!gameManager.storyScriptable.Stage1BossCompleted && gameManager.storyScriptable.Stage1Encountered)
+                    return true;
+                else
+                    return false;
+            case 9000:
+                if(!gameManager.storyScriptable.isStage1Completed&&gameManager.storyScriptable.Stage1BossCompleted)
+                    return true;
+                else
+                    return false;
+            case 10000:
+                if(!gameManager.storyScriptable.isOnStage2)
+                    return true;
+                else
+                    return false;
+            case 11000:
+                if(!gameManager.storyScriptable.Stage2Check1 && gameManager.storyScriptable.isOnStage2)
+                    return true;
+                else
+                    return false;
+            case 12000:
+                if(!gameManager.storyScriptable.Stage2Check2 && gameManager.storyScriptable.Stage2Check1)
+                    return true;
+                else
+                    return false;
+            case 13000:
+                if(!gameManager.storyScriptable.Stage2Check3 && gameManager.storyScriptable.Stage2Check2)
+                    return true;
+                else
+                    return false;
+            case 14000:
+                if(!gameManager.storyScriptable.Stage2Check4 && gameManager.storyScriptable.Stage2Check3)
+                    return true;
+                else
+                    return false;
+            case 15000:
+                if(!gameManager.storyScriptable.Stage2Check5 && gameManager.storyScriptable.Stage2Check4)
+                    return true;
+                else
+                    return false;
+            case 16000:
+                if(!gameManager.storyScriptable.Stage2Check6 && gameManager.storyScriptable.Stage2Check5)
+                    return true;
+                else
+                    return false;
+            case 17000://드래곤 처치후 대사
+                if(!gameManager.storyScriptable.Stage2Check7 && gameManager.storyScriptable.Stage2Check7Dragon)
+                    return true;
+                else
+                    return false;
+            case 18000:
+                if(!gameManager.storyScriptable.Stage2Check8 && gameManager.storyScriptable.Stage2Check7)
+                    return true;
+                else
+                    return false;
+            case 19000:
+                if(!gameManager.storyScriptable.isStage2Completed && gameManager.storyScriptable.Stage2Check8)
                     return true;
                 else
                     return false;
@@ -525,11 +588,50 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case 4000:
                 gameManager.storyScriptable.isTutorialCompleted = true;
                 break;
+            case 5000:
+                gameManager.storyScriptable.isOnStage1 = true;
+                break;
             case 6000:
                 gameManager.storyScriptable.Stage1Started = true;
                 break;
             case 7000:
                 gameManager.storyScriptable.Stage1beforEncounter = true;
+                break;
+            case 8000:
+                gameManager.storyScriptable.Stage1BossCompleted = true;
+                break;
+            case 9000:
+                gameManager.storyScriptable.isStage1Completed = true;
+                break;
+            case 10000:
+                gameManager.storyScriptable.isOnStage2 = true;
+                break;
+            case 11000:
+                gameManager.storyScriptable.Stage2Check1 = true;
+                break;
+            case 12000:
+                gameManager.storyScriptable.Stage2Check2 = true;
+                break;
+            case 13000:
+                gameManager.storyScriptable.Stage2Check3 = true;
+                break;
+            case 14000:
+                gameManager.storyScriptable.Stage2Check4 = true;
+                break;
+            case 15000:
+                gameManager.storyScriptable.Stage2Check5 = true;
+                break;
+            case 16000:
+                gameManager.storyScriptable.Stage2Check6 = true;
+                break;
+            case 17000:
+                gameManager.storyScriptable.Stage2Check7 = true;
+                break;
+            case 18000:
+                gameManager.storyScriptable.Stage2Check8 = true;
+                break;
+            case 19000:
+                gameManager.storyScriptable.isStage2Completed = true;
                 break;
             default:
                 break;

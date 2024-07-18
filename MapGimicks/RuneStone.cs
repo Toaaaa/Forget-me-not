@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class RuneStone : Singleton<RuneStone> //스테이지 2에서 드래곤 봉인을 담당하는 runestone.
+public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 runestone.
 {
     [SerializeField]
     Light2D light2D;
@@ -61,28 +61,31 @@ public class RuneStone : Singleton<RuneStone> //스테이지 2에서 드래곤 봉인을 담�
 
         while (true)
         {
-            if(light2D.gameObject.activeSelf == false)
+            if(light2D != null)
             {
-                break;
-            }//게임오브젝트가 비활성화 되면 루프를 빠져나옴.
-            while (elapsedTime < duration)
-            {
-                float t = elapsedTime / duration;
-                if (increasing)
+                if (light2D.gameObject.activeSelf == false)
                 {
-                    light2D.intensity = Mathf.Lerp(minIntensity, maxIntensity, t);
-                }
-                else
+                    break;
+                }//게임오브젝트가 비활성화 되면 루프를 빠져나옴.
+                while (elapsedTime < duration)
                 {
-                    light2D.intensity = Mathf.Lerp(maxIntensity, minIntensity, t);
-                }
+                    float t = elapsedTime / duration;
+                    if (increasing)
+                    {
+                        light2D.intensity = Mathf.Lerp(minIntensity, maxIntensity, t);
+                    }
+                    else
+                    {
+                        light2D.intensity = Mathf.Lerp(maxIntensity, minIntensity, t);
+                    }
 
-                elapsedTime += Time.deltaTime;
-                await UniTask.Yield(PlayerLoopTiming.Update);
-            }
-            // 역전환
-            elapsedTime = 0f;
-            increasing = !increasing;
+                    elapsedTime += Time.deltaTime;
+                    await UniTask.Yield(PlayerLoopTiming.Update);
+                }
+                // 역전환
+                elapsedTime = 0f;
+                increasing = !increasing;
+            }           
         }
     }
 }
