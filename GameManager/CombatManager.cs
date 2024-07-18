@@ -70,6 +70,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 
+        Player.Instance.wasInCombat = true;
         playerList = playableManager.joinedPlayer;
         //alivePlayerList = playableManager.joinedPlayer;
         /*for(int i = 0; i < alivePlayerList.Count; i++)

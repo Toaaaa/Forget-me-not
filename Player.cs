@@ -25,6 +25,8 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
     private float verti_delta;
     public Vector2 dirVec;//direction of where player is looking at
     public Vector3 combatPosition;
+    public bool wasInCombat;//전투에 참여했었는지 확인하는 변수.//해당 변수의 경우 게임을 새로 킬때는 저장되면 안됨
+    public Vector3 placeBeforeEnteringCombat;//전투입장전 위치 저장용 변수.//해당 변수의 경우 게임을 새로 킬때는 저장되면 안됨
     Rigidbody2D rigid;
     GameObject scanedObject;
     public GameObject CAT;//고양이 오브젝트.
@@ -445,7 +447,15 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 //이펙트와 함께 스프라이트 변경.
                 break;
             case "9"://mapdata 에서 데이터 가져와서 전투 시작 (스테이지 1에서의 보스전투)
+                Player.Instance.placeBeforeEnteringCombat = Player.Instance.transform.position;
                 gameManager.combatManager.OnCombatStart();
+                break;
+            case "10":
+                //리시아가 페이드 인으로 등장.
+                //리시아가 파티에 추가됨
+                break;
+            case "11"://드래곤의 봉인석 파괴
+                RuneStone.Instance.DistoryRune();
                 break;
             case "101"://스테이지 1 완료
                 gameManager.storyScriptable.isStage1Completed = true;

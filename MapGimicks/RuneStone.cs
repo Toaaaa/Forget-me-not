@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 runestone.
+public class RuneStone : Singleton<RuneStone> //스테이지 2에서 드래곤 봉인을 담당하는 runestone.
 {
     [SerializeField]
     Light2D light2D;
@@ -25,7 +25,7 @@ public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 r
         {
             light2D = GetComponentInChildren<Light2D>();
         }
-        if (storyScriptable.Stage2Check7)//드래곤 봉인이 해제되면 빛이 꺼지고 게임오브젝트가 비활성화 됨.
+        if (storyScriptable.Stage2Check7Dragon)//드래곤 봉인이 해제되면 빛이 꺼지고 게임오브젝트가 비활성화 됨.
         {
             this.gameObject.SetActive(false);
         }
@@ -42,7 +42,6 @@ public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 r
     public async void DistoryRune()//봉인을 해제할때 재생되는 효과. +스토리 체크포인트 적용 + 게임오브젝트 비활성화 (터지는 효과는 개별 오브젝트로 외부에 존재)
     {
         explosionFX.SetActive(true);
-        storyScriptable.Stage2Check7 = true;
         await RuneDisable();
     }
 
@@ -50,7 +49,9 @@ public class RuneStone : MonoBehaviour //스테이지 2에서 드래곤 봉인을 담당하는 r
     {
         await UniTask.Delay(1000);
         this.gameObject.SetActive(false);
-        //2.5초뒤 전투입장 하는 스크립트 실행.
+        await UniTask.Delay(2500);//2.5초뒤 해당 맵에서 전투 시작
+        Player.Instance.placeBeforeEnteringCombat = Player.Instance.transform.position;//전투전 플레이어의 위치를 저장.
+        CombatManager.Instance.OnCombatStart();
     }
 
     private async UniTask AnimateLightIntensity() //빛의 세기를 3.5 에서 5사이로 깜빡이는 함수.

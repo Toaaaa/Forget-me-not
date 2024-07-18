@@ -13,6 +13,13 @@ public class TransferPoint : MonoBehaviour
 
     private void Start()
     {
+        if (Player.Instance.wasInCombat)//전투에서 돌아온 상태라면
+        {
+            Player.Instance.wasInCombat = false;
+            Player.Instance.transform.position = Player.Instance.placeBeforeEnteringCombat;
+            return;
+        }
+
         if (linkedMapName == Player.Instance.currentMapName) //이동전 받은 맵 이름이 transferMapName과 같다면
         {
             //빌딩 번호가 0이 아닌 경우 아래의 스크립트 사용 (맵 내부의 건물간의 이동시)
