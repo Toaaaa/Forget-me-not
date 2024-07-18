@@ -23,6 +23,10 @@ public class TransferPoint : MonoBehaviour
                     Player.Instance.transform.position = this.transform.position; //해당 포탈의 위치에 플레이어 이동시켜주기
                     return;
                 }    
+                else
+                {
+                    throw new System.Exception("플레이어의 isDown과 포탈의 isDown이 다릅니다.");
+                }
             }
             else //플레이어의 isdown이 false 일 경우
             {
@@ -30,6 +34,10 @@ public class TransferPoint : MonoBehaviour
                 {
                     Player.Instance.transform.position = this.transform.position; //해당 포탈의 위치에 플레이어 이동시켜주기
                     return;
+                }
+                else
+                {
+                    throw new System.Exception("플레이어의 isDown과 포탈의 isDown이 다릅니다.");
                 }
             }
             

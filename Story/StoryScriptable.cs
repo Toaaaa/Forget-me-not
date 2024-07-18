@@ -48,6 +48,7 @@ public class StoryScriptable : ScriptableObject
     public bool stage1_box1;//box1
     public bool stage1_box2;//box2
     public bool stage1_box3;//box3
+    public bool hidden_box;//hiddenBox
     public bool stage1_bossbox1;//box4
     public bool stage1_bossbox2;//box5
     public bool stage1_Sword;//sword
@@ -95,6 +96,7 @@ public class StoryScriptable : ScriptableObject
         stage1_box1 = false;
         stage1_box2 = false;
         stage1_box3 = false;
+        hidden_box = false;
         stage1_bossbox1 = false;
         stage1_bossbox2 = false;
         stage1_Sword = false;

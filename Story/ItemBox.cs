@@ -100,6 +100,18 @@ public class ItemBox : MonoBehaviour
                     isOpened = false;
                 }
                 break;
+            case 8:
+                if(storyScriptable.hidden_box) //Blood Elixir 가 들어있음.
+                {
+                    openedBoxTilemap.gameObject.SetActive(true);
+                    gameObject.SetActive(false);
+                    isOpened = true;
+                }
+                else
+                {
+                    isOpened = false;
+                }
+                break;
             default:
                 Debug.Log("Box ID not found");
                 break;
@@ -129,6 +141,12 @@ public class ItemBox : MonoBehaviour
                 break;
             case 6:
                 storyScriptable.stage1_Sword = true;
+                break;
+            case 7:
+                storyScriptable.stage2_CaveBox = true;
+                break;
+            case 8:
+                storyScriptable.hidden_box = true;
                 break;
             default:
                 Debug.Log("Box ID not found");
