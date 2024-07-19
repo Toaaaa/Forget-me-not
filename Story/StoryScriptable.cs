@@ -56,6 +56,7 @@ public class StoryScriptable : ScriptableObject
     public bool stage1_roomDoor;//roomDoor
 
     public bool stage2_CaveBox;//caveBox
+    public bool stage2_windearring;//windEarring
 
     public void restAll()
     {

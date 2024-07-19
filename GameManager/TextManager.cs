@@ -230,7 +230,7 @@ public class TextManager : MonoBehaviour
         });
 
         /////스토리 스크립트/////스테이지 1
-        storyTalkData.Add(10000, new string[]//스테이지 2 입장시 출력 + isOnStage2
+        storyTalkData.Add(10000, new string[]//스테이지 2 입장시(입구의 타일을 밟으면) 출력 + isOnStage2
         {
             "으앗! 하수구 밖에 이런곳이 있었나??:10:견습 기사:0",
             "저희의 다음 목적지 까지 바로 이동하는 마법을 사용하였어요.:12:마법사:0",
