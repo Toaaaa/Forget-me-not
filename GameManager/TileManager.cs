@@ -109,6 +109,17 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                     GameManager.Instance.combatManager.OnCombatStart();
                 }
                 break;
+            case 23000://바람정령 나무 밑에 설치(꽃을 심는 과정)
+                if (!GameManager.Instance.storyScriptable.Stage2Extra3&& GameManager.Instance.storyScriptable.Stage2Extra2)
+                {
+                    GameManager.Instance.storyScriptable.Stage2Extra3 = true;
+                    GameManager.Instance.Player.alarmOn = true;
+                }
+                if (GameManager.Instance.Player.alarmOn)
+                {
+                    GameManager.Instance.Player.ShowAlarm(storynum, 0);
+                }
+                break;
             default:
                 break;
          }           

@@ -567,6 +567,28 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     return true;
                 else
                     return false;
+            case 20000:
+                if(!gameManager.storyScriptable.Stage2Extra0&& !gameManager.storyScriptable.isStage2Completed&& gameManager.storyScriptable.Stage2Check4)
+                    return true;
+                else
+                    return false;
+            case 21000:
+                if(!gameManager.storyScriptable.Stage2Extra1&& !gameManager.storyScriptable.isStage2Completed&& gameManager.storyScriptable.Stage2Extra0)
+                    return true;
+                else
+                    return false;
+            case 22000:
+                if(!gameManager.storyScriptable.Stage2Extra2&& !gameManager.storyScriptable.isStage2Completed&& gameManager.storyScriptable.Stage2Extra1)
+                    return true;
+                else
+                    return false;
+            //case 23000의 경우 tilemap을 밟으면 자동 재생 이며 tilemanager에서 진행도 체킹 + 진행도 저장을 진행한다
+
+            case 24000:
+                if(!gameManager.storyScriptable.Stage2Extra4&& !gameManager.storyScriptable.isStage2Completed&& gameManager.storyScriptable.Stage2Extra3)
+                    return true;
+                else
+                    return false;
             default:
                 Debug.Log("Wrong StoryNum");
                 return false;
@@ -632,6 +654,18 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case 19000:
                 gameManager.storyScriptable.isStage2Completed = true;
+                break;
+            case 20000:
+                gameManager.storyScriptable.Stage2Extra0 = true;
+                break;
+            case 21000:
+                gameManager.storyScriptable.Stage2Extra1 = true;
+                break;
+            case 22000:
+                gameManager.storyScriptable.Stage2Extra2 = true;
+                break;
+            case 24000:
+                gameManager.storyScriptable.Stage2Extra4 = true;
                 break;
             default:
                 break;
