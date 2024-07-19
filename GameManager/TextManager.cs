@@ -27,6 +27,7 @@ public class TextManager : MonoBehaviour
     void GenerateData()//이곳에 대화 데이터들 입력
     {
         talkData.Add(1, new string[] { "오랫동안 방치된 해골이 있다. " });
+
         talkData.Add(1000, new string[] { "안녕123123123:0", "이곳은 처음이지?:1" });//extraNPC는 초상화가 없지만, 임시초상화 사용중.
         talkData.Add(2000, new string[] 
         {
@@ -57,7 +58,15 @@ public class TextManager : MonoBehaviour
             "이곳은 하지만 용사 파티는 전사가 없다고 하는데..?:0",
             "나는 누구에게 이 검을 주려고 했던 거지...?:1"
         });//1스테이지 책 4번 (용사의 검)
-        
+        talkData.Add(6000, new string[]//isnpc =false >>오직 텍스트 박스만 출력
+        {
+            "평생을 한사람만 사랑해온 엘리엇. 여기에 묻히다.:0",
+        });//2스테이지 절벽 무덤 1
+        talkData.Add(7000, new string[]//isnpc =false
+        {
+            "바람꽃 같은 그녀 여기서 쉬어간다.:0",
+            "-안나- :0",
+        });//2스테이지 절벽 무덤 2
 
         for (int i = 0; i < portraitArr.Length; i++)
         {
@@ -65,6 +74,9 @@ public class TextManager : MonoBehaviour
             portraitData.Add(2000 + i, portraitArr[i]);
             portraitData.Add(3000 + i, portraitArr[i]);
             portraitData.Add(4000 + i, portraitArr[i]);
+            portraitData.Add(5000 + i, portraitArr[i]);
+            portraitData.Add(6000 + i, portraitArr[i]);
+            portraitData.Add(7000 + i, portraitArr[i]);
         }
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
