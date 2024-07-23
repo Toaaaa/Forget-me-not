@@ -60,13 +60,17 @@ public class TextManager : MonoBehaviour
         });//1스테이지 책 4번 (용사의 검)
         talkData.Add(6000, new string[]//isnpc =false >>오직 텍스트 박스만 출력
         {
-            "평생을 한사람만 사랑해온 엘리엇. 여기에 묻히다.:0",
+            "평생을 한사람만 바라본 엘리엇. 여기에 묻히다.:0",
         });//2스테이지 절벽 무덤 1
         talkData.Add(7000, new string[]//isnpc =false
         {
             "바람꽃 같은 그녀 여기서 쉬어간다.:0",
             "-안나- :0",
         });//2스테이지 절벽 무덤 2
+        talkData.Add(7000, new string[]//isnpc =false
+        {
+            "파란빛이 나오는것 같은 푸른 꽃이다. :0",
+        });//바람나무 앞 바람꽃.
 
         for (int i = 0; i < portraitArr.Length; i++)
         {
