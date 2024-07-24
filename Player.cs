@@ -361,8 +361,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             talk.SetMsg(talkData.Split(':')[0]);
             imageBox.SetActive(true);
             nameBox.SetActive(true);
-            nameText.GetComponent<TextMeshProUGUI>().text = scanedObject.name;
+            //nameText.GetComponent<TextMeshProUGUI>().text = scanedObject.name;
             portrait.sprite = textManager.GetPortrait(ID, int.Parse(talkData.Split(':')[1]));
+            nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
             portrait.color = new Color32(255, 255, 255, 255);
         }
         else
