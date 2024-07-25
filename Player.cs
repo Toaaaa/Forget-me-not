@@ -70,6 +70,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
 
     void Update()
     {
+        PlayerZSorting();//플레이어의 z값을 y값에 따라 조정하여 오브젝트와의 정렬순서를 조정하는 함수.
         isMoving = h != 0 || v != 0; //if h or v is not 0, isMoving is true.
         if (!isAutoMove)
         {
@@ -365,7 +366,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             portrait.sprite = textManager.GetPortrait(ID, int.Parse(talkData.Split(':')[1]));
             nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
             portrait.color = new Color32(255, 255, 255, 255);
-        }
+        }   
         else
         {
             talk.SetMsg(talkData);
@@ -705,6 +706,12 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             v = gameManager.cantAction ? 0 : Input.GetAxisRaw("Vertical");
         }
     }
+    private void PlayerZSorting()
+    {
+        var position = this.gameObject.transform.position;
+        position.z = 3 + position.y * 0.01f; //(최소값 3)
+        this.gameObject.transform.position = position;
+    }//플레이어의 z값을 y값에 따라 조정하여 오브젝트와의 정렬순서를 조정하는 함수.
 
     public void MovePlayer(int i) //i == 0 : up, i == 1 : down, i == 2 : left, i == 3 : right
     {
