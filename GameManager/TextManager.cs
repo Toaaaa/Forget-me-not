@@ -29,6 +29,7 @@ public class TextManager : MonoBehaviour
         talkData.Add(1, new string[] { "오랫동안 방치된 해골이 있다. " });
 
         talkData.Add(1000, new string[] { "안녕123123123:0:임시NPC", "이곳은 처음이지?:1:임시NPC" });//extraNPC는 초상화가 없지만, 임시초상화 사용중.
+        Debug.Log("대화1000 데이터 추가 완료");
         talkData.Add(2000, new string[] 
         {
             "연금술의 힘을 장비에 접목하는 것은 매우 위험한 시도다.:0:낡은 기록",
@@ -67,42 +68,53 @@ public class TextManager : MonoBehaviour
             "바람꽃 같은 그녀 여기서 쉬어간다.:0",
             "-안나- :0",
         });//2스테이지 절벽 무덤 2
-        talkData.Add(7000, new string[]//isnpc =false
+        talkData.Add(8000, new string[]//isnpc =false
         {
             "파란빛이 나오는것 같은 푸른 꽃이다. :0",
         });//바람나무 앞 바람꽃.
-        talkData.Add(8000, new string[]//NPC(관리인)
+        talkData.Add(9000, new string[]//NPC(관리인)
         {
             "이놈의 눈은 치워도 치워도 없어지지 않아... :0:오두막 관리인",
             "벌써 10년째 마을로 가는 길목의 눈을 치우고 있는 일을 하는데:0:오두막 관리인",
             "바람정령님이 없어진 이후로는 눈이 더 많이 내리는것 같아. :0:오두막 관리인",
         });//2-5에 있는 오두막 관리인
-        talkData.Add(9000, new string[]//isnpc=false
+        talkData.Add(10000, new string[]//isnpc=false
         {
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
         });//2스테이지 도서관의 책 1
-        talkData.Add(10000, new string[]//isnpc=false
+        talkData.Add(11000, new string[]//isnpc=false
         {
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
         });//2스테이지 도서관의 책 2
-        talkData.Add(11000, new string[]//isnpc=false
+        talkData.Add(12000, new string[]//isnpc=false
         {
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
         });//2스테이지 도서관의 책 3
-        talkData.Add(12000, new string[]//isnpc=false
+        talkData.Add(13000, new string[]//isnpc=false
         {
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
             "임시 텍스트 :0",
         });//2스테이지 도서관의 책 4
+        talkData.Add(14000, new string[]//isnpc=false
+        {
+            "임시 텍스트 :0",
+            "임시 텍스트 :0",
+            "임시 텍스트 :0",
+            "임시 텍스트 :0",
+        });//2스테이지 도서관의 책 5
+        talkData.Add(15000, new string[]//isnpc=false
+        {
+            "알수없는 언어로 적혀있다.:0",
+        });//2스테이지 도서관의 책 6
 
 
 
@@ -311,7 +323,7 @@ public class TextManager : MonoBehaviour
             "(견습 기사가 파티에서 이탈 하였습니다) :8:견습 기사:0",
             "그럼 저희는 마을의 장로를 찾으러 가볼까요:12:마법사:0",
         });
-        storyTalkData.Add(12000, new string[]//(checkpoint2만 되어있을때) 장로에게 말을 걸면 출력 + checkpoint2
+        storyTalkData.Add(12000, new string[]//(checkpoint1만 되어있을때) 장로에게 말을 걸면 출력 + checkpoint2
         {
             "안녕하세요, 혹시 이 마을의 장로님 되시는분 맞으신가요?:0:나:0",
             "어서 오게 , 여행자들이여. 험한 날씨를 뚫고 오느라 고생많았소.:21:장로:0",
@@ -496,7 +508,11 @@ public class TextManager : MonoBehaviour
             "나는 이제 늙어서 보이지는 않지만 느껴진다네... 따듯한 바람에서 정령님이 축복이 느껴져..:22:노인:0",
             "고맙다네 젊은이들...:22:노인:1",//맵전체의 안개가 눈에띄게 약해짐.(마을에는 원래 안개 X)
         });
-
+        storyTalkData.Add(25000, new string[]//만약 장로를 만나기 전에 바로 식당으로 가서 기사에게 말을 건 경우.
+        {
+            "이야...! 너무 맛있잖아?!:10:견습 기사:0",//기쁜 기사
+            "(기사는 행복한 표정으로 밥을 먹고있다.):10:견습 기사:0",
+        });
 
 
 
@@ -527,6 +543,7 @@ public class TextManager : MonoBehaviour
             storyPortraitData.Add(22000 + i, storyArr[i]);
             storyPortraitData.Add(23000 + i, storyArr[i]);
             storyPortraitData.Add(24000 + i, storyArr[i]);
+            storyPortraitData.Add(25000 + i, storyArr[i]);
         }//0번 스테이지 초상화.
     }
 
