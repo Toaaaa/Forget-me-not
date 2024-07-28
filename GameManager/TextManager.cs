@@ -513,8 +513,14 @@ public class TextManager : MonoBehaviour
             "이야...! 너무 맛있잖아?!:10:견습 기사:0",//기쁜 기사
             "(기사는 행복한 표정으로 밥을 먹고있다.):10:견습 기사:0",
         });
-
-
+        storyTalkData.Add(26000, new string[]//리시아와 합류하기 전 노인과 대화할시 짧은 스크립트
+        {
+            "쿨럭 쿨럭....:22:노인:0",
+        });
+        storyTalkData.Add(27000, new string[]//바람정령을 되찾은뒤 노인과 대화할시
+        {
+            "젊은이들 정말 고맙다네. 바람의 정령님도 기뻐하실거야.:22:노인:0",
+        });
 
 
         for (int i = 0; i < 22; i++)
@@ -544,6 +550,8 @@ public class TextManager : MonoBehaviour
             storyPortraitData.Add(23000 + i, storyArr[i]);
             storyPortraitData.Add(24000 + i, storyArr[i]);
             storyPortraitData.Add(25000 + i, storyArr[i]);
+            storyPortraitData.Add(26000 + i, storyArr[i]);
+            storyPortraitData.Add(27000 + i, storyArr[i]);
         }//0번 스테이지 초상화.
     }
 

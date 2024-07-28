@@ -158,7 +158,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     TalkAction(scanedObject);
                     break;
                 case "Story":
-                    int i=scanedObject.GetComponent<ObjectId>().tempID;
+                    int i=scanedObject.GetComponent<ObjectId>().ID;
                     StoryAction(i);
                     //스토리 진행 오브젝트로. 해당 오브젝트가 들고있는 변수 참고 or 함수 실행을 통해
                     //자동 재생 스토리 스크립트 재생.
@@ -591,6 +591,21 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     return true;
                 else
                     return false;
+            case 25000:
+                if(!gameManager.storyScriptable.Stage2Check2&&gameManager.storyScriptable.Stage2Check1)
+                    return true;
+                else
+                    return false;
+            case 26000:
+                if(!gameManager.storyScriptable.Stage2Check4)
+                    return true;
+                else
+                    return false;
+            case 27000:
+                if(gameManager.storyScriptable.Stage2Extra4)
+                    return true;
+                else
+                    return false;
             default:
                 Debug.Log("Wrong StoryNum");
                 return false;
@@ -668,6 +683,15 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case 24000:
                 gameManager.storyScriptable.Stage2Extra4 = true;
+                break;
+            case 25000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 26000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 27000:
+                //반복 대사. 추가 조건 X
                 break;
             default:
                 break;
