@@ -115,6 +115,43 @@ public class TextManager : MonoBehaviour
         {
             "알수없는 언어로 적혀있다.:0",
         });//2스테이지 도서관의 책 6
+        talkData.Add(16000, new string[]//바람정령 나무 //isnpc=false
+        {
+            "바람정령 나무다.:0"
+        });
+        talkData.Add(17000, new string[]//pub에서 술을 마시는 npc들//isnpc=false
+        {
+            "(즐겁게 술을 마시고 있는 모습이다):0"
+        });
+        talkData.Add(18000, new string[]//pub에서 술을 마시는 npc들//isnpc=false
+        {
+            "(조용히 술을 마시고 있는 모습이다):0"
+        });
+        talkData.Add(19000, new string[]//이정표 2-2//isnpc=false
+        {
+            "마을 >>:0"
+        });
+        talkData.Add(20000, new string[]//이정표 2-3//isnpc=false
+        {
+            "드래곤 봉인석 >>:0"
+        });
+        talkData.Add(21000, new string[]//마을 이정표//isnpc=false
+        {
+            "마을 입구:0"
+        });
+        talkData.Add(22000, new string[]//마을 입구 게시판//isnpc=false
+        {
+            "종이가 붙어있던 자국만 남은 게시판이다.:0"
+        });
+        talkData.Add(23000, new string[]//마을 내부 게시판//isnpc=false
+        {
+            "알타르 주점 근무자 모집중....:0",
+            "블러드 루트 농축액을 찾.....:0",
+            "(나머지 부분은 찢겨져 있다):0",
+            "도서관 관리인을 구하고 있습니다....:0"
+        });
+
+
 
 
 
@@ -132,6 +169,12 @@ public class TextManager : MonoBehaviour
             portraitData.Add(10000 + i, portraitArr[i]);
             portraitData.Add(11000 + i, portraitArr[i]);
             portraitData.Add(12000 + i, portraitArr[i]);
+            portraitData.Add(13000 + i, portraitArr[i]);
+            portraitData.Add(14000 + i, portraitArr[i]);
+            portraitData.Add(15000 + i, portraitArr[i]);
+            portraitData.Add(16000 + i, portraitArr[i]);
+            portraitData.Add(17000 + i, portraitArr[i]);
+            portraitData.Add(18000 + i, portraitArr[i]);
         }
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
@@ -140,7 +183,7 @@ public class TextManager : MonoBehaviour
     void GenerateStoryData()
     {
         //이곳에 스토리 데이터들 입력 0~3:플레이어,4~7:고양이, 8~11:견습기사, 12~15:마법사, 16~19:힐러, 20:엘더고블린
-        //21:장로, 22:노인 (설원 맵에서의 서브퀘스트 노인), 
+        //21:장로, 22:노인 (설원 맵에서의 서브퀘스트 노인), 23:도서관사서, 24:도서관의 일반인. 25:pub의 일반인
 
         /////알람 스크립트/////
         storyTalkData.Add(0, new string[]
@@ -512,15 +555,31 @@ public class TextManager : MonoBehaviour
         {
             "이야...! 너무 맛있잖아?!:10:견습 기사:0",//기쁜 기사
             "(기사는 행복한 표정으로 밥을 먹고있다.):10:견습 기사:0",
-        });
+        });//(조건반복)
         storyTalkData.Add(26000, new string[]//리시아와 합류하기 전 노인과 대화할시 짧은 스크립트
         {
             "쿨럭 쿨럭....:22:노인:0",
-        });
+        });//(조건반복)
         storyTalkData.Add(27000, new string[]//바람정령을 되찾은뒤 노인과 대화할시
         {
             "젊은이들 정말 고맙다네. 바람의 정령님도 기뻐하실거야.:22:노인:0",
-        });
+        });//(조건반복)
+        storyTalkData.Add(28000, new string[]//도서관 사서와의 대화
+        {
+             "마왕시절 이전부터 천년가까이 운영하고 있는 도서관이에요.:23:도서관 사서:0",
+             "정보의 양이 그만큼 많다고는 할 수 없지만, 다른곳에서는 쉽게 구할수 없는 정보가 많습니다.:23:도서관 사서:0",
+        });//(반복)
+        storyTalkData.Add(29000, new string[]//도서관의 일반인과의 대화
+        {
+             "대륙 남부에는 거대한 사막 지역이 있다.. :24:마을 주민:0",
+             "가벼운 마음으로 여행을 와서 사막 미궁에서 영영 빠져나오지 못한 사람들이 많다.. :24:마을 주민:0",
+             "(혼잣말을 중얼거리고 있다):24:마을 주민:0",
+        });//(반복)
+        storyTalkData.Add(30000, new string[]//pub의 3명중 한명과의 대화
+        {
+             "아! 이곳은 처음이신 분인가봐요?:22:행복한 청년:0",
+             "이곳의 술이랑 음식은 최고라고 자부해요. 많이 즐기다 가주세요!!:22:행복한 청년:0",
+        });//(반복)
 
 
         for (int i = 0; i < 22; i++)
@@ -552,6 +611,9 @@ public class TextManager : MonoBehaviour
             storyPortraitData.Add(25000 + i, storyArr[i]);
             storyPortraitData.Add(26000 + i, storyArr[i]);
             storyPortraitData.Add(27000 + i, storyArr[i]);
+            storyPortraitData.Add(28000 + i, storyArr[i]);
+            storyPortraitData.Add(29000 + i, storyArr[i]);
+            storyPortraitData.Add(30000 + i, storyArr[i]);
         }//0번 스테이지 초상화.
     }
 
