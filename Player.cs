@@ -494,6 +494,9 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     gameManager.playableManager.inParty.inPartySlots[2].isJoin = false;//전사 빼주기
                 }
                 break;
+            case "14"://스테이지 1에서 동상을 칼로 부술때
+                //추후 입력
+                break;
             case "101"://스테이지 1 완료
                 gameManager.storyScriptable.isStage1Completed = true;
                 magician.isPerson = true;
