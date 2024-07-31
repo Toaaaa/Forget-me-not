@@ -73,7 +73,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 //오른쪽으로 가려할때(istage1completed가 아닐때는), (이벤트 스크립트textbox를 띄우며 "여기로는 갈 필요가 없을것 같아" 라며 )
                 if (!GameManager.Instance.storyScriptable.isStage1Completed&&GameManager.Instance.Player.h>0)
                 {
-                    GameManager.Instance.Player.h = 0;
+                    GameManager.Instance.Player.h = 0;//수평인풋 0
                     GameManager.Instance.Player.alarmOn = true;
                 }
                 if (GameManager.Instance.Player.alarmOn)
@@ -92,12 +92,23 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
             case 4:
                 if(!GameManager.Instance.storyScriptable.isTutorial&& GameManager.Instance.Player.v > 0)
                 {
-                    GameManager.Instance.Player.v = 0;
+                    GameManager.Instance.Player.v = 0;//수직인풋 0
                     GameManager.Instance.Player.alarmOn = true;
                 }
                 if(GameManager.Instance.Player.alarmOn)
                 {
                     GameManager.Instance.Player.ShowAlarm(storynum,1);
+                }
+                break;
+            case 5://스테이지 2에서 전사가 합류 전일때 마을을 벗어나려 할 경우.
+                if (!GameManager.Instance.playableManager.inParty.inPartySlots[2].inSlot && GameManager.Instance.Player.v < 0)
+                {
+                    GameManager.Instance.Player.v = 0;//수직인풋 0
+                    GameManager.Instance.Player.alarmOn = true;
+                }
+                if (GameManager.Instance.Player.alarmOn)
+                {
+                    GameManager.Instance.Player.ShowAlarm(storynum, 0);//위로 강제이동(마을로)
                 }
                 break;
 

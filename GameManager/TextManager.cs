@@ -194,6 +194,10 @@ public class TextManager : MonoBehaviour
         {
             "여기로는 갈 필요가 없을것 같아"
         });
+        storyTalkData.Add(5, new string[]//기사 합류 전 스테이지 2에서 마을을 벗어나려 할때.
+        {
+            "아직 기사가 합류하지 않았어"
+        });
         storyTalkData.Add(100, new string[]
         {
             " 획득."
