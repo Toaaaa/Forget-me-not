@@ -43,6 +43,13 @@ public class AutoStoryWhenStart : MonoBehaviour
                         //전투 리워드 창에서 stage1bosscompleted =true로 해주고 있음.
                     }
                     break;
+                case 10000://스테이지 2 입장시
+                    if (!gameManager.storyScriptable.isOnStage2)
+                    {
+                        StartCoroutine(AutoStoryTime(10000, 2.0f));
+                    }
+                    break;
+
             }
         }
     }

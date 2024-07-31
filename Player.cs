@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobject는 필요없네.
 {
@@ -333,7 +334,13 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         textPanel.SetActive(talking);
 
     }
-
+    /*public void Talk_Tile(int storynum)//인터렉트를 통해 talkaction을 실행하는것이 아니라 타일을 밟아서 실행되는 경우 사용//테스트 해본적 없어서 추후 확인 필요.
+    {
+        Talk(storynum, false);//false == npc가 아님으로 text메시지만 출력.
+        if (!textPanel.activeSelf)
+            gameManager.isTalk = true;
+        textPanel.SetActive(talking);
+    }*///다른방법 사용하기로 함.
     private void Talk(int ID, bool isNPC)
     {
         string talkData = "";
@@ -419,8 +426,16 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
         }
         //
             talk.SetMsg(talkData.Split(':')[0]);
+        if (storyNum == 23000)//일부 스토리의 경우 imageBox와 nameBox를 사용하지 않음.
+        {
+            imageBox.SetActive(false);
+            nameBox.SetActive(false);
+        }
+        else
+        {
             imageBox.SetActive(true);
             nameBox.SetActive(true);
+        }
             portrait.sprite = textManager.GetStoryPortrait(storyNum, int.Parse(talkData.Split(':')[1]));
             nameText.GetComponent<TextMeshProUGUI>().text = talkData.Split(':')[2];
 
@@ -457,6 +472,7 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 break;
             case "10":
                 //리시아가 페이드 인으로 등장.
+                FindObjectOfType<Licia>().TurnOnAlpha();
                 //리시아가 파티에 추가됨
                 if (!gameManager.playableManager.inParty.inPartySlots[3].isJoin)//힐러가 아직 없을때
                 {
@@ -622,6 +638,26 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                     return true;
                 else
                     return false;
+            case 28000://도서관 사서 반복대화//기본조건
+                if(gameManager.storyScriptable.isOnStage2)
+                    return true;
+                else
+                    return false;
+            case 29000://도서관의 일반인 반복대화//기본조건
+                if(gameManager.storyScriptable.isOnStage2)
+                    return true;
+                else
+                    return false;
+            case 30000://pub의 일반인 반복대화//기본조건
+                if(gameManager.storyScriptable.isOnStage2)
+                    return true;
+                else
+                    return false;
+            case 31000://메인스토리가 전부 끝난뒤 장로와의 반복 대화
+                if(gameManager.storyScriptable.Stage2Check8)
+                    return true;
+                else
+                    return false;
             default:
                 Debug.Log("Wrong StoryNum");
                 return false;
@@ -707,6 +743,18 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
                 //반복 대사. 추가 조건 X
                 break;
             case 27000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 28000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 29000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 30000:
+                //반복 대사. 추가 조건 X
+                break;
+            case 31000:
                 //반복 대사. 추가 조건 X
                 break;
             default:

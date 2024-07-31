@@ -117,6 +117,10 @@ public class ItemBox : MonoBehaviour
                 {
                     gameObject.SetActive(false);
                 }
+                if (storyScriptable.Stage2Extra3)//심기전 귀걸이 비활성화
+                {
+                    gameObject.SetActive(false);
+                }
                 break;
             default:
                 Debug.Log("Box ID not found");

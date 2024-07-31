@@ -53,7 +53,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
         if (tile == null) //타일이 없을때는 false 리턴. (ismonsterzone이 없는 타일) 이라는 false가 됨.
             return;
         int storyNum = dataFromTiles[tile].storyNum;
-        if (!dataFromTiles[tile].isStoryTile) //스토리타일이 아닌 데이터 세팅(ssobj 변수 변경) 타일일 경우.
+        if (!dataFromTiles[tile].isStoryTile) //스토리타일이 아닌 데이터 세팅(ssobj 변수 변경) 타일일 경우.or 알림타일.
         {
             DataTile(storyNum);
         }
@@ -111,7 +111,18 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                     GameManager.Instance.Player.ShowAlarm(storynum, 0);//위로 강제이동(마을로)
                 }
                 break;
-
+            case 6://유저가 장로방에 들어가려고 할때 못들어가게 강제 이동
+                if (!GameManager.Instance.playableManager.inParty.inPartySlots[2].inSlot && GameManager.Instance.Player.h > 0)
+                {
+                    GameManager.Instance.Player.h = 0;//수평인풋 0
+                    GameManager.Instance.Player.alarmOn = true;
+                }
+                if (GameManager.Instance.Player.alarmOn)
+                {
+                    GameManager.Instance.Player.ShowAlarm(storynum, 2);//왼쪽으로 강제이동
+                }
+                break;
+            
             case 7100:
                 if (!GameManager.Instance.storyScriptable.Stage1Encountered)//스테이지 1보스 입장전 몬스터 조우
                 {
@@ -120,7 +131,7 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                     GameManager.Instance.combatManager.OnCombatStart();
                 }
                 break;
-            case 23000://바람정령 나무 밑에 설치(꽃을 심는 과정)
+            /*case 23000://바람정령 나무 밑에 설치(꽃을 심는 과정)
                 if (!GameManager.Instance.storyScriptable.Stage2Extra3&& GameManager.Instance.storyScriptable.Stage2Extra2)
                 {
                     GameManager.Instance.storyScriptable.Stage2Extra3 = true;
@@ -128,9 +139,9 @@ public class TileManager : MonoBehaviour //돈 디스트로이를 하지 않은 특정 이벤트
                 }
                 if (GameManager.Instance.Player.alarmOn)
                 {
-                    GameManager.Instance.Player.ShowAlarm(storynum, 0);
+                    GameManager.Instance.Player.Talk_Tile(storynum);
                 }
-                break;
+                break;*///그냥 다른 방법 사용//
             default:
                 break;
          }           
