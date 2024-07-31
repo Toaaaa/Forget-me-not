@@ -19,7 +19,6 @@ public class inPartySlot
     public PlayableC thisCharacter;
     public bool isJoin;
     public bool inSlot;
-    public bool isDead;
 
     public inPartySlot(PlayableC playable)
     {

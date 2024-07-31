@@ -458,9 +458,25 @@ public class Player :Singleton<Player> //추후 다른거 상속받게 바꾸자 movingobjec
             case "10":
                 //리시아가 페이드 인으로 등장.
                 //리시아가 파티에 추가됨
+                if (!gameManager.playableManager.inParty.inPartySlots[3].isJoin)//힐러가 아직 없을때
+                {
+                    gameManager.playableManager.inParty.inPartySlots[3].isJoin = true;//힐러 넣어주기
+                }
                 break;
             case "11"://드래곤의 봉인석 파괴
                 FindObjectOfType<RuneStone>().DistoryRune();
+                break;
+            case "12"://견습기사 파티 추가
+                if (!gameManager.playableManager.inParty.inPartySlots[2].isJoin)//전사가 아직 없을때
+                {
+                    gameManager.playableManager.inParty.inPartySlots[2].isJoin = true;//전사 넣어주기
+                }
+                break;
+            case "13"://견습기사 파티 이탈
+                if (gameManager.playableManager.inParty.inPartySlots[2].isJoin)
+                {
+                    gameManager.playableManager.inParty.inPartySlots[2].isJoin = false;//전사 빼주기
+                }
                 break;
             case "101"://스테이지 1 완료
                 gameManager.storyScriptable.isStage1Completed = true;
