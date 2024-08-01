@@ -292,6 +292,10 @@ public class CombatManager : Singleton<CombatManager>
             }
         }
         playerTurnTime += 3f;
+        if(GameManager.Instance.storyScriptable.isOnStage2 && !GameManager.Instance.storyScriptable.isOnStage3 && !GameManager.Instance.storyScriptable.Stage2Extra3)
+        {
+            playerTurnTime = playerTurnTime * 0.7f;
+        }//만약 바람정령 퀘스트를 마치지 못한상태로 스테이지 2에 있는 경우 speed가 30프로 감소.
         CombatTimerSet();
         for (int i = 0; i < monsterList.Count; i++)
         {
@@ -321,6 +325,10 @@ public class CombatManager : Singleton<CombatManager>
             }
         }
         playerTurnTime += 2.5f;
+        if (GameManager.Instance.storyScriptable.isOnStage2 && !GameManager.Instance.storyScriptable.isOnStage3 && !GameManager.Instance.storyScriptable.Stage2Extra3)
+        {
+            playerTurnTime = playerTurnTime * 0.7f;
+        }//만약 바람정령 퀘스트를 마치지 못한상태로 스테이지 2에 있는 경우 speed가 30프로 감소.
         CombatTimerSet();
         for (int i = 0; i < monsterAliveList.Count; i++)
         {
