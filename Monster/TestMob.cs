@@ -44,7 +44,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
             CombatManager.Instance.DeadMobItemDrop.Add(mitem);
         }//드랍된 아이템이 있을경우(null이 아닐경우) list에 추가
     }
-    private Item GetItemFromList()
+    private Item GetItemFromList()//일정 확률에 따라, 해당 몬스터가 소지하고 있는 아이템을 드랍한다.
     {
         int randomValue = Random.Range(0, 100);
         int sum = 0;

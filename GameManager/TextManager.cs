@@ -61,16 +61,16 @@ public class TextManager : MonoBehaviour
         });//1스테이지 책 4번 (용사의 검)
         talkData.Add(6000, new string[]//isnpc =false >>오직 텍스트 박스만 출력
         {
-            "평생을 한사람만 바라본 엘리엇. 여기에 묻히다.:0",
+            "평생을 한사람만 바라본 엘리엇. 여기에 묻히다.",
         });//2스테이지 절벽 무덤 1
         talkData.Add(7000, new string[]//isnpc =false
         {
-            "바람꽃 같은 그녀 여기서 쉬어간다.:0",
+            "바람꽃 같은 그녀 여기서 쉬어간다.",
             "-안나- :0",
         });//2스테이지 절벽 무덤 2
         talkData.Add(8000, new string[]//isnpc =false
         {
-            "파란빛이 나오는것 같은 푸른 꽃이다. :0",
+            "파란빛이 나오는것 같은 푸른 꽃이다. ",
         });//바람나무 앞 바람꽃.
         talkData.Add(9000, new string[]//NPC(관리인)
         {
@@ -80,60 +80,59 @@ public class TextManager : MonoBehaviour
         });//2-5에 있는 오두막 관리인
         talkData.Add(10000, new string[]//isnpc=false
         {
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
         });//2스테이지 도서관의 책 1
         talkData.Add(11000, new string[]//isnpc=false
         {
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
         });//2스테이지 도서관의 책 2
         talkData.Add(12000, new string[]//isnpc=false
         {
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
         });//2스테이지 도서관의 책 3
         talkData.Add(13000, new string[]//isnpc=false
         {
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
         });//2스테이지 도서관의 책 4
         talkData.Add(14000, new string[]//isnpc=false
         {
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
-            "임시 텍스트 :0",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
+            "임시 텍스트 ",
         });//2스테이지 도서관의 책 5
         talkData.Add(15000, new string[]//isnpc=false
         {
-            "알수없는 언어로 적혀있다.:0",
+            "알수없는 언어로 적혀있다.",
         });//2스테이지 도서관의 책 6
         talkData.Add(16000, new string[]//바람정령 나무 //isnpc=false
         {
-            "바람정령 나무다.:0"
+            "바람정령 나무다."
         });
         talkData.Add(17000, new string[]//pub에서 술을 마시는 npc들//isnpc=false
         {
-            "(즐겁게 술을 마시고 있는 모습이다):0"
+            "(즐겁게 술을 마시고 있는 모습이다)"
         });
         talkData.Add(18000, new string[]//pub에서 술을 마시는 npc들//isnpc=false
         {
-            "(조용히 술을 마시고 있는 모습이다):0"
+            "(조용히 술을 마시고 있는 모습이다)"
         });
         talkData.Add(19000, new string[]//이정표 2-2//isnpc=false
         {
-            "마을 >>:0"
+            "마을 >>"
         });
         talkData.Add(20000, new string[]//이정표 2-3//isnpc=false
         {
-            "드래곤 봉인석 >>:0"
+            "드래곤 봉인석 >>"
         });
         talkData.Add(21000, new string[]//마을 이정표//isnpc=false
         {
@@ -141,14 +140,14 @@ public class TextManager : MonoBehaviour
         });
         talkData.Add(22000, new string[]//마을 입구 게시판//isnpc=false
         {
-            "종이가 붙어있던 자국만 남은 게시판이다.:0"
+            "종이가 붙어있던 자국만 남은 게시판이다."
         });
         talkData.Add(23000, new string[]//마을 내부 게시판//isnpc=false
         {
-            "알타르 주점 근무자 모집중....:0",
-            "블러드 루트 농축액을 찾.....:0",
-            "(나머지 부분은 찢겨져 있다):0",
-            "도서관 관리인을 구하고 있습니다....:0"
+            "알타르 주점 근무자 모집중....",
+            "블러드 루트 농축액을 찾.....",
+            "(나머지 부분은 찢겨져 있다)",
+            "도서관 관리인을 구하고 있습니다...."
         });
 
 

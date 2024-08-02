@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -76,6 +77,8 @@ public class Tank : PlayableC
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
+        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
@@ -109,6 +112,9 @@ public class Tank : PlayableC
     {
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
+
+        critatk = ElementDamage(skill3Type, mob, critatk);//속성 데미지 계산.
+        ElementStack(skill3Type, mob);//속성 스택 쌓기.
 
         mob.Hp -= CheckCrit(atk, this.crit);
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);

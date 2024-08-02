@@ -197,6 +197,10 @@ public class PlayableC : ScriptableObject
     {
 
     }
+    virtual public void LastHolyRayDmgCalc(GameObject g)//홀리레이의 마지막 타격(5번째)의 속성 스택부여
+    {
+
+    }
 
     virtual public float CheckCrit(float atkDMG,int critPercent)
     {
@@ -234,6 +238,71 @@ public class PlayableC : ScriptableObject
     {
         return 0;
     }
+    public void ElementStack(SkillType thisSkillType, TestMob monster)//공격시의 속성 스택
+    {
+        if (thisSkillType != SkillType.none)//무속성이 아닐경우 스택 쌓기, 무속성의 경우 그냥 스킵.
+        {
+            monster.stackedElement = thisSkillType;//몬스터에 쌓이는 속성 스택을 플레이어의 스킬 기반으로 세팅.
+            return;
+        }
+    }
+    public float ElementDamage(SkillType thisSkillType, TestMob monster, float critatk)//속성 스택 해당시 추가 데미지
+    {
+        Debug.Log(thisSkillType + "속성 데미지");
+        if (thisSkillType != SkillType.none)
+        {
+            Debug.Log("속성 데미지");
+            switch (thisSkillType)
+            {
+                case SkillType.Fire:
+                    if (monster.stackedElement == SkillType.Water)//물 속성 스택의 경우 반감
+                    {
+                        return critatk * 0.8f;
+                    }
+                    else if (monster.stackedElement == SkillType.Wood)//나무 속성 스택의 경우 추가데미지.
+                    {
+                        return critatk * 1.2f;
+                    }
+                    else//화염속성의 경우
+                    {
+                        return critatk;
+                    }
+                case SkillType.Water:
+                    if (monster.stackedElement == SkillType.Wood)//나무 속성 스택의 경우 반감
+                    {
+                        return critatk * 0.8f;
+                    }
+                    else if (monster.stackedElement == SkillType.Fire)//화염 속성 스택의 경우 추가데미지.
+                    {
+                        return critatk * 1.2f;
+                    }
+                    else//물속성의 경우
+                    {
+                        return critatk;
+                    }
+                case SkillType.Wood:
+                    if (monster.stackedElement == SkillType.Fire)//화염 속성 스택의 경우 반감
+                    {
+                        return critatk * 0.8f;
+                    }
+                    else if (monster.stackedElement == SkillType.Water)//물 속성 스택의 경우 추가데미지.
+                    {
+                        return critatk * 1.2f;
+                    }
+                    else//나무속성의 경우
+                    {
+                        return critatk;
+                    }
+                default:
+                    return critatk;
+            }
+        }
+        else//무속성 공격의 경우
+        {
+            Debug.Log("무속성 데미지");
+            return critatk;
+        }
+    }//elementdamage 를 호출하고 elementstack을 호출해야함.
 }
 
 

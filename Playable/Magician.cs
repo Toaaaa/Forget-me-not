@@ -28,8 +28,6 @@ public class Magician : PlayableC
         for(int i =0; i<CombatManager.Instance.monsterObject.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
         {
             float temp = CheckCrit(atk * 1.5f, this.crit);
-            Debug.Log(temp);
-            Debug.Log("공격 데미지는 :" + atk * 1.5f + "입니다.");
             CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= temp;
         }
     }

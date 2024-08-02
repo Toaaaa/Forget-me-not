@@ -41,6 +41,8 @@ public class Warrior : PlayableC
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
+        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
@@ -55,9 +57,11 @@ public class Warrior : PlayableC
     }
     override public void SkillDmgCalc1(GameObject g)//여기서 투사체의 피격시 데미지 계산방법.
     {
-        float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산.
-        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
-        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산. (적용될 데미지값)
+        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.(치명타시의 시각효과를 위한 bool값)
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();//monster == 피격 대상 몬스터.
+        critatk = ElementDamage(skill1Type, monster, critatk);//속성 데미지 계산.
+        ElementStack(skill1Type, monster);//속성 스택 쌓기.
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
@@ -190,6 +194,7 @@ public class Warrior : PlayableC
                 return 0;
         }
     }
+
 }
 
 

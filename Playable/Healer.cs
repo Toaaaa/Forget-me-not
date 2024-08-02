@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Healer", menuName = "PlayableCharacter/Healer")]
 public class Healer : PlayableC
 {
-
+    public GameObject skillEffect3Last;
 
     override public void Attack(Transform trans)
     {
@@ -55,6 +55,9 @@ public class Healer : PlayableC
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
+        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
+
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
@@ -75,11 +78,32 @@ public class Healer : PlayableC
     {
         
     }
-    public override void HolyRayDmgCalc(GameObject g)
+    public override void HolyRayDmgCalc(GameObject g)//홀리레이의 1~4번째 타격의 데미지 계산
     {
         float critatk = CheckCrit(atk*0.5f, this.crit); //데미지 계산에 치명타 연산.
         bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(skill3Type, monster, critatk);//속성 데미지 계산.
+        //1~4번째 타격은 속성 스택 쌓기 없음.
+        if (monster.Def >= critatk)
+        {
+            monster.Hp -= 1;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit, false);
+        }
+        else
+        {
+            monster.Hp -= critatk * 2f - monster.Def;
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
+        }
+        Destroy(g);
+    }
+    public override void LastHolyRayDmgCalc(GameObject g)//홀리레이의 마지막 타격(5번째)의 속성 스택부여
+    {
+        float critatk = CheckCrit(atk * 0.5f, this.crit); //데미지 계산에 치명타 연산.
+        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(skill3Type, monster, critatk);//속성 데미지 계산.
+        ElementStack(skill3Type, monster);//속성 스택 쌓기.
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
@@ -100,7 +124,7 @@ public class Healer : PlayableC
 
     public async void StartSpawning(Transform trans)
     {
-        await SpawnSkillEffectRepeatedly(trans, 5, 200); //0.2초 간격으로 5번 콜라이더를 발사
+        await SpawnSkillEffectRepeatedly(trans, 4, 200); //0.2초 간격으로 4번+마지막1발 콜라이더를 발사
     }
 
     private async UniTask SpawnSkillEffectRepeatedly(Transform trans, int repetitions, int delayMilliseconds)//0.2초 간격으로 5번 콜라이더를 발사할 함수
@@ -113,8 +137,12 @@ public class Healer : PlayableC
             obj.GetComponent<HealSkill3>().targetLocked();
             await UniTask.Delay(delayMilliseconds);
         }
+        //마지막 타격
+        var objL = Instantiate(skillEffect3Last, trans.transform.position, Quaternion.identity);
+        objL.GetComponent<HealSkill3Last>().player = this;
+        objL.GetComponent<HealSkill3Last>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        objL.GetComponent<HealSkill3Last>().targetLocked();
     }
-
     private float WhenMaxHpPrint(PlayableC player) //힐량이 최대 체력을 넘어갈때, 얼마나 회복되는지 출력.
     {
         float print;
