@@ -29,7 +29,6 @@ public class TextManager : MonoBehaviour
         talkData.Add(1, new string[] { "오랫동안 방치된 해골이 있다. " });
 
         talkData.Add(1000, new string[] { "안녕123123123:0:임시NPC", "이곳은 처음이지?:1:임시NPC" });//extraNPC는 초상화가 없지만, 임시초상화 사용중.
-        Debug.Log("대화1000 데이터 추가 완료");
         talkData.Add(2000, new string[] 
         {
             "연금술의 힘을 장비에 접목하는 것은 매우 위험한 시도다.:0:낡은 기록",
@@ -80,9 +79,10 @@ public class TextManager : MonoBehaviour
         });//2-5에 있는 오두막 관리인
         talkData.Add(10000, new string[]//isnpc=false
         {
-            "임시 텍스트 ",
-            "임시 텍스트 ",
-            "임시 텍스트 ",
+            "대륙의 절반 이상을 차지하고 있는 드래고니아 왕국은 드래곤의 축복을 받고있다고 알려져 있으며",
+            "대륙의 역사상 유래없을 정도의 강력한 기사제도와 군사력을 바탕으로 국경주변지역의 치안을 안정적으로 지키고 있다. ",
+            "드래고니아 왕국의 실질적인 권력은 3개의 백작가를 중심으로 구성되며 있으며 이중 왕국 기사단의 고위층을 이루는 ",
+            "드라니우스 가문은 왕국의 초대 국왕 시절부터 우호적인 관계를 구축하여 최근까지도 수많은 기사들을 배출하는 가문이다.",
         });//2스테이지 도서관의 책 1
         talkData.Add(11000, new string[]//isnpc=false
         {
@@ -149,7 +149,10 @@ public class TextManager : MonoBehaviour
             "(나머지 부분은 찢겨져 있다)",
             "도서관 관리인을 구하고 있습니다...."
         });
-
+        talkData.Add(23000, new string[]//스테이지 2 입구에 있는 표지판//isnpc=false
+        {
+            "산불 조심"
+        });
 
 
 
@@ -174,6 +177,11 @@ public class TextManager : MonoBehaviour
             portraitData.Add(16000 + i, portraitArr[i]);
             portraitData.Add(17000 + i, portraitArr[i]);
             portraitData.Add(18000 + i, portraitArr[i]);
+            portraitData.Add(19000 + i, portraitArr[i]);
+            portraitData.Add(20000 + i, portraitArr[i]);
+            portraitData.Add(21000 + i, portraitArr[i]);
+            portraitData.Add(22000 + i, portraitArr[i]);
+            portraitData.Add(23000 + i, portraitArr[i]);
         }
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
