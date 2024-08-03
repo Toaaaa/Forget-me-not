@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 using Cinemachine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class SceneChangeManager : Singleton<SceneChangeManager>
 {
@@ -225,6 +226,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
     IEnumerator EndReward()
     {
         yield return new WaitForSeconds(1.0f);
+        GameManager.Instance.Camera.GetComponent<PixelPerfectCamera>().enabled = true;//전투씬+보상씬이 끝나면 다시 픽셀 퍼펙트 카메라 활성화.
         SceneManager.LoadScene(Player.Instance.currentMapName);
         keepPlayerNoSprite = false;//플레이어 스프라이트 다시 켜기
         Fade_battle1.transform.DOMoveY(2690, combatFadeOutDuration).SetEase(Ease.InOutSine);

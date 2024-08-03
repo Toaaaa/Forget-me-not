@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.SearchService;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 
@@ -43,6 +44,7 @@ public class MapData : MonoBehaviour
         SceneChangeManager.Instance.battleSceneName = battleSceneName;
         CombatManager.Instance.battleSceneName = battleSceneName;
         Player.Instance.combatPosition = playerPosition;
+        GameManager.Instance.Camera.GetComponent<PixelPerfectCamera>().enabled = false;//전투 씬에서는 픽셀퍼펙트 비활성화
         SceneChangeManager.Instance.ChangeBattleScene();
     }
 
