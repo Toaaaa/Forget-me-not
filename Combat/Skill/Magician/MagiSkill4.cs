@@ -3,14 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealSkill3 : PlayerSkill //홀리 레이
+public class MagiSkill4 : PlayerSkill//피어싱 라이트닝
 {
     public void targetLocked()
     {
         if (targetMob != null)
-        {
-            transform.DOMove(targetMob.transform.position, 0.1f).SetEase(Ease.Linear);
-        }
+            transform.DOMove(targetMob.transform.position, 0.5f).SetEase(Ease.Linear);//투사체0.5초동안 이동
         else
         {
             Destroy(gameObject);
@@ -20,9 +18,8 @@ public class HealSkill3 : PlayerSkill //홀리 레이
     {
         if (collision.gameObject.tag == "Mob")
         {
-            player.HolyRayDmgCalc(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
+            player.SkillDmgCalc4(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             //Destroy(gameObject);
         }
-            
     }
 }

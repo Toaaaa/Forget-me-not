@@ -173,7 +173,7 @@ public class PlayableC : ScriptableObject
     {
 
     }
-    virtual public void SkillDmgCalc4()
+    virtual public void SkillDmgCalc4(GameObject g)
     {
 
     }

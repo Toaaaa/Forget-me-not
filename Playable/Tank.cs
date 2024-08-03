@@ -103,7 +103,7 @@ public class Tank : PlayableC
     {
                
     }
-    override public void SkillDmgCalc4()
+    override public void SkillDmgCalc4(GameObject g)
     {
 
     }
@@ -116,7 +116,7 @@ public class Tank : PlayableC
         critatk = ElementDamage(skill3Type, mob, critatk);//속성 데미지 계산.
         ElementStack(skill3Type, mob);//속성 스택 쌓기.
 
-        mob.Hp -= CheckCrit(atk, this.crit);
+        mob.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);
     }
 

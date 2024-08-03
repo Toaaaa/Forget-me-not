@@ -116,7 +116,7 @@ public class Healer : PlayableC
         }
         Destroy(g);
     }
-    override public void SkillDmgCalc4()
+    override public void SkillDmgCalc4(GameObject g)
     {
         
     }

@@ -82,7 +82,7 @@ public class Warrior : PlayableC
     {
         Debug.Log("전사의 스킬3 데미지 계산");
     }
-    override public void SkillDmgCalc4()
+    override public void SkillDmgCalc4(GameObject g)
     {
         Debug.Log("전사의 스킬4 데미지 계산");
     }

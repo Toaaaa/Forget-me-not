@@ -14,56 +14,44 @@ public class Magician : PlayableC
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
-    override public void Skill1(Transform trans) //블레이즈
+    override public void Skill1(Transform trans) //블레이즈//모든 몬스터에게 1.5배의 공격력으로 공격
     {
         Debug.Log("블레이즈");
-        /*
-        multiTarget = CombatManager.Instance.monsterAliveList;
-        for(int i=0; i<multiTarget.Count; i++)
+        for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
-            var obj =Instantiate(skillEffect1, trans.transform.position, Quaternion.identity,CombatManager.Instance.mobplace.transform);
-            obj.GetComponent<TestProjectile>().targetMob = multiTarget[i].GetComponent<TestMob>();
-            obj.GetComponent<TestProjectile>().targetLocked();
-        }*/ //다중 타겟 공격시 projectile의 타겟 설정에 사용하는 코드.
-        for(int i =0; i<CombatManager.Instance.monsterObject.Count; i++) //모든 몬스터에게 1.5배의 공격력으로 공격
-        {
-            float temp = CheckCrit(atk * 1.5f, this.crit);
-            CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp -= temp;
+            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
+            obj.GetComponent<MagiSkill1>().player = this;
+            obj.GetComponent<MagiSkill1>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
+            obj.GetComponent<MagiSkill1>().targetLocked();
         }
     }
     override public void Skill2(Transform trans) //모든 플레이어들 치명타 확률 증가 //Sharpening accuracy
     {
-        if (CombatManager.Instance.playerList[0].critBuff)
+        for (int i = 0; i < CombatManager.Instance.playerList.Count; i++)
         {
-            Debug.Log("치명타 버프가 이미 적용중 입니다.");
-            return;
-        }
-        for(int i = 0; i < CombatManager.Instance.playerList.Count; i++)
-        {
-            CombatManager.Instance.playerList[i].crit += 15;
-            CombatManager.Instance.playerList[i].critBuff = true;
+            var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
+            obj.GetComponent<MagiSkill2>().player = this;
+            obj.GetComponent<MagiSkill2>().targetPlayer = CombatManager.Instance.playerList[i];
+            obj.GetComponent<MagiSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[i];
+            obj.GetComponent<MagiSkill2>().targetLocked();
         }
     }
     override public void Skill3(Transform trans) //속도 감소 //시간 비동기화
     {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
-        multiTarget = CombatManager.Instance.monsterAliveList;
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
-            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)
-            {
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 3;
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed = true;
-            }
-            else
-            {
-                Debug.Log("이미 속도가 감소되어 있습니다.");
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
-            }
+            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
+            obj.GetComponent<MagiSkill3>().player = this;
+            obj.GetComponent<MagiSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
+            obj.GetComponent<MagiSkill3>().targetLocked();
         }
     }
-    override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) (빛의 봉인검 비주얼)
+    override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) (빛의 봉인검 비주얼) << 추후 데미지출력 다단히트 3번으로 나오게 수정할수도(비주얼적인 이유로)(홀리레이 참고)
     { //>>높은 데미지 높은 코스트
-        CombatManager.Instance.monsterSelected.GetComponent<TestMob>().Hp -= CheckCrit(atk * 3.5f,this.crit);
+        var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
+        obj.GetComponent<MagiSkill4>().player = this;
+        obj.GetComponent<MagiSkill4>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<MagiSkill4>().targetLocked();
     }
 
 
@@ -72,6 +60,8 @@ public class Magician : PlayableC
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
+        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
         monster.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk, isCrit,false);
         Destroy(g);
@@ -88,10 +78,58 @@ public class Magician : PlayableC
     {
 
     }
-    override public void SkillDmgCalc4()
+    override public void SkillDmgCalc4(GameObject g)//피어싱 라이트닝 데미지 계산.
     {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
+        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
 
+        monster.Hp -= critatk * 3.5f;
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 3.5f, isCrit, false);
+        Destroy(g);
     }
+    override public void MultiDmg1(PlayableC player, TestMob mob)//마법사의 경우 전부 방어력 무시 트루데미지.
+    {
+        float critatk = CheckCrit(atk, this.crit);//데미지 치명타 보정
+        bool isCrit = IsCritical(critatk, atk);
+
+        critatk = ElementDamage(skill3Type, mob, critatk);//최종데미지 속성 데미지 계산.
+        ElementStack(skill3Type, mob);//속성 스택 쌓기.
+
+        mob.Hp -= critatk * 1.5f;
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk * 1.5f, isCrit, false);
+    }
+    override public void MultiDmg3(PlayableC player, TestMob mob)//시간 디버프 이기때문에 속성 스텍을 적용 할수 있는 최소한의 데미지 1 만 적용.
+    {
+        float critatk = CheckCrit(atk, this.crit);//데미지 치명타 보정
+        bool isCrit = IsCritical(critatk, atk);
+        isCrit =false;//시간 디버프는 최소 데미지를 적용하기에 치명타 없이 only 속성 추가 데미지만..
+        critatk = ElementDamage(skill3Type, mob, 1);//기본데미지 1을 기반으로 속성 데미지 계산.
+        ElementStack(skill3Type, mob);//속성 스택 쌓기.
+
+        TimeAsynchronization();//몬스터의 speed 감소 효과.
+        mob.Hp -= critatk;
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);//최소 데미지 1
+    }
+    public void TimeAsynchronization()//스킬 3의 속도 디버프 효과
+    {
+        for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
+        {
+            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)
+            {
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 3;
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed = true;
+            }
+            else
+            {
+                Debug.Log("이미 속도가 감소되어 있습니다.");
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
+            }
+        }
+    }
+
 
     override public void LevelUpStat()//마법사의 경우 공격력 증가 위주의 스탯.
     {
