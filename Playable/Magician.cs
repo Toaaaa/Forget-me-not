@@ -48,7 +48,7 @@ public class Magician : PlayableC
     }
     override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) (빛의 봉인검 비주얼) << 추후 데미지출력 다단히트 3번으로 나오게 수정할수도(비주얼적인 이유로)(홀리레이 참고)
     { //>>높은 데미지 높은 코스트
-        var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
+        var obj = Instantiate(skillEffect4, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill4>().player = this;
         obj.GetComponent<MagiSkill4>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<MagiSkill4>().targetLocked();
@@ -83,8 +83,8 @@ public class Magician : PlayableC
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
-        critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
-        ElementStack(normalAttackType, monster);//속성 스택 쌓기.
+        critatk = ElementDamage(skill4Type, monster, critatk);//속성 데미지 계산.
+        ElementStack(skill4Type, monster);//속성 스택 쌓기.
 
         monster.Hp -= critatk * 3.5f;
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 3.5f, isCrit, false);
@@ -95,8 +95,8 @@ public class Magician : PlayableC
         float critatk = CheckCrit(atk, this.crit);//데미지 치명타 보정
         bool isCrit = IsCritical(critatk, atk);
 
-        critatk = ElementDamage(skill3Type, mob, critatk);//최종데미지 속성 데미지 계산.
-        ElementStack(skill3Type, mob);//속성 스택 쌓기.
+        critatk = ElementDamage(skill1Type, mob, critatk);//최종데미지 속성 데미지 계산.
+        ElementStack(skill1Type, mob);//속성 스택 쌓기.
 
         mob.Hp -= critatk * 1.5f;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk * 1.5f, isCrit, false);

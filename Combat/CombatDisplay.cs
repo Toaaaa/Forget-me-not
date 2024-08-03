@@ -273,7 +273,7 @@ public class CombatDisplay : MonoBehaviour
             selectingPlayer.Attack(slotList[selectedSlotIndex].playerPrefab.transform);
             StartCoroutine(inaction());
             combatManager.playerNoAttackTime = 0;//공격을 하면 noattacktime을 0으로 초기화.
-            combatManager.turnTimeUsedShow.PrintUsedTime(combatManager.skillCostTime);//코스트 타이머에서 코스트 사용효과 표시.
+            combatManager.turnTimeUsedShow.PrintUsedTime(combatManager.attackCostTime);//코스트 타이머에서 코스트 사용효과 표시.
             combatManager.playerTurnTime -= combatManager.attackCostTime;
             monsterAttackManager.playerTurnUsed += combatManager.attackCostTime;
             combatManager.isFirstSelection = false;

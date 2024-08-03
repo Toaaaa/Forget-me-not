@@ -149,7 +149,7 @@ public class TextManager : MonoBehaviour
             "(나머지 부분은 찢겨져 있다)",
             "도서관 관리인을 구하고 있습니다...."
         });
-        talkData.Add(23000, new string[]//스테이지 2 입구에 있는 표지판//isnpc=false
+        talkData.Add(24000, new string[]//스테이지 2 입구에 있는 표지판//isnpc=false
         {
             "산불 조심"
         });
@@ -182,6 +182,7 @@ public class TextManager : MonoBehaviour
             portraitData.Add(21000 + i, portraitArr[i]);
             portraitData.Add(22000 + i, portraitArr[i]);
             portraitData.Add(23000 + i, portraitArr[i]);
+            portraitData.Add(24000 + i, portraitArr[i]);
         }
     }
     // 설명문 하나뿐인 엑스트라npc, 물건의 경우 1~999
