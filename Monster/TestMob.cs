@@ -22,6 +22,12 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     public bool isDead;
 
+    //몬스터 상태 ui용 변수
+    public bool isAtkBuffed;
+    public bool isDefBuffed;
+    public bool isDefDebuffed;
+    public bool isSpeedDebuffed;
+
 
     private void OnEnable()
     {
@@ -32,6 +38,11 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         Speed = monster.mSpeed;
         MinimumSpeed = monster.mMinimumSpeed;
         stackedElement = SkillType.none;
+        isDead = false;
+        isAtkBuffed = false;
+        isDefBuffed = false;
+        isDefDebuffed = false;
+        isSpeedDebuffed = false;
     }
     private void OnDisable()
     {
@@ -63,8 +74,41 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     private void Update()
     {
-        //(Input.GetKeyDown(KeyCode.Space))
-            //monsterSkill[0].UseSkill(this);
+        //몬스터 상태 ui 업데이트
+        if(Atk > monster.mAtk)
+        {
+            isAtkBuffed= true;
+        }
+        else
+        {
+            isAtkBuffed = false;
+        }
+        if(Def > monster.mDef)
+        {
+            isDefBuffed = true;
+        }
+        else
+        {
+            isDefBuffed = false;
+        }
+        if(Def < monster.mDef)
+        {
+            isDefDebuffed = true;
+        }
+        else
+        {
+            isDefDebuffed = false;
+        }
+        if(Speed < monster.mSpeed)
+        {
+            isSpeedDebuffed = true;
+        }
+        else
+        {
+            isSpeedDebuffed = false;
+        }
+        //
+
     }
     //죽으면 monster.whenDie() 호출
 }
