@@ -19,7 +19,7 @@ public class Magician : PlayableC
         Debug.Log("블레이즈");
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
-            var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
+            var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
             obj.GetComponent<MagiSkill1>().player = this;
             obj.GetComponent<MagiSkill1>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<MagiSkill1>().targetLocked();
