@@ -65,7 +65,7 @@ public class MonsterAttackManager : MonoBehaviour
             }
         }
     }
-    private async void AttackPattern(TestMob monster)
+    private void AttackPattern(TestMob monster)
     {
         monster.target = null;
         if (!combatManager.isAggroOn)
@@ -88,7 +88,7 @@ public class MonsterAttackManager : MonoBehaviour
                 monster.target = combatManager.playerList[Random.Range(0, combatManager.playerList.Count)];
             }
         }
-        else if(combatManager.isAggroOn&&combatManager.tank.isDead)//어그로가 켜져있고 탱커가 죽어있을때
+        else if (combatManager.isAggroOn && combatManager.tank.isDead)//어그로가 켜져있고 탱커가 죽어있을때
         {
             combatManager.isAggroOn = false;
             if (monster.target == null)
@@ -100,9 +100,9 @@ public class MonsterAttackManager : MonoBehaviour
         {
             monster.target = combatManager.tank; //어그로가 켜져있을때 탱커를 타겟으로.
         }
-        if(monster.target.isDead)//만약 선택된 플레이어가 이미 사망한 상태라면 다시 타겟 선정.
+        if (monster.target.isDead)//만약 선택된 플레이어가 이미 사망한 상태라면 다시 타겟 선정.
         {
-            for(int i = 0; i<combatManager.playerList.Count; i++)
+            for (int i = 0; i < combatManager.playerList.Count; i++)
             {
                 if (!combatManager.playerList[i].isDead)
                 {
@@ -113,21 +113,18 @@ public class MonsterAttackManager : MonoBehaviour
             return;
         }
 
-        if(monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
+        if (monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
         {
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
-            await AttackingDone();
         }
-        else if(combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
+        else if (combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
         {
             Debug.Log("플레이어가 1명만 살아있을때");
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
-            await AttackingDone();
         }
         else
         {
             monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
-            await AttackingDone();
         }
     }
 
@@ -218,20 +215,15 @@ public class MonsterAttackManager : MonoBehaviour
     }
     private async UniTask AttackStartDelay(TestMob monster)
     {
-        await UniTask.Delay(600);
+        await UniTask.Delay(800);
         AttackPattern(monster);
     }
     private async UniTask AttackStartExtraDelay(TestMob monster)//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
     {
-        await UniTask.Delay(900);
+        await UniTask.Delay(800);
         AttackPattern(monster);
     }
 
 
-    private async UniTask AttackingDone() //몬스터의 useskill이 실행과 동시에 재생되는 태스크.
-    {
-        await UniTask.Delay(800);
-        isAttacking = false;
-    }
     
 }

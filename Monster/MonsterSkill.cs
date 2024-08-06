@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 [CreateAssetMenu(fileName = "New monsterskill", menuName = "skill/monster")]
 public class MonsterSkill : ScriptableObject
@@ -22,30 +23,29 @@ public class skills
 
     public void UseSkill(TestMob mob)
     {
+        Debug.Log("몬스터가 공격을 하였습니다" + "스킬 번호 : "+skillNum);
+        Animator anim = mob.GetComponent<Animator>();
         switch (skillNum)
         {
-            case 0:
-                //일반 공격
-                NormalAttack(mob);
-                Debug.Log("몬스터의 일반 공격");
+            case 0://0번스킬
+                   //(0번 스킬의 경우) 특수 패턴 스킬.
                 break;
-            case 1:
-                //공격력 강화
-                strongAttack(mob);
+            case 1://1번스킬(일반적인 공격1)
+                anim.SetInteger("skillNum", 1);
+                mob.GetComponent<MonsterAnimatorController>().Attack("ATK1").Forget();//이 안에 attacking을 true하는 코드 있음.
                 break;
-            case 2:
-                //체력 회복
-                hpRegen(mob);
+            case 2://2번스킬(일반적인 공격2)
+                anim.SetInteger("skillNum", 2);
+                mob.GetComponent<MonsterAnimatorController>().Attack("ATK2").Forget();
                 break;
             case 3:
-                allAttackDebuff();
+
                 break;
             case 4:
-                WideAttack(mob);
+
                 break;
             case 5:
-                DoubleAttack(mob);
-                Debug.Log("몬스터의 더블어택");
+
                 break;
             case 6:
                 Debug.Log("스킬6 사용");
@@ -68,7 +68,7 @@ public class skills
         }
     }
 
-    private void NormalAttack(TestMob mob) //일반 공격
+    public void NormalAttack(TestMob mob) //일반 공격
     {
         if(mob.target.def >= mob.Atk)
         {
@@ -82,17 +82,17 @@ public class skills
         Debug.Log(skillName);
     }
 
-    private void strongAttack(TestMob mob) //공격력 강화
+    public void strongAttack(TestMob mob) //공격력 강화
     {
         mob.Atk += 10;
         Debug.Log(skillName);
     }
-    private void hpRegen(TestMob mob) //체력 회복
+    public void hpRegen(TestMob mob) //체력 회복
     {
         mob.Hp += 10;
         Debug.Log(skillName);
     }
-    private void allAttackDebuff() //모든 플레이어 공격력 감소
+    public void allAttackDebuff() //모든 플레이어 공격력 감소
     {
         if (CombatManager.Instance.isAtkDebuff)//이미 해당 스킬이 적용 중인 경우.
             //다른 공격스킬을 대신 사용하게 하기.
@@ -103,7 +103,7 @@ public class skills
             CombatManager.Instance.isAtkDebuff = true;
         }
     }
-    private void WideAttack(TestMob mob) //모든 플레이어에게 공격력의 1배만큼 데미지를 줌.
+    public void WideAttack(TestMob mob) //모든 플레이어에게 공격력의 1배만큼 데미지를 줌.
     {
         for(int i=0; i<CombatManager.Instance.playerList.Count; i++)
         {
@@ -118,7 +118,7 @@ public class skills
             }
         }
     }
-    private void DoubleAttack(TestMob mob) //타겟 플레이어에게 2번만큼 데미지를 줌.
+    public void DoubleAttack(TestMob mob) //타겟 플레이어에게 2번만큼 데미지를 줌.
     {
             if (mob.target.def >= mob.Atk)
             {
@@ -131,12 +131,12 @@ public class skills
             }
     }
 
-    private void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.
+    public void PoisonAttack(TestMob mob) //모든 플레이어에게  중독 상태 부여.
     {
         mob.target.isPoisoned = true;
         mob.target.hp -= 10;
     }
-    private void skillSeal(TestMob mob) //모든 플레이어의 스킬 봉인.
+    public void skillSeal(TestMob mob) //모든 플레이어의 스킬 봉인.
     {
         mob.target.isSkillSealed = true;
     }
@@ -156,7 +156,7 @@ public class skills
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Hp += CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().MaxHp*0.3f;
             }
         }
-        
+        CombatManager.Instance.monsterAttackManager.isAttacking = false;
     }
 
 }

@@ -94,6 +94,7 @@ public class SlotPlacement : MonoBehaviour
                 var obj = Instantiate(combatManager.playerList[i].Char_Prefab, P_slotPlace[i].transform.position, Quaternion.identity);
                 combatManager.combatDisplay.slotList[i].playerPrefab = obj; //p0 slot의 playerPrefab에 해당되는 플레이어의 오브젝트를 등록시켜줌.
                 obj.GetComponent<CharacterPrefab>().thisSlot = combatManager.combatDisplay.slotList[i];
+                combatManager.playerList[i].InGamePrefab = obj;
             }
         }
     }

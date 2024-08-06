@@ -13,8 +13,8 @@ public enum SkillType
 
 public class PlayableC : ScriptableObject
 {
-    
 
+    public GameObject InGamePrefab;//전투 씬에서 존재할 프리팹.
     public GameObject Char_Prefab;
     public Sprite characterImage;
     public Sprite charaterRewardImage;
