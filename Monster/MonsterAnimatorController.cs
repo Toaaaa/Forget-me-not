@@ -21,9 +21,20 @@ public class MonsterAnimatorController : MonoBehaviour
         await WaitForAnimationToComplete(animationName);
 
         // idle 상태로 전환
-        Debug.Log("몬스터가 공격을 마쳤습니다");
         animator.SetBool("attacking", false);
     }
+
+    public async UniTask Death(string animationName)
+    {
+        animator.SetTrigger("death");
+
+        await WaitForAnimationToComplete(animationName);
+
+        Debug.Log("몬스터가 죽었습니다");
+        CombatManager.Instance.monsterAliveList.Remove(this.gameObject);
+        this.gameObject.SetActive(false);
+    }
+
 
     private async UniTask WaitForAnimationToComplete(string animationName)
     {
@@ -32,12 +43,12 @@ public class MonsterAnimatorController : MonoBehaviour
         {
             await UniTask.Yield(PlayerLoopTiming.Update);
         }
-        /*
+ 
         // 애니메이션 상태가 종료될 때까지 대기
         while (IsAnimationPlaying(animationName))
         {
             await UniTask.Yield(PlayerLoopTiming.Update);
-        }*/
+        }
     }
 
     private bool IsAnimationPlaying(string animationName)

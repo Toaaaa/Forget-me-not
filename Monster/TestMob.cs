@@ -35,6 +35,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     private void OnEnable()
     {
+        ResetAnimator();
         Hp = monster.mHp;
         MaxHp = monster.mHp;
         Atk = monster.mAtk;
@@ -82,7 +83,12 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         return null;
     }
     
-
+    private void ResetAnimator()
+    {
+        Animator anim = GetComponent<Animator>();
+        anim.SetBool("attacking", false);
+        anim.SetBool("death", false);
+    }
 
     private void Update()
     {

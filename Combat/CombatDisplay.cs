@@ -827,19 +827,21 @@ public class CombatDisplay : MonoBehaviour
         selectingItem = null;//아이템을 사용후 지정된 아이템 초기화.
         itemSelected = false;//아이템 사용중 변수 초기화.
     }
+
     private void WhenDie()
     {
+        /*
         if (combatManager.isCombatStart)
         {
             for(int i = 0; i < MobList.Count; i++)
             {
                 if (MobList[i].GetComponent<TestMob>().Hp <= 0)
                 {
-                    MobList[i].SetActive(false);
                     MobList.RemoveAt(i);
+                    //해당 removeAt 함수는 CombatManager의 MonsterDie에서 실행하게 옮김.
                 }
             }
-        }
+        }*/
     }
     public void AtActionEnd()
     {
