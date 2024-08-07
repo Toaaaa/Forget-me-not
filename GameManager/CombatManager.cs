@@ -4,6 +4,7 @@ using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,7 +27,7 @@ public class CombatManager : Singleton<CombatManager>
     public List<PlayableC> playerList;//현재 전투에 참혀중인 플레이어(사망시 제외 하지말것.)
     //public List<PlayableC> alivePlayerList;//현재 전투에 참여중인 살아있는 플레이어.
     public List<TestMob> monsterList;//전투에 참여할 몬스터들 << 여기에 있는 몬스터를 통해 해당 몬스터의 스킬사용시만 접근 (이거는 prefab의 스크립트에 접근 하는것임을 유의)
-    public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
+    //public Dictionary<TestMob, GameObject> monstersInCombat = new Dictionary<TestMob, GameObject>(); //전투에 참여하는 몬스터들과 그 오브젝트를 매칭시키는 딕셔너리.
     public List<GameObject> monsterObject; //몬스터 오브젝트를 담을 리스트.
     public List<GameObject> monsterAliveList; //살아있는 몬스터 리스트.
 
@@ -108,7 +109,7 @@ public class CombatManager : Singleton<CombatManager>
         
         slotPlacement = null;
         combatDisplay.inAction = false;
-        monstersInCombat.Clear();
+        //monstersInCombat.Clear();
         monsterObject.Clear();
         monsterAliveList.Clear();       
         selectedPlayer = null;
@@ -141,7 +142,7 @@ public class CombatManager : Singleton<CombatManager>
         DeadMobGoldCount = 0;
         DeadMobExpCount = 0;
         combatDisplay.inAction = false;
-        monstersInCombat.Clear();
+        //monstersInCombat.Clear();
         monsterAliveList.Clear();
         selectedPlayer = null;
         monsterSelected = null;
@@ -218,7 +219,7 @@ public class CombatManager : Singleton<CombatManager>
         }
     }
 
-    public void updateMonster()//incombatscene에서 해당 함수 호출하여 사용.
+    public void updateMonster()//incombatscene.start()에서 해당 함수 호출하여 사용.
     {
         Scene scene = SceneManager.GetActiveScene();
         if(scene.name != battleSceneName)
@@ -232,7 +233,7 @@ public class CombatManager : Singleton<CombatManager>
             monsterObject.Add(obj);
             combatDisplay.mobSlotList[i].GetComponent<MobSlot>().monster = obj;
             monsterAliveList.Add(obj);
-            monstersInCombat.Add(monsterList[i], monsterObject[i]);
+            //monstersInCombat.Add(monsterList[i], monsterObject[i]);
         }
         combatDisplay.MobList.Clear();
         monsterAttackManager.monsters.Clear();

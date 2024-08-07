@@ -19,6 +19,15 @@ public class MonsterAttackManager : MonoBehaviour
 
     private void Update()
     {
+
+        if(monsters.Count == 0) //등록된 몬스터가 누락되었을 경우 다시 등록
+        {
+            for (int i = 0; i < combatManager.monsterObject.Count; i++)
+            {
+                monsters.Add(combatManager.monsterObject[i].GetComponent<TestMob>());
+            }
+        }
+
         if (combatManager.isCombatStart)
         {
             if (monsterAttackAvailable)
