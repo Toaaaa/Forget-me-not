@@ -165,11 +165,11 @@ public class PlayableC : ScriptableObject
     {
 
     }
-    virtual public void SkillDmgCalc2()
+    virtual public void SkillDmgCalc2(GameObject g)
     {
 
     }
-    virtual public void SkillDmgCalc3()
+    virtual public void SkillDmgCalc3(GameObject g)
     {
 
     }

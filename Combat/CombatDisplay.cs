@@ -105,7 +105,7 @@ public class CombatDisplay : MonoBehaviour
         }
         if(skillSelectedForPlayer)
         {
-            if(selectingPlayer.name == "Magician" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 1)
+            if(selectingPlayer.name == "Warrior" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 2)
             {
                 SkillOnSelectForAllPlayer();//모든 플레이어 대상 스킬.
             }

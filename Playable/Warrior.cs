@@ -74,11 +74,11 @@ public class Warrior : PlayableC
         }
         Destroy(g);
     }
-    override public void SkillDmgCalc2()
+    override public void SkillDmgCalc2(GameObject g)
     {
         Debug.Log("전사의 스킬2 데미지 계산");
     }
-    override public void SkillDmgCalc3()
+    override public void SkillDmgCalc3(GameObject g)
     {
         Debug.Log("전사의 스킬3 데미지 계산");
     }

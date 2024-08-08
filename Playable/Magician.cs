@@ -25,16 +25,12 @@ public class Magician : PlayableC
             obj.GetComponent<MagiSkill1>().targetLocked();
         }
     }
-    override public void Skill2(Transform trans) //모든 플레이어들 치명타 확률 증가 //Sharpening accuracy
-    {
-        for (int i = 0; i < CombatManager.Instance.playerList.Count; i++)
-        {
-            var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
-            obj.GetComponent<MagiSkill2>().player = this;
-            obj.GetComponent<MagiSkill2>().targetPlayer = CombatManager.Instance.playerList[i];
-            obj.GetComponent<MagiSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[i];
-            obj.GetComponent<MagiSkill2>().targetLocked();
-        }
+    override public void Skill2(Transform trans) //단일 공격 + 느려진 시간스택(초기 speed - 현재 speed)에 비례하여 데미지 + 스택 리셋
+    { 
+        var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
+        obj.GetComponent<MagiSkill2>().player = this;
+        obj.GetComponent<MagiSkill2>().targetMob = this.singleTarget.GetComponent<TestMob>();
+        obj.GetComponent<MagiSkill2>().targetLocked();
     }
     override public void Skill3(Transform trans) //속도 감소 //시간 비동기화
     {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
@@ -70,11 +66,22 @@ public class Magician : PlayableC
     {
 
     }
-    override public void SkillDmgCalc2()
+    override public void SkillDmgCalc2(GameObject g)
     {
+        float critatk = CheckCrit(atk, this.crit);
+        bool isCrit = IsCritical(critatk, atk);
+        TestMob monster = this.singleTarget.GetComponent<TestMob>();
+        critatk = ElementDamage(skill2Type, monster, critatk);//속성 데미지 계산.
+        ElementStack(skill2Type, monster);//속성 스택 쌓기.
 
+        monster.Speed = monster.monster.mSpeed; //시간 스택 리셋
+        float stack = TimeStack(monster);//몬스터의 시간 스택 비례 데미지;
+
+        monster.Hp -= critatk * stack;
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk *stack, isCrit, false);
+        Destroy(g);
     }
-    override public void SkillDmgCalc3()
+    override public void SkillDmgCalc3(GameObject g)
     {
 
     }
@@ -128,6 +135,11 @@ public class Magician : PlayableC
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
             }
         }
+    }
+    public float TimeStack(TestMob monster)
+    {
+        int speedStack = monster.monster.mSpeed - monster.Speed;
+        return (float)speedStack;
     }
 
 

@@ -150,6 +150,7 @@ public class SceneChangeManager : Singleton<SceneChangeManager>
         Fade_battle2.GetComponent<RectTransform>().DOLocalMoveY(-2115, combatFadeOutDuration).SetEase(Ease.InOutSine);
         GameManager.Instance.onSceneChange = false;
         CombatManager.Instance.isCombatStart = true;
+        CombatManager.Instance.SFXManager.SetTheSFX();//스킬 fx 세팅
         //전투가 시작 될수 있게 하기.
     }
     public void LeaveBattleScene()

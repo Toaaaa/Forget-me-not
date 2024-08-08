@@ -74,7 +74,7 @@ public class Healer : PlayableC
     {
         
     }
-    override public void SkillDmgCalc2()
+    override public void SkillDmgCalc2(GameObject g)
     {
         
     }

@@ -18,6 +18,7 @@ public class CombatManager : Singleton<CombatManager>
     public TurnTimeUsedShow turnTimeUsedShow;
     public CombatTimer combatTimer;
     public MonsterAttackManager monsterAttackManager;
+    public SFXManager SFXManager;
     public MapData mapData;
     public CombatDisplay combatDisplay; //전투 ui를 담을 변수.
     public GameObject mobplace;

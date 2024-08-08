@@ -95,11 +95,11 @@ public class Tank : PlayableC
     {
 
     }
-    override public void SkillDmgCalc2()
+    override public void SkillDmgCalc2(GameObject g)
     {
 
     }
-    override public void SkillDmgCalc3()
+    override public void SkillDmgCalc3(GameObject g)
     {
                
     }

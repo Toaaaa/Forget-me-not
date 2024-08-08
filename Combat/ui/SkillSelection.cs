@@ -187,18 +187,19 @@ public class SkillSelection : MonoBehaviour
                 }
                 if(combatManager.combatDisplay.selectingPlayer.name =="Warrior")
                 {
-                    combatManager.combatDisplay.skillSelected = true;
-                }
-                if(combatManager.combatDisplay.selectingPlayer.name == "Magician")
-                {
-                    if(skillIndex == 1)
+                    if(skillIndex == 2)
                     {
                         combatManager.combatDisplay.skillSelectedForPlayer = true;
                     }
                     else
                     {
                         combatManager.combatDisplay.skillSelected = true;
-                    }
+                    }                   
+                    
+                }
+                if(combatManager.combatDisplay.selectingPlayer.name == "Magician")
+                {
+                    combatManager.combatDisplay.skillSelected = true;
                 }
                 switch (skillIndex)
                 {
