@@ -30,15 +30,15 @@ public class CombatTimer : MonoBehaviour
         if (story.isOnStage2 && !story.Stage2Extra3)//얼어붙었을때
         {
             FrozenTimer.SetActive(true);
-            this.gameObject.GetComponent<Image>().color = new Color(47, 239, 255, 255);//파란 테두리.
-            timerBar.GetComponent<Image>().color = new Color(47, 239, 255, 255);//파란 게이지.
+            this.gameObject.GetComponent<Image>().color = new Color32(47, 239, 255, 255);//파란 테두리.
+            timerBar.GetComponent<Image>().color = new Color32(47, 239, 255, 255);//파란 게이지.
             timerText.color = new Color(0, 255, 178, 255);//약간 파란 텍스트.
         }
         else
         {
             FrozenTimer.SetActive(false);
-            this.gameObject.GetComponent<Image>().color = new Color(242, 255, 47, 255);//평소의 노란 테두리.
-            timerBar.GetComponent<Image>().color = new Color(242, 255, 47, 255);//평소의 노란 게이지.
+            this.gameObject.GetComponent<Image>().color = new Color32(242, 255, 47, 255);//평소의 노란 테두리.
+            timerBar.GetComponent<Image>().color = new Color32(242, 255, 47, 255);//평소의 노란 게이지.
             timerText.color = new Color(255, 239, 0, 255);//평소의 노란 텍스트.
         }
     }
