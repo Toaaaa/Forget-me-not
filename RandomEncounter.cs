@@ -63,7 +63,6 @@ public class RandomEncounter : MonoBehaviour
     {
         if(encounterRate != 0 && CombatManager.Instance.mapData.encounterRate !=0) //사전에 축적된 extraEncounterRate때문에 0이 아닌곳에서 인카운터 발생가능성 방지.
         {
-            Debug.Log(encounterRate +"_"+ extraEncounterRate);
             encounterCount = 0; //몬스터 인카운터가 발생하면 스텝을 초기화.
             extraEncounterRate = 0; //몬스터 인카운터가 발생하면 추가 확률을 초기화.
             Player.Instance.placeBeforeEnteringCombat = Player.Instance.transform.position;

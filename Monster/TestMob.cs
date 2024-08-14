@@ -7,6 +7,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     public Monster monster;
     public MobSlot thisSlot;//이 몹위치에 대응되는 Canvas 상의 슬롯.
+    public Animator shadowAnimator;//그림자 애니메이터
     public List<skills> monsterSkill;
     public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모와놓은 리스트.
     public PlayableC target; //스킬을 사용할 대상.
@@ -83,11 +84,13 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         return null;
     }
     
-    private void ResetAnimator()
+    private void ResetAnimator()//본인과 그림자의 애니메이터 초기화
     {
         Animator anim = GetComponent<Animator>();
         anim.SetBool("attacking", false);
         anim.SetBool("death", false);
+        shadowAnimator.SetBool("attacking", false);
+        shadowAnimator.SetBool("death", false);
     }
 
     private void Update()

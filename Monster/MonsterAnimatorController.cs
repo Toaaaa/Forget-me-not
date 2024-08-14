@@ -6,10 +6,12 @@ using UnityEngine;
 public class MonsterAnimatorController : MonoBehaviour
 {
     private Animator animator;
+    private Animator shadowAnimator;//그림자의 애니메이터
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        shadowAnimator = GetComponent<TestMob>().shadowAnimator;
     }
 
     public  async UniTask Attack(string animationName)//해당 이름을 가진 공격 애니메이션을 실행
@@ -27,6 +29,7 @@ public class MonsterAnimatorController : MonoBehaviour
     public async UniTask Death(string animationName)
     {
         animator.SetTrigger("death");
+        shadowAnimator.GetComponent<MonsterShadowAnimator>().SettingTriger();//death의 트리거 실행.
 
         await WaitForAnimationToComplete(animationName);
 
