@@ -13,7 +13,8 @@ public class MonsterAnimatorController : MonoBehaviour
         animator = GetComponent<Animator>();
         shadowAnimator = GetComponent<TestMob>().shadowAnimator;
     }
-
+    
+    //아래 메서드들은 호출시 @@@.Forget()을 붙여주어야 함.
     public  async UniTask Attack(string animationName)//해당 이름을 가진 공격 애니메이션을 실행
     {
         animator.SetBool("attacking", true);

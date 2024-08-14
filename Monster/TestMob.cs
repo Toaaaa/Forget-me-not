@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 {
-
+    /////피격시 플래시 이펙트 변수/////
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+    public float flashDuration = 0.1f;
+    /////
     public Monster monster;
     public MobSlot thisSlot;//이 몹위치에 대응되는 Canvas 상의 슬롯.
     public Animator shadowAnimator;//그림자 애니메이터
@@ -33,6 +37,11 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public bool isDefDebuffed;
     public bool isSpeedDebuffed;
 
+    private void Start()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color; // 원래 색상 저장
+    }
 
     private void OnEnable()
     {
@@ -83,7 +92,11 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         }
         return null;
     }
-    
+    public void TakeDamage()// 피격 시 반짝임 효과
+    {
+        StartCoroutine(Flash());
+    }
+
     private void ResetAnimator()//본인과 그림자의 애니메이터 초기화
     {
         Animator anim = GetComponent<Animator>();
@@ -132,4 +145,12 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     }
     //죽으면 monster.whenDie() 호출
+
+
+    private IEnumerator Flash()
+    {
+        spriteRenderer.color = Color.red; // 피격 시 빨간색으로 변경
+        yield return new WaitForSeconds(flashDuration); // 일정 시간 대기
+        spriteRenderer.color = originalColor; // 원래 색상으로 복원
+    }
 }
