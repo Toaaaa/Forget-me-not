@@ -23,7 +23,7 @@ public class MagiSkill2 : PlayerSkill//치명타 버프
         }
         if (collision.gameObject.tag == "Mob")
         {
-            player.SkillDmgCalc4(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
+            player.SkillDmgCalc2(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             //Destroy(gameObject);
         }
     }

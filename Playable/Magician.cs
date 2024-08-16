@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,6 +11,8 @@ public class Magician : PlayableC
 
     override public void Attack(Transform trans)
     {
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK0").Forget();//공격 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx0();//기본 공격 sfx 재생
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
@@ -16,7 +20,8 @@ public class Magician : PlayableC
     }
     override public void Skill1(Transform trans) //블레이즈//모든 몬스터에게 1.5배의 공격력으로 공격
     {
-        Debug.Log("블레이즈");
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK1").Forget();//스킬1 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx1();//스킬1 sfx 재생
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
             var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
@@ -25,7 +30,7 @@ public class Magician : PlayableC
             obj.GetComponent<MagiSkill1>().targetLocked();
         }
     }
-    override public void Skill2(Transform trans) //단일 공격 + 느려진 시간스택(초기 speed - 현재 speed)에 비례하여 데미지 + 스택 리셋
+    override public void Skill2(Transform trans) //단일 공격 + 느려진 시간스택(매 속도 감소 사용시 마다 스택 쌓임)에 비례하여 데미지 + 스택 리셋
     { 
         var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill2>().player = this;
@@ -58,6 +63,8 @@ public class Magician : PlayableC
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
         ElementStack(normalAttackType, monster);//속성 스택 쌓기.
+
+        monster.TakeDamage();//피격시 반짝이는 효과
         monster.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk, isCrit,false);
         Destroy(g);
@@ -74,10 +81,11 @@ public class Magician : PlayableC
         critatk = ElementDamage(skill2Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill2Type, monster);//속성 스택 쌓기.
 
-        monster.Speed = monster.monster.mSpeed; //시간 스택 리셋
         float stack = TimeStack(monster);//몬스터의 시간 스택 비례 데미지;
+        monster.slowStack = 0;//스택 초기화
 
-        monster.Hp -= critatk * stack;
+        monster.TakeDamage();//피격시 반짝이는 효과
+        monster.Hp -= critatk *(2f+ stack);
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk *stack, isCrit, false);
         Destroy(g);
     }
@@ -93,6 +101,7 @@ public class Magician : PlayableC
         critatk = ElementDamage(skill4Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill4Type, monster);//속성 스택 쌓기.
 
+        monster.TakeDamage();//피격시 반짝이는 효과
         monster.Hp -= critatk * 3.5f;
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 3.5f, isCrit, false);
         Destroy(g);
@@ -105,6 +114,7 @@ public class Magician : PlayableC
         critatk = ElementDamage(skill1Type, mob, critatk);//최종데미지 속성 데미지 계산.
         ElementStack(skill1Type, mob);//속성 스택 쌓기.
 
+        mob.TakeDamage();//피격시 반짝이는 효과
         mob.Hp -= critatk * 1.5f;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk * 1.5f, isCrit, false);
     }
@@ -117,6 +127,7 @@ public class Magician : PlayableC
         ElementStack(skill3Type, mob);//속성 스택 쌓기.
 
         TimeAsynchronization();//몬스터의 speed 감소 효과.
+        mob.TakeDamage();//피격시 반짝이는 효과
         mob.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);//최소 데미지 1
     }
@@ -127,18 +138,19 @@ public class Magician : PlayableC
             if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)
             {
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 3;
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed = true;
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack++;
             }
             else
             {
                 Debug.Log("이미 속도가 감소되어 있습니다.");
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack++;
             }
         }
     }
     public float TimeStack(TestMob monster)
     {
-        int speedStack = monster.monster.mSpeed - monster.Speed;
+        int speedStack = monster.slowStack;
         return (float)speedStack;
     }
 

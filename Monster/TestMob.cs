@@ -16,6 +16,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모와놓은 리스트.
     public PlayableC target; //스킬을 사용할 대상.
     public bool isslowed; //스킬에 의해 속도가 감소되었는지 판별하는 변수.
+    public int slowStack; //속도 감소 스킬에 의해 쌓인 스택.
     public SkillType stackedElement; // 공격에 의해서 쌓인 속성 스택.
     //skillType 이 none일 경우 >>//따로 속성이 안 붙어있는 경우. (전투 시작단계 or 역속성 공격을 하였을 경우 속성 스택 초기화)
     public float Hp;
@@ -51,6 +52,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         Atk = monster.mAtk;
         Def = monster.mDef;
         Speed = monster.mSpeed;
+        slowStack = 0;
         MinimumSpeed = monster.mMinimumSpeed;
         stackedElement = SkillType.none;
         isDead = false;
@@ -135,10 +137,12 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         }
         if(Speed < monster.mSpeed)
         {
+            isslowed = true;
             isSpeedDebuffed = true;
         }
         else
         {
+            isslowed = false;
             isSpeedDebuffed = false;
         }
         //

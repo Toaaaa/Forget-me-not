@@ -43,7 +43,7 @@ public class Tank : PlayableC
         isAggroOn = true;
         CombatManager.Instance.isAggroOn = true;
     }
-    override public void Skill3(Transform trans) //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 4씩 감소시킴.
+    override public void Skill3(Transform trans) //땅울리기. >>모든 몬스터에게 공격력만큼의 데미지를 주고 방어력을 3씩 감소시킴.
     { //>> 높은 가치의 스킬이기에 코스트 높게 설정할것.
         Debug.Log("땅울리기");
         for (int i=0; i<CombatManager.Instance.monsterAliveList.Count; i++)
@@ -53,7 +53,7 @@ public class Tank : PlayableC
             obj.GetComponent<TankSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<TankSkill3>().targetLocked();
 
-            CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def -= 4;
+            CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def -= 3;
             if (CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def < 0)
             {
                 CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>().Def = 0;
@@ -62,8 +62,7 @@ public class Tank : PlayableC
     }
     override public void Skill4(Transform trans)
     {
-        //견습기사이기 때문에 스킬이 3개밖에 없음.
-        //10레벨 달성시 스킬 해금 스크립트에서, "견습기사는 스킬이 3개밖에 없습니다." 라는 메세지를 띄워주면 될듯.
+        //스킬 추가
     }
 
     override public void ResetBUff()
