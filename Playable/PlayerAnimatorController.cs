@@ -13,8 +13,9 @@ public class PlayerAnimatorController : MonoBehaviour
     }
 
     //아래 메서드들은 호출시 @@@.Forget()을 붙여주어야 함.
-    public async UniTask Attack(string animationName)//해당 이름을 가진 공격 애니메이션을 실행
+    public async UniTask Attack(string animationName,int skillNum)//해당 이름을 가진 공격 애니메이션을 실행
     {
+        animator.SetInteger("skillNum", skillNum);
         animator.SetBool("attacking", true);
 
         // 공격 애니메이션이 끝날 때까지 대기
@@ -22,6 +23,8 @@ public class PlayerAnimatorController : MonoBehaviour
 
         // idle 상태로 전환
         animator.SetBool("attacking", false);
+        await UniTask.Yield();
+        Debug.Log("플레이어가 공격을 끝냈습니다");
     }
     public void Hit(string animationName) //피격시 애니메이션 재생
     {

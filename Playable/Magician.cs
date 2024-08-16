@@ -11,7 +11,7 @@ public class Magician : PlayableC
 
     override public void Attack(Transform trans)
     {
-        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK0").Forget();//공격 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK0",0).Forget();//공격 애니메이션 재생
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx0();//기본 공격 sfx 재생
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
@@ -20,7 +20,7 @@ public class Magician : PlayableC
     }
     override public void Skill1(Transform trans) //블레이즈//모든 몬스터에게 1.5배의 공격력으로 공격
     {
-        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK1").Forget();//스킬1 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK1",1).Forget();//스킬1 애니메이션 재생
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx1();//스킬1 sfx 재생
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
