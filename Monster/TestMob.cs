@@ -30,6 +30,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
 
     public List<GameObject> SFXInfo;//몬스터가 사용하는 스킬에 대한 이펙트정보
     public List<GameObject> SFX;//몬스터가 사용하는 버프에 대한 실제로 사용할 이펙트들.
+    public List<GameObject> playerSFX;//플레이어가 사용하는 스킬에 대한 이펙트정보(디버프 계열등.. 다중 공격시에 몬스터에 표시될 sfx)
 
 
     //몬스터 상태 ui용 변수

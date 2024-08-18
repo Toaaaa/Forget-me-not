@@ -32,6 +32,8 @@ public class Magician : PlayableC
     }
     override public void Skill2(Transform trans) //단일 공격 + 느려진 시간스택(매 속도 감소 사용시 마다 스택 쌓임)에 비례하여 데미지 + 스택 리셋
     { 
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK2",2).Forget();//스킬2 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx2();//스킬2 sfx 재생
         var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill2>().player = this;
         obj.GetComponent<MagiSkill2>().targetMob = this.singleTarget.GetComponent<TestMob>();
@@ -39,6 +41,8 @@ public class Magician : PlayableC
     }
     override public void Skill3(Transform trans) //속도 감소 //시간 비동기화
     {//코스트 상(적의 속도를 감소키기기에 밸류가 높음)
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK3",3).Forget();//스킬3 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx3();//스킬3 sfx 재생
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
             var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
@@ -49,6 +53,8 @@ public class Magician : PlayableC
     }
     override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) (빛의 봉인검 비주얼) << 추후 데미지출력 다단히트 3번으로 나오게 수정할수도(비주얼적인 이유로)(홀리레이 참고)
     { //>>높은 데미지 높은 코스트
+        InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK4",4).Forget();//스킬3 애니메이션 재생
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4();//스킬4 sfx 재생
         var obj = Instantiate(skillEffect4, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill4>().player = this;
         obj.GetComponent<MagiSkill4>().targetMob = this.singleTarget.GetComponent<TestMob>();

@@ -178,6 +178,7 @@ public class CombatManager : Singleton<CombatManager>
         {
             if (monsterObject[i].GetComponent<TestMob>().Hp <= 0)
             {
+                Debug.Log("monsaterdie호출");
                 monsterDie(i);
             }
         }//몬스터의 체력이 0이하가 되면 사망판정 + 사망한 몬스터를 리스트,monsterobject에서 제거.
@@ -362,11 +363,10 @@ public class CombatManager : Singleton<CombatManager>
     }   
     private void monsterDie(int num)
     {
-        combatDisplay.MobList.RemoveAt(num);
         monsterObject[num].GetComponent<TestMob>().Hp = 0.1f;//hp가 0이하가 되면 계속 trigger 호출이 되서 사망 애니메이션이 고장남. 따라서 사망직후 바로 hp 0.1세팅
-        Debug.Log("몬스터가 죽었습니다.");
         monsterObject[num].GetComponent<TestMob>().isDead = true;
         monsterObject[num].GetComponent<MonsterAnimatorController>().Death("DEATH").Forget();//몬스터 사망시의 모든 기능 실행.
+        combatDisplay.MobList.RemoveAt(num);
     }
     private void PlayerDieCheck()//추후 isdead에서의 색깔변화가 아닌. 애니메이션의 파라미터를 isdead로 변경하여 죽은 애니메이션을 실행하도록 변경할것.
     {

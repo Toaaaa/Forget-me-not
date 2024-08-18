@@ -19,8 +19,7 @@ public class MagiSkill1 : PlayerSkill//블레이즈
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("충돌이 감지되었습니다.");
-        if (collision.gameObject.tag == "Mob")
+        if (collision.gameObject == targetMob.gameObject)
         {
             player.MultiDmg1(player, targetMob);//여기에 데미지 출력 효과도 포함되어있음.
             Destroy(gameObject);

@@ -21,7 +21,7 @@ public class AttackSkill : PlayerSkill //모든 캐릭터의 기본 공격
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Mob")
+        if (collision.gameObject == targetMob.gameObject)
         {
             Debug.Log("몹에게 데미지를 입힙니다.");
             player.AttackDmgCalc(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
