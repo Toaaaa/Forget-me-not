@@ -33,6 +33,12 @@ public class RewardDisplay : MonoBehaviour
 
     public void SetReward()//보상을 설정해주는 함수, 각종 계산식들 포함
     {
+        if (CombatManager.Instance.selectedFlee)//만약 도망을 통해서 전투를 끝냈을 경우 보상 수령 취소
+        {
+            CombatManager.Instance.DeadMobExpCount = 0;
+            CombatManager.Instance.DeadMobGoldCount = 0;
+            CombatManager.Instance.DeadMobItemDrop.Clear();
+        }
         expAllGiven = false;//경험치 리필하면서, 초기화 해주기
         exp = CombatManager.Instance.DeadMobExpCount;//경험치 세팅
         OriginalExp = exp;

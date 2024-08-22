@@ -103,7 +103,7 @@ public class FirstSelection : MonoBehaviour
     {
         playerAverageSpeed = 0;
         fastestMonsterSpeed = 0;
-        if(combatManager.playerTurnTime >= combatManager.fleeCostTime)
+        if(combatManager.playerTurnTime >= combatManager.fleeCostTime &&!combatManager.isBoss)
         {
             for (int i = 0; i < combatManager.playerList.Count; i++)
             {
@@ -122,6 +122,7 @@ public class FirstSelection : MonoBehaviour
                 combatManager.DeadMobExpCount = 0;
                 combatManager.DeadMobGoldCount = 0;
                 combatManager.DeadMobItemDrop.Clear();
+                combatManager.selectedFlee = true;
                 combatManager.OnCombatEnd();
             }
             else
@@ -131,9 +132,13 @@ public class FirstSelection : MonoBehaviour
                 Debug.Log("도망에 실패했습니다.");
             }
         }
-        else
+        else if(!combatManager.isBoss)
         {
             combatManager.TimerShake();//턴시간이 부족할때 타이머 흔드는 효과.
+        }
+        else//보스 전투시
+        {
+            return;
         }
     }
 

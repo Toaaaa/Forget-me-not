@@ -41,6 +41,7 @@ public class CombatManager : Singleton<CombatManager>
     public bool BuffIsOn; //버프아이템은 한번에 하나만 적용 되도록. //만약에 다른 버프 사용중에 버프아이템을 사용 할 경우 이전 버프는 사라짐.
     public bool isAtkDebuff; //공격력 디버프가 적용중인 경우체크 >> 이를 토대로 전투가 끝나면 디버프 해제.
     //버프 아이템 사용중에는 파티원의 인원변경 불가능.
+    public bool selectedFlee; //도망가기가 선택되었는지.
     public bool isBoss; //보스전투인지 아닌지 판별하는 변수.   
     public bool isCombatStart; //전투가 시작되었는지 판별하는 변수.
     public string battleSceneName; //전투 씬의 이름을 저장하는 변수.
@@ -73,6 +74,7 @@ public class CombatManager : Singleton<CombatManager>
     }
     public void OnCombatStart()//전투 시작시 호출되는 함수.
     { 
+        selectedFlee = false;
         Player.Instance.wasInCombat = true;
         playerList = playableManager.joinedPlayer;
         //alivePlayerList = playableManager.joinedPlayer;
