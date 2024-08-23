@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class CombatStatus : MonoBehaviour
 {
     public PlayableC player;
+    public Image playerSprite;
     public Image playerImage;
     public Image playerHpBar;
     public TextMeshProUGUI playerHpText;
@@ -45,7 +46,16 @@ public class CombatStatus : MonoBehaviour
             {
                 player.isTired = false;
             }
-        }       
+        }
+        if(player != null)
+        {
+            playerSprite.sprite = player.CharIcon;
+        }
+        else
+        {
+            playerSprite.sprite = null;
+        }
+        playerHpText.text = (int)player.hp + "/" + (int)player.maxHp;
     }
 
     private void buffcheck()
