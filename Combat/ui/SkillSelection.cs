@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class SkillSelection : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class SkillSelection : MonoBehaviour
     public CombatManager combatManager;
     public List<GameObject> skillSelection;//1~4번 스킬 선택창.
     public List<GameObject> skillBehind;//스킬 선택창 뒤에 있는 이미지. (실제 선택은 아니고 표시용)
+    public List<GameObject> skillElement;//선택된 스킬의 속성을 표시.(1~4번 스킬)
+    public List<GameObject> skillBehindEle;
+    public List<Sprite> elementImage;//스킬의 속성을 표시할 이미지들.
+
     public GameObject skillDesc;//선택된 스킬의 설명을 표시할 텍스트.
     public PlayableC player;
 
@@ -20,6 +25,7 @@ public class SkillSelection : MonoBehaviour
     public int PlayerLevel; //3번째 스킬과 4번째 스킬은 각각 5레벨 10레벨때 해금됨.
     private bool selectUp;
     public int skillIndex = 0;
+    private SkillType skillType;
 
     private void OnEnable()
     {
@@ -28,10 +34,91 @@ public class SkillSelection : MonoBehaviour
 
         skillBehind[0].GetComponentInChildren<TextMeshProUGUI>().text = player.skill1Name;
         skillBehind[1].GetComponentInChildren<TextMeshProUGUI>().text = player.skill2Name;
+
+        for (int i = 0; i < skillElement.Count; i++)
+        {
+            if (skillElement[i].activeSelf)
+            {
+                switch (i)
+                {
+                    case 0:
+                        skillType = player.skill1Type;
+                        break;
+                    case 1:
+                        skillType = player.skill2Type;
+                        break;
+                    case 2:
+                        skillType = player.skill3Type;
+                        break;
+                    case 3:
+                        skillType = player.skill4Type;
+                        break;
+                    default:
+                        break;
+                }
+
+                if (skillType == SkillType.Fire)
+                {
+                    skillElement[i].GetComponent<Image>().sprite = elementImage[0];
+                }
+                else if (skillType == SkillType.Water)
+                {
+                    skillElement[i].GetComponent<Image>().sprite = elementImage[1];
+                }
+                else if (skillType == SkillType.Wood)
+                {
+                    skillElement[i].GetComponent<Image>().sprite = elementImage[2];
+                }
+                else if (skillType == SkillType.none)
+                {
+                    skillElement[i].GetComponent<Image>().sprite = elementImage[3];
+                }
+            }
+        }//선택창 칸의 우측에 표시될 속성 이미지.
+        for (int i = 0; i < skillBehindEle.Count; i++)
+        {
+            if (skillBehindEle[i].activeSelf)
+            {
+                switch (i)
+                {
+                    case 0:
+                        skillType = player.skill1Type;
+                        break;
+                    case 1:
+                        skillType = player.skill2Type;
+                        break;
+                    case 2:
+                        skillType = player.skill3Type;
+                        break;
+                    case 3:
+                        skillType = player.skill4Type;
+                        break;
+                    default:
+                        break;
+                }
+                if (skillType == SkillType.Fire)
+                {
+                    skillBehindEle[i].GetComponent<Image>().sprite = elementImage[0];
+                }
+                else if (skillType == SkillType.Water)
+                {
+                    skillBehindEle[i].GetComponent<Image>().sprite = elementImage[1];
+                }
+                else if (skillType == SkillType.Wood)
+                {
+                    skillBehindEle[i].GetComponent<Image>().sprite = elementImage[2];
+                }
+                else if (skillType == SkillType.none)
+                {
+                    skillBehindEle[i].GetComponent<Image>().sprite = elementImage[3];
+                }
+            }
+        }//이후 새로운 기능을 추가할 수도 있으니, 활성화 될 때마다 리셋 해주는것으로 하기.
     }
 
     private void Update()
-    {
+    {       
+
         SkillDescText();
         switch (skillIndex)
         {

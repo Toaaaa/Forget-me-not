@@ -174,6 +174,7 @@ public class MonsterAttackManager : MonoBehaviour
 
     private async void MonsterSpecialAttack()
     {
+        combatManager.monsterTurnTime -= 3;
         Debug.Log("몬스터의 특수패턴");
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         currentScene = SceneManager.GetActiveScene();

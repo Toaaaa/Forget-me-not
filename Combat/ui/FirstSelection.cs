@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FirstSelection : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class FirstSelection : MonoBehaviour
     public CombatSelection combatSelection; //여기에 player의 정보가 있음.
     public List<GameObject> selection; // 1.공격 2.스킬 3.아이템 4.도망
     public List<GameObject> selectionBehind; //선택창 뒤에 있는 이미지들. (실제 선택은 아니고 표시용)
+    public GameObject attackElement; //기본 공격의 속성 표시
+    public GameObject attackBehindEle;
+    public List<Sprite> elementImage; //스킬의 속성을 표시할 이미지들.
 
     public GameObject selectCostText;
 
@@ -17,9 +22,43 @@ public class FirstSelection : MonoBehaviour
     float playerAverageSpeed;
     float fastestMonsterSpeed;
 
+    private void OnEnable()
+    {
+        if (attackElement.activeSelf)
+        {
+            if (combatSelection.player.normalAttackType == SkillType.Fire)
+            {
+                attackElement.GetComponent<Image>().sprite = elementImage[0];
+            }
+            else if (combatSelection.player.normalAttackType == SkillType.Water)
+            {
+                attackElement.GetComponent<Image>().sprite = elementImage[1];
+            }
+            else if (combatSelection.player.normalAttackType == SkillType.Wood)
+            {
+                attackElement.GetComponent<Image>().sprite = elementImage[2];
+            }
+        }//선택창 칸의 우측에 표시될 속성 이미지.
+        if (attackBehindEle.activeSelf)
+        {
+            if (combatSelection.player.normalAttackType == SkillType.Fire)
+            {
+                attackBehindEle.GetComponent<Image>().sprite = elementImage[0];
+            }
+            else if (combatSelection.player.normalAttackType == SkillType.Water)
+            {
+                attackBehindEle.GetComponent<Image>().sprite = elementImage[1];
+            }
+            else if (combatSelection.player.normalAttackType == SkillType.Wood)
+            {
+                attackBehindEle.GetComponent<Image>().sprite = elementImage[2];
+            }
+        }
+    }
 
     private void Update()
     {
+
         switch (selectionIndex)
         {
             case 0:
