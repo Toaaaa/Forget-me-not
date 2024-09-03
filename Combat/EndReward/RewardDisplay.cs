@@ -43,7 +43,8 @@ public class RewardDisplay : MonoBehaviour
         exp = CombatManager.Instance.DeadMobExpCount;//경험치 세팅
         OriginalExp = exp;
         gold = RandomGold();//골드 세팅
-
+        if (CombatManager.Instance.selectedFlee)
+            gold = 0;
 
         CombatManager.Instance.DeadMobExpCount = 0;//경험치 세팅 끝나면 리셋 해주기.
         CombatManager.Instance.DeadMobGoldCount = 0;//골드 세팅 끝나면 리셋 해주기.

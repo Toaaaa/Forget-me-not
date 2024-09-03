@@ -70,6 +70,11 @@ public class RewardPageManager : MonoBehaviour
                 ChangeSpotLight(i);
             }
         }
+        if(rewardDisplay.gold == 0)// 전투 flee 를 하였을 경우 gold가 0임으로 보상창을 닫을수 있게 함.
+        {
+            await UniTask.Delay(1300);
+            CanClose = true;
+        }
     }
 
 
