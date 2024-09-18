@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -13,6 +14,8 @@ public class CombatStatus : MonoBehaviour
     public TextMeshProUGUI playerHpText;
     public Image playerFatique;
     public CombatBuffs combatbuff;
+    private bool OnShake;//현제 체력바가 흔들리고 있음을 나타내는 변수.
+
     private void Update()
     {
         if(player == null) //플레이어가 없을경우 slot의 비활성화.
@@ -128,7 +131,9 @@ public class CombatStatus : MonoBehaviour
     IEnumerator hpreduce() //체력 감소시
     {
         //체력바 줄이기.
-        while(playerHpBar.fillAmount > player.hp / player.maxHp)
+        if(OnShake == false)
+            StartCoroutine(HpBarShake());
+        while (playerHpBar.fillAmount > player.hp / player.maxHp)
         {
             playerHpBar.fillAmount -= 0.001f;
             if(playerHpBar.fillAmount < player.hp / player.maxHp)
@@ -180,5 +185,14 @@ public class CombatStatus : MonoBehaviour
             }
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    IEnumerator HpBarShake()//피해를 입었을때 체력바 흔들리는 효과
+    {
+        Debug.Log("데미지 입음");
+        OnShake = true;
+        this.gameObject.transform.DOPunchPosition(new Vector3(5.5f, 0, 0), 1f, 10, 1);
+        yield return new WaitForSeconds(1f);
+        OnShake = false;
     }
 }
