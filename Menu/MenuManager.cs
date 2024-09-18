@@ -169,6 +169,7 @@ public class MenuManager : MonoBehaviour
                 case 1://item
                     if (Input.GetKeyDown(KeyCode.LeftArrow) && !isItemUsing) //아이템 사용하려고 하는 중이 아닐때 좌우키를 누르면 아이템메뉴의 2차메뉴가 변경됨.
                     {
+                        /*
                         if (menu[1].activeSelf == true)
                         {
                             clickItemOther();
@@ -181,9 +182,19 @@ public class MenuManager : MonoBehaviour
                         {
                             clickItemConsumable();
                         }
+                        *///기타창(clickItemOther)을 사용할때의 코드. 기타창을 안쓸 예정이라 수정.
+                        if (menu[1].activeSelf == true)
+                        {
+                            clickItemEquip();
+                        }
+                        else if (menu[2].activeSelf == true)
+                        {
+                            clickItemConsumable();
+                        }
                     }
                     else if (Input.GetKeyDown(KeyCode.RightArrow) && !isItemUsing)
                     {
+                        /*
                         if (menu[1].activeSelf == true)
                         {
                             clickItemConsumable();
@@ -193,6 +204,15 @@ public class MenuManager : MonoBehaviour
                             clickItemOther();
                         }
                         else if (menu[3].activeSelf == true)
+                        {
+                            clickItemEquip();
+                        }
+                        *///기타창(clickItemOther)을 사용할때의 코드. 기타창을 안쓸 예정이라 수정.
+                        if (menu[1].activeSelf == true)
+                        {
+                            clickItemConsumable();
+                        }
+                        else if (menu[2].activeSelf == true)
                         {
                             clickItemEquip();
                         }
