@@ -115,7 +115,7 @@ public class ShopDisplay : MonoBehaviour
 
     public void useSelectedItem() //해당 아이템을 사용하는 함수를, 관리에 용이하도록,  추후 장비/소비 에 따라 각각의 개별 메서드를 이용해 사용할것.
     {
-        if (Input.GetKeyDown(KeyCode.Return) && selectedItem != null)
+        if (Input.GetKeyDown(KeyCode.Space) && selectedItem != null)
         {
             itemBuyUI.SetActive(true);
 
