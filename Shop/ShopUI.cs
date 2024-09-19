@@ -11,11 +11,23 @@ public class ShopUI : MonoBehaviour
     private void OnEnable()
     {
         shopDisplay = GetComponent<ShopDisplay>();
-        
+        ShopDataUpdate();
+    }
+    private void Start()
+    {
+        ShopDataUpdate();
     }
     //여기서 엔터를 하면 선택중인 아이템을 itembuyui로 정보를 넘겨서 해당 ui가 열려있을때 enter를 통해 구매를 할수 있게.
     // Update is called once per frame
     void Update()
+    {
+        ShopDataUpdate();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            gameObject.SetActive(false); 
+
+    }
+
+    void ShopDataUpdate()//현재 상호작용 중인 shop의 데이터를 불러와 적용해주는 함수.
     {
         switch (shopName)
         {
@@ -39,9 +51,5 @@ public class ShopUI : MonoBehaviour
                 shopDisplay.container = shopData.StartStage;
                 break;
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-            gameObject.SetActive(false); 
-
     }
 }

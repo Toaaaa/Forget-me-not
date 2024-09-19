@@ -227,7 +227,6 @@ public class ShopDisplay : MonoBehaviour
 
     public void CreateDisplay()
     {
-        Debug.Log(container.Count);
         for (int i = 0; i < container.Count; i++)
         {
                 var obj = Instantiate(container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
@@ -237,8 +236,8 @@ public class ShopDisplay : MonoBehaviour
                 itemDisplayed.Add(container[i], obj);
                 obj.SetActive(false); //처음에는 모든 아이템을 비활성화 시키고, itemReplace에서 활성화 시킬것.
                 itemInShop.Add(obj); //현재 display되고있는 아이템들을 저장.
-
-
+                //itemReplace();
+                Debug.Log("CreateDisplay" + i);
         }
     }
 
