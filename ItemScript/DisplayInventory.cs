@@ -35,7 +35,7 @@ public class DisplayInventory : MonoBehaviour
     private void Start()
     {
         CreateDisplay(inventype);
-
+        UpdateDisplay(inventype);
     }
 
     private void Update()
@@ -350,18 +350,17 @@ public class DisplayInventory : MonoBehaviour
     public void CreateDisplay(int inventype)
     {
         itemInInven = new List<GameObject>();
-        for(int i =0; i< inventory.Container.Count; i++)
+        for(int i =0; i< inventory.Container.Count; i++) //인벤토리에 있는 모든 아이템의 개수.
         {
-            if (inventory.Container[i]._itemType == inventype)
-            {
+            if (inventory.Container[i]._itemType == inventype && inventory.Container[i].amount != 0) //그중 해당 디스플레이와 동일한 타입의 아이템만 표시.
+            {                
                 var obj = Instantiate(inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
-                //obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
                 obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.Container[i].amount.ToString("n0");
                 obj.GetComponent<IsGone>().itemID = inventory.Container[i].ID;
                 itemDisplayed.Add(inventory.Container[i], obj);
                 obj.SetActive(false); //처음에는 모든 아이템을 비활성화 시키고, itemReplace에서 활성화 시킬것.
                 itemInInven.Add(obj); //현재 display되고있는 아이템들을 저장.
-                
+                itemReplace();
 
             }
 
@@ -374,6 +373,6 @@ public class DisplayInventory : MonoBehaviour
         return new Vector3(0, Y_Start+(-Y_SpaceBetweenItems*i), 0f);
     }
 
-  
+
 
 }

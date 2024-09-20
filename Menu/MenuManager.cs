@@ -185,11 +185,11 @@ public class MenuManager : MonoBehaviour
                         *///기타창(clickItemOther)을 사용할때의 코드. 기타창을 안쓸 예정이라 수정.
                         if (menu[1].activeSelf == true)
                         {
-                            clickItemEquip();
+                            clickItemConsumable();
                         }
                         else if (menu[2].activeSelf == true)
                         {
-                            clickItemConsumable();
+                            clickItemEquip();
                         }
                     }
                     else if (Input.GetKeyDown(KeyCode.RightArrow) && !isItemUsing)

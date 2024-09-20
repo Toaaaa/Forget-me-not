@@ -237,7 +237,6 @@ public class ShopDisplay : MonoBehaviour
                 obj.SetActive(false); //처음에는 모든 아이템을 비활성화 시키고, itemReplace에서 활성화 시킬것.
                 itemInShop.Add(obj); //현재 display되고있는 아이템들을 저장.
                 //itemReplace();
-                Debug.Log("CreateDisplay" + i);
         }
     }
 
