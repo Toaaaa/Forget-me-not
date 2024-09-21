@@ -124,7 +124,7 @@ public class ShopDisplay : MonoBehaviour
 
     public int GetItemCost(Item item,int amount)
     {
-        return container[item.itemID].price * amount;
+        return container[itemInShop[shopNumber].GetComponent<IsGone>().itemID].price * amount;
     }
     public bool CheckEnoughGold(int amount)//돈이 충분한지 확인하는 함수//상점의 itemBuyUI에서 실행되는 함수.
     {

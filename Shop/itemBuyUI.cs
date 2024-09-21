@@ -7,7 +7,7 @@ public class itemBuyUI : MonoBehaviour
 {
     public ShopDisplay displayShop;
     Item selecteditem;
-    TextMeshProUGUI text;
+    public TextMeshProUGUI text;
     int amountSelect;
     int totalPrice;
     int maxAmount;
@@ -17,15 +17,24 @@ public class itemBuyUI : MonoBehaviour
     private void OnEnable()
     {
         amountSelect = 1;
+        selecteditem = displayShop.selectedItem == null ? null : displayShop.selectedItem; //displayinventory에서 선택된 아이템을 가져옴.
+        amountText.text = amountSelect.ToString(); //총 구매할 갯수 표시
+        totalPrice = displayShop.GetItemCost(displayShop.selectedItem, amountSelect);
+        TotalGold.text = totalPrice.ToString(); //총 가격 표시
+        if (selecteditem != null)
+        {
+            maxAmount = displayShop.container[displayShop.shopNumber].amount;
+            text.text = ("buy " + selecteditem.name);
+        }
     }
 
     private void Update()
     {
+        selecteditem = displayShop.selectedItem == null ? null : displayShop.selectedItem; //displayinventory에서 선택된 아이템을 가져옴.
         amountText.text = amountSelect.ToString(); //총 구매할 갯수 표시
         totalPrice = displayShop.GetItemCost(displayShop.selectedItem, amountSelect);
         TotalGold.text = totalPrice.ToString(); //총 가격 표시
 
-        selecteditem = displayShop.selectedItem == null ? null : displayShop.selectedItem; //displayinventory에서 선택된 아이템을 가져옴.
         if (Input.GetKeyDown(KeyCode.Space))//이거를 이제 갯수까지 다 정한 뒤에 구매하는 방식으로// (창뜨면 기본 1개부터 해서 ~~ 최대갯수까지 + 엔터로 구매)
         {
             if(selecteditem != null)
@@ -35,6 +44,7 @@ public class itemBuyUI : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("esc");
             int temp = displayShop.shopNumber;
             gameObject.SetActive(false);
             displayShop.gameObject.SetActive(true);
