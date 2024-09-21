@@ -9,7 +9,10 @@ public class itemBuyUI : MonoBehaviour
     Item selecteditem;
     TextMeshProUGUI text;
     int amountSelect;
+    int totalPrice;
     int maxAmount;
+    public TextMeshProUGUI amountText;
+    public TextMeshProUGUI TotalGold;
 
     private void OnEnable()
     {
@@ -18,6 +21,9 @@ public class itemBuyUI : MonoBehaviour
 
     private void Update()
     {
+        amountText.text = amountSelect.ToString(); //총 구매할 갯수 표시
+        totalPrice = displayShop.GetItemCost(displayShop.selectedItem, amountSelect);
+        TotalGold.text = totalPrice.ToString(); //총 가격 표시
 
         selecteditem = displayShop.selectedItem == null ? null : displayShop.selectedItem; //displayinventory에서 선택된 아이템을 가져옴.
         if (Input.GetKeyDown(KeyCode.Space))//이거를 이제 갯수까지 다 정한 뒤에 구매하는 방식으로// (창뜨면 기본 1개부터 해서 ~~ 최대갯수까지 + 엔터로 구매)
@@ -37,13 +43,13 @@ public class itemBuyUI : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if (amountSelect < maxAmount)
+            if (amountSelect < maxAmount && displayShop.CheckEnoughGold(amountSelect+1))
             {
                 amountSelect++;
             }
             else
             {
-                amountSelect = maxAmount;
+                return;
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -63,7 +69,7 @@ public class itemBuyUI : MonoBehaviour
         {
             maxAmount = displayShop.container[displayShop.shopNumber].amount;
             text = GetComponentInChildren<TextMeshProUGUI>();
-            text.text = ("buy "+amountSelect+" of "+selecteditem.name);
+            text.text = ("buy "+selecteditem.name);
         }
     }
 }
