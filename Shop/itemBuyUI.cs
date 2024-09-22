@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class itemBuyUI : MonoBehaviour
 {
@@ -13,7 +15,17 @@ public class itemBuyUI : MonoBehaviour
     int maxAmount;
     public TextMeshProUGUI amountText;
     public TextMeshProUGUI TotalGold;
+    public GameObject UpArrow;
+    Vector3 UpArrowPos;
+    public GameObject DownArrow;
+    Vector3 DownArrowPos;
 
+
+    private void Start()
+    {
+        UpArrowPos = UpArrow.transform.position;
+        DownArrowPos = DownArrow.transform.position;
+    }
     private void OnEnable()
     {
         amountSelect = 1;
@@ -56,9 +68,11 @@ public class itemBuyUI : MonoBehaviour
             if (amountSelect < maxAmount && displayShop.CheckEnoughGold(amountSelect+1))
             {
                 amountSelect++;
+                AmountUpSelect();
             }
             else
             {
+                //여기에는 나중에 추가가 안됨을 알리는 소리 넣기.
                 return;
             }
         }
@@ -67,6 +81,7 @@ public class itemBuyUI : MonoBehaviour
             if (amountSelect > 1)
             {
                 amountSelect--;
+                AmountDownSelect();
             }
             else
             {
@@ -81,5 +96,28 @@ public class itemBuyUI : MonoBehaviour
             text = GetComponentInChildren<TextMeshProUGUI>();
             text.text = ("buy "+selecteditem.name);
         }
+    }
+
+    void AmountUpSelect()//화살표가 위로 통통 튀는 효과
+    {
+        UpArrow.transform.DOMoveY(UpArrowPos.y + 0.06f, 0.06f) // 1 유닛 위로 이동, 0.2초
+            .SetEase(Ease.OutBounce) // 튕기는 효과
+            .OnComplete(() =>
+            {
+                // 원래 위치로 돌아오기
+                UpArrow.transform.DOMove(UpArrowPos, 0.06f)
+                    .SetEase(Ease.OutBounce); // 튕기는 효과
+            });
+    }
+    void AmountDownSelect()//화살표가 아래로 통통 튀는 효과
+    {
+        DownArrow.transform.DOMoveY(DownArrowPos.y - 0.06f, 0.06f) // 1 유닛 위로 이동, 0.2초
+            .SetEase(Ease.OutBounce) // 튕기는 효과
+            .OnComplete(() =>
+            {
+                // 원래 위치로 돌아오기
+                DownArrow.transform.DOMove(DownArrowPos, 0.06f)
+                    .SetEase(Ease.OutBounce); // 튕기는 효과
+            });
     }
 }
