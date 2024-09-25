@@ -58,7 +58,7 @@ public class CombatStatus : MonoBehaviour
         {
             playerSprite.sprite = null;
         }
-        playerHpText.text = (int)player.hp + "/" + (int)player.maxHp;
+        playerHpText.text = (int)player.hp + "/" + (int)player.maxHp; 
     }
 
     private void buffcheck()

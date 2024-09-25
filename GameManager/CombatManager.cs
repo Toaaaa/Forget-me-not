@@ -55,7 +55,7 @@ public class CombatManager : Singleton<CombatManager>
 
     //turn
     public float playerTurnTime; //플레이어의 턴 시간.
-    public float monsterTurnTime; //몬스터의 턴 시간.
+    public int monsterTurnTime; //몬스터의 턴 시간.
     public float playerNoAttackTime; //플레이어가 아무런 선택없이 6초동안 시간을 보낸경우, 자동으로 몬스터 공격 실행을 위한 변수.
     public int attackCostTime; //기본공격의 코스트 시간unw.
     public int skillCostTime; //스킬 사용의 코스트 시간.
@@ -63,7 +63,7 @@ public class CombatManager : Singleton<CombatManager>
     public int fleeCostTime; //도망가기의 코스트 시간.
     public PlayableC lastAction; //마지막으로 행동한 플레이어. (피로도 시스템을 위한 변수)
 
-    float tempMonst;
+    int tempMonst;
 
 
 
@@ -304,9 +304,10 @@ public class CombatManager : Singleton<CombatManager>
         CombatTimerSet();
         for (int i = 0; i < monsterList.Count; i++)
         {
-            tempMonst +=1f* monsterList[i].GetComponent<TestMob>().monster.mSpeed;
+            tempMonst +=1* monsterList[i].GetComponent<TestMob>().monster.mSpeed;
         }
         monsterTurnTime = tempMonst;
+        monsterAttackManager.MonsterTurnCardSet();//몬스터의 카드를 세팅.
     }
     public void timerSet()//턴이 재시작 될때 사용하는 함수.
     {
@@ -340,6 +341,7 @@ public class CombatManager : Singleton<CombatManager>
             tempMonst += 1* monsterAliveList[i].GetComponent<TestMob>().Speed;
         }
         monsterTurnTime = tempMonst;
+        monsterAttackManager.MonsterTurnCardSet();//몬스터의 카드를 세팅.
 
         for (int i = 0; i < playerList.Count; i++)
         {

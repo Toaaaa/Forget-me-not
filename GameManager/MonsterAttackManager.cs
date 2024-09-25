@@ -4,6 +4,8 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
+using UnityEngine.UI;
+using Cysharp.Threading.Tasks.Triggers;
 
 public class MonsterAttackManager : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class MonsterAttackManager : MonoBehaviour
     public CombatManager combatManager;
     public CombatDisplay combatDisplay;
     public List<TestMob> monsters;
+
+    [SerializeField]
+    List<Image> monsterTurnCard;//몬스터의 남은 턴 횟수를 시각적으로 보여주는 카드. 0~9까지
+    int monsterTurnCount;//몬스터의 턴 카드 갯수 int값.
 
     public bool monsterAttackAvailable; //몬스터의 공격이 가능한지 판별하는 변수. (플레이어가 3턴시간 이상을 사용하였을때)
     public float playerTurnUsed; //플레이어의 턴시간 누적 사용시간. 몬스터 공격을 하며 차감하기.
@@ -64,7 +70,7 @@ public class MonsterAttackManager : MonoBehaviour
                 }
             }
 
-            if (playerTurnUsed >= 3 && combatManager.monsterTurnTime > 0)
+            if (playerTurnUsed >= 3 && monsterTurnCount > 0) //combatManager.monsterTurnTime 에서 monsterturncount 로 변경. 카드가 생성된 이후에 몬스터가 행동을 진행해줫으면 함.
             {
                 monsterAttackAvailable = true;
             }
@@ -146,6 +152,7 @@ public class MonsterAttackManager : MonoBehaviour
         if(!monster.isDead)
         {
             combatManager.monsterTurnTime -= 3;
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             await AttackStartDelay(monster);
             return;
         }
@@ -163,6 +170,7 @@ public class MonsterAttackManager : MonoBehaviour
         if (!monster.isDead)
         {
             combatManager.monsterTurnTime -= 3;
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             await AttackStartExtraDelay(monster);
             return;
         }
@@ -175,6 +183,7 @@ public class MonsterAttackManager : MonoBehaviour
     private async void MonsterSpecialAttack()
     {
         combatManager.monsterTurnTime -= 3;
+        MonsterTurnCardUse();//몬스터의 턴 카드 사용.
         Debug.Log("몬스터의 특수패턴");
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         currentScene = SceneManager.GetActiveScene();
@@ -218,6 +227,26 @@ public class MonsterAttackManager : MonoBehaviour
         }
 
     }
+
+
+    public async void MonsterTurnCardSet()//새로 턴타임을 리필 할때 카드가 세팅되는 효과.
+    {
+        await UniTask.Delay(1000);//이전에 실행된 카드가 사용되는 효과와 겹치지 않게 딜레이를 줌.
+        monsterTurnCount = combatManager.monsterTurnTime / 3;
+        monsterTurnCount += (combatManager.monsterTurnTime%3) == 0 ? 0 : 1;//턴타임이 3의 배수일 경우 딱맞게, 그 이상일 경우 카드 한장 추가.
+        Debug.Log("몬스터의 턴 카드 갯수 : " + monsterTurnCount);
+        for(int i=0; i< monsterTurnCount; i++)
+        {
+            monsterTurnCard[i].GetComponent<MonsterCardEffect>().CardReset();//카드가 생성되는 효과.
+        }
+    }
+    public void MonsterTurnCardUse()//몬스터의 턴을 사용할때 카드가 사용되는 효과.
+    {
+        monsterTurnCount--;
+        monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().CardUsed();//카드가 사용되는 효과.
+    }
+
+
 
     private void OnDisable()
     {
