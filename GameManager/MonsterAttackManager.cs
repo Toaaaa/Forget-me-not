@@ -43,7 +43,7 @@ public class MonsterAttackManager : MonoBehaviour
                     if (!isAttacking)
                     {
                         MonsterSpecialAttack();//is attacking을 적용하려면 monsterSpecialAttack안에 monsterattack을 넣어야 할듯.
-                        playerTurnUsed -= 6;
+                        playerTurnUsed -= 3;
                         monsterAttackAvailable = false;
                     }                   
                 }
@@ -130,15 +130,18 @@ public class MonsterAttackManager : MonoBehaviour
 
         if (monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
         {
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
         }
         else if (combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
         {
             Debug.Log("플레이어가 1명만 살아있을때");
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
         }
         else
         {
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
         }
     }
@@ -152,7 +155,6 @@ public class MonsterAttackManager : MonoBehaviour
         if(!monster.isDead)
         {
             combatManager.monsterTurnTime -= 3;
-            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             await AttackStartDelay(monster);
             return;
         }
@@ -170,7 +172,6 @@ public class MonsterAttackManager : MonoBehaviour
         if (!monster.isDead)
         {
             combatManager.monsterTurnTime -= 3;
-            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             await AttackStartExtraDelay(monster);
             return;
         }
@@ -183,12 +184,12 @@ public class MonsterAttackManager : MonoBehaviour
     private async void MonsterSpecialAttack()
     {
         combatManager.monsterTurnTime -= 3;
-        MonsterTurnCardUse();//몬스터의 턴 카드 사용.
         Debug.Log("몬스터의 특수패턴");
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         currentScene = SceneManager.GetActiveScene();
         if (combatManager.isBoss)//보스전의 특수패턴
         {
+            MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             switch (currentScene.name)
             {
                 case "bossbattle in stage1"://1번 맵 보스
@@ -201,9 +202,9 @@ public class MonsterAttackManager : MonoBehaviour
                     break;
             }
         }
-        else //일반 몬스터의 특수 패턴
+        else //보스전이 아닐때의 특수패턴
         {
-            await SpecialAttackStartDelay(0.7f, monster); //턴타임 6초 이상일시 0.7초 딜레이 후 특수공격 시작.
+            await SpecialAttackStartDelay(0.6f, monster); //턴타임 6초 이상일시 0.7초 딜레이 후 특수공격 시작.
            
         }
     }
@@ -215,6 +216,7 @@ public class MonsterAttackManager : MonoBehaviour
         {
             case "battle in stage0"://튜토리얼맵
                 monster.monsterSkill[0].BattleCry(monster);//전투의 함성
+                MonsterTurnCardUse();//몬스터의 턴 카드 사용.
                 break;
             case "battle in stage1":
                 break;
@@ -231,7 +233,7 @@ public class MonsterAttackManager : MonoBehaviour
 
     public async void MonsterTurnCardSet()//새로 턴타임을 리필 할때 카드가 세팅되는 효과.
     {
-        await UniTask.Delay(1000);//이전에 실행된 카드가 사용되는 효과와 겹치지 않게 딜레이를 줌.
+        await UniTask.Delay(1800);//이전에 실행된 카드가 사용되는 효과와 겹치지 않게 딜레이를 줌.
         monsterTurnCount = combatManager.monsterTurnTime / 3;
         monsterTurnCount += (combatManager.monsterTurnTime%3) == 0 ? 0 : 1;//턴타임이 3의 배수일 경우 딱맞게, 그 이상일 경우 카드 한장 추가.
         for(int i=0; i< monsterTurnCount; i++)
@@ -253,12 +255,12 @@ public class MonsterAttackManager : MonoBehaviour
     }
     private async UniTask AttackStartDelay(TestMob monster)
     {
-        await UniTask.Delay(800);
+        await UniTask.Delay(600);
         AttackPattern(monster);
     }
     private async UniTask AttackStartExtraDelay(TestMob monster)//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
     {
-        await UniTask.Delay(800);
+        await UniTask.Delay(600);
         AttackPattern(monster);
     }
 
