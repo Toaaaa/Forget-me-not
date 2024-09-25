@@ -234,7 +234,6 @@ public class MonsterAttackManager : MonoBehaviour
         await UniTask.Delay(1000);//이전에 실행된 카드가 사용되는 효과와 겹치지 않게 딜레이를 줌.
         monsterTurnCount = combatManager.monsterTurnTime / 3;
         monsterTurnCount += (combatManager.monsterTurnTime%3) == 0 ? 0 : 1;//턴타임이 3의 배수일 경우 딱맞게, 그 이상일 경우 카드 한장 추가.
-        Debug.Log("몬스터의 턴 카드 갯수 : " + monsterTurnCount);
         for(int i=0; i< monsterTurnCount; i++)
         {
             monsterTurnCard[i].GetComponent<MonsterCardEffect>().CardReset();//카드가 생성되는 효과.
