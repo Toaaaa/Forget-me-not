@@ -241,6 +241,20 @@ public class MonsterAttackManager : MonoBehaviour
             monsterTurnCard[i].GetComponent<MonsterCardEffect>().CardReset();//카드가 생성되는 효과.
         }
     }
+    public async void DeadMonsterTurnCardSet()//몬스터가 죽었을때 잔여 턴 카드의 개수를 조정하는 함수.
+    {
+        await UniTask.Delay(600);
+        int tempCount = combatManager.GetNewTurnTime() / 3;//GetNewTurnTime() == 죽은 몬스터의 턴타임을 제외한 나머지 턴타임.
+        tempCount += (combatManager.GetNewTurnTime() % 3) == 0 ? 0 : 1;
+        if(tempCount < monsterTurnCount)
+        {
+            for (int i = tempCount; i < monsterTurnCount; i++)
+            {
+                monsterTurnCard[i].GetComponent<MonsterCardEffect>().CardUsed();//카드가 사용되는 효과.
+            }
+            monsterTurnCount = tempCount;
+        }
+    }
     public void MonsterTurnCardUse()//몬스터의 턴을 사용할때 카드가 사용되는 효과.
     {
         monsterTurnCount--;

@@ -63,7 +63,7 @@ public class CombatManager : Singleton<CombatManager>
     public int fleeCostTime; //도망가기의 코스트 시간.
     public PlayableC lastAction; //마지막으로 행동한 플레이어. (피로도 시스템을 위한 변수)
 
-    int tempMonst;
+    public int tempMonst;
 
 
 
@@ -223,7 +223,7 @@ public class CombatManager : Singleton<CombatManager>
         }
     }
 
-    public void updateMonster()//incombatscene.start()에서 해당 함수 호출하여 사용.
+    public void updateMonster()//incombatscene.start()에서 해당 함수 호출하여 사용. //몬스터의 배치와 저장 정보 업데이트 함수.
     {
         Scene scene = SceneManager.GetActiveScene();
         if(scene.name != battleSceneName)
@@ -361,14 +361,22 @@ public class CombatManager : Singleton<CombatManager>
             }
         }//마지막으로 모든 수치 초기화.
     }//플레이어와 몬스터의 속도에 따른 턴시간을 세팅해주는 함수.
-    private void StartCombat()
+    public int GetNewTurnTime()
     {
+        int temptime = 0;
+        for (int i = 0; i < monsterAliveList.Count; i++)
+        {
+            if (!monsterAliveList[i].GetComponent<TestMob>().isDead)//죽은 몬스터 제외.
+                temptime += 1 * monsterAliveList[i].GetComponent<TestMob>().Speed;
+        }
+        return temptime;
+    }
 
-    }   
     private void monsterDie(int num)
     {
         monsterObject[num].GetComponent<TestMob>().Hp = 0.1f;//hp가 0이하가 되면 계속 trigger 호출이 되서 사망 애니메이션이 고장남. 따라서 사망직후 바로 hp 0.1세팅
         monsterObject[num].GetComponent<TestMob>().isDead = true;
+        monsterAttackManager.DeadMonsterTurnCardSet();//몬스터가 죽었을때 죽은 몬스터 분의 턴타임을 잔존 턴카드에서 제거.
         monsterObject[num].GetComponent<MonsterAnimatorController>().Death("DEATH").Forget();//몬스터 사망시의 모든 기능 실행.
         combatDisplay.MobList.RemoveAt(num);
     }
@@ -412,7 +420,7 @@ public class CombatManager : Singleton<CombatManager>
         {
             if (playerList[i].isPoisoned)
             {
-                playerList[i].hp -= 10;
+                playerList[i].hp -= playerList[i].hp * 0.1f;
             }
         }
     }
