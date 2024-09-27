@@ -62,6 +62,7 @@ public class Magician : PlayableC
     }
 
 
+    //DmgCalc 에서 스킬의 데미지가 적용되는 방식 관리.
     public override void AttackDmgCalc(GameObject g)
     {
         float critatk = CheckCrit(atk, this.crit);
@@ -79,7 +80,7 @@ public class Magician : PlayableC
     {
 
     }
-    override public void SkillDmgCalc2(GameObject g)
+    override public void SkillDmgCalc2(GameObject g)//3번 스킬로 쌓은 속도 스택을 추가 데미지로 적용.
     {
         float critatk = CheckCrit(atk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
@@ -91,7 +92,7 @@ public class Magician : PlayableC
         monster.slowStack = 0;//스택 초기화
 
         monster.TakeDamage();//피격시 반짝이는 효과
-        monster.Hp -= critatk *(2f+ stack);
+        monster.Hp -= critatk *(1.5f+ stack);//기본 데미지 2배 + 스택(최대4회)만큼 추가 데미지
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk *stack, isCrit, false);
         Destroy(g);
     }
@@ -137,7 +138,7 @@ public class Magician : PlayableC
         mob.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);//최소 데미지 1
     }
-    public void TimeAsynchronization()//스킬 3의 속도 디버프 효과
+    public void TimeAsynchronization()//스킬 3의 속도 디버프 효과//slowstack은 최대 4번까지
     {
         for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
         {
@@ -152,6 +153,10 @@ public class Magician : PlayableC
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
                 CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack++;
             }
+            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack >= 4)
+            {
+                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack = 4;
+            }//최대 4 스택 까지만 적용
         }
     }
     public float TimeStack(TestMob monster)
