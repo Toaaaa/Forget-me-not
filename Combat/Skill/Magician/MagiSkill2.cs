@@ -19,7 +19,7 @@ public class MagiSkill2 : PlayerSkill//시간 동기화
     {
         if (collision.gameObject == targetMob.gameObject)
         {
-            player.InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx2OnMonster(collision.gameObject.transform);//플레이어의 위치에 스킬효과 표시
+            player.InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx2OnMonster(collision.gameObject.transform);//몬스터의 위치에 스킬효과 표시
             player.SkillDmgCalc2(this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             //Destroy(gameObject);
         }

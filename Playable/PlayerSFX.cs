@@ -34,10 +34,7 @@ public class PlayerSFX : MonoBehaviour
     }
     public void PlayerSfx3OnMonster(Transform monsterT)//몬스터의 위치에 표시될 스킬
     {
-        //SFXs[7].transform.position = monsterT.position;
-        //SFXs[7].SetActive(false);
-        //SFXs[7].SetActive(true);
-        //몬스터 자체의 sfx 실행으로 변경
+        //몬스터 자체의 sfx 실행으로 변경 (몬스터의 크기에 효과 맞춤) >> targetMob.playerSFX[0] 활성화.
     }
     public void PlayerSfx4()//스킬4
     {

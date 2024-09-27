@@ -133,31 +133,28 @@ public class Magician : PlayableC
         critatk = ElementDamage(skill3Type, mob, 1);//기본데미지 1을 기반으로 속성 데미지 계산.
         ElementStack(skill3Type, mob);//속성 스택 쌓기.
 
-        TimeAsynchronization();//몬스터의 speed 감소 효과.
+        TimeAsynchronization(mob);//몬스터의 speed 감소 효과.
         mob.TakeDamage();//피격시 반짝이는 효과
         mob.Hp -= critatk;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);//최소 데미지 1
     }
-    public void TimeAsynchronization()//스킬 3의 속도 디버프 효과//slowstack은 최대 4번까지
+    public void TimeAsynchronization(TestMob mob)//스킬 3의 속도 디버프 효과//slowstack은 최대 4번까지
     {
-        for (int i = 0; i < CombatManager.Instance.monsterAliveList.Count; i++)
-        {
-            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().isslowed == false)
-            {
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 3;
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack++;
-            }
-            else
-            {
-                Debug.Log("이미 속도가 감소되어 있습니다.");
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().Speed -= 1;
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack++;
-            }
-            if (CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack >= 4)
-            {
-                CombatManager.Instance.monsterObject[i].GetComponent<TestMob>().slowStack = 4;
-            }//최대 4 스택 까지만 적용
-        }
+         if (mob.isslowed == false)
+         {
+            mob.Speed -= 3;
+            mob.slowStack++;
+         }
+         else
+         {
+            Debug.Log("이미 속도가 감소되어 있습니다.");
+            mob.Speed -= 1;
+            mob.slowStack++;
+         }
+         if (mob.slowStack >= 4)
+         {
+             mob.slowStack = 4;
+         }//최대 4 스택 까지만 적용
     }
     public float TimeStack(TestMob monster)
     {
