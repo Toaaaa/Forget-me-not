@@ -135,7 +135,6 @@ public class MonsterAttackManager : MonoBehaviour
         }
         else if (combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
         {
-            Debug.Log("플레이어가 1명만 살아있을때");
             MonsterTurnCardUse();//몬스터의 턴 카드 사용.
             monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
         }
@@ -149,7 +148,6 @@ public class MonsterAttackManager : MonoBehaviour
 
     private async void MonsterAttack()
     {
-        Debug.Log("MonsterAttack");
         isAttacking = true;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         if(!monster.isDead)
@@ -166,7 +164,6 @@ public class MonsterAttackManager : MonoBehaviour
     }
     private async void MonsterExtraAttack()//플레이어의 턴이 끝나고 남은 몬스터 턴에서 재생되는 공격.
     {
-        Debug.Log("MonsterExtraAttack");
         isAttacking = true;
         TestMob monster = monsters[Random.Range(0, monsters.Count)];
         if (!monster.isDead)

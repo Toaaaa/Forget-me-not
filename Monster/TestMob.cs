@@ -39,6 +39,9 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public bool isDefDebuffed;
     public bool isSpeedDebuffed;
 
+    //몬스터 하단부 위치값에 세팅할 오브젝트
+    public GameObject bottomPos;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();

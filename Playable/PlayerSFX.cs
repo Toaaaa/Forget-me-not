@@ -47,6 +47,29 @@ public class PlayerSFX : MonoBehaviour
         SFXs[8].SetActive(false);
         SFXs[8].SetActive(true);
     }
+    public void PlayerSfx4_starting(int i,Transform prj)//스킬4의 시전중 작은 번개, 이동 중인 스킬 투사체의 위치에 스킬 표시
+    {
+        switch (i)
+        {
+            case 0:
+                SFXs[9].transform.position = prj.position;
+                SFXs[9].SetActive(false);
+                SFXs[9].SetActive(true);
+                break;
+            case 1:
+                SFXs[10].transform.position = prj.position;
+                SFXs[10].SetActive(false);
+                SFXs[10].SetActive(true);
+                break;
+            case 2:
+                SFXs[11].transform.position = prj.position;
+                SFXs[11].SetActive(false);
+                SFXs[11].SetActive(true);
+                break;
+        }
+    }
+
+
     /*
     public void PlayerDie()//빈사상태의 효과 표시
     {

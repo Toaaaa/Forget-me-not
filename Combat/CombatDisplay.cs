@@ -80,15 +80,15 @@ public class CombatDisplay : MonoBehaviour
         {
             if(selectingPlayer.name == "Magician" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 0)
             {
-                SkillOnSelectAll();//±¤¿ª½ºÅ³.
+                SkillOnSelectAll();//¸¶¹ý»ç 1¹ø ±¤¿ª½ºÅ³.
             }
             else if (selectingPlayer.name == "Magician" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 2)
             {
-                SkillOnSelectAll();//±¤¿ª½ºÅ³.
+                SkillOnSelectAll();//¸¶¹ý»ç 3¹ø ±¤¿ª½ºÅ³.
             }
             else if(selectingPlayer.name == "Tank" && combatSelection.skillSelection.GetComponent<SkillSelection>().skillIndex == 2)
             {
-                SkillOnSelectAll();//±¤¿ª½ºÅ³.
+                SkillOnSelectAll();//ÅÊÄ¿ 3¹ø ±¤¿ª½ºÅ³.
             }
             else
             {

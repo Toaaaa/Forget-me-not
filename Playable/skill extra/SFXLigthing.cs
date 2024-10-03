@@ -8,6 +8,8 @@ using Cysharp.Threading.Tasks;
 public class SFXLigthing : MonoBehaviour
 {
     public Light2D light2D;
+    public bool TwinckleLight;
+
     [SerializeField]
     private float L_Time0;//기본은 0, 라이트를 켜기전 대기시간이 필요할 경우 사용.    
     [SerializeField]
@@ -45,6 +47,26 @@ public class SFXLigthing : MonoBehaviour
                     DOTween.To(() => lightColor.a, x => lightColor.a = x, 0f, L_Time3)
                         .OnUpdate(() => light2D.color = lightColor);
                 });
+                if(TwinckleLight)
+                    TwinkleEffect(L_Time2);//빛이 L_Time2시간동안 번쩍번쩍 하는 효과.
             });
+    }
+
+    private void TwinkleEffect(float duration)
+    {
+        // 빛의 강약 효과를 구현할 반복 횟수 (duration 동안 발생)
+        int twinkleCount = 4; // 이 값은 파직거림의 횟수로 조정 가능
+        float twinkleDuration = duration / (twinkleCount * 2); // 강약 강약으로 왔다갔다하는 시간
+        float OriginalIntensity = light2D.intensity;
+
+        Sequence twinkleSequence = DOTween.Sequence();
+
+        for (int i = 0; i < twinkleCount; i++)
+        {
+            twinkleSequence.Append(DOTween.To(() => light2D.intensity, x => light2D.intensity = x, OriginalIntensity*0.5f, twinkleDuration)) // 약하게
+                .Append(DOTween.To(() => light2D.intensity, x => light2D.intensity = x, OriginalIntensity, twinkleDuration)); // 강하게
+        }
+
+        twinkleSequence.Play();
     }
 }

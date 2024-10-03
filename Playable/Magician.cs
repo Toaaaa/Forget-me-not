@@ -51,7 +51,7 @@ public class Magician : PlayableC
             obj.GetComponent<MagiSkill3>().targetLocked();
         }
     }
-    override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) (빛의 봉인검 비주얼) << 추후 데미지출력 다단히트 3번으로 나오게 수정할수도(비주얼적인 이유로)(홀리레이 참고)
+    override public void Skill4(Transform trans) //피어싱 라이트닝. 3연속 관통 공격. (단일기) 추후 데미지출력 다단히트 3번으로 나오게 수정할수도(비주얼적인 이유로)(홀리레이 참고)
     { //>>높은 데미지 높은 코스트
         InGamePrefab.GetComponent<PlayerAnimatorController>().Attack("ATK4",4).Forget();//스킬3 애니메이션 재생
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4();//스킬4 sfx 재생
@@ -59,6 +59,7 @@ public class Magician : PlayableC
         obj.GetComponent<MagiSkill4>().player = this;
         obj.GetComponent<MagiSkill4>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<MagiSkill4>().targetLocked();
+        TripleLighting(obj);//투사체 이동시간 1.6초중 ,  0.4초 0.8초 1.2초 구간에 이동경로상에 작은 천둥 sfx 출력 하는 함수,
     }
 
 
@@ -162,7 +163,15 @@ public class Magician : PlayableC
         return (float)speedStack;
     }
 
+    private async void TripleLighting(GameObject obj)//피어싱 라이트닝이 몬스터 타격전 경로에 3번(0.4,0.8,1.2초마다) 작은 번개를 소환하는 효과
+    {
+        for(int i=0; i<3; i++)
+        {
+            await UniTask.Delay(400);
+            InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4_starting(i, obj.transform);//투사체 이동중에 번개 효과
+        }
 
+    }
     override public void LevelUpStat()//마법사의 경우 공격력 증가 위주의 스탯.
     {
         switch (level)//2레벨부터 15레벨까지의 레벨업시 스텟 증가량
