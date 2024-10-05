@@ -165,11 +165,18 @@ public class Magician : PlayableC
 
     private async void TripleLighting(GameObject obj)//피어싱 라이트닝이 몬스터 타격전 경로에 3번(0.4,0.8,1.2초마다) 작은 번개를 소환하는 효과
     {
+        /*
         for(int i=0; i<3; i++)
         {
             await UniTask.Delay(400);
             InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4_starting(i, obj.transform);//투사체 이동중에 번개 효과
-        }
+        }*/
+        await UniTask.Delay(800);
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4_starting(0, obj.transform);//투사체 이동중에 번개 효과
+        await UniTask.Delay(200);
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4_starting(1, obj.transform);//투사체 이동중에 번개 효과
+        await UniTask.Delay(200);
+        InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4_starting(2, obj.transform);//투사체 이동중에 번개 효과
 
     }
     override public void LevelUpStat()//마법사의 경우 공격력 증가 위주의 스탯.
