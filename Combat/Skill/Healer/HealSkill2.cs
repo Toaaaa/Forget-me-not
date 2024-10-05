@@ -31,11 +31,11 @@ public class HealSkill2 : PlayerSkill //(±¤¿ªÈú)
                     if (targetPlayer.hp > targetPlayer.maxHp)
                     {
                         targetPlayer.hp = targetPlayer.maxHp;
-                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.gameObject.transform.position, WhenMaxHpPrint(player), false, true);
+                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.gameObject, WhenMaxHpPrint(player), false, true);
                     }
                     else
                     {
-                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.gameObject.transform.position, player.atk * 2f, false, true);
+                        CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.gameObject, player.atk * 2f, false, true);
                     }
                 }
                 Destroy(gameObject);

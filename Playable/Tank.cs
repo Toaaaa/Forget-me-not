@@ -81,12 +81,12 @@ public class Tank : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, 1, isCrit, false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk - monster.Def, isCrit, false);
         }
         Destroy(g);
     }
@@ -116,7 +116,7 @@ public class Tank : PlayableC
         ElementStack(skill3Type, mob);//속성 스택 쌓기.
 
         mob.Hp -= critatk;
-        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject, critatk, isCrit, false);
     }
 
     override public void LevelUpStat()//탱커의 경우 어그로 스킬이 있기에 방어력 체력수치 조정에 유의.

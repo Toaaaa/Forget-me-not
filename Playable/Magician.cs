@@ -74,7 +74,7 @@ public class Magician : PlayableC
 
         monster.TakeDamage();//피격시 반짝이는 효과
         monster.Hp -= critatk;
-        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk, isCrit,false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk, isCrit,false);
         Destroy(g);
     }
     override public void SkillDmgCalc1(GameObject g)
@@ -94,7 +94,7 @@ public class Magician : PlayableC
 
         monster.TakeDamage();//피격시 반짝이는 효과
         monster.Hp -= critatk *(1.5f+ stack);//기본 데미지 2배 + 스택(최대4회)만큼 추가 데미지
-        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk *stack, isCrit, false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk *stack, isCrit, false);
         Destroy(g);
     }
     override public void SkillDmgCalc3(GameObject g)
@@ -111,7 +111,7 @@ public class Magician : PlayableC
 
         monster.TakeDamage();//피격시 반짝이는 효과
         monster.Hp -= critatk * 3.5f;
-        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 3.5f, isCrit, false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk * 3.5f, isCrit, false);
         Destroy(g);
     }
     override public void MultiDmg1(PlayableC player, TestMob mob)//마법사의 경우 전부 방어력 무시 트루데미지.
@@ -124,7 +124,7 @@ public class Magician : PlayableC
 
         mob.TakeDamage();//피격시 반짝이는 효과
         mob.Hp -= critatk * 1.5f;
-        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk * 1.5f, isCrit, false);
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject, critatk * 1.5f, isCrit, false);
     }
     override public void MultiDmg3(PlayableC player, TestMob mob)//시간 디버프 이기때문에 속성 스텍을 적용 할수 있는 최소한의 데미지 1 만 적용.
     {
@@ -137,7 +137,7 @@ public class Magician : PlayableC
         TimeAsynchronization(mob);//몬스터의 speed 감소 효과.
         mob.TakeDamage();//피격시 반짝이는 효과
         mob.Hp -= critatk;
-        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject.transform.position, critatk, isCrit, false);//최소 데미지 1
+        CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject, critatk, isCrit, false);//최소 데미지 1
     }
     public void TimeAsynchronization(TestMob mob)//스킬 3의 속도 디버프 효과//slowstack은 최대 4번까지
     {

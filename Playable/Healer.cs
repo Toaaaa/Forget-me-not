@@ -61,12 +61,12 @@ public class Healer : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit,false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, 1, isCrit,false);
         }
         else
         {
             monster.Hp -= critatk - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk - monster.Def, isCrit, false);
         }
         Destroy(g);
     }
@@ -88,12 +88,12 @@ public class Healer : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, 1, isCrit, false);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk * 2f - monster.Def, isCrit, false);
         }
         Destroy(g);
     }
@@ -107,12 +107,12 @@ public class Healer : PlayableC
         if (monster.Def >= critatk)
         {
             monster.Hp -= 1;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, 1, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, 1, isCrit, false);
         }
         else
         {
             monster.Hp -= critatk * 2f - monster.Def;
-            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject.transform.position, critatk * 2f - monster.Def, isCrit, false);
+            CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk * 2f - monster.Def, isCrit, false);
         }
         Destroy(g);
     }

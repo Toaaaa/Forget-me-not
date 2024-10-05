@@ -23,13 +23,13 @@ public class DamagePrintManager : MonoBehaviour
         }
     }
 
-    public void PrintDamage(Vector3 position, float damage,bool iscrit,bool isheal)
+    public void PrintDamage(GameObject MobPos, float damage,bool iscrit,bool isheal)
     {
         for(int i = 0; i < damagePrint.Length; i++)
         {
             if (!damagePrint[i].activeInHierarchy)
             {
-                damagePrint[i].transform.position = position + new Vector3(0,30,0);
+                damagePrint[i].gameObject.GetComponent<RectTransform>().anchoredPosition = MobPos.GetComponent<RectTransform>().anchoredPosition + new Vector2(0,40f);
                 if (iscrit)
                 {
                     damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().fontSize = 60;
