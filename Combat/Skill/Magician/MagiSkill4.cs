@@ -10,7 +10,7 @@ public class MagiSkill4 : PlayerSkill//피어싱 라이트닝
     {
 
         if (targetMob != null)
-            transform.DOMove(targetMob.GetComponent<TestMob>().bottomPos.transform.position, 1.4f).SetEase(Ease.Linear);//투사체1.6초 동안 이동
+            transform.DOMove(targetMob.GetComponent<TestMob>().bottomPos.transform.position, 1.3f).SetEase(Ease.Linear);//투사체1.3초 동안 이동
         else
         {
             Destroy(gameObject);

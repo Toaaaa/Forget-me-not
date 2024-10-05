@@ -178,7 +178,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         for(int i = 0; i < monsterObject.Count; i++)
         {
-            if (monsterObject[i].GetComponent<TestMob>().Hp <= 0)
+            if (monsterObject[i].GetComponent<TestMob>().Hp <= 0 && !monsterObject[i].GetComponent<TestMob>().isDead)
             {
                 Debug.Log("monsaterdie호출");
                 monsterDie(i);
@@ -378,7 +378,11 @@ public class CombatManager : Singleton<CombatManager>
         monsterObject[num].GetComponent<TestMob>().isDead = true;
         monsterAttackManager.DeadMonsterTurnCardSet();//몬스터가 죽었을때 죽은 몬스터 분의 턴타임을 잔존 턴카드에서 제거.
         monsterObject[num].GetComponent<MonsterAnimatorController>().Death("DEATH").Forget();//몬스터 사망시의 모든 기능 실행.
-        combatDisplay.MobList.RemoveAt(num);
+        GameObject mob = combatDisplay.MobList.Find(x => x == monsterObject[num]);
+        if(mob != null)
+        {
+            combatDisplay.MobList.Remove(mob);
+        }
     }
     private void PlayerDieCheck()//추후 isdead에서의 색깔변화가 아닌. 애니메이션의 파라미터를 isdead로 변경하여 죽은 애니메이션을 실행하도록 변경할것.
     {
