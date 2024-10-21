@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,11 +32,13 @@ public class MonsterAnimatorController : MonoBehaviour
     {
         animator.SetTrigger("death");
         shadowAnimator.GetComponent<MonsterShadowAnimator>().SettingTriger();//death의 트리거 실행.
+        try { CombatManager.Instance.monsterAliveList.Remove(this.gameObject); }//몬스터가 죽은 경우 즉시 리스트에서 제거하여, 화살표가 선택중인 몬스터 혼동 없도록 하기.
+        catch (ObjectDisposedException e)
+        { Console.WriteLine("Caught: {0}", e.Message);}
 
         await WaitForAnimationToComplete(animationName);
 
         Debug.Log("몬스터가 죽었습니다");
-        CombatManager.Instance.monsterAliveList.Remove(this.gameObject);
         this.gameObject.SetActive(false);
     }
 
