@@ -79,7 +79,6 @@ public class skills
             mob.target.hp -= mob.Atk - mob.target.def;
         }
         mob.target.hp -= mob.Atk;
-        Debug.Log(skillName);
     }
 
     public void strongAttack(TestMob mob) //공격력 강화
@@ -90,7 +89,6 @@ public class skills
     public void hpRegen(TestMob mob) //체력 회복
     {
         mob.Hp += 10;
-        Debug.Log(skillName);
     }
     public void allAttackDebuff() //모든 플레이어 공격력 감소
     {

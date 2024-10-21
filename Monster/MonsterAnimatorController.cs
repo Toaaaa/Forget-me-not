@@ -19,7 +19,6 @@ public class MonsterAnimatorController : MonoBehaviour
     public  async UniTask Attack(string animationName)//해당 이름을 가진 공격 애니메이션을 실행
     {
         animator.SetBool("attacking", true);
-        Debug.Log("몬스터가 공격을 시작합니다");
 
         // 공격 애니메이션이 끝날 때까지 대기
         await WaitForAnimationToComplete(animationName);
@@ -38,7 +37,6 @@ public class MonsterAnimatorController : MonoBehaviour
 
         await WaitForAnimationToComplete(animationName);
 
-        Debug.Log("몬스터가 죽었습니다");
         this.gameObject.SetActive(false);
     }
 

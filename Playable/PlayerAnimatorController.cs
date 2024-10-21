@@ -24,7 +24,6 @@ public class PlayerAnimatorController : MonoBehaviour
         // idle 상태로 전환
         animator.SetBool("attacking", false);
         await UniTask.Yield();
-        Debug.Log("플레이어가 공격을 끝냈습니다");
     }
     public void Hit(string animationName) //피격시 애니메이션 재생
     {

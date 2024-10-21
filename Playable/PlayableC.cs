@@ -294,10 +294,8 @@ public class PlayableC : ScriptableObject
     }
     public float ElementDamage(SkillType thisSkillType, TestMob monster, float critatk)//속성 스택 해당시 추가 데미지
     {
-        Debug.Log(thisSkillType + "속성 데미지");
         if (thisSkillType != SkillType.none)
         {
-            Debug.Log("속성 데미지");
             switch (thisSkillType)
             {
                 case SkillType.Fire:

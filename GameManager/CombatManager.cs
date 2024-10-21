@@ -180,7 +180,6 @@ public class CombatManager : Singleton<CombatManager>
         {
             if (monsterObject[i].GetComponent<TestMob>().Hp <= 0 && !monsterObject[i].GetComponent<TestMob>().isDead)
             {
-                Debug.Log("monsaterdie호출");
                 monsterDie(i);
             }
         }//몬스터의 체력이 0이하가 되면 사망판정 + 사망한 몬스터를 리스트,monsterobject에서 제거.
