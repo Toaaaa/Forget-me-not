@@ -10,6 +10,11 @@ public enum ItemType
     Consumable, //소비    
     Default //기타
 }
+public enum EquipType
+{
+    Weapon,
+    Accessory
+}
 
 [System.Serializable]   
 public abstract class Item : ScriptableObject
@@ -22,6 +27,7 @@ public abstract class Item : ScriptableObject
     [TextArea(5, 15)]
     public string itemDescription;
     public ItemType itemType;
+    public EquipType equipType;
     //public EquipItem.EquipType equipType;
     //public EquipItem.OptionType optionType;
     //public ConsumeItem.ConsumeType consumeType;

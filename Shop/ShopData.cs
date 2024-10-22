@@ -24,6 +24,7 @@ public class ShopData : ScriptableObject, ISerializationCallbackReceiver
     {
 #if UNITY_EDITOR
         database = (DBManager)AssetDatabase.LoadAssetAtPath("Assets/ScriptableObject/DB_manager.asset", typeof(DBManager));
+        AfterEnableAndDesrialize();//OnAfterDeserialize >> OnEnable 순서이기에 해당 작업을 OnEnable에서 수행.
         //#else 추후 빌드시에는 resource.load가 아니라 addressable asset system을 사용하자. <<
 #endif
     }
@@ -46,12 +47,11 @@ public class ShopData : ScriptableObject, ISerializationCallbackReceiver
             file.Close(); //to prevent memory leak
         }
     }
-
-    public void OnAfterDeserialize()
+    private void AfterEnableAndDesrialize()
     {
         for (int i = 0; i < StartStage.Count; i++)
         {
-              StartStage[i].item = database.GetItem[StartStage[i].ID];
+            StartStage[i].item = database.GetItem[StartStage[i].ID];
         }
         for (int i = 0; i < fisrtArea.Count; i++)
         {
@@ -77,6 +77,10 @@ public class ShopData : ScriptableObject, ISerializationCallbackReceiver
         {
             specialShop2[i].item = database.GetItem[specialShop2[i].ID];
         }
+    }
+
+    public void OnAfterDeserialize()
+    {       
     }
     public void OnBeforeSerialize()
     {

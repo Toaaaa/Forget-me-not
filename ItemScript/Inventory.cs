@@ -20,6 +20,7 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
     {
 #if UNITY_EDITOR
         database = (DBManager)AssetDatabase.LoadAssetAtPath("Assets/ScriptableObject/DB_manager.asset", typeof(DBManager));
+        AfterEnableAndDesrialize(); //OnAfterDeserialize >> OnEnable 순서이기에 해당 작업을 OnEnable에서 수행.
         //#else 추후 빌드시에는 resource.load가 아니라 addressable asset system을 사용하자. <<
 #endif
     }
@@ -57,17 +58,47 @@ public class Inventory : ScriptableObject, ISerializationCallbackReceiver
         }
     }
 
-    public void OnAfterDeserialize()
-    {
-        for(int i = 0; i < Container.Count; i++)
+    public void OnAfterDeserialize()//에디터 에서 인벤토리에 바로 아이템을 추가할때 동기화시키는 함수
+    {      
+        for (int i = 0; i < Container.Count; i++)
         {
-            Container[i].item = database.GetItem[Container[i].ID];
-            //if (Container[i].item == null)
-            //{
-            //    Container[i].item = database.GetItem[Container[i].ID]; //이걸로 하면 오류는 안생기던데 인벤에 아이템을 즉석으로 추가할때 귀찮아 지더라.. 일단은 임시로 보류
-            //}
+            if (Container[i].item.itemType == ItemType.Equipment)
+            {
+                if (Container[i].item.equipType == EquipType.Accessory)
+                {
+                    Container[i].isAcc = true;
+                }
+                else
+                {
+                    Container[i].isAcc = false;
+                }
+            }
+            else
+            {
+                Container[i].isAcc = false;
+            }
+        }//인벤에 들어갈때 itemtype이 equip 일때 해당 아이템의 악세서리 유무를 확인, isAcc값에 변수 등록.
+    }
+    private void AfterEnableAndDesrialize()
+    {
+        for (int i = 0; i < Container.Count; i++)
+        {
+            try { Container[i].item = database.GetItem[Container[i].ID]; }
+            catch (System.Exception e) { Debug.Log("Exception : " + e); }
+        }
+        for (int i = 0; i < Container.Count; i++)
+        {
+            try
+            {
+                if (Container[i].item == null || Container[i].item != database.GetItem[Container[i].ID])
+                {
+                    Container[i].item = database.GetItem[Container[i].ID];
+                }
+            }
+            catch (KeyNotFoundException e) { Debug.Log("ItemID가 데이터 베이스와 다름. : " + e); }
         }
     }
+
 
     public void OnBeforeSerialize()
     {
