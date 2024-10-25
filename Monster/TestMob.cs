@@ -13,7 +13,7 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public MobSlot thisSlot;//이 몹위치에 대응되는 Canvas 상의 슬롯.
     public Animator shadowAnimator;//그림자 애니메이터
     public List<skills> monsterSkill;
-    public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모와놓은 리스트.
+    public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모아놓은 리스트.
     public PlayableC target; //스킬을 사용할 대상.
     public bool isslowed; //스킬에 의해 속도가 감소되었는지 판별하는 변수.
     public int slowStack; //속도 감소 스킬에 의해 쌓인 스택.

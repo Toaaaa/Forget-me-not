@@ -240,7 +240,7 @@ public class CombatManager : Singleton<CombatManager>
         }
         combatDisplay.MobList.Clear();
         monsterAttackManager.monsters.Clear();
-
+        monsterAttackManager.SpecialCardStack = 0;//몬스터의 특수카드 스택 초기화.
         for (int i = 0; i < monsterObject.Count; i++) //컴뱃 매니저의 몬스터 오브젝트를 컴뱃 디스플레이의 몬스터리스트에도 추가.
         {
             combatDisplay.MobList.Add(monsterObject[i]);
