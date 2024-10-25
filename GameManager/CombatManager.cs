@@ -375,7 +375,7 @@ public class CombatManager : Singleton<CombatManager>
     {
         monsterObject[num].GetComponent<TestMob>().Hp = 0.1f;//hp가 0이하가 되면 계속 trigger 호출이 되서 사망 애니메이션이 고장남. 따라서 사망직후 바로 hp 0.1세팅
         monsterObject[num].GetComponent<TestMob>().isDead = true;
-        monsterAttackManager.DeadMonsterTurnCardSet();//몬스터가 죽었을때 죽은 몬스터 분의 턴타임을 잔존 턴카드에서 제거.
+        //monsterAttackManager.DeadMonsterTurnCardSet();//몬스터가 죽었을때 죽은 몬스터 분의 턴타임을 잔존 턴카드에서 제거.
         monsterObject[num].GetComponent<MonsterAnimatorController>().Death("DEATH").Forget();//몬스터 사망시의 모든 기능 실행.
         GameObject mob = combatDisplay.MobList.Find(x => x == monsterObject[num]);
         if(mob != null)

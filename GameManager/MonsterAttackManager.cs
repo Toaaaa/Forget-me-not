@@ -25,6 +25,8 @@ public class MonsterAttackManager : MonoBehaviour
 
     public bool isAttacking;//공격 중일때사용하는 bool. >> 공격 애니메이션이 끝날때 false로 변경함. +특수 공격의 경우 일단은 MonsterSkill.@@@ 에서 false로 설정함.
 
+    private System.Random random = new System.Random();//랜덤함수.
+
     private void Update()
     {
 
@@ -265,7 +267,7 @@ public class MonsterAttackManager : MonoBehaviour
         }
         SpecialCardStackUse();//특수카드 스택을 사용하는 함수.
     }
-    public async void DeadMonsterTurnCardSet()//몬스터가 죽었을때 잔여 턴 카드의 개수를 조정하는 함수.
+    public async void DeadMonsterTurnCardSet()//몬스터가 죽었을때 잔여 턴 카드의 개수를 조정하는 함수. >> 특수카드 기믹과 의도가 충돌해서 해당 기능은 사용하지 않는걸로 결정. (CombatManager.monsterDie()에서 사용했었음.)
     {
         await UniTask.Delay(600);
         int tempCount = combatManager.GetNewTurnTime() / 3;//GetNewTurnTime() == 죽은 몬스터의 턴타임을 제외한 나머지 턴타임.
@@ -294,7 +296,7 @@ public class MonsterAttackManager : MonoBehaviour
 
         //잔여 턴 카드중 특수카드가 아닌 카드만 필터링
         var nonSpecialCards = monsterTurnCard
-            .Where(card => !card.GetComponent<MonsterCardEffect>().CardIsSpecial) //특수카드가 아닌 카드만 필터링
+            .Where(card => !card.GetComponent<MonsterCardEffect>().CardIsSpecial&&card.GetComponent<MonsterCardEffect>().IsCardOn) //특수카드가 아닌 + 사용 가능한 카드만 필터링
             .ToList(); // 필터링된 카드를 리스트로 변환
 
         if (nonSpecialCards.Count == 0)
@@ -304,7 +306,7 @@ public class MonsterAttackManager : MonoBehaviour
         }
 
         // 랜덤으로 하나의 카드를 특수 카드로 변경
-        int x = Random.Range(0, nonSpecialCards.Count);
+        int x = random.Next(0, nonSpecialCards.Count);
         nonSpecialCards[x].GetComponent<MonsterCardEffect>().SpecialCard();
     }
     private void SpecialCardStackUse()//특수카드 스택을 사용하는 함수. (턴 카드 리셋시 사용하는 함수)
