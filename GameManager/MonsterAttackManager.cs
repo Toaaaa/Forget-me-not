@@ -284,7 +284,8 @@ public class MonsterAttackManager : MonoBehaviour
     public void CardUse()//몬스터의 턴을 사용할때 카드가 사용되는 효과.
     {
         monsterTurnCount--;
-        monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().CardUsed();//카드가 사용되는 효과.
+        if(monsterTurnCount >= 0)
+            monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().CardUsed();//카드가 사용되는 효과.
     }
     private void MonsterSpecialCard()//잔여 몬스터 턴 카드중 하나를 특수카드로 변경.
     {
