@@ -15,6 +15,7 @@ public class Magician : PlayableC
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx0();//기본 공격 sfx 재생
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().playerAtk = this.atk;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
@@ -26,6 +27,7 @@ public class Magician : PlayableC
         {
             var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
             obj.GetComponent<MagiSkill1>().player = this;
+            obj.GetComponent <MagiSkill1>().playerAtk = this.atk;
             obj.GetComponent<MagiSkill1>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<MagiSkill1>().targetLocked();
         }
@@ -36,6 +38,7 @@ public class Magician : PlayableC
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx2();//스킬2 sfx 재생
         var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill2>().player = this;
+        obj.GetComponent<MagiSkill2>().playerAtk = this.atk;
         obj.GetComponent<MagiSkill2>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<MagiSkill2>().targetLocked();
     }
@@ -47,6 +50,7 @@ public class Magician : PlayableC
         {
             var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
             obj.GetComponent<MagiSkill3>().player = this;
+            obj.GetComponent<MagiSkill3>().playerAtk = this.atk;
             obj.GetComponent<MagiSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<MagiSkill3>().targetLocked();
         }
@@ -57,6 +61,7 @@ public class Magician : PlayableC
         InGamePrefab.GetComponent<PlayerSFX>().PlayerSfx4();//스킬4 sfx 재생
         var obj = Instantiate(skillEffect4, trans.transform.position, Quaternion.identity);
         obj.GetComponent<MagiSkill4>().player = this;
+        obj.GetComponent<MagiSkill4>().playerAtk = this.atk;
         obj.GetComponent<MagiSkill4>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<MagiSkill4>().targetLocked();
         TripleLighting(obj);//투사체 이동시간 1.6초중 ,  0.4초 0.8초 1.2초 구간에 이동경로상에 작은 천둥 sfx 출력 하는 함수,
@@ -66,7 +71,7 @@ public class Magician : PlayableC
     //DmgCalc 에서 스킬의 데미지가 적용되는 방식 관리.
     public override void AttackDmgCalc(GameObject g)
     {
-        float critatk = CheckCrit(atk, this.crit);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
         bool isCrit = IsCritical(critatk, atk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
@@ -83,8 +88,8 @@ public class Magician : PlayableC
     }
     override public void SkillDmgCalc2(GameObject g)//3번 스킬로 쌓은 속도 스택을 추가 데미지로 적용.
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(skill2Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill2Type, monster);//속성 스택 쌓기.
@@ -103,8 +108,8 @@ public class Magician : PlayableC
     }
     override public void SkillDmgCalc4(GameObject g)//피어싱 라이트닝 데미지 계산.
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(skill4Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill4Type, monster);//속성 스택 쌓기.
@@ -114,10 +119,10 @@ public class Magician : PlayableC
         CombatManager.Instance.damagePrintManager.PrintDamage(monster.thisSlot.gameObject, critatk * 3.5f, isCrit, false);
         Destroy(g);
     }
-    override public void MultiDmg1(PlayableC player, TestMob mob)//마법사의 경우 전부 방어력 무시 트루데미지.
+    override public void MultiDmg1(PlayableC player, TestMob mob, GameObject g)//마법사의 경우 전부 방어력 무시 트루데미지.
     {
-        float critatk = CheckCrit(atk, this.crit);//데미지 치명타 보정
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);//데미지 치명타 보정
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
 
         critatk = ElementDamage(skill1Type, mob, critatk);//최종데미지 속성 데미지 계산.
         ElementStack(skill1Type, mob);//속성 스택 쌓기.
@@ -126,10 +131,10 @@ public class Magician : PlayableC
         mob.Hp -= critatk * 1.5f;
         CombatManager.Instance.damagePrintManager.PrintDamage(mob.thisSlot.gameObject, critatk * 1.5f, isCrit, false);
     }
-    override public void MultiDmg3(PlayableC player, TestMob mob)//시간 디버프 이기때문에 속성 스텍을 적용 할수 있는 최소한의 데미지 1 만 적용.
+    override public void MultiDmg3(PlayableC player, TestMob mob, GameObject g)//시간 디버프 이기때문에 속성 스텍을 적용 할수 있는 최소한의 데미지 1 만 적용.
     {
-        float critatk = CheckCrit(atk, this.crit);//데미지 치명타 보정
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);//데미지 치명타 보정
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         isCrit =false;//시간 디버프는 최소 데미지를 적용하기에 치명타 없이 only 속성 추가 데미지만..
         critatk = ElementDamage(skill3Type, mob, 1);//기본데미지 1을 기반으로 속성 데미지 계산.
         ElementStack(skill3Type, mob);//속성 스택 쌓기.

@@ -178,19 +178,19 @@ public class PlayableC : ScriptableObject
     {
 
     }
-    virtual public void MultiDmg1(PlayableC player,TestMob target)
+    virtual public void MultiDmg1(PlayableC player,TestMob target,GameObject g)
     {
 
     }
-    virtual public void MultiDmg2(PlayableC player, TestMob target)
+    virtual public void MultiDmg2(PlayableC player, TestMob target, GameObject g)
     {
 
     }
-    virtual public void MultiDmg3(PlayableC player, TestMob target)
+    virtual public void MultiDmg3(PlayableC player, TestMob target, GameObject g)
     {
 
     }
-    virtual public void MultiDmg4(PlayableC player, TestMob target)
+    virtual public void MultiDmg4(PlayableC player, TestMob target, GameObject g)
     {
 
     }

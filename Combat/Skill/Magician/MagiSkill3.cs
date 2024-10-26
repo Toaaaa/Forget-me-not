@@ -21,7 +21,7 @@ public class MagiSkill3 : PlayerSkill //속도감소 광역기
     {
         if (collision.gameObject == targetMob.gameObject)
         {
-            player.MultiDmg3(player, targetMob);//여기에 데미지 출력 효과도 포함되어있음.
+            player.MultiDmg3(player, targetMob,this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             targetMob.playerSFX[0].gameObject.SetActive(false);
             targetMob.playerSFX[0].gameObject.SetActive(true);//몬스터의 위치에 슬로우 효과 재생
             Destroy(gameObject);

@@ -848,7 +848,7 @@ public class CombatDisplay : MonoBehaviour
         if(selectingPlayer.fatigue == selectingPlayer.maxFatigue)
         {
             //이미 최대 피로도.
-            //피로도 최대의 애니메이션 출력.(이미 출력중일때는 출력되지 않도록 할것.)
+            //피로도 최대의 애니메이션 출력 or 공격력 감소 아이콘 표시.(이미 출력중일때는 출력되지 않도록 할것.)
         }
         else
         {

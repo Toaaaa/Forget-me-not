@@ -12,6 +12,7 @@ public class Healer : PlayableC
     {
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().playerAtk = this.atk;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
@@ -19,6 +20,7 @@ public class Healer : PlayableC
     {
         var obj = Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
         obj.GetComponent<HealSkill1>().player = this;
+        obj.GetComponent<HealSkill1>().playerAtk = this.atk;
         obj.GetComponent<HealSkill1>().targetPlayer = CombatManager.Instance.selectedPlayer;
         obj.GetComponent<HealSkill1>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
         obj.GetComponent<HealSkill1>().targetLocked();
@@ -31,6 +33,7 @@ public class Healer : PlayableC
         {
             var obj = Instantiate(skillEffect2, trans.transform.position, Quaternion.identity);
             obj.GetComponent<HealSkill2>().player = this;
+            obj.GetComponent<HealSkill2>().playerAtk = this.atk;
             obj.GetComponent<HealSkill2>().targetPlayer = CombatManager.Instance.playerList[i];
             obj.GetComponent<HealSkill2>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[i];
             obj.GetComponent<HealSkill2>().targetLocked();
@@ -44,6 +47,7 @@ public class Healer : PlayableC
     {//중 정도의 코스트에 모든 마나 소모. (기본적으로 1스킬 = 1마나)
         var obj = Instantiate(skillEffect4, trans.transform.position, Quaternion.identity);
         obj.GetComponent<HealSkill4>().player = this;
+        obj.GetComponent<HealSkill4>().playerAtk = this.atk;
         obj.GetComponent<HealSkill4>().targetPlayer = CombatManager.Instance.selectedPlayer;
         obj.GetComponent<HealSkill4>().targetplayerPlace = CombatManager.Instance.combatDisplay.slotList[CombatManager.Instance.combatDisplay.selectedSlotIndex];
         obj.GetComponent<HealSkill4>().targetLocked();
@@ -52,8 +56,8 @@ public class Healer : PlayableC
 
     public override void AttackDmgCalc(GameObject g)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
         ElementStack(normalAttackType, monster);//속성 스택 쌓기.
@@ -80,8 +84,8 @@ public class Healer : PlayableC
     }
     public override void HolyRayDmgCalc(GameObject g)//홀리레이의 1~4번째 타격의 데미지 계산
     {
-        float critatk = CheckCrit(atk*0.5f, this.crit); //데미지 계산에 치명타 연산.
-        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk * 0.5f, this.crit); //데미지 계산에 치명타 연산.
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk); // 해당 데미지가 치명타인지 확인.
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(skill3Type, monster, critatk);//속성 데미지 계산.
         //1~4번째 타격은 속성 스택 쌓기 없음.
@@ -99,8 +103,8 @@ public class Healer : PlayableC
     }
     public override void LastHolyRayDmgCalc(GameObject g)//홀리레이의 마지막 타격(5번째)의 속성 스택부여
     {
-        float critatk = CheckCrit(atk * 0.5f, this.crit); //데미지 계산에 치명타 연산.
-        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk * 0.5f, this.crit); //데미지 계산에 치명타 연산.
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk); // 해당 데미지가 치명타인지 확인.
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(skill3Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill3Type, monster);//속성 스택 쌓기.
@@ -133,6 +137,7 @@ public class Healer : PlayableC
         {
             var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
             obj.GetComponent<HealSkill3>().player = this;
+            obj.GetComponent<HealSkill3>().playerAtk = this.atk;
             obj.GetComponent<HealSkill3>().targetMob = this.singleTarget.GetComponent<TestMob>();
             obj.GetComponent<HealSkill3>().targetLocked();
             await UniTask.Delay(delayMilliseconds);
@@ -140,6 +145,7 @@ public class Healer : PlayableC
         //마지막 타격
         var objL = Instantiate(skillEffect3Last, trans.transform.position, Quaternion.identity);
         objL.GetComponent<HealSkill3Last>().player = this;
+        objL.GetComponent<HealSkill3Last>().playerAtk = this.atk;
         objL.GetComponent<HealSkill3Last>().targetMob = this.singleTarget.GetComponent<TestMob>();
         objL.GetComponent<HealSkill3Last>().targetLocked();
     }

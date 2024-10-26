@@ -21,7 +21,7 @@ public class MagiSkill1 : PlayerSkill//블레이즈
     {
         if (collision.gameObject == targetMob.gameObject)
         {
-            player.MultiDmg1(player, targetMob);//여기에 데미지 출력 효과도 포함되어있음.
+            player.MultiDmg1(player, targetMob, this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             Destroy(gameObject);
         }
     }

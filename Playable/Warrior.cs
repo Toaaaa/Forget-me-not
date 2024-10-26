@@ -13,6 +13,7 @@ public class Warrior : PlayableC
     {
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().playerAtk = this.atk;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
@@ -20,6 +21,7 @@ public class Warrior : PlayableC
     {
         var obj=Instantiate(skillEffect1, trans.transform.position, Quaternion.identity);
         obj.GetComponent<WarriorSkill1>().player = this;
+        obj.GetComponent<WarriorSkill1>().playerAtk = this.atk;
         obj.GetComponent<WarriorSkill1>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<WarriorSkill1>().targetLocked();
     }
@@ -38,8 +40,8 @@ public class Warrior : PlayableC
 
     public override void AttackDmgCalc(GameObject g)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
         ElementStack(normalAttackType, monster);//속성 스택 쌓기.
@@ -57,8 +59,8 @@ public class Warrior : PlayableC
     }
     override public void SkillDmgCalc1(GameObject g)//여기서 투사체의 피격시 데미지 계산방법.
     {
-        float critatk = CheckCrit(atk, this.crit); //데미지 계산에 치명타 연산. (적용될 데미지값)
-        bool isCrit = IsCritical(critatk, atk); // 해당 데미지가 치명타인지 확인.(치명타시의 시각효과를 위한 bool값)
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit); //데미지 계산에 치명타 연산. (적용될 데미지값)
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk); // 해당 데미지가 치명타인지 확인.(치명타시의 시각효과를 위한 bool값)
         TestMob monster = this.singleTarget.GetComponent<TestMob>();//monster == 피격 대상 몬스터.
         critatk = ElementDamage(skill1Type, monster, critatk);//속성 데미지 계산.
         ElementStack(skill1Type, monster);//속성 스택 쌓기.

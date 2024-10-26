@@ -16,6 +16,7 @@ public class Tank : PlayableC
     {
         var obj = Instantiate(normalAttack, trans.transform.position, Quaternion.identity);
         obj.GetComponent<AttackSkill>().player = this;
+        obj.GetComponent<AttackSkill>().playerAtk = this.atk;
         obj.GetComponent<AttackSkill>().targetMob = this.singleTarget.GetComponent<TestMob>();
         obj.GetComponent<AttackSkill>().targetLocked();
     }
@@ -50,6 +51,7 @@ public class Tank : PlayableC
         {
             var obj = Instantiate(skillEffect3, trans.transform.position, Quaternion.identity);
             obj.GetComponent<TankSkill3>().player = this;
+            obj.GetComponent<TankSkill3>().playerAtk = this.atk;
             obj.GetComponent<TankSkill3>().targetMob = CombatManager.Instance.monsterAliveList[i].GetComponent<TestMob>();
             obj.GetComponent<TankSkill3>().targetLocked();
 
@@ -73,8 +75,8 @@ public class Tank : PlayableC
 
     public override void AttackDmgCalc(GameObject g)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
         TestMob monster = this.singleTarget.GetComponent<TestMob>();
         critatk = ElementDamage(normalAttackType, monster, critatk);//속성 데미지 계산.
         ElementStack(normalAttackType, monster);//속성 스택 쌓기.
@@ -107,10 +109,10 @@ public class Tank : PlayableC
 
     }
 
-    override public void MultiDmg3(PlayableC player, TestMob mob)
+    override public void MultiDmg3(PlayableC player, TestMob mob, GameObject g)
     {
-        float critatk = CheckCrit(atk, this.crit);
-        bool isCrit = IsCritical(critatk, atk);
+        float critatk = CheckCrit(g.GetComponent<PlayerSkill>().playerAtk, this.crit);
+        bool isCrit = IsCritical(critatk, g.GetComponent<PlayerSkill>().playerAtk);
 
         critatk = ElementDamage(skill3Type, mob, critatk);//속성 데미지 계산.
         ElementStack(skill3Type, mob);//속성 스택 쌓기.

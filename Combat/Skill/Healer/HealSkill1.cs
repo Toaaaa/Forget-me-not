@@ -21,7 +21,7 @@ public class HealSkill1 : PlayerSkill //(¥‹¿œ »˙)
         {
             if (targetPlayer != null && collision.GetComponent<CharacterPrefab>().player == targetPlayer)
             {
-                targetPlayer.hp += player.atk * 3f;
+                targetPlayer.hp += playerAtk * 3f;
                 if (targetPlayer.hp > targetPlayer.maxHp)
                 {
                     CombatManager.Instance.damagePrintManager.PrintDamage(targetplayerPlace.gameObject, WhenMaxHpPrint(player), false, true);

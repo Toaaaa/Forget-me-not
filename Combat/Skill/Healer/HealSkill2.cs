@@ -27,7 +27,7 @@ public class HealSkill2 : PlayerSkill //(±¤¿ªÈú)
             {
                 if (!targetPlayer.isDead)
                 {
-                    targetPlayer.hp += player.atk * 2f;
+                    targetPlayer.hp += playerAtk * 2f;
                     if (targetPlayer.hp > targetPlayer.maxHp)
                     {
                         targetPlayer.hp = targetPlayer.maxHp;

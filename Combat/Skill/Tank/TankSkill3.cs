@@ -22,7 +22,7 @@ public class TankSkill3 : PlayerSkill //(땅울리기)
         Debug.Log("충돌이 감지되었습니다.");
         if (collision.gameObject.tag == "Mob")
         {
-            player.MultiDmg3(player,targetMob);//여기에 데미지 출력 효과도 포함되어있음.
+            player.MultiDmg3(player,targetMob,this.gameObject);//여기에 데미지 출력 효과도 포함되어있음.
             //피격시 방깍 이펙트 출력.
             Destroy(gameObject);
         }
