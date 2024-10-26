@@ -60,6 +60,7 @@ public class MonsterCardEffect : MonoBehaviour
     {
         //카드가 특수카드로 바뀌는 효과 재생.
         //적당한 타이밍에 CardIsSpecial을 true 변경
-        CardIsSpecial = true;//
+        CardIsSpecial
+            = true;//
     }
 }

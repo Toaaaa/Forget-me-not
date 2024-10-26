@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class DamagePrintManager : MonoBehaviour
@@ -46,7 +48,7 @@ public class DamagePrintManager : MonoBehaviour
                 {
                     damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().color = Color.red;
                 }
-                damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().text = damage.ToString();
+                damagePrint[i].GetComponentInChildren<TextMeshProUGUI>().text =Math.Round(damage,MidpointRounding.AwayFromZero).ToString();
                 damagePrint[i].SetActive(true);
                 break;
             }
