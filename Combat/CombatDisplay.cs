@@ -852,8 +852,14 @@ public class CombatDisplay : MonoBehaviour
         }
         else
         {
-            selectingPlayer.fatigue += 1;
-        }//행동이 끝날때 피로도 추가.
+            //턴타임 코스트가 6이상의 행동을 시전시, 피로도 2증가.
+            if(combatManager.skillCostTime >= 6)
+                selectingPlayer.fatigue += 2;
+            else
+                selectingPlayer.fatigue += 1;
+
+            combatManager.skillCostTime = 0;//스킬 코스트 초기화.
+        }//행동이 끝날때 사용 스킬 코스트에 따른, 피로도 추가.
         for(int i = 0; i < playerList.Count; i++)
         {
             if (playerList[i] != selectingPlayer)
