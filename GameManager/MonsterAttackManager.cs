@@ -85,7 +85,7 @@ public class MonsterAttackManager : MonoBehaviour
             }
         }
     }
-    private void AttackPattern(TestMob monster)
+    private async void AttackPattern(TestMob monster)
     {
         monster.target = null;
         if (!combatManager.isAggroOn)
@@ -144,6 +144,7 @@ public class MonsterAttackManager : MonoBehaviour
             {
                 monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
             }
+            await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
         }
         else if (combatManager.alivePlayerCount == 1)//플레이어가 1명만 살아있을때 공격형 스킬만사용
@@ -157,6 +158,7 @@ public class MonsterAttackManager : MonoBehaviour
             {
                 monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
             }
+            await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
         }
         else//그외의 상황에서는 모든 스킬을 사용.
@@ -170,6 +172,7 @@ public class MonsterAttackManager : MonoBehaviour
             {
                 monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
             }
+            await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
         }
     }

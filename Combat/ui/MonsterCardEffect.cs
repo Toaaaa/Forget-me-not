@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,9 @@ public class MonsterCardEffect : MonoBehaviour
     public bool IsCardOn;//카드가 켜저있는지.
     public bool CardIsSpecial;//카드가 특수카드인지.
     [SerializeField]
-    private List<Sprite> Cards;//카드 0 :일반 턴 카드, 카드 1: 특수 스킬 턴 카드
+    private List<GameObject> Cards;//카드 0 :일반 턴 카드, 카드 1: 특수 스킬 턴 카드
+    [SerializeField]
+    private List<GameObject> CardEffect;//카드 생성시 재생될 이펙트.
 
     private void Start()
     {
@@ -23,44 +26,45 @@ public class MonsterCardEffect : MonoBehaviour
     {
         if (IsCardOn)
         {
-            Color card = this.GetComponent<Image>().color;
-            card.a = 1;
-            GetComponent<Image>().color = card;
+            if (CardIsSpecial)
+            {
+                Cards[1].SetActive(true);
+                Cards[0].SetActive(false);
+            }
+            else
+            {
+                Cards[0].SetActive(true);
+                Cards[1].SetActive(false);
+            }
         }
         else
         {
-            Color card = this.GetComponent<Image>().color;
-            card.a = 0;
-            GetComponent<Image>().color = card;
-        }
-        if(CardIsSpecial)
-        {
-            this.GetComponent<Image>().sprite = Cards[1];
-        }
-        else
-        {
-            this.GetComponent<Image>().sprite = Cards[0];
+            Cards[0].SetActive(false);
+            Cards[1].SetActive(false);
         }
 
     }
 
     public void CardReset()//카드가 생성되는 효과 재생.
     {
-        Debug.Log("카드가 생성되었습니다");
+        CardEffect[0].SetActive(false);
+        CardEffect[0].SetActive(true);
         IsCardOn = true;
+        CardIsSpecial = false;
     }
 
     public void CardUsed()//카드가 사용되는 효과 재생.
     {
-        Debug.Log("카드가 사용되었습니다");
-        //카드의 종류에 따른 사용 효과 재생 (일반,특수)
+        //카드가 사용될때 재생되는 효과.
+
         //IsCardOn = false;는 monsterAttackManager에서 처리.
     }
-    public void SpecialCard()
+    public async UniTask SpecialCard()
     {
         //카드가 특수카드로 바뀌는 효과 재생.
-        //적당한 타이밍에 CardIsSpecial을 true 변경
-        CardIsSpecial
-            = true;//
+        CardEffect[1].SetActive(false);
+        CardEffect[1].SetActive(true);
+        await UniTask.Delay(600);//0.6초
+        CardIsSpecial= true;
     }
 }
