@@ -23,7 +23,6 @@ public class skills
 
     public void UseSkill(TestMob mob)
     {
-        Debug.Log("몬스터가 공격을 하였습니다" + "스킬 번호 : "+skillNum);
         Animator anim = mob.GetComponent<Animator>();
         switch (skillNum)
         {

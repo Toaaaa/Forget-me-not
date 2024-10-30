@@ -132,6 +132,10 @@ public class CombatManager : Singleton<CombatManager>
         ReviveIfDead();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
+        //스킬 알람 강제종료
+        combatDisplay.skillUseAlarm.FinishAlarm();
+        monsterAttackManager.MonsterAlarm.FinishAlarm();
+        //화면 닫힘
         SceneChangeManager.Instance.LeaveBattleScene();
     }
     public void OnCombatLost() //전투에서 패배할시.
@@ -163,7 +167,11 @@ public class CombatManager : Singleton<CombatManager>
         ResetPlayerBuff();
         //플레이어의 스킬 버프가 켜져 있을시 해당 버프도 해제. (각종 기타 버프들도 다 해제 되는지 확인.)
         isCombatStart = false;
-        SceneChangeManager.Instance.BlackOutEndJourney();//블랙아웃 후 여정의 끝 화면 활성화.
+        //스킬 알람 강제종료
+        combatDisplay.skillUseAlarm.FinishAlarm();
+        monsterAttackManager.MonsterAlarm.FinishAlarm();
+        //블랙아웃 후 여정의 끝 화면 활성화.
+        SceneChangeManager.Instance.BlackOutEndJourney();
 
     }
 

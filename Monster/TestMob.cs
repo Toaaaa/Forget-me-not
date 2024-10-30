@@ -19,6 +19,9 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
     public int slowStack; //속도 감소 스킬에 의해 쌓인 스택.
     public SkillType stackedElement; // 공격에 의해서 쌓인 속성 스택.
     //skillType 이 none일 경우 >>//따로 속성이 안 붙어있는 경우. (전투 시작단계 or 역속성 공격을 하였을 경우 속성 스택 초기화)
+    public string SpecialSkillName; //특수 스킬의 이름.
+    public string SpecialSkillDesc; //특수 스킬의 설명.
+
     public float Hp;
     public float MaxHp;
     public float Atk;
@@ -64,6 +67,10 @@ public class TestMob : MonoBehaviour //애는 프리팹으로 만들것.
         isDefBuffed = false;
         isDefDebuffed = false;
         isSpeedDebuffed = false;
+        SpecialSkillName = monster.SpecialSkillName;
+        SpecialSkillDesc = monster.SpecialSkillDesc;
+        monsterSkill = monster.monsterSkill;
+        monsterOnlyAttack = monster.monsterOnlyAttack;
 
         SFX = new List<GameObject>();
         for (int i = 0; i < SFXInfo.Count; i++)

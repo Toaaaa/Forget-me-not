@@ -45,10 +45,11 @@ public class MonsterCardEffect : MonoBehaviour
 
     }
 
-    public void CardReset()//카드가 생성되는 효과 재생.
+    public async void CardReset()//카드가 생성되는 효과 재생.
     {
         CardEffect[0].SetActive(false);
         CardEffect[0].SetActive(true);
+        await UniTask.Delay(600);//0.6초
         IsCardOn = true;
         CardIsSpecial = false;
     }

@@ -28,6 +28,7 @@ public class CombatDisplay : MonoBehaviour
     public CombatSelection combatSelection;//위의 플레이어의 selection을 담당하는 곳.
     public Item selectingItem;//선택된 아이템.
     public ItemSelection itemInven;//위의 아이템을 선택하는 곳.
+    public SkillUseAlarm skillUseAlarm;//스킬 사용시 알람.
 
     private bool selectUp; //selectslot에서 방금 up키를 눌러서 변경 되었는지 판별.
     public bool attackSelected; //공격이 선택되었는지 판별하는 변수.firstSelection에서 기본공격 선택시.
@@ -333,15 +334,19 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     combatManager.combatDisplay.selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill1Name,selectingPlayer.skill1Func);
                     break;
                 case 1:
                     combatManager.combatDisplay.selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill2Name, selectingPlayer.skill2Func);
                     break;
                 case 2:
                     combatManager.combatDisplay.selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill3Name, selectingPlayer.skill3Func);
                     break;
-                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                case 3:
                     combatManager.combatDisplay.selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill4Name, selectingPlayer.skill4Func);
                     break;
             }
             StartCoroutine(inaction());
@@ -402,17 +407,21 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill1Name, selectingPlayer.skill1Func);
                     //요런곳에 monsterselected 를 임시로 저장하면서 사망 확인 해주는 코루틴? 넣어도 좋을듯.
                     //+코루틴에는 사망 애니메이션 출력에 실제로는 skill을 사용함과 동시에 이미 사망은 하였기에 애니메이션만 출력하는 코루틴.
                     break;
                 case 1:
                     selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill2Name, selectingPlayer.skill2Func);
                     break;
                 case 2:
                     selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill3Name, selectingPlayer.skill3Func);
                     break;
-                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                case 3:
                     selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill4Name, selectingPlayer.skill4Func);
                     break;
             }
             StartCoroutine(inaction());
@@ -499,15 +508,19 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill1Name, selectingPlayer.skill1Func);
                     break;
                 case 1:
                     selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill2Name, selectingPlayer.skill2Func);
                     break;
                 case 2:
                     selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill3Name, selectingPlayer.skill3Func);
                     break;
-                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                case 3:
                     selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill4Name, selectingPlayer.skill4Func);
                     break;
             }
             StartCoroutine(inaction());
@@ -581,15 +594,19 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill1Name, selectingPlayer.skill1Func);
                     break;
                 case 1:
                     selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill2Name, selectingPlayer.skill2Func);
                     break;
                 case 2:
                     selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill3Name, selectingPlayer.skill3Func);
                     break;
-                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                case 3:
                     selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill4Name, selectingPlayer.skill4Func);
                     break;
             }
             StartCoroutine(inaction());
@@ -655,15 +672,19 @@ public class CombatDisplay : MonoBehaviour
             {
                 case 0:
                     selectingPlayer.Skill1(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill1Name, selectingPlayer.skill1Func);
                     break;
                 case 1:
                     selectingPlayer.Skill2(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill2Name, selectingPlayer.skill2Func);
                     break;
                 case 2:
                     selectingPlayer.Skill3(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill3Name, selectingPlayer.skill3Func);
                     break;
-                case 3://탱커의 경우 4번스킬이 없고, 3번,4번 스킬은 레벨이 오름에 따라서 해제되는 방식.
+                case 3:
                     selectingPlayer.Skill4(slotList[selectedSlotIndex].playerPrefab.transform);
+                    skillUseAlarm.SkillAlarmShow(selectingPlayer.skill4Name, selectingPlayer.skill4Func);
                     break;
             }
             StartCoroutine(inaction());

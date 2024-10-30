@@ -77,6 +77,11 @@ public class PlayableC : ScriptableObject
     public string skill2Desc;
     public string skill3Desc;
     public string skill4Desc;
+    //스킬의 기능 설명 (@@@한 능력을 가짐의 실질적인 기능 표시) SkillUseAlarm을 통해 표시.
+    public string skill1Func;
+    public string skill2Func;
+    public string skill3Func;
+    public string skill4Func;
     //스킬 코스트
     public int skill1Cost;
     public int skill2Cost;

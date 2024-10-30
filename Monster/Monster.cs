@@ -24,6 +24,12 @@ public class Monster : ScriptableObject
     public string Name;
     public Sprite sprite;
     public MonsterType monsterType; //normal의 경우 도주가능, boss의 경우 도주 불가능.
+    public List<skills> monsterSkill;
+    public List<skills> monsterOnlyAttack; //회복 등의 버프형 스킬이 아닌 공격형 스킬만 모아놓은 리스트.
+
+
+    public string SpecialSkillName;
+    public string SpecialSkillDesc;
 
     public float mHp;
     public float mAtk;

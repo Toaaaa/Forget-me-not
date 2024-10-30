@@ -14,12 +14,12 @@ public class MonsterAttackManager : MonoBehaviour
     public CombatManager combatManager;
     public CombatDisplay combatDisplay;
     public List<TestMob> monsters;
+    public SkillUseAlarm MonsterAlarm;
 
     [SerializeField]
     List<Image> monsterTurnCard;//몬스터의 남은 턴 횟수를 시각적으로 보여주는 카드. 0~9까지
     int monsterTurnCount;//몬스터의 턴 카드 갯수 int값.
     public int SpecialCardStack;//만약 잔여 턴 카드가 없을 경우 특수카드 변환 스택을 저장하여 턴카드가 생성될때 사용함.
-
     public bool monsterAttackAvailable; //몬스터의 공격이 가능한지 판별하는 변수. (플레이어가 3턴시간 이상을 사용하였을때)
     public float playerTurnUsed; //플레이어의 턴시간 누적 사용시간. 몬스터 공격을 하며 차감하기.
 
@@ -132,6 +132,8 @@ public class MonsterAttackManager : MonoBehaviour
             }
             return;
         }
+        int atkOnlyNum = Random.Range(0, monster.monsterOnlyAttack.Count);//공격만 시전할 시 랜덤스킬.
+        int skillNum = Random.Range(0, monster.monsterSkill.Count);//랜덤스킬.
 
         if (monster.Hp >= monster.MaxHp * 0.8f)//몬스터의 체력이 80% 이상일때는 공격형 스킬만 사용.
         {
@@ -142,7 +144,8 @@ public class MonsterAttackManager : MonoBehaviour
             }
             else
             {
-                monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+                monster.monsterOnlyAttack[atkOnlyNum].UseSkill(monster);
+                MonsterAlarm.SkillAlarmShow(monster.monsterOnlyAttack[atkOnlyNum].skillName, monster.monsterOnlyAttack[atkOnlyNum].skillDesc);
             }
             await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
@@ -156,7 +159,9 @@ public class MonsterAttackManager : MonoBehaviour
             }
             else
             {
-                monster.monsterOnlyAttack[Random.Range(0, monster.monsterOnlyAttack.Count)].UseSkill(monster);
+
+                monster.monsterOnlyAttack[atkOnlyNum].UseSkill(monster);
+                MonsterAlarm.SkillAlarmShow(monster.monsterOnlyAttack[atkOnlyNum].skillName, monster.monsterOnlyAttack[atkOnlyNum].skillDesc);
             }
             await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
@@ -170,7 +175,8 @@ public class MonsterAttackManager : MonoBehaviour
             }
             else
             {
-                monster.monsterSkill[Random.Range(0, monster.monsterSkill.Count)].UseSkill(monster);
+                monster.monsterSkill[skillNum].UseSkill(monster);
+                MonsterAlarm.SkillAlarmShow(monster.monsterSkill[skillNum].skillName, monster.monsterSkill[skillNum].skillDesc);
             }
             await UniTask.Delay(600);
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().IsCardOn = false;//카드 사용후 카드를 사용된 상태로 변경.
@@ -243,9 +249,11 @@ public class MonsterAttackManager : MonoBehaviour
         {
             case "battle in stage0"://튜토리얼맵
                 monster.monsterSkill[0].BattleCry(monster);//전투의 함성
+                MonsterAlarm.SkillAlarmShow(monster.SpecialSkillName, monster.SpecialSkillDesc);//개별 객체가 가지고 있는 이름과 설명 출력.
                 break;
             case "battle in stage1":
                 monster.monsterSkill[0].BattleCry(monster);//전투의 함성
+                MonsterAlarm.SkillAlarmShow(monster.SpecialSkillName, monster.SpecialSkillDesc);//개별 객체가 가지고 있는 이름과 설명 출력.
                 break;
             case "battle in stage2":
 
@@ -290,7 +298,7 @@ public class MonsterAttackManager : MonoBehaviour
         if(monsterTurnCount >= 0)
             monsterTurnCard[monsterTurnCount].GetComponent<MonsterCardEffect>().CardUsed();//카드가 사용되는 효과.
     }
-    private void MonsterSpecialCard()//잔여 몬스터 턴 카드중 하나를 특수카드로 변경.
+    private async void MonsterSpecialCard()//잔여 몬스터 턴 카드중 하나를 특수카드로 변경.
     {
         if (monsterTurnCount == 0)
         {
@@ -311,7 +319,7 @@ public class MonsterAttackManager : MonoBehaviour
 
         // 랜덤으로 하나의 카드를 특수 카드로 변경
         int x = random.Next(0, nonSpecialCards.Count);
-        nonSpecialCards[x].GetComponent<MonsterCardEffect>().SpecialCard();
+        await nonSpecialCards[x].GetComponent<MonsterCardEffect>().SpecialCard();
     }
     private void SpecialCardStackUse()//특수카드 스택을 사용하는 함수. (턴 카드 리셋시 사용하는 함수)
     {
